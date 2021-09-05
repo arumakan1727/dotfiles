@@ -1,0 +1,92 @@
+add_newline = true
+
+format = """
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$time\
+$vcsh\
+$git_branch\
+$status\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$lua\
+$custom\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$shell\
+$character"""
+
+[directory]
+truncate_to_repo = false
+fish_style_pwd_dir_length = 1
+style = "#3f8ed1"
+format = "[$path [$read_only](bg:$style fg:red)](bg:$style fg:#f0f0f0)[](fg:$style)"
+
+[time]
+disabled = false
+style = "#3f3f3f"
+format = "\b\b[](fg:#3f8ed1 bg:$style)[$time](bg:$style fg:#d0d0d0)[](fg:$style) "
+
+[git_branch]
+style = "#a8d045"
+format = "\b\b[](fg:#3f3f3f bg:$style)[ $symbol$branch ](fg:black bg:$style)[](fg:$style) "
+
+[package]
+disabled = true
+
+
+[character]
+success_symbol = " [\\$](bold green)"
+error_symbol = " [\\$](bold red)"
+
+[status]
+disabled = false
+style = "#d13730"
+symbol = "😨"
+format = "[\\[$symbol $status\\]](fg:$style) "
