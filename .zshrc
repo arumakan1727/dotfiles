@@ -9,7 +9,3 @@ source $HOME/.config/zsh/external_tool_init.zsh
 if command -v zprof > /dev/null 2>&1 ; then
   zprof
 fi
-
-# fnm
-export PATH=/home/armkn/.fnm:$PATH
-eval "`fnm env`"
