@@ -1,0 +1,22 @@
+set scrolloff=5       " 上下方向のカーソルからのゆとり行数
+set showcmd           " 入力中のコマンドを表示
+
+set wildmenu
+
+set incsearch
+set hlsearch
+
+set clipboard+=unnamed
+
+nnoremap j gj
+nnoremap k gk
+nnoremap Y y$
+nnoremap L :tabnext<CR>
+nnoremap H :tabprev<CR>
+
+"改行の挿入
+nnoremap <Space><CR> i<CR><ESC>
+
+nnoremap <Space>w <C-w>
+
+nnoremap <ESC><ESC> :nohlsearch<CR>
