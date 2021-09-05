@@ -1,0 +1,57 @@
+[theme]
+name = "slick"
+[theme.overrides]
+# https://www.nerdfonts.com/cheat-sheet
+# https://github.com/ryanoasis/powerline-extra-symbols
+separator = "\ue0b2"
+
+
+[icons]
+name = "awesome"
+
+
+[[block]]
+block = "net"
+format = "{ssid} {ip} {speed_down}"
+interval = 3
+hide_missing = true
+hide_inactive = true
+
+
+[[block]]
+block = "cpu"
+interval = 3
+
+
+[[block]]
+block = "temperature"
+collapsed = false
+interval = 3
+format = "{average}"
+chip = "*-isa-*"
+
+
+[[block]]
+block = "memory"
+display_type = "memory"
+format_mem = "{mem_used;G} ({mem_used_percents})"
+format_swap = "swap:{swap_used;G} ({swap_used_percents})"
+
+
+[[block]]
+block = "sound"
+
+
+[[block]]
+block = "battery"
+device = "BAT1"
+interval = 30
+format = "{percentage}%"
+allow_missing = true
+hide_missing = true
+
+
+[[block]]
+block = "time"
+interval = 5
+format = "%m月%d日 %H:%M"
