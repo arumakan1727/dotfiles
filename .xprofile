@@ -1,0 +1,23 @@
+#!/bin/sh
+## This file will be loaded by lightdm
+
+# turn bell off
+xset b off
+
+# keyboard autorepeat (enable, delay[ms], frequency[ms])
+xset r on
+xset r rate 200 100
+
+# DPMS (standby (=black screen)[s], suspend[s], power off[s])
+xset +dpms
+xset dpms 180 300 600
+
+# default option for unzip, zip
+export ZIPINFOOPT="-OCP932"
+export UNZIPOPT="-OCP932"
+
+# synchronize plipboard and selection
+if command -v autocutsel > /dev/null 2>&1; then
+  autocutsel -fork &
+  autocutsel -selection PRIMARY -fork &
+fi
