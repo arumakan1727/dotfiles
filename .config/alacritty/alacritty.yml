@@ -1,0 +1,101 @@
+font:
+  size: 9
+  family: 'JetBrainsMono Nerd Font'
+
+color_schemes:
+  substrata: &substrata
+    primary:
+      background: '#191c25'
+      foreground: '#b5b4c9'
+    normal:
+      black:   '#2e313d'
+      red:     '#cf8164'
+      green:   '#76a065'
+      yellow:  '#ab924c'
+      blue:    '#8296b0'
+      magenta: '#a18daf'
+      cyan:    '#659ea2'
+      white:   '#b5b4c9'
+    bright:
+      black:   '#5b5f71'
+      red:     '#fe9f7c'
+      green:   '#92c47e'
+      yellow:  '#d2b45f'
+      blue:    '#a0b9d8'
+      magenta: '#c6aed7'
+      cyan:    '#7dc2c7'
+      white:   '#f0ecfe'
+
+  scorcerer: &scorcerer
+    primary:
+      background: '#222222'
+      foreground: '#c2c2b0'
+    cursor:
+      text:   CellBackground
+      cursor: CellForeground
+    normal:
+      black:   '#363639'
+      red:     '#aa4450'
+      green:   '#719611'
+      yellow:  '#cc8800'
+      blue:    '#6688aa'
+      magenta: '#8f6f8f'
+      cyan:    '#528b8b'
+      white:   '#d3d3d3'
+    bright:
+      black:   '#4f4f56'
+      red:     '#ff6a6a'
+      green:   '#b1d631'
+      yellow:  '#ff9800'
+      blue:    '#90b0f1'
+      magenta: '#8181a6'
+      cyan:    '#87ceeb'
+      white:   '#c1cdc1'
+
+  one_dark: &one_dark
+    primary:
+      background: '#282c34'
+      foreground: '#abb2bf'
+    cursor:
+      text:       CellBackground
+      cursor:     '#528bff' # syntax-cursor-color
+    selection:
+      text:       CellForeground
+      background: '#3e4451' # syntax-selection-color
+    normal:
+      black:      '#5c6370' # mono-3
+      red:        '#e06c75' # red 1
+      green:      '#98c379'
+      yellow:     '#e5c07b' # orange 2
+      blue:       '#61afef'
+      magenta:    '#c678dd'
+      cyan:       '#56b6c2'
+      white:      '#828997' # mono-2
+
+  molokai: &molokai
+    # Default colors
+    primary:
+      background: '#1B1D1E'
+      foreground: '#F8F8F2'
+    # Normal colors
+    normal:
+      black:   '#333333'
+      red:     '#C4265E'
+      green:   '#86B42B'
+      yellow:  '#B3B42B'
+      blue:    '#6A7EC8'
+      magenta: '#8C6BC8'
+      cyan:    '#56ADBC'
+      white:   '#E3E3DD'
+    # Bright colors
+    bright:
+      black:   '#666666'
+      red:     '#F92672'
+      green:   '#A6E22E'
+      yellow:  '#E2E22E'
+      blue:    '#819AFF'
+      magenta: '#AE81FF'
+      cyan:    '#66D9EF'
+      white:   '#F8F8F2'
+
+colors: *scorcerer
