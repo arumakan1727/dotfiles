@@ -11,10 +11,9 @@ cmp.setup({
       select = true,
       behavior = cmp.ConfirmBehavior.Insert,
     }),
-    ['<CR>'] = cmp.mapping.confirm({
-      select = true,
-      behavior = cmp.ConfirmBehavior.Replace,
-    }),
+
+    -- <CR> は nvim-autopairs で設定される
+
     ['<M-j>'] = cmp.mapping.scroll_docs(2),
     ['<M-k>'] = cmp.mapping.scroll_docs(-2),
     ['<C-Space>'] = cmp.mapping.complete(),
