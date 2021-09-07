@@ -51,7 +51,6 @@ return require('packer').startup(function(use)
   use {'kevinoid/vim-jsonc', ft = 'jsonc'}
   use {'pangloss/vim-javascript', ft = 'javascript'}
   use {'hail2u/vim-css3-syntax', ft = {'html', 'css', 'markdown'}}
-  use {'gko/vim-coloresque', on = 'VimEnter'}
 
   -- Markdown
   use {'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = ':call mkdp#util#install()'}
@@ -89,6 +88,9 @@ return require('packer').startup(function(use)
 
   -- get syntax info under cursor
   use {'wadackel/nvim-syntax-info', cmd = {'SyntaxInfo'}}
+
+  -- color code
+  use {'gko/vim-coloresque', on = 'VimEnter'}
 
   --------------------------------
   -- treesitter
