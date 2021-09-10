@@ -23,7 +23,8 @@ set completeopt=menuone,noinsert,noselect
 set expandtab
 set smarttab
 set shiftround
-set autoindent smartindent
+set autoindent
+set nosmartindent
 
 "----------------------------------------------------------------------------------------
 " Command Completion

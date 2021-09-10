@@ -31,11 +31,17 @@ end
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
 local servers = {
-  'clangd',
-  'pyright',
-  'gopls',
   'bashls',
+  'clangd',
+  'cssls',
+  'gopls',
+  'html',
+  'jsonls',
   'nimls',
+  'pyright',
+  'tsserver',
+  'vimls',
+  'vuels',
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -46,10 +52,27 @@ for _, sever in ipairs(servers) do
     on_attach = on_attach,
     capabilities = capabilities,
     flags = {
-      debounce_text_changes = 300,
+      debounce_text_changes = 500,
     }
   }
 end
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    update_in_insert = true,
+  }
+)
+
+---------------------------------------------------------------------
+-- null-ls
+--[[ local null_ls = require'null-ls'
+null_ls.config {
+  sources = {
+    null_ls.builtins.formatting.prettier,
+    null_ls.builtins.diagnostics.eslint_d,
+  }
+}
+nvim_lsp['null-ls'].setup{} ]]
 
 ---------------------------------------------------------------------
 -- lspsaga
