@@ -101,3 +101,16 @@ function rm-exebin() {
     command rm -v "$binary"
   done
 }
+
+# random string (default length: 6)
+function randstr() {
+  cat /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c ${1:-6}
+  echo
+  return 0
+}
+
+# random bytes (default bytes: 32B)
+function randbytes() {
+  cat /dev/urandom | head -c ${1:-32}
+  return 0
+}
