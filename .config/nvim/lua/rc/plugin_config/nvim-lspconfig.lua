@@ -33,6 +33,12 @@ local on_attach = function(client, bufnr)
     max_width = 80,
     zindex = 50,  -- send floating window to back layer
   })
+
+  vim.cmd 'hi LspDiagnosticsDefaultError guifg=#ff0000'
+  vim.cmd 'hi LspDiagnosticsDefaultWarning guifg=#f0ac00'
+  vim.cmd 'hi LspDiagnosticsDefaultHint guifg=#66ddff'
+  vim.cmd 'hi LspSagaLightBulbSign guifg=#ffe090'
+  vim.cmd 'hi LspSagaLightBulb     guifg=#ff3090'
 end
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
