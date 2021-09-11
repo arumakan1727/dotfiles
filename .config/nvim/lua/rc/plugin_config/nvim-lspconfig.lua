@@ -69,12 +69,6 @@ for _, sever in ipairs(servers) do
   }
 end
 
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    update_in_insert = true,
-  }
-)
-
 ---------------------------------------------------------------------
 -- null-ls
 --[[ local null_ls = require'null-ls'
