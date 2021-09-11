@@ -19,6 +19,7 @@ path=(
   $HOME/.config/yarn/global/node_modules/.bin(N-/)
   $HOME/.deno/bin(N-/)
   $HOME/.fnm(N-/)
+  $HOME/.cargo/bin(N-/)
   /usr/local/go/bin(N-/)
   $path
 )
