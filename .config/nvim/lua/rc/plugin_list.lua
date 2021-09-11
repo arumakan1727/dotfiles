@@ -64,20 +64,19 @@ return require('packer').startup(function(use)
 
   -----------------------------------------------
   -- colorscheme
-  use {'joshdick/onedark.vim', opt = true}
-  use {'kaicataldo/material.vim', opt = true}
-  use {'morhetz/gruvbox', opt = true}
-  use {'w0ng/vim-hybrid', opt = true}
-  use {'sainnhe/sonokai', opt = true}
-  use {'tomasr/molokai', opt = true}
-  use {'jacoborus/tender.vim', opt = true}
-  use {'arcticicestudio/nord-vim', opt = true}
+  use {'joshdick/onedark.vim'}
+  use {'kaicataldo/material.vim'}
+  use {'morhetz/gruvbox'}
+  use {'w0ng/vim-hybrid'}
+  use {'sainnhe/sonokai'}
+  use {'tomasr/molokai'}
+  use {'jacoborus/tender.vim'}
+  use {'arcticicestudio/nord-vim'}
   use {'cocopon/iceberg.vim', config = function() vim.cmd 'colorscheme iceberg' end }
   use {'Shatur/neovim-ayu',
     config = function()
       vim.g.ayu_mirage = true
     end,
-    opt = true
   }
 
   -- get syntax info under cursor
