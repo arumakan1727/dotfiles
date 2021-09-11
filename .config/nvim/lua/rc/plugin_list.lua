@@ -131,6 +131,34 @@ return require('packer').startup(function(use)
   use {'tjdevries/nlua.nvim', event = "VimEnter"}
 
   --------------------------------
+  -- formatting
+  use {
+    'mhartington/formatter.nvim',
+    config = function()
+      local prettier = {
+        function()
+          return {
+            exe = 'prettier',
+            args = {'--stdin-filepath', vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
+            stdin = true,
+          }
+        end
+      }
+
+      require'formatter'.setup {
+        filetype = {
+          html = prettier,
+          javascript = prettier,
+          typescript = prettier,
+          vue = prettier,
+        }
+      }
+      vim.api.nvim_set_keymap('n', ',f', '<cmd>Format<CR>', {noremap = true, silent = true})
+    end,
+  }
+
+
+  --------------------------------
   -- brackets
   use {
     'andymass/vim-matchup',
