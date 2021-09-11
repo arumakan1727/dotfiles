@@ -26,7 +26,13 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  require'lsp_signature'.on_attach()
+
+  require'lsp_signature'.on_attach({
+    bind = true,
+    max_height = 8,
+    max_width = 80,
+    zindex = 50,  -- send floating window to back layer
+  })
 end
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
