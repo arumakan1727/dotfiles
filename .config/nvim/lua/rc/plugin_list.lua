@@ -96,16 +96,16 @@ return require('packer').startup(function(use)
 
   --------------------------------
   -- LSP
-  use {'glepnir/lspsaga.nvim'}
-  use {'folke/trouble.nvim'}
-  use {'ray-x/lsp_signature.nvim'}
-  --[[ use {
-    'jose-elias-alvarez/null-ls.nvim',
-    requires = {'nvim-lua/plenary.nvim'},
-  } ]]
+  --[[ use]]
   use {
     'neovim/nvim-lspconfig',
-    requires = 'hrsh7th/cmp-nvim-lsp',
+    requires = {
+      'hrsh7th/cmp-nvim-lsp',
+      'glepnir/lspsaga.nvim',
+      'folke/trouble.nvim',
+      'ray-x/lsp_signature.nvim',
+      -- {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-lua/plenary.nvim'}},
+    },
     config = function() require'rc/plugin_config/nvim-lspconfig' end
   }
 
