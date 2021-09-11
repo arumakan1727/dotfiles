@@ -168,7 +168,6 @@ return require('packer').startup(function(use)
     'mattn/emmet-vim',
     ft = {'html', 'css', 'markdown'},
     setup = function()
-      vim.g.user_emmet_leader_key = '<M-y>'
     end
   }
 

@@ -7,11 +7,6 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<C-y>'] = cmp.mapping.confirm({
-      select = true,
-      behavior = cmp.ConfirmBehavior.Insert,
-    }),
-
     -- <CR> は nvim-autopairs で設定される
 
     ['<M-j>'] = cmp.mapping.scroll_docs(2),
