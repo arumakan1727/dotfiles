@@ -42,15 +42,9 @@ return require('packer').startup(function(use)
   --------------------------------
   -- specific language
   use {'mboughaba/i3config.vim', ft = 'i3config'}
-  use {'zah/nim.vim', ft = 'nim'}
   use {'yasuhiroki/github-actions-yaml.vim', ft='yaml'}
-  use {'vim-crystal/vim-crystal', ft = 'crystal'}
-  use {'udalov/kotlin-vim', ft = 'kotlin'}
-  use {'kylef/apiblueprint.vim', ft = 'apiblueprint'}
-  use {'aklt/plantuml-syntax', ft = 'plantuml'}
-  use {'kevinoid/vim-jsonc', ft = 'jsonc'}
-  use {'pangloss/vim-javascript', ft = 'javascript'}
-  use {'hail2u/vim-css3-syntax', ft = {'html', 'css', 'markdown'}}
+  use {'hail2u/vim-css3-syntax', ft = {'html', 'css', 'markdown', 'vue'}}
+  use {'sheerun/vim-polyglot'}
 
   -- Markdown
   use {'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = ':call mkdp#util#install()'}
