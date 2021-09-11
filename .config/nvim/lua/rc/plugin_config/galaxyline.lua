@@ -38,7 +38,15 @@ gls.left[3] ={
 }
 gls.left[4] = {
   FileName = {
-    provider = {'FileName','FileSize'},
+    provider = function()
+      local filename =  vim.fn.expand('%')
+      local modified_icon = ' [+] '
+      if vim.bo.modifiable and vim.bo.modified then
+        return filename .. modified_icon
+      else
+        return filename .. ' '
+      end
+    end,
     condition = buffer_not_empty,
     separator_highlight = {colors.purple,colors.darkblue},
     highlight = {colors.magenta,colors.darkblue}
