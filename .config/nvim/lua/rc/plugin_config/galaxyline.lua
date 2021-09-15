@@ -9,7 +9,7 @@ local colors = {
   darkblue = '#081633',
   green = '#a0c700',
   orange = '#FF8800',
-  purple = '#594977',
+  purple = '#082f4a',
   magenta = '#d16d9e',
   grey = '#c0c0c0',
   blue = '#0087d7',
@@ -39,7 +39,7 @@ gls.left[3] ={
 gls.left[4] = {
   FileName = {
     provider = function()
-      local filename =  vim.fn.expand('%')
+      local filename =  vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.')
       local modified_icon = ' [+] '
       if vim.bo.modifiable and vim.bo.modified then
         return filename .. modified_icon
@@ -49,7 +49,7 @@ gls.left[4] = {
     end,
     condition = buffer_not_empty,
     separator_highlight = {colors.purple,colors.darkblue},
-    highlight = {colors.magenta,colors.darkblue}
+    highlight = {colors.grey, colors.darkblue}
   }
 }
 
@@ -155,12 +155,6 @@ gls.right[4] = {
     separator = ' ',
     separator_highlight = {colors.darkblue,colors.purple},
     highlight = {colors.grey,colors.darkblue},
-  }
-}
-gls.right[5] = {
-  ScrollBar = {
-    provider = 'ScrollBar',
-    highlight = {colors.yellow,colors.purple},
   }
 }
 

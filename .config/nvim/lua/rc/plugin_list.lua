@@ -101,7 +101,7 @@ return require('packer').startup(function(use)
     'neovim/nvim-lspconfig',
     requires = {
       'hrsh7th/cmp-nvim-lsp',
-      'glepnir/lspsaga.nvim',
+      -- 'glepnir/lspsaga.nvim',
       'folke/trouble.nvim',
       'ray-x/lsp_signature.nvim',
       -- {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-lua/plenary.nvim'}},
@@ -187,7 +187,7 @@ return require('packer').startup(function(use)
   -- emmet
   use {
     'mattn/emmet-vim',
-    ft = {'html', 'css', 'markdown'},
+    ft = {'html', 'css', 'markdown', 'vue'},
     setup = function()
     end
   }
