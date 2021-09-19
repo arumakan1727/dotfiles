@@ -216,3 +216,4 @@ bar {
 }
 
 for_window [title="Guake Preferences"] floating enable
+for_window [title="Guakeの設定"] floating enable
