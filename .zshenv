@@ -85,5 +85,8 @@ export PIPENV_VENV_IN_PROJECT=true
 [[ -s "$HOME/.cargo/env" ]] && \
   source "$HOME/.cargo/env"
 
-[[ -s "$HOME/.fnm" ]] && \
+builtin command -v fnm > /dev/null 2>&1 && \
   eval "$(fnm env)"
+
+builtin command -v opam > /dev/null 2>&1 && \
+  eval "$(opam env)"
