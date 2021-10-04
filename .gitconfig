@@ -32,3 +32,5 @@
   colorMoved = zebra
 [pull]
   ff = only
+[user]
+  useConfigOnly = true
