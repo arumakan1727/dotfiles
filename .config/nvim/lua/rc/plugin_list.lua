@@ -43,7 +43,7 @@ return require('packer').startup(function(use)
   -- specific language
   use {'mboughaba/i3config.vim', ft = 'i3config'}
   use {'yasuhiroki/github-actions-yaml.vim', ft='yaml'}
-  use {'hail2u/vim-css3-syntax', ft = {'html', 'css', 'markdown', 'vue'}}
+  use {'hail2u/vim-css3-syntax', ft = {'html', 'htmldjango', 'css', 'markdown', 'vue'}}
   use {'sheerun/vim-polyglot'}
 
   -- Markdown
@@ -72,6 +72,7 @@ return require('packer').startup(function(use)
   use {'tomasr/molokai'}
   use {'jacoborus/tender.vim'}
   use {'arcticicestudio/nord-vim'}
+  use {'NLKNguyen/papercolor-theme'}
   use {'cocopon/iceberg.vim', config = function() vim.cmd 'colorscheme iceberg' end }
   use {'Shatur/neovim-ayu',
     config = function()
@@ -101,7 +102,7 @@ return require('packer').startup(function(use)
     'neovim/nvim-lspconfig',
     requires = {
       'hrsh7th/cmp-nvim-lsp',
-      -- 'glepnir/lspsaga.nvim',
+      'glepnir/lspsaga.nvim',
       'folke/trouble.nvim',
       'ray-x/lsp_signature.nvim',
       -- {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-lua/plenary.nvim'}},
@@ -187,7 +188,7 @@ return require('packer').startup(function(use)
   -- emmet
   use {
     'mattn/emmet-vim',
-    ft = {'html', 'css', 'markdown', 'vue'},
+    ft = {'html', 'htmldjango', 'css', 'markdown', 'vue'},
     setup = function()
     end
   }
@@ -196,11 +197,9 @@ return require('packer').startup(function(use)
   -- edit
   use {
     'junegunn/vim-easy-align',
-    -- event = "VimEnter",
-    cmd = {'EasyAlign'},
     config = function()
-      vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)')
-      vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)')
+      vim.api.nvim_set_keymap('n', 'ga', '<Plug>(EasyAlign)', {})
+      vim.api.nvim_set_keymap('x', 'ga', '<Plug>(EasyAlign)', {})
     end
   }
   use {'dhruvasagar/vim-table-mode', cmd = {'TableModeEnable'}}
@@ -261,12 +260,6 @@ return require('packer').startup(function(use)
   }
 
   -----------------------------------------------
-  -- find
-  use {
-    'kevinhwang91/nvim-hlslens',
-    event = "VimEnter",
-    config = function() vim.cmd('source ~/.config/nvim/rc/plugin_config/nvim-hlslens.vim') end
-  }
   use {
     't9md/vim-quickhl',
     event = "VimEnter",

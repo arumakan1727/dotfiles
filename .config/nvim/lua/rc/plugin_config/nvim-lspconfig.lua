@@ -14,16 +14,16 @@ local on_attach = function(client, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   -- buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  -- buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  -- buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   -- buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<M-CR>', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  -- buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  -- buf_set_keymap('n', '<M-CR>', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   -- buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  -- buf_set_keymap('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  -- buf_set_keymap('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
@@ -57,12 +57,12 @@ for _, sever in ipairs(servers) do
   nvim_lsp[sever].setup {
     on_attach = function()
       on_attach()
-      --[[ require'lsp_signature'.on_attach({
+      require'lsp_signature'.on_attach({
         bind = true,
-        max_height = 8,
+        max_height = 3,
         max_width = 80,
         zindex = 50,  -- send floating window to back layer
-      }) ]]
+      })
     end,
     capabilities = capabilities,
     flags = {
@@ -84,12 +84,15 @@ nvim_lsp['null-ls'].setup{} ]]
 
 ---------------------------------------------------------------------
 -- lspsaga
---[[ local saga = require'lspsaga'
+local saga = require'lspsaga'
 saga.init_lsp_saga {
   error_sign = '',
   warn_sign = '',
   hint_sign = '',
   infor_sign = '',
+  code_action_prompt = {
+    enable = false,
+  },
 }
 
 -- find the cursor word definition and references
@@ -158,7 +161,7 @@ vim.api.nvim_set_keymap('n', '[e',
 vim.api.nvim_set_keymap('n', ']e',
   '<cmd>lua require("lspsaga.diagnostic").lsp_jump_diagnostic_next()<CR>',
   {noremap = true, silent = true}
-) ]]
+)
 
 ---------------------------------------------------------------------
 -- trouble

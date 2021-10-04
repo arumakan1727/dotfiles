@@ -39,13 +39,14 @@ gls.left[3] ={
 gls.left[4] = {
   FileName = {
     provider = function()
-      local filename =  vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.')
-      local modified_icon = ' [+] '
-      if vim.bo.modifiable and vim.bo.modified then
-        return filename .. modified_icon
-      else
-        return filename .. ' '
+      local res =  vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.')
+      if vim.bo.readonly then
+        res = res .. '[RO]'
       end
+      if vim.bo.modifiable and vim.bo.modified then
+        res = res .. '*'
+      end
+      return res .. ' '
     end,
     condition = buffer_not_empty,
     separator_highlight = {colors.purple,colors.darkblue},

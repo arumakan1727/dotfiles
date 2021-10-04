@@ -9,8 +9,6 @@ cmp.setup({
   mapping = {
     -- <CR> は nvim-autopairs で設定される
 
-    ['<M-j>'] = cmp.mapping.scroll_docs(2),
-    ['<M-k>'] = cmp.mapping.scroll_docs(-2),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-q>'] = cmp.mapping.close(),
   },
