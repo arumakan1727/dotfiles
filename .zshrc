@@ -1,3 +1,30 @@
+if [[ -z "$TMUX" ]] && { command -v tmux > /dev/null 2>&1 }; then
+  sessions="$(tmux list-sessions)"
+
+  if [[ -z "$sessions" ]]; then
+    tmux new-session
+  fi
+
+  create_new_session="Create New Session"
+
+  if command -v fzf > /dev/null 2>&1 ; then
+    id="$(echo "${sessions}\n${create_new_session}" | fzf | cut -d: -f1)"
+  else
+    sessions=( ${(@f)"$(echo "$sessions\n$create_new_session")"} )
+    select res in $sessions
+    do
+      id="$(echo $res | cut -d: -f1)"
+      break
+    done
+  fi
+
+  if [[ "$id" = "$create_new_session" ]]; then
+    tmux new-session
+  else
+    tmux attach-session -t "$id"
+  fi
+fi
+
 source $HOME/.config/zsh/base.zsh
 source $HOME/.config/zsh/completion.zsh
 source $HOME/.config/zsh/function.zsh
