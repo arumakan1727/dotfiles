@@ -17,6 +17,7 @@
   graph = log --graph --oneline
   sw = switch
   rstr = restore --staged
+  delete-merged-branch = "!git branch --merged | egrep '.+\\/.*#[0-9]+' | xargs git branch -d"
 [core]
   autocrlf = input
   quotepath = false
