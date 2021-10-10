@@ -2,7 +2,7 @@ if [[ -z "$TMUX" ]] && { command -v tmux > /dev/null 2>&1 }; then
   sessions="$(tmux list-sessions)"
 
   if [[ -z "$sessions" ]]; then
-    tmux new-session
+    exec tmux new-session
   fi
 
   create_new_session="Create New Session"
@@ -19,9 +19,9 @@ if [[ -z "$TMUX" ]] && { command -v tmux > /dev/null 2>&1 }; then
   fi
 
   if [[ "$id" = "$create_new_session" ]]; then
-    tmux new-session
+    exec tmux new-session
   else
-    tmux attach-session -t "$id"
+    exec tmux attach-session -t "$id"
   fi
 fi
 
