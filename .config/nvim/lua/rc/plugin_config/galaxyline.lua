@@ -172,8 +172,25 @@ gls.short_line_left[1] = {
 gls.short_line_right[1] = {
   BufferIcon = {
     provider= 'BufferIcon',
-    separator = ' ',
-    separator_highlight = {colors.purple,colors.bg},
+    -- separator = '',
+    -- separator_highlight = {colors.purple,colors.bg},
     highlight = {colors.grey,colors.purple}
+  }
+}
+gls.short_line_left[2] = {
+  FileName = {
+    provider = function()
+      local res =  vim.fn.pathshorten(vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.'))
+      if vim.bo.readonly then
+        res = res .. '[RO]'
+      end
+      if vim.bo.modifiable and vim.bo.modified then
+        res = res .. '*'
+      end
+      return res .. ' '
+    end,
+    condition = buffer_not_empty,
+    separator_highlight = {colors.purple,colors.darkblue},
+    highlight = {colors.grey, colors.darkblue}
   }
 }

@@ -45,6 +45,7 @@ return require('packer').startup(function(use)
   use {'yasuhiroki/github-actions-yaml.vim', ft='yaml'}
   use {'hail2u/vim-css3-syntax', ft = {'html', 'htmldjango', 'css', 'markdown', 'vue'}}
   use {'sheerun/vim-polyglot'}
+  use {'alaviss/nim.nvim', ft = 'nim'}
 
   -- Markdown
   use {'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = ':call mkdp#util#install()'}
@@ -83,9 +84,6 @@ return require('packer').startup(function(use)
   -- get syntax info under cursor
   use {'wadackel/nvim-syntax-info', cmd = {'SyntaxInfo'}}
 
-  -- color code
-  use {'gko/vim-coloresque', on = 'VimEnter'}
-
   --------------------------------
   -- treesitter
   use {
@@ -97,7 +95,6 @@ return require('packer').startup(function(use)
 
   --------------------------------
   -- LSP
-  --[[ use]]
   use {
     'neovim/nvim-lspconfig',
     requires = {
@@ -116,6 +113,7 @@ return require('packer').startup(function(use)
   'hrsh7th/nvim-cmp',
     requires = {
       'hrsh7th/vim-vsnip',
+      'hrsh7th/cmp-vsnip',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
@@ -163,11 +161,19 @@ return require('packer').startup(function(use)
   -- brackets
   use {
     'andymass/vim-matchup',
+    after = {'nvim-treesitter'},
     config = function()
       vim.g.loaded_matchit = 1
       vim.g.matchup_matchparen_offscreen = {method = 'popup'}
       vim.cmd("hi MatchParenCur cterm=underline gui=underline")
       vim.cmd("hi MatchWordCur cterm=underline gui=underline")
+
+      require'nvim-treesitter.configs'.setup {
+        matchup = {
+          enable = true,
+          disable = {'html', 'htmldjango', 'vue', 'xml'},
+        }
+      }
     end
   }
   use {
@@ -234,7 +240,8 @@ return require('packer').startup(function(use)
     requires = 'kyazdani42/nvim-web-devicons',
     setup = function()
       vim.api.nvim_set_keymap('n', '<M-t>', ':<C-u>NvimTreeToggle<CR>', {noremap = true, silent = true})
-    end
+    end,
+    config = function() require'nvim-tree'.setup() end
   }
 
   -----------------------------------------------
