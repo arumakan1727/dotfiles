@@ -1,4 +1,4 @@
-if [[ -z "$TMUX" ]] && { command -v tmux > /dev/null 2>&1 }; then
+if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux > /dev/null 2>&1 }; then
   sessions="$(tmux list-sessions)"
 
   if [[ -z "$sessions" ]]; then
