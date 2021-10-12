@@ -5,12 +5,13 @@ if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux > /dev/null 2>&1 }; t
     exec tmux new-session
   fi
 
+  dont_use_tmux="Don't use tmux"
   create_new_session="Create New Session"
 
   if command -v fzf > /dev/null 2>&1 ; then
-    id="$(echo "${sessions}\n${create_new_session}" | fzf | cut -d: -f1)"
+    id="$(echo "$sessions\n$create_new_session\n$dont_use_tmux" | fzf | cut -d: -f1)"
   else
-    sessions=( ${(@f)"$(echo "$sessions\n$create_new_session")"} )
+    sessions=( ${(@f)"$(echo "$sessions\n$create_new_session\n$dont_use_tmux")"} )
     select res in $sessions
     do
       id="$(echo $res | cut -d: -f1)"
@@ -20,6 +21,8 @@ if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux > /dev/null 2>&1 }; t
 
   if [[ "$id" = "$create_new_session" ]]; then
     exec tmux new-session
+  elif [[ "$id" = "$dont_use_tmux" ]]; then
+    :  # do nothing
   else
     exec tmux attach-session -t "$id"
   fi
