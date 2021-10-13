@@ -203,7 +203,7 @@ bindsym Mod4+Shift+Print --release \
 bar {
     font pango: JetBrains Mono, FontAwesome 13
     position bottom
-    status_command zsh -c 'i3status-rs ~/.config/i3status-rust/config.toml'
+    status_command 'i3status-rs'
     colors {
         separator #666666
         background #222222

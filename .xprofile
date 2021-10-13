@@ -16,6 +16,8 @@ xset dpms 180 300 600
 export ZIPINFOOPT="-OCP932"
 export UNZIPOPT="-OCP932"
 
+[[ -s "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
 # synchronize plipboard and selection
 if command -v autocutsel > /dev/null 2>&1; then
   autocutsel -fork &
