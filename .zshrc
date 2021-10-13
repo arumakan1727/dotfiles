@@ -5,8 +5,8 @@ if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux > /dev/null 2>&1 }; t
     exec tmux new-session
   fi
 
-  dont_use_tmux="Don't use tmux"
-  create_new_session="Create New Session"
+  dont_use_tmux="-- Don't use tmux"
+  create_new_session="-- Create New Session"
 
   if command -v fzf > /dev/null 2>&1 ; then
     id="$(echo "$sessions\n$create_new_session\n$dont_use_tmux" | fzf | cut -d: -f1)"
