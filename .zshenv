@@ -82,8 +82,9 @@ export PIPENV_VENV_IN_PROJECT=true
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && \
   source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-[[ -s "$HOME/.cargo/env" ]] && \
-  source "$HOME/.cargo/env"
+[[ -s "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+
+[[ -s "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 
 builtin command -v fnm > /dev/null 2>&1 && \
   eval "$(fnm env)"
