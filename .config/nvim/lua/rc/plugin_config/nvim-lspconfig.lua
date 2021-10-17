@@ -40,14 +40,15 @@ local servers = {
   'clangd',
   'cssls',
   'gopls',
+  'hls',
   'html',
   'jsonls',
   'nimls',
   'pyright',
-  -- 'tailwindcss',
   'tsserver',
   'vimls',
   'volar',
+  -- 'tailwindcss',
 }
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -13,9 +13,9 @@ cmp.setup({
     ['<C-q>'] = cmp.mapping.close(),
   },
   sources = {
+    {name = 'path'},
     {name = 'nvim_lsp'},
     {name = 'vsnip'},
-    {name = 'path'},
     {name = 'buffer'},
   },
   preselect = cmp.PreselectMode.None,

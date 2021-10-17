@@ -180,7 +180,7 @@ gls.short_line_right[1] = {
 gls.short_line_left[2] = {
   FileName = {
     provider = function()
-      local res =  vim.fn.pathshorten(vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.'))
+      local res = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.')
       if vim.bo.readonly then
         res = res .. '[RO]'
       end
