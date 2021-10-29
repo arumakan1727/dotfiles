@@ -1,5 +1,12 @@
 local cmp = require'cmp'
 
+require('nvim-autopairs').setup{}
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+
+cmp.event:on('confirm_done',
+  cmp_autopairs.on_confirm_done({ map_char = { tex = '' }})
+)
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -7,14 +14,13 @@ cmp.setup({
     end,
   },
   mapping = {
-    -- <CR> は nvim-autopairs で設定される
-
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-q>'] = cmp.mapping.close(),
   },
   sources = {
-    {name = 'path'},
     {name = 'nvim_lsp'},
+    {name = 'path'},
     {name = 'vsnip'},
     {name = 'buffer'},
   },

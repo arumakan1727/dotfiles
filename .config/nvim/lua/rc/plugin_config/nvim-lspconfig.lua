@@ -47,7 +47,8 @@ local servers = {
   'pyright',
   'tsserver',
   'vimls',
-  'volar',
+  'vuels',
+  -- 'volar',
   -- 'tailwindcss',
 }
 

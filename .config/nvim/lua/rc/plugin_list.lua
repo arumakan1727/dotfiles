@@ -112,6 +112,35 @@ return require('packer').startup(function(use)
     config = function() require'rc/plugin_config/nvim-lspconfig' end
   }
 
+
+  --------------------------------
+  -- brackets
+  use {
+    'andymass/vim-matchup',
+    after = {'nvim-treesitter'},
+    config = function()
+      vim.g.loaded_matchit = 1
+      vim.g.matchup_matchparen_offscreen = {method = 'popup'}
+      vim.cmd("hi MatchParenCur cterm=underline gui=underline")
+      vim.cmd("hi MatchWordCur cterm=underline gui=underline")
+    end
+  }
+  use {
+    'windwp/nvim-ts-autotag',
+    after = {'nvim-treesitter'},
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end
+  }
+  use {
+    'windwp/nvim-autopairs',
+    config = function()
+      local Rule = require('nvim-autopairs.rule')
+      local npairs = require('nvim-autopairs')
+      npairs.add_rule(Rule('"""', '"""', 'nim'))
+    end
+  }
+
   --------------------------------
   -- Completion
   use {
@@ -124,7 +153,11 @@ return require('packer').startup(function(use)
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-nvim-lua',
       'onsails/lspkind-nvim',
+      'windwp/nvim-autopairs',
     },
+    setup = function()
+      vim.cmd 'source ~/.config/nvim/rc/plugin_setup/vsnip.vim'
+    end,
     config = function()
       require'rc/plugin_config/nvim-cmp'
       vim.cmd 'source ~/.config/nvim/rc/plugin_config/nvim-cmp.vim'
@@ -159,40 +192,6 @@ return require('packer').startup(function(use)
       }
       vim.api.nvim_set_keymap('n', ',f', '<cmd>Format<CR>', {noremap = true, silent = true})
     end,
-  }
-
-
-  --------------------------------
-  -- brackets
-  use {
-    'andymass/vim-matchup',
-    after = {'nvim-treesitter'},
-    config = function()
-      vim.g.loaded_matchit = 1
-      vim.g.matchup_matchparen_offscreen = {method = 'popup'}
-      vim.cmd("hi MatchParenCur cterm=underline gui=underline")
-      vim.cmd("hi MatchWordCur cterm=underline gui=underline")
-
-      require'nvim-treesitter.configs'.setup {
-        matchup = {
-          enable = true,
-          disable = {'html', 'htmldjango', 'vue', 'xml'},
-        }
-      }
-    end
-  }
-  use {
-    'windwp/nvim-autopairs',
-    event = "VimEnter",
-    after = 'nvim-cmp',
-    config = function() require 'rc/plugin_config/nvim-autopairs' end
-  }
-  use {
-    'windwp/nvim-ts-autotag',
-    after = {'nvim-treesitter'},
-    config = function()
-      require('nvim-ts-autotag').setup()
-    end
   }
 
   --------------------------------
@@ -252,16 +251,6 @@ return require('packer').startup(function(use)
   -----------------------------------------------
   -- cursor move
   use {
-    'phaazon/hop.nvim',
-    as = 'hop',
-    event = "VimEnter",
-    config = function()
-      require'hop'.setup {}
-      vim.api.nvim_set_keymap('n', 'SS', "<cmd>lua require'hop'.hint_words()<CR>", {})
-      vim.api.nvim_set_keymap('x', 'SS', "<cmd>lua require'hop'.hint_words()<CR>", {})
-    end
-  }
-  use {
     'rhysd/clever-f.vim',
     event = "VimEnter",
     setup = function()
@@ -307,16 +296,6 @@ return require('packer').startup(function(use)
     end
   }
 
-  -----------------------------------------------
-  -- spell check, grammar check
-  if vim.fn.executable('java') == 1 then
-    use {'rhysd/vim-grammarous', cmd = {'GrammarousCheck'}}
-  end
-
-  --------------------------------
-  -- screenshot
-  use {'segeljakt/vim-silicon', cmd = {'Silicon'}}
-
   --------------------------------
   -- telescope (nvim-featured fuzzy finder)
   use {'nvim-lua/popup.nvim'}
@@ -347,21 +326,6 @@ return require('packer').startup(function(use)
     end,
     config = function()
       vim.cmd("hi ExtraWhitespace guibg=#401000 ctermbg=red")
-    end
-  }
-
-  --------------------------------
-  -- project
-  use {
-    'airblade/vim-rooter',
-    event = "VimEnter",
-    setup = function()
-      vim.g.rooter_cd_cmd = 'lcd'
-      vim.g.rooter_manual_only = 1
-      vim.g.rooter_patterns = {
-        'tags', '.git', '.git/', '_darcs/', '.hg/',
-        '.bzr/', 'Makefile', 'GNUMakefile', 'GNUmakefile', '.svn/'
-      }
     end
   }
 

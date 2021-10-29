@@ -77,7 +77,3 @@ nnoremap <Space><CR> i<CR><ESC>
 
 "open buffer list
 nnoremap ,b :ls<CR>:<C-u>b 
-
-"Indent
-nnoremap <Tab> >>
-nnoremap <S-Tab> <<
