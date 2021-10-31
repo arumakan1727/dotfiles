@@ -14,7 +14,7 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-q>'] = cmp.mapping.close(),
   },

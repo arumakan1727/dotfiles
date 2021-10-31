@@ -49,14 +49,18 @@ local servers = {
   'vimls',
   'vuels',
   -- 'volar',
-  -- 'tailwindcss',
 }
+
+local autoStartDisable = {}
+autoStartDisable['volar'] = 1
+autoStartDisable['vuels'] = 1
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 for _, sever in ipairs(servers) do
   nvim_lsp[sever].setup {
+    autostart = true,
     on_attach = function()
       on_attach()
       require'lsp_signature'.on_attach({

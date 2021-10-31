@@ -50,7 +50,7 @@ return require('packer').startup(function(use)
       vim.g.polyglot_disabled = {'csv', 'nim'}
     end
   }
-  use {'alaviss/nim.nvim', ft = 'nim'}
+  use { 'alaviss/nim.nvim', ft = 'nim' }
 
   -- Markdown
   use {'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = ':call mkdp#util#install()'}
@@ -176,7 +176,7 @@ return require('packer').startup(function(use)
         function()
           return {
             exe = 'prettier',
-            args = {'--stdin-filepath', vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
+            args = {'--stdin-filepath', vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), },
             stdin = true,
           }
         end
