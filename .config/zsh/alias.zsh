@@ -17,6 +17,7 @@ alias cp='cp -iv'
 alias ln='ln -v'
 
 # ls
+alias l='ls -F --color=auto -1'
 alias ls='ls -F --color=auto'
 alias ll='ls -lh'
 alias la='ls -a'
