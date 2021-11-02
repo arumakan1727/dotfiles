@@ -55,17 +55,13 @@ return require('packer').startup(function(use)
   -- Markdown
   use {'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = ':call mkdp#util#install()'}
   use {
-    'SidOfc/mkdx',
-    ft = {'markdown'},
+    'plasticboy/vim-markdown',
+    ft = 'markdown',
     setup = function()
-      vim.api.nvim_set_var('mkdx#settings', {
-        map = {enable = 0, prefix = '<localleader>'},
-        highlight = {enable = 1},
-        enter = {shift = 0},
-        links = {external = {enable =  1}},
-        toc = {text = 'Table of Contents', update_on_write = 1},
-      })
-    end
+      vim.g.vim_markdown_math = 1
+      vim.g.vim_markdown_frontmatter = 1
+      vim.g.vim_markdown_strikethrough = 1
+    end,
   }
 
   -----------------------------------------------
@@ -162,6 +158,16 @@ return require('packer').startup(function(use)
       require'rc/plugin_config/nvim-cmp'
       vim.cmd 'source ~/.config/nvim/rc/plugin_config/nvim-cmp.vim'
     end
+  }
+
+  use {
+    'mattn/vim-sonictemplate',
+    setup = function()
+      vim.api.nvim_set_keymap('n', '<F9>', ':<C-u>%d<CR>:Template main<CR>', {noremap = true, silent = false})
+      vim.g.sonictemplate_vim_template_dir = {
+        vim.fn.expand('~/.config/nvim/sonictemplate'),
+      }
+    end,
   }
 
   -- Neovim Lua
