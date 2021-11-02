@@ -70,7 +70,10 @@ tnoremap <silent><ESC> <C-\><C-n>
 nnoremap <Space>y :%y<CR>
 
 "ファイル保存
-nnoremap ,w :w<CR>
+nnoremap ,w :<C-u>w<CR>
+
+"Clear buffer
+nnoremap ,d :<C-u>%d<CR>
 
 "改行の挿入
 nnoremap <Space><CR> i<CR><ESC>
