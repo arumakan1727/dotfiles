@@ -128,14 +128,6 @@ return require('packer').startup(function(use)
       require('nvim-ts-autotag').setup()
     end
   }
-  use {
-    'windwp/nvim-autopairs',
-    config = function()
-      local Rule = require('nvim-autopairs.rule')
-      local npairs = require('nvim-autopairs')
-      npairs.add_rule(Rule('"""', '"""', 'nim'))
-    end
-  }
 
   --------------------------------
   -- Completion
@@ -166,6 +158,7 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', '<F9>', ':<C-u>%d<CR>:Template main<CR>', {noremap = true, silent = false})
       vim.g.sonictemplate_vim_template_dir = {
         vim.fn.expand('~/.config/nvim/sonictemplate'),
+        vim.fn.expand('~/kyopro/sonictemplate'),
       }
     end,
   }

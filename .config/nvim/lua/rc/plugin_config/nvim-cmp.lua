@@ -1,7 +1,11 @@
 local cmp = require'cmp'
 
-require('nvim-autopairs').setup{}
+
+local autopairs = require('nvim-autopairs')
+local Rule = require('nvim-autopairs.rule')
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+autopairs.setup{}
+autopairs.add_rule(Rule('"""', '"""', 'nim'))
 
 cmp.event:on('confirm_done',
   cmp_autopairs.on_confirm_done({ map_char = { tex = '' }})

@@ -32,24 +32,14 @@ local on_attach = function(client, bufnr)
   vim.cmd 'hi LspDiagnosticsDefaultHint guifg=#66ddff'
   vim.cmd 'hi LspSagaLightBulbSign guifg=#ffe090'
   vim.cmd 'hi LspSagaLightBulb     guifg=#ffe090'
-end
 
--- https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
-local servers = {
-  'bashls',
-  'clangd',
-  'cssls',
-  'gopls',
-  'hls',
-  'html',
-  'jsonls',
-  'nimls',
-  'pyright',
-  'tsserver',
-  'vimls',
-  'vuels',
-  -- 'volar',
-}
+  require'lsp_signature'.on_attach({
+      bind = true,
+      max_height = 3,
+      max_width = 80,
+      zindex = 50,  -- send floating window to back layer
+    })
+end
 
 local autoStartDisable = {}
 autoStartDisable['volar'] = 1
@@ -58,24 +48,47 @@ autoStartDisable['vuels'] = 1
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-for _, sever in ipairs(servers) do
-  nvim_lsp[sever].setup {
-    autostart = true,
-    on_attach = function()
-      on_attach()
-      require'lsp_signature'.on_attach({
-        bind = true,
-        max_height = 3,
-        max_width = 80,
-        zindex = 50,  -- send floating window to back layer
-      })
-    end,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 500,
-    }
-  }
-end
+local flags = {
+  debounce_text_changes = 1000,
+}
+
+local defaultConfig = {
+  autostart = true,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = flags,
+}
+
+nvim_lsp.bashls.setup(defaultConfig)
+nvim_lsp.cssls.setup(defaultConfig)
+nvim_lsp.gopls.setup(defaultConfig)
+nvim_lsp.hls.setup(defaultConfig)
+nvim_lsp.html.setup(defaultConfig)
+nvim_lsp.jsonls.setup(defaultConfig)
+nvim_lsp.nimls.setup(defaultConfig)
+nvim_lsp.pyright.setup(defaultConfig)
+nvim_lsp.tsserver.setup(defaultConfig)
+nvim_lsp.vimls.setup(defaultConfig)
+
+nvim_lsp.clangd.setup {
+  autostart = true,
+  cmd = { 'clangd', '--background-index', '--enable-config', '--header-insertion=never' },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = flags,
+}
+nvim_lsp.vuels.setup {
+  autostart = false,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = flags,
+}
+nvim_lsp.volar.setup {
+  autostart = false,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = flags,
+}
 
 ---------------------------------------------------------------------
 -- null-ls
