@@ -57,7 +57,7 @@ zstyle ':completion:*' use-compctl true
 
 # make completion is slow
 zstyle ':completion:*:make:*:targets' call-command true
-zstyle ':completion:*:make::' tag-order targets:
+zstyle ':completion:*:make::' tag-order targets
 zstyle ':completion:*:*:*make:*:targets' command awk \''/^[a-zA-Z0-9][^\/\t=]+:/ {print $1}'\' \$file
 #zstyle ':completion:*:*:make:*:targets' ignored-patterns '*.o'
 #zstyle ':completion:*:*:*make:*:*' tag-order '!targets !functions !file-patterns'
