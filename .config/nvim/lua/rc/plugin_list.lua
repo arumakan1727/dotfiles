@@ -339,4 +339,11 @@ return require('packer').startup(function(use)
       require('gitsigns').setup()
     end
   }
+
+  --------------------------------
+  -- DB client
+  use {
+    'kristijanhusak/vim-dadbod-ui',
+    requires = { 'tpope/vim-dadbod' },
+  }
 end)
