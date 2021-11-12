@@ -128,13 +128,21 @@ gls.left[13] = {
 
 gls.right[1]= {
   FileFormat = {
-    provider = 'FileFormat',
+    provider = 'FileTypeName',
     separator = ' ',
     separator_highlight = {colors.bg,colors.purple},
     highlight = {colors.grey,colors.purple},
   }
 }
 gls.right[2]= {
+  FileFormat = {
+    provider = 'FileFormat',
+    separator = ' ',
+    separator_highlight = {colors.bg,colors.purple},
+    highlight = {colors.grey,colors.purple},
+  }
+}
+gls.right[3]= {
   FileEncode = {
     provider = 'FileEncode',
     separator = ' |',
@@ -142,7 +150,7 @@ gls.right[2]= {
     highlight = {colors.grey,colors.purple},
   }
 }
-gls.right[3] = {
+gls.right[4] = {
   LineInfo = {
     provider = 'LineColumn',
     separator = ' |',
@@ -150,7 +158,7 @@ gls.right[3] = {
     highlight = {colors.grey,colors.purple},
   },
 }
-gls.right[4] = {
+gls.right[5] = {
   PerCent = {
     provider = 'LinePercent',
     separator = ' ',

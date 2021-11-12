@@ -54,7 +54,7 @@ return require('packer').startup(function(use)
 
   -- Markdown
   use {'iamcco/markdown-preview.nvim', ft = {'markdown'}, run = ':call mkdp#util#install()'}
-  use {
+  --[[ use {
     'plasticboy/vim-markdown',
     ft = 'markdown',
     setup = function()
@@ -62,6 +62,12 @@ return require('packer').startup(function(use)
       vim.g.vim_markdown_frontmatter = 1
       vim.g.vim_markdown_strikethrough = 1
     end,
+  } ]]
+
+  -- CSV
+  use {
+    'mechatroner/rainbow_csv',
+    ft = 'csv',
   }
 
   -----------------------------------------------
