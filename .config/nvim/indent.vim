@@ -7,6 +7,6 @@ augroup MyIndentSettingsByFiletype
         \ setlocal shiftwidth=16 tabstop=16 softtabstop=16 noexpandtab
   autocmd FileType go
         \ setlocal noexpandtab shiftwidth=4 tabstop=4
-  autocmd FileType c,cpp,java,python
+  autocmd FileType c,cpp,java,python,nim
         \ setlocal tabstop=4 shiftwidth=4 softtabstop=4
 augroup END
