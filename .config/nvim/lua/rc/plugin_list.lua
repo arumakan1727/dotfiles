@@ -81,8 +81,8 @@ return require('packer').startup(function(use)
   use {'tomasr/molokai'}
   use {'jacoborus/tender.vim'}
   use {'arcticicestudio/nord-vim'}
-  use {'NLKNguyen/papercolor-theme'}
-  use {'cocopon/iceberg.vim', config = function() vim.cmd 'colorscheme iceberg' end }
+  use {'NLKNguyen/papercolor-theme', config = function() vim.cmd 'colorscheme PaperColor' end }
+  use {'cocopon/iceberg.vim' }
   use {'Shatur/neovim-ayu',
     config = function()
       vim.g.ayu_mirage = true
@@ -330,10 +330,8 @@ return require('packer').startup(function(use)
       vim.g.better_whitespace_enabled = 1
       vim.g.better_whitespace_operator = ''
       vim.g.strip_whitespace_on_save = 0
+      vim.cmd("autocmd ColorScheme * hi ExtraWhitespace guibg=#401000 ctermbg=red")
     end,
-    config = function()
-      vim.cmd("hi ExtraWhitespace guibg=#401000 ctermbg=red")
-    end
   }
 
   --------------------------------
