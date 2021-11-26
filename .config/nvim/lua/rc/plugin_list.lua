@@ -301,6 +301,13 @@ return require('packer').startup(function(use)
       vim.api.nvim_set_keymap('n', '<Space>ma', '<Plug>BookmarkShowAll', {})
     end
   }
+  use {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {}
+    end
+  }
 
   --------------------------------
   -- telescope (nvim-featured fuzzy finder)
