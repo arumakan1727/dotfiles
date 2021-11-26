@@ -68,7 +68,7 @@ nvim_lsp.jsonls.setup(defaultConfig)
 nvim_lsp.nimls.setup(defaultConfig)
 nvim_lsp.ocamllsp.setup(defaultConfig)
 nvim_lsp.pyright.setup(defaultConfig)
-nvim_lsp.rls.setup(defaultConfig)
+nvim_lsp.rust_analyzer.setup(defaultConfig)
 nvim_lsp.tsserver.setup(defaultConfig)
 nvim_lsp.vimls.setup(defaultConfig)
 
