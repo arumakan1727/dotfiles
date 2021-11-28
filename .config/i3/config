@@ -47,7 +47,6 @@ bindsym --release $mod+$mouse_middle kill
 # floating window
 floating_modifier $mod
 bindsym $mod+Shift+space floating toggle
-bindsym $mouse_right floating toggle
 
 
 # excellent application lancher
