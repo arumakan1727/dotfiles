@@ -1,3 +1,9 @@
+[core]
+  autocrlf = input
+  quotepath = false
+  pager  = delta
+[interactive]
+  diffFilter = delta --color-only
 [init]
   defaultBranch = main
 [push]
@@ -18,9 +24,6 @@
   sw = switch
   rstr = restore --staged
   delete-merged-branch = "!git branch --merged | egrep '.+\\/.*#[0-9]+' | xargs git branch -d"
-[core]
-  autocrlf = input
-  quotepath = false
 [merge]
   ff = false
 [fetch]
@@ -35,3 +38,5 @@
   ff = only
 [user]
   useConfigOnly = true
+[delta]
+  line-numbers = true
