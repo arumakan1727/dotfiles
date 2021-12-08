@@ -67,7 +67,18 @@ tnoremap <silent><ESC> <C-\><C-n>
 "----------------------------------------------------------------------------------------
 " Misc
 "ファイル全体の内容を+レジスタにヤンク
-nnoremap <Space>y :%y<CR>
+nnoremap <Space>y :<C-u>call Yank_or_bundle()<CR>
+
+let b:kyopro_cpplib_root = expand("$KYOPRO_LIB_ROOT/cpp")
+let b:kyopro_cpplib_root_readable = exists('$KYOPRO_LIB_ROOT') && isdirectory(b:kyopro_cpplib_root)
+function! Yank_or_bundle() abort
+  if &filetype == 'cpp' && b:kyopro_cpplib_root_readable
+    call system('oj-bundle ' . expand('%') . ' -I' . b:kyopro_cpplib_root . ' | xclip')
+    echo '[OK] copied via oj-bundle'
+  else
+    exec '%yank'
+  endif
+endfunction
 
 "ファイル保存
 nnoremap ,w :<C-u>w<CR>

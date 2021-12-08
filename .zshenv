@@ -79,6 +79,9 @@ export PYENV_ROOT="$HOME/.pyenv"
 export SDKMAN_DIR="$HOME/.sdkman"
 export PIPENV_VENV_IN_PROJECT=true
 
+[[ -d "$HOME/kyopro/kyopro_lib" ]] && \
+  export KYOPRO_LIB_ROOT="$HOME/kyopro/kyopro_lib"
+
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && \
   source "$HOME/.sdkman/bin/sdkman-init.sh"
 
