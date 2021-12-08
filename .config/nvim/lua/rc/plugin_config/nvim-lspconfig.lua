@@ -74,7 +74,7 @@ nvim_lsp.vimls.setup(defaultConfig)
 
 nvim_lsp.clangd.setup {
   autostart = true,
-  cmd = { 'clangd', '--background-index', '--enable-config', '--header-insertion=never' },
+  cmd = { 'clangd', '--background-index', '--enable-config' },
   on_attach = on_attach,
   capabilities = capabilities,
   flags = flags,
