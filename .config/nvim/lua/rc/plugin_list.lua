@@ -107,7 +107,6 @@ return require('packer').startup(function(use)
     'neovim/nvim-lspconfig',
     requires = {
       'hrsh7th/cmp-nvim-lsp',
-      'glepnir/lspsaga.nvim',
       'folke/trouble.nvim',
       'ray-x/lsp_signature.nvim',
       -- {'jose-elias-alvarez/null-ls.nvim', requires = {'nvim-lua/plenary.nvim'}},
