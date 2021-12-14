@@ -67,14 +67,15 @@ tnoremap <silent><ESC> <C-\><C-n>
 "----------------------------------------------------------------------------------------
 " Misc
 "ファイル全体の内容を+レジスタにヤンク
-nnoremap <Space>y :<C-u>call Yank_or_bundle()<CR>
+nnoremap <Space>y :<C-u>call Yank_or_bundle('--lib-to-tail')<CR>
+nnoremap ,y :<C-u>call Yank_or_bundle('')<CR>
 
 let b:kyopro_cpplib_root = expand("$KYOPRO_LIB_ROOT/cpp")
 let b:kyopro_cpplib_root_readable = exists('$KYOPRO_LIB_ROOT') && isdirectory(b:kyopro_cpplib_root)
 let b:kyopro_cppbundler = 'cppbundle'
-function! Yank_or_bundle() abort
+function! Yank_or_bundle(option) abort
   if &filetype == 'cpp' && b:kyopro_cpplib_root_readable
-    call system(b:kyopro_cppbundler . ' ' . expand('%') . ' -I' . b:kyopro_cpplib_root . ' | xclip')
+    call system(b:kyopro_cppbundler . ' ' . expand('%') . ' -I' . b:kyopro_cpplib_root . ' ' . a:option . ' | xclip')
     echo '[OK] copied via ' . b:kyopro_cppbundler
   else
     exec '%yank'
