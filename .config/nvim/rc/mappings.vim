@@ -75,8 +75,13 @@ let b:kyopro_cpplib_root_readable = exists('$KYOPRO_LIB_ROOT') && isdirectory(b:
 let b:kyopro_cppbundler = 'cppbundle'
 function! Yank_or_bundle(option) abort
   if &filetype == 'cpp' && b:kyopro_cpplib_root_readable
-    call system(b:kyopro_cppbundler . ' ' . expand('%') . ' -I' . b:kyopro_cpplib_root . ' ' . a:option . ' | xclip')
-    echo '[OK] copied via ' . b:kyopro_cppbundler
+    let cmd = b:kyopro_cppbundler . ' ' . expand('%') . ' -I' . b:kyopro_cpplib_root . ' ' . a:option . ' | xsel --input --clipboard'
+    call system(cmd)
+    if v:shell_error != 0
+      echoerr '[Err!] ' . cmd
+    else
+      echo '[OK] copied via ' . b:kyopro_cppbundler
+    endif
   else
     exec '%yank'
   endif
