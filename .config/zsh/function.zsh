@@ -114,3 +114,8 @@ function randbytes() {
   cat /dev/urandom | head -c ${1:-32}
   return 0
 }
+
+function dl() {
+  rm -rf test
+  oj dl $1
+}
