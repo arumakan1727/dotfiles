@@ -161,7 +161,7 @@ return require('packer').startup(function(use)
   use {
     'mattn/vim-sonictemplate',
     setup = function()
-      vim.api.nvim_set_keymap('n', '<F9>', ':<C-u>%d<CR>:Template main<CR>', {noremap = true, silent = false})
+      vim.api.nvim_set_keymap('n', '<F9>', ':<C-u>%d<CR>:Template main<CR>:LspRestart<CR>', {noremap = true, silent = false})
       vim.g.sonictemplate_vim_template_dir = {
         vim.fn.expand('~/.config/nvim/sonictemplate'),
         vim.fn.expand('~/kyopro/sonictemplate'),
