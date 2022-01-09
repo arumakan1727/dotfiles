@@ -116,6 +116,17 @@ function randbytes() {
 }
 
 function dl() {
-  rm -rf test
-  oj dl $1
+  if [ $# -eq 0 ]; then
+    current_tab_url=$(chrome-session-dump -active "$HOME"/.config/google-chrome | egrep '^https:\/\/atcoder.\w+\/contests\/.+\/tasks\/.+' | head -n1)
+    if [ -z "$current_tab_url" ]; then
+      echo 'Invalid URL of current active tab' >&2
+      return 1
+    else
+      rm -rf test
+      oj dl "$current_tab_url"
+    fi
+  else
+    rm -rf test
+    oj dl $1
+  fi
 }
