@@ -73,6 +73,40 @@ nvim_lsp.clangd.setup {
   capabilities = capabilities,
   flags = flags,
 }
+--[[ nvim_lsp.java_language_server.setup {
+  autostart = true,
+  cmd = { vim.fn.expand('~/ghq/github.com/georgewfraser/java-language-server/dist/lang_server_linux.sh') },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = flags,
+} ]]
+nvim_lsp.jdtls.setup {
+  autostart = true,
+  cmd = {
+    "java",
+    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    "-Dosgi.bundles.defaultStartLevel=4",
+    "-Declipse.product=org.eclipse.jdt.ls.core.product",
+    "-Dlog.protocol=true",
+    "-Dlog.level=ALL",
+    "-Xms1g",
+    "-Xmx2G",
+    "--add-modules=ALL-SYSTEM",
+    "--add-opens",
+    "java.base/java.util=ALL-UNNAMED",
+    "--add-opens",
+    "java.base/java.lang=ALL-UNNAMED",
+    "-jar",
+    vim.fn.expand("~/.local/share/jdtls-manual-install/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar"),
+    "-configuration",
+    vim.fn.expand("~/.local/share/jdtls-manual-install/config_linux"),
+    "-data",
+    vim.fn.expand("~/.cache/jdtls/projdata/tmp"),
+  },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = flags,
+}
 nvim_lsp.vuels.setup {
   autostart = false,
   on_attach = on_attach,
