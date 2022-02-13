@@ -232,11 +232,63 @@ return require('packer').startup(function(use)
   }
 
   -----------------------------------------------
-  -- statusline
   use {
-    'glepnir/galaxyline.nvim',
-    branch = 'main',
-    config = function() require 'rc/plugin_config/galaxyline' end
+    'nvim-lualine/lualine.nvim',
+    event = "VimEnter",
+    config = function()
+      local function get_active_lsp_names()
+        local fallback_msg = 'No Active LSP'
+        local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+        local clients = vim.lsp.get_active_clients()
+
+        if next(clients) == nil then
+          return fallback_msg
+        end
+
+        res = ''
+        for _, client in ipairs(clients) do
+          local filetypes = client.config.filetypes
+          if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+            if res == '' then
+              res = client.name
+            else
+              res = res .. ',' .. client.name
+            end
+          end
+        end
+
+        if res == '' then
+          return fallback_msg
+        else
+          return res
+        end
+      end
+
+      require'lualine'.setup {
+        options = {
+          theme = 'solarized_dark'
+        },
+        sections = {
+          lualine_b = {'filename'},
+          lualine_c = {
+            'branch',
+            'diff',
+            {
+              'diagnostics',
+              sources = {'nvim_lsp'},
+              diagnostics_color = {
+                error = {fg = '#ff3333'}
+              }
+            },
+            {
+              'active_lsp_name',
+              fmt = get_active_lsp_names,
+              color = {fg = '#8ed732'}
+            }
+          },
+        },
+      }
+    end,
   }
 
   -----------------------------------------------
