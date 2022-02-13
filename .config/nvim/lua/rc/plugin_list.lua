@@ -81,16 +81,13 @@ return require('packer').startup(function(use)
   use {'tomasr/molokai'}
   use {'jacoborus/tender.vim'}
   use {'arcticicestudio/nord-vim'}
-  use {'NLKNguyen/papercolor-theme', config = function() vim.cmd 'colorscheme PaperColor' end }
+  use {'NLKNguyen/papercolor-theme', setup = function() vim.cmd 'colorscheme PaperColor' end }
   use {'cocopon/iceberg.vim' }
   use {'Shatur/neovim-ayu',
     config = function()
       vim.g.ayu_mirage = true
     end,
   }
-
-  -- get syntax info under cursor
-  use {'wadackel/nvim-syntax-info', cmd = {'SyntaxInfo'}}
 
   --------------------------------
   -- treesitter
