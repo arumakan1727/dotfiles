@@ -283,7 +283,7 @@ return require('packer').startup(function(use)
             {
               'active_lsp_name',
               fmt = get_active_lsp_names,
-              color = {fg = '#8ed732'}
+              color = {fg = '#66c9d9'}
             }
           },
         },
