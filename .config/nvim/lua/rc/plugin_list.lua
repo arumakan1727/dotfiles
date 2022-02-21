@@ -73,6 +73,7 @@ return require('packer').startup(function(use)
 
   -----------------------------------------------
   -- colorscheme
+  use {'EdenEast/nightfox.nvim', config = function() vim.cmd 'colorscheme nightfox' end }
   use {'joshdick/onedark.vim'}
   use {'kaicataldo/material.vim'}
   use {'morhetz/gruvbox'}
@@ -80,8 +81,7 @@ return require('packer').startup(function(use)
   use {'sainnhe/sonokai'}
   use {'tomasr/molokai'}
   use {'jacoborus/tender.vim'}
-  use {'arcticicestudio/nord-vim'}
-  use {'NLKNguyen/papercolor-theme', setup = function() vim.cmd 'colorscheme PaperColor' end }
+  use {'NLKNguyen/papercolor-theme'}
   use {'cocopon/iceberg.vim' }
   use {'Shatur/neovim-ayu',
     config = function()
