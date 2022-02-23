@@ -73,7 +73,7 @@ return require('packer').startup(function(use)
 
   -----------------------------------------------
   -- colorscheme
-  use {'EdenEast/nightfox.nvim', config = function() vim.cmd 'colorscheme nightfox' end }
+  use {'EdenEast/nightfox.nvim', config = function() vim.cmd 'colorscheme duskfox' end }
   use {'joshdick/onedark.vim'}
   use {'kaicataldo/material.vim'}
   use {'morhetz/gruvbox'}
