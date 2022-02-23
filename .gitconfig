@@ -40,3 +40,5 @@
   useConfigOnly = true
 [delta]
   line-numbers = true
+[commit]
+	template = ~/.git_commit_template.txt

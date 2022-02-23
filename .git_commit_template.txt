@@ -1,0 +1,26 @@
+
+
+# =============== Fix / Enhancement ================
+# ✨  :sparkles:        新機能の追加
+# 🐛  :bug:             バグ修正
+# ✏️   :pencil2:         タイポの修正
+# 🚨  :rotating_light:  リンタからの警告修正・フォーマット
+# 🎨  :art:             デザインUI/UX
+# ♻️   :recycle:         リファクタリング
+# ⚡️  :zap:             パフォーマンス改善
+# 🔒️  :lock:            セキュリティ関連の修正
+# ⚰️   :coffin:          デッドコードの削除
+
+# =============== Project ================
+# 🎉  :tada:            最初のコミット
+# 📝  :memo:            ドキュメント
+# ⬆️   :arrow_up:        依存関係の更新
+# 🔖  :bookmark:        バージョンタグ（Version Tag）
+# 🔧  :wrench:          設定
+# 🚧  :construction:    WIP(Work In Progress)
+
+
+# ==================== Format ====================
+# :emoji: Subject
+#
+# Commit body...（First Commit）
