@@ -44,12 +44,6 @@ return require('packer').startup(function(use)
   use {'mboughaba/i3config.vim', ft = 'i3config'}
   use {'yasuhiroki/github-actions-yaml.vim', ft='yaml'}
   use {'hail2u/vim-css3-syntax', ft = {'html', 'htmldjango', 'css', 'markdown', 'vue'}}
-  use {
-    'sheerun/vim-polyglot',
-    setup = function()
-      vim.g.polyglot_disabled = {'csv', 'nim'}
-    end
-  }
   use { 'alaviss/nim.nvim', ft = 'nim' }
 
   -- Markdown
