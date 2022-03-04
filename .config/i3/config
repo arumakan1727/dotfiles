@@ -28,7 +28,7 @@ font pango:JetBrains Mono 10
 
 # launch on i3 setup
 exec --no-startup-id nm-applet
-exec --no-startup-id fcitx -rd
+exec --no-startup-id fcitx5 -rd
 exec --no-startup-id guake
 exec --no-startup-id feh --bg-scale ~/.config/i3/wallpaper_big_moon_illust.jpg
 exec --no-startup-id pgrep unclutter || unclutter -b
