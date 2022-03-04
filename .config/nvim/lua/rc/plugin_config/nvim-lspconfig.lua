@@ -29,6 +29,7 @@ local on_attach = function(client, bufnr)
 
   require'lsp_signature'.on_attach({
       bind = true,
+      floating_window_above_cur_line = true,
       max_height = 3,
       max_width = 80,
       zindex = 50,  -- send floating window to back layer
