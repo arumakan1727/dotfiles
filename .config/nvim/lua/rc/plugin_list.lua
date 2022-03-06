@@ -42,8 +42,6 @@ return require('packer').startup(function(use)
   --------------------------------
   -- specific language
   use {'mboughaba/i3config.vim', ft = 'i3config'}
-  use {'yasuhiroki/github-actions-yaml.vim', ft='yaml'}
-  use {'hail2u/vim-css3-syntax', ft = {'html', 'htmldjango', 'css', 'markdown', 'vue'}}
   use { 'alaviss/nim.nvim', ft = 'nim' }
 
   -- Markdown

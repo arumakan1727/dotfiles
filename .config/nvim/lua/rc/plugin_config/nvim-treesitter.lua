@@ -15,11 +15,11 @@ require'nvim-treesitter.configs'.setup {
     },
   },
   indent = {
-    enable = false,
-    -- disable = {'python', 'html', 'javascript', 'vue',},
+    enable = true,
+    disable = {'python'},
   },
   matchup = {
     enable = true,
-    disable = {'html', 'htmldjango', 'vue', 'xml'},
+    -- disable = {'html', 'htmldjango', 'xml'},
   },
 }
