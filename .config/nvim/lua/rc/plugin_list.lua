@@ -224,10 +224,21 @@ return require('packer').startup(function(use)
   }
 
   -----------------------------------------------
+  -- status line
+  use {
+    "SmiteshP/nvim-gps",
+    after = "nvim-treesitter",
+    config = function()
+      require('nvim-gps').setup()
+    end
+  }
   use {
     'nvim-lualine/lualine.nvim',
+    after = "nvim-gps",
     event = "VimEnter",
     config = function()
+      local gps = require('nvim-gps')
+
       local function get_active_lsp_names()
         local fallback_msg = 'No Active LSP'
         local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
@@ -261,7 +272,12 @@ return require('packer').startup(function(use)
           theme = 'solarized_dark'
         },
         sections = {
-          lualine_b = {'filename'},
+          lualine_b = {
+            {
+              'filename',
+              path = 1,  -- 0: Just the filename / 1: Relative path / 2: Absolute path
+            }
+          },
           lualine_c = {
             'branch',
             'diff',
@@ -273,10 +289,19 @@ return require('packer').startup(function(use)
               }
             },
             {
+              gps.get_location,
+              cond = gps.is_available
+            },
+          },
+          lualine_x = {
+            'encoding',
+            'fileformat',
+            'filetype',
+            {
               'active_lsp_name',
               fmt = get_active_lsp_names,
-              color = {fg = '#66c9d9'}
-            }
+              color = {fg = '#60c3c0'}
+            },
           },
         },
       }
