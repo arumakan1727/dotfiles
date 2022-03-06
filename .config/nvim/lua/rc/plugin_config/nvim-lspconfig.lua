@@ -36,10 +36,6 @@ local on_attach = function(client, bufnr)
     })
 end
 
-local autoStartDisable = {}
-autoStartDisable['volar'] = 1
-autoStartDisable['vuels'] = 1
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
@@ -66,6 +62,7 @@ nvim_lsp.pyright.setup(defaultConfig)
 nvim_lsp.rust_analyzer.setup(defaultConfig)
 nvim_lsp.tsserver.setup(defaultConfig)
 nvim_lsp.vimls.setup(defaultConfig)
+nvim_lsp.volar.setup(defaultConfig)
 
 nvim_lsp.clangd.setup {
   autostart = true,
@@ -108,29 +105,6 @@ nvim_lsp.jdtls.setup {
   capabilities = capabilities,
   flags = flags,
 }
-nvim_lsp.vuels.setup {
-  autostart = false,
-  on_attach = on_attach,
-  capabilities = capabilities,
-  flags = flags,
-}
-nvim_lsp.volar.setup {
-  autostart = false,
-  on_attach = on_attach,
-  capabilities = capabilities,
-  flags = flags,
-}
-
----------------------------------------------------------------------
--- null-ls
---[[ local null_ls = require'null-ls'
-null_ls.config {
-  sources = {
-    null_ls.builtins.formatting.prettier,
-    null_ls.builtins.diagnostics.eslint_d,
-  }
-}
-nvim_lsp['null-ls'].setup{} ]]
 
 ---------------------------------------------------------------------
 -- trouble
