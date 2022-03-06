@@ -65,20 +65,13 @@ return require('packer').startup(function(use)
 
   -----------------------------------------------
   -- colorscheme
-  use {'EdenEast/nightfox.nvim', config = function() vim.cmd 'colorscheme duskfox' end }
-  use {'joshdick/onedark.vim'}
-  use {'kaicataldo/material.vim'}
-  use {'morhetz/gruvbox'}
-  use {'w0ng/vim-hybrid'}
-  use {'sainnhe/sonokai'}
-  use {'tomasr/molokai'}
-  use {'jacoborus/tender.vim'}
-  use {'NLKNguyen/papercolor-theme'}
-  use {'cocopon/iceberg.vim' }
-  use {'Shatur/neovim-ayu',
+  use {
+    'EdenEast/nightfox.nvim',
     config = function()
-      vim.g.ayu_mirage = true
-    end,
+      vim.cmd 'colorscheme duskfox'
+      vim.cmd 'hi IndentBlanklineIndent1 guibg=#2f2b44 gui=nocombine'
+      vim.cmd 'hi IndentBlanklineIndent2 guibg=#231d36 gui=nocombine'
+    end
   }
 
   --------------------------------
@@ -350,6 +343,26 @@ return require('packer').startup(function(use)
     config = function() require 'rc/plugin_config/bufferline' end
   }
 
+  ----------------------------------------------
+  -- indent guide
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require('indent_blankline').setup {
+        char = "",
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+        },
+        space_char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+        },
+        show_trailing_blankline_indent = false,
+      }
+    end
+  }
+
   -----------------------------------------------
   -- mark
   use {
@@ -384,15 +397,6 @@ return require('packer').startup(function(use)
     event = "VimEnter",
     after = {'popup.nvim', 'plenary.nvim'},
     config = function() require 'rc/plugin_config/telescope' end
-  }
-
-  use {
-    'Yggdroot/indentLine',
-    setup = function()
-      vim.g.indentLine_enabled = 1
-      vim.g.indentLine_setConceal = 0
-      vim.g.indentLine_char = '┆'
-    end
   }
 
   use {
