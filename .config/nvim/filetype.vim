@@ -8,3 +8,5 @@ au! BufRead,BufNewFile *.en
       \ setlocal filetype=txt spell
 au! BufRead,BufNewFile tsconfig.json
       \ setlocal filetype=jsonc
+au! BufRead,BufNewFile .flake8
+      \ setlocal filetype=cfg
