@@ -323,6 +323,13 @@ return require('packer').startup(function(use)
     end
   }
 
+  --[[ use {
+    'mg979/vim-visual-multi',
+    setup = function()
+      vim.cmd 'source ~/.config/nvim/rc/plugin_setup/vim-visual-multi.vim'
+    end,
+  } ]]
+
   -----------------------------------------------
   use {
     't9md/vim-quickhl',
