@@ -175,9 +175,18 @@ return require('packer').startup(function(use)
           javascript = prettier,
           typescript = prettier,
           vue = prettier,
+          python = {
+            function()
+              return {
+                exe = "black",
+                args = { vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)) },
+                stdin = false,
+              }
+            end
+          },
         }
       }
-      vim.api.nvim_set_keymap('n', ',f', '<cmd>Format<CR>', {noremap = true, silent = true})
+      vim.api.nvim_set_keymap('n', ',f', '<cmd>Format<CR>', {noremap = true, silent = false})
     end,
   }
 

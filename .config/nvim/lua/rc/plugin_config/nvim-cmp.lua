@@ -30,23 +30,25 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-q>'] = cmp.mapping.close(),
-    ["<Tab>"] = cmp.mapping(function(fallback)
+    ["<Down>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif vim.fn["vsnip#available"](1) == 1 then
         feedkey("<Plug>(vsnip-expand-or-jump)", "")
-      elseif has_words_before() then
-        cmp.complete()
+      -- elseif has_words_before() then
+        -- cmp.complete()
       else
         fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
       end
     end, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(function()
+    ["<Up>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif vim.fn["vsnip#jumpable"](-1) == 1 then
         feedkey("<Plug>(vsnip-jump-prev)", "")
+      else
+        fallback()
       end
     end, { "i", "s" }),
   },
