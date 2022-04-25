@@ -47,7 +47,7 @@ o.autoread = true -- 他で書き換えられたら自動で読み直す
 o.hidden = true -- 編集中でも他のファイルを開けるようにする
 o.modeline = true -- ファイル末尾のmodeline読み込みを許可
 o.confirm = true -- 未保存のときに確認する
-  -- o.autochdir = true -- ファイルのディレクトリに移動
+-- o.autochdir = true -- ファイルのディレクトリに移動
 
 -- Backup
 o.backup = true
@@ -96,16 +96,16 @@ vim.g.vimsyn_embed = "l" -- 埋め込みluaコードのハイライトを有効�
 -- True color support
 vim.g.colorterm = os.getenv("COLORTERM")
 if
-	vim.g.colorterm == "truecolor"
-	or vim.g.colorterm == "24bit"
-	or vim.g.colorterm == "rxvt"
-	or vim.g.colorterm == ""
+    vim.g.colorterm == "truecolor"
+    or vim.g.colorterm == "24bit"
+    or vim.g.colorterm == "rxvt"
+    or vim.g.colorterm == ""
 then
-	if vim.fn.exists("+termguicolors") then
-		o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
-		o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
-		o.termguicolors = true
-	end
+    if vim.fn.exists("+termguicolors") then
+        o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
+        o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
+        o.termguicolors = true
+    end
 end
 
 -- UI, Visual, Display
@@ -116,7 +116,7 @@ o.showmatch = true -- 括弧の対応をハイライト
 o.matchtime = 1 -- 括弧の対を見つけるミリ秒数
 o.showcmd = true -- 入力中のコマンドを表示
 o.number = true -- 行番号表示
-o.relativenumber = true  -- 行番号の表示を現在行からの相対値に
+o.relativenumber = false  -- 行番号の表示を現在行からの相対値にしない
 o.wrap = true -- 画面幅で折り返す
 o.title = true -- ウィンドウのタイトルを設定する
 o.scrolloff = 8  -- 上下方向のカーソルのゆとり行数
@@ -126,7 +126,7 @@ o.pumheight = 10 -- 補完候補の表示数
 o.mouse = "a"  -- 全てのマウス操作有効化
 o.conceallevel = 0  -- JSONなどでダブルクォートが隠されるのを抑制
 o.showtabline = 2  -- tablineを常に表示
-o.signcolumn = true
+o.signcolumn = "yes"
 
 -- Fold (コード折りたたみ)
 -- o.foldmethod="marker"
@@ -142,11 +142,11 @@ o.guicursor = "n-v-c-sm:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCurs
 o.laststatus = 3  -- ウィンドウ分割してもステータスラインは画面全体の下部(last)にのみ表示
 o.shortmess = "aItToOF"
 opt.fillchars = {
-	horiz = "━",
-	horizup = "┻",
-	horizdown = "┳",
-	vert = "┃",
-	vertleft = "┫",
-	vertright = "┣",
-	verthoriz = "╋",
+    horiz = "━",
+    horizup = "┻",
+    horizdown = "┳",
+    vert = "┃",
+    vertleft = "┫",
+    vertright = "┣",
+    verthoriz = "╋",
 }

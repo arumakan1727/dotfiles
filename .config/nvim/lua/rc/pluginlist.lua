@@ -2,9 +2,20 @@ local jetpack_root = vim.fn.stdpath('data') .. '/site/pack/jetpack'
 
 if vim.fn.empty(vim.fn.glob(jetpack_root)) == 1 then
   local gitclone_cmd = "git clone --depth 1 https://github.com/tani/vim-jetpack  " .. jetpack_root .. "/src/vim-jetpack"
-  local symlink_cmd = "ln -s " .. jetpack_root .. "/{src,opt}/vim-jetpack"
-  vim.cmd("!" .. gitclone_cmd .. " && " .. symlink_cmd)
+  local mkdir_cmd = "mkdir -p " .. jetpack_root .. "/opt"
+  local symlink_cmd = "ln -snf " .. jetpack_root .. "/{src,opt}/vim-jetpack"
+  vim.cmd("!" .. gitclone_cmd .. " && " .. mkdir_cmd .. " && " .. symlink_cmd)
+
+  vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+      vim.cmd("packadd vim-jetpack")
+      vim.cmd("JetpackSync")
+    end
+  })
 end
+
+vim.g["jetpack#optimization"] = 1
+vim.g["jetpack#copy_method"] = "symlink"
 
 vim.cmd("packadd vim-jetpack")
 
