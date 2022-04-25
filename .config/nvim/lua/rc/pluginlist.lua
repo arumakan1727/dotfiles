@@ -10,7 +10,7 @@ vim.cmd("packadd vim-jetpack")
 
 require"jetpack".startup(function(use)
   local function opt_use(x)
-    use { x, opt = true }
+    use { x, opt=true }
   end
 
   -- Package manager
@@ -23,12 +23,6 @@ require"jetpack".startup(function(use)
   use "MunifTanjim/nui.nvim"
   use "tami5/sqlite.lua"
   use "kyazdani42/nvim-web-devicons"
-
-  -- Colorscheme
-  use "EdenEast/nightfox.nvim"
-
-  -- Indent guide
-  opt_use "lukas-reineke/indent-blankline.nvim"
 
   -- Specific language
   use { "mboughaba/i3config.vim", ft="i3config" }
@@ -115,6 +109,12 @@ require"jetpack".startup(function(use)
   -- Memo
   opt_use "renerocksai/calendar-vim"
   opt_use "renerocksai/telekasten.nvim"
+
+  -- Colorscheme
+  opt_use "EdenEast/nightfox.nvim"
+
+  -- Indent guide
+  opt_use "lukas-reineke/indent-blankline.nvim"
 
   -- Highlight
   opt_use "norcalli/nvim-colorizer.lua"
