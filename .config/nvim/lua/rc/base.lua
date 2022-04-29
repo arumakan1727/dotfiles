@@ -5,7 +5,7 @@ local opt = vim.opt
 o.history = 10000  -- コマンド履歴,検索履歴の記憶件数
 o.wildmenu = true  -- コマンド補完を強化
 o.wildignorecase = true  -- コマンド補完で大文字小文字を区別しない
-o.wildmode = "longest,list,full"  -- 最長のマッチまで補完, 候補を横1列に表示, Tabで候補を順に選択
+o.wildmode = "full:longest,full"  -- 最長のマッチまで補完して候補を縦に列挙→タブで候補選択
 opt.wildoptions:append("pum")
 
 -- Timeout
@@ -19,16 +19,16 @@ opt.complete:append("k") -- 補完に辞書ファイル追加
 o.completeopt = "menuone,noselect,noinsert"
 
 -- Indent
-o.tabstop = 4  -- タブ文字の画面上での表示幅
-o.shiftwidth = 4  -- cindentやautoindent時に挿入されるインデント幅
-o.softtabstop = 4  -- Tabキー押下時に挿入される空白文字数, 0の場合はtabstopと同じ, BSにも影響する
+o.tabstop = 2  -- タブ文字の画面上での表示幅
+o.shiftwidth = 2  -- cindentやautoindent時に挿入されるインデント幅
+o.softtabstop = 0  -- Tabキー押下時に挿入される空白文字数, 0の場合はtabstopと同じ, BSにも影響する
 o.expandtab = true
 o.autoindent = true
 o.smartindent = false
 
 -- Invisible chars
 o.list = true  -- 不可視文字を表示する
-o.listchars = "tab:»-,trail:･"  -- タブ文字と末尾の空白文字
+o.listchars = "tab:»»,trail:･"  -- タブ文字と末尾の空白文字
 
 -- Search
 o.wrapscan = true -- 最後まで検索したら先頭へ戻る
@@ -95,17 +95,12 @@ vim.g.vimsyn_embed = "l" -- 埋め込みluaコードのハイライトを有効�
 
 -- True color support
 vim.g.colorterm = os.getenv("COLORTERM")
-if
-    vim.g.colorterm == "truecolor"
-    or vim.g.colorterm == "24bit"
-    or vim.g.colorterm == "rxvt"
-    or vim.g.colorterm == ""
-then
-    if vim.fn.exists("+termguicolors") then
-        o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
-        o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
-        o.termguicolors = true
-    end
+if (vim.g.colorterm == "truecolor" or vim.g.colorterm == "24bit" or vim.g.colorterm == "") then
+	if vim.fn.exists("+termguicolors") then
+		o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
+		o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
+		o.termguicolors = true
+	end
 end
 
 -- UI, Visual, Display
@@ -142,11 +137,11 @@ o.guicursor = "n-v-c-sm:block-Cursor/lCursor-blinkon0,i-ci-ve:ver25-Cursor/lCurs
 o.laststatus = 3  -- ウィンドウ分割してもステータスラインは画面全体の下部(last)にのみ表示
 o.shortmess = "aItToOF"
 opt.fillchars = {
-    horiz = "━",
-    horizup = "┻",
-    horizdown = "┳",
-    vert = "┃",
-    vertleft = "┫",
-    vertright = "┣",
-    verthoriz = "╋",
+	horiz = "━",
+	horizup = "┻",
+	horizdown = "┳",
+	vert = "┃",
+	vertleft = "┫",
+	vertright = "┣",
+	verthoriz = "╋",
 }

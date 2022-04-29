@@ -20,16 +20,13 @@ vim.g["jetpack#copy_method"] = "symlink"
 vim.cmd("packadd vim-jetpack")
 
 require"jetpack".startup(function(use)
-  local function opt_use(x)
-    use { x, opt=true }
-  end
-
   -- Package manager
   use { "tani/vim-jetpack", opt=1 }
 
   -- Library
   use "tpope/vim-repeat"
   use "nvim-lua/plenary.nvim"
+	use "rcarriga/nvim-notify"
   use "nvim-lua/popup.nvim"
   use "MunifTanjim/nui.nvim"
   use "tami5/sqlite.lua"
@@ -41,94 +38,96 @@ require"jetpack".startup(function(use)
   use { "iamcco/markdown-preview.nvim", ft="markdown", run=":call mkdp#util#install()" }
 
   -- Language Server Protocol
-  opt_use "neovim/nvim-lspconfig"
-  opt_use "folke/lsp-colors.nvim"
-  opt_use "folke/trouble.nvim"
-  opt_use "j-hui/fidget.nvim"
-	opt_use "jose-elias-alvarez/null-ls.nvim"
+  use "neovim/nvim-lspconfig"
+  use "williamboman/nvim-lsp-installer"
+	use "tamago324/nlsp-settings.nvim"
+  use "folke/lsp-colors.nvim"
+  use "folke/trouble.nvim"
+  use "j-hui/fidget.nvim"
+  use "jose-elias-alvarez/null-ls.nvim"
 
   -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter", opt=true, run=":TSUpdate" }
-  opt_use "JoosepAlviste/nvim-ts-context-commentstring"
-  opt_use "yioneko/nvim-yati"
-  opt_use "haringsrob/nvim_context_vt"
-  opt_use "m-demare/hlargs.nvim"
+  use { "nvim-treesitter/nvim-treesitter", --[[ run=":TSUpdate" --]] }
+  use "JoosepAlviste/nvim-ts-context-commentstring"
+  use "yioneko/nvim-yati"
+  use "haringsrob/nvim_context_vt"
+  use "m-demare/hlargs.nvim"
 
   -- Paren
-  opt_use "andymass/vim-matchup"
-  opt_use "windwp/nvim-autopairs"
-  opt_use "windwp/nvim-ts-autotag"
+  use "andymass/vim-matchup"
+  use "windwp/nvim-autopairs"
+  use "windwp/nvim-ts-autotag"
 
   -- Completion
-  opt_use "hrsh7th/nvim-cmp"
-  opt_use "onsails/lspkind-nvim"
-  opt_use "hrsh7th/cmp-nvim-lsp"
-  opt_use "hrsh7th/cmp-nvim-lsp-signature-help"
-  opt_use "hrsh7th/cmp-buffer"
-  opt_use "hrsh7th/cmp-path"
-  opt_use "hrsh7th/cmp-nvim-lua"
-  opt_use "hrsh7th/cmp-emoji"
-  opt_use "f3fora/cmp-spell"
-  opt_use "yutkat/cmp-mocword"
-  opt_use "uga-rosa/cmp-dictionary"
-  opt_use "hrsh7th/cmp-cmdline"
+  use "hrsh7th/nvim-cmp"
+  use "onsails/lspkind-nvim"
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-nvim-lsp-signature-help"
+  use "hrsh7th/cmp-buffer"
+  use "hrsh7th/cmp-path"
+  use "hrsh7th/cmp-nvim-lua"
+  use "hrsh7th/cmp-emoji"
+  use "f3fora/cmp-spell"
+  use "yutkat/cmp-mocword"
+  use "uga-rosa/cmp-dictionary"
+  use "hrsh7th/cmp-cmdline"
 
   -- Telescope (Fuzzy finder)
-  opt_use "nvim-telescope/telescope.nvim"
-  opt_use "nvim-telescope/telescope-frecency.nvim"
-  opt_use "tamago324/telescope-sonictemplate.nvim"
+  use "nvim-telescope/telescope.nvim"
+  use "nvim-telescope/telescope-frecency.nvim"
+  use "tamago324/telescope-sonictemplate.nvim"
 
   -- Cursor move
-  opt_use "phaazon/hop.nvim"
-  opt_use "osyo-manga/vim-milfeulle"
+  use "phaazon/hop.nvim"
+  use "osyo-manga/vim-milfeulle"
 
   -- Edit
-  opt_use "junegunn/vim-easy-align"
-  opt_use "machakann/vim-sandwich"
-  opt_use "mopp/vim-operator-convert-case"
-  opt_use "AckslD/nvim-trevJ.lua"
-  opt_use "deris/vim-rengbang"
+  use "junegunn/vim-easy-align"
+  use "machakann/vim-sandwich"
+  --use "mopp/vim-operator-convert-case"
+  use "AckslD/nvim-trevJ.lua"
+  use "deris/vim-rengbang"
 
   -- Format
-  opt_use "ntpeters/vim-better-whitespace"
-	opt_use "gpanders/editorconfig.nvim"
+  use "ntpeters/vim-better-whitespace"
+  use "gpanders/editorconfig.nvim"
 
   -- Comment
-  opt_use "numToStr/Comment.nvim"
+  use "numToStr/Comment.nvim"
 
   -- Search
-	opt_use "kevinhwang91/nvim-hlslens"
-	opt_use "haya14busa/vim-asterisk"
+  use "kevinhwang91/nvim-hlslens"
+  use "haya14busa/vim-asterisk"
 
   -- Template
-  opt_use "mattn/vim-sonictemplate"
+  use "mattn/vim-sonictemplate"
 
   -- UI Components (+helper)
-  opt_use "nvim-lualine/lualine.nvim"
-  opt_use "SmiteshP/nvim-gps"
-  opt_use "akinsho/bufferline.nvim"
-  opt_use "GustavoKatel/sidebar.nvim"
-  opt_use "petertriho/nvim-scrollbar"
-  opt_use "nvim-neo-tree/neo-tree.nvim"
-  opt_use "famiu/bufdelete.nvim"
-  opt_use "stevearc/stickybuf.nvim"
+  use "nvim-lualine/lualine.nvim"
+  use "SmiteshP/nvim-gps"
+  use "akinsho/bufferline.nvim"
+  use "GustavoKatel/sidebar.nvim"
+  use "petertriho/nvim-scrollbar"
+  use "nvim-neo-tree/neo-tree.nvim"
+  use "famiu/bufdelete.nvim"
+  use "stevearc/stickybuf.nvim"
 
   -- Git
-  opt_use "TimUntersberger/neogit"
-  opt_use "lewis6991/gitsigns.nvim"
+  use "TimUntersberger/neogit"
+  use "lewis6991/gitsigns.nvim"
 
   -- Memo
-  opt_use "renerocksai/calendar-vim"
-  opt_use "renerocksai/telekasten.nvim"
+  use "renerocksai/calendar-vim"
+  use "renerocksai/telekasten.nvim"
 
   -- Colorscheme
-  opt_use "EdenEast/nightfox.nvim"
+  use "EdenEast/nightfox.nvim"
 
   -- Indent guide
-  opt_use "lukas-reineke/indent-blankline.nvim"
+  use "lukas-reineke/indent-blankline.nvim"
 
   -- Highlight
-  opt_use "norcalli/nvim-colorizer.lua"
-  opt_use "t9md/vim-quickhl"
-  opt_use "folke/todo-comments.nvim"
+  use "norcalli/nvim-colorizer.lua"
+  use "t9md/vim-quickhl"
+  use "folke/todo-comments.nvim"
 end)
