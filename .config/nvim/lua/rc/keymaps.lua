@@ -9,7 +9,7 @@ keymap.set({ "n", "v" }, "k", "gk", opts)
 -- Copy
 keymap.set("n", "Y", "y$", opts)
 keymap.set("n", "<Leader>y", "<Cmd>%yank<CR>", opts)
-keymap.set("n", "x", "_x", opts)
+keymap.set("n", "x", '"_x', opts)
 
 -- Window
 keymap.set("n", "<Leader>w", "<C-w>", opts)
