@@ -17,7 +17,7 @@ keymap.set("n", "x", '"_x', opts)
 keymap.set("n", "<Leader>w", "<C-w>", opts)
 
 -- Clear highlight
-keymap.set("n", "<Esc><Esc>", "<Cmd>nohlsearch<CR>", opts)
+keymap.set("n", ",<Esc>", "<Cmd>nohlsearch<CR>", opts)
 
 -- Undo trigger
 keymap.set("i", "<CR>", "<C-g>u<CR>", opts)
@@ -50,6 +50,12 @@ keymap.set("n", "[b", "<Cmd>bprevious<CR>", opts)
 keymap.set("n", "]b", "<Cmd>bnext<CR>", opts)
 keymap.set("n", "[t", "<Cmd>tabprevious<CR>", opts)
 keymap.set("n", "]t", "<Cmd>tabnext<CR>", opts)
+
+-- Scrolling; プラグインの Telescope で z を使うので代わりに gz で使えるように
+-- https://vim-jp.org/vimdoc-ja/scroll.html
+keymap.set("n", "gzz", "zz", opts)
+keymap.set("n", "gzt", "zt", opts)
+keymap.set("n", "gzb", "zb", opts)
 
 -- Terminal
 keymap.set("t", "<ESC>", [[<C-\><C-n>]], opts)

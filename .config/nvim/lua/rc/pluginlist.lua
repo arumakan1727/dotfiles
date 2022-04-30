@@ -60,7 +60,6 @@ require"jetpack".startup(function(use)
 
   -- Completion
   use "hrsh7th/nvim-cmp"
-  use "onsails/lspkind-nvim"
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lsp-signature-help"
   use "hrsh7th/cmp-buffer"
@@ -68,14 +67,13 @@ require"jetpack".startup(function(use)
   use "hrsh7th/cmp-nvim-lua"
   use "hrsh7th/cmp-emoji"
   use "f3fora/cmp-spell"
-  use "yutkat/cmp-mocword"
-  use "uga-rosa/cmp-dictionary"
+  use "onsails/lspkind-nvim"
   use "hrsh7th/cmp-cmdline"
 
   -- Telescope (Fuzzy finder)
-  use "nvim-telescope/telescope.nvim"
-  use "nvim-telescope/telescope-frecency.nvim"
-  use "tamago324/telescope-sonictemplate.nvim"
+  use { "nvim-telescope/telescope.nvim", opt=true }
+  use { "nvim-telescope/telescope-frecency.nvim", opt=true }
+  use { "tamago324/telescope-sonictemplate.nvim", opt=true }
 
   -- Cursor move
   use "phaazon/hop.nvim"
