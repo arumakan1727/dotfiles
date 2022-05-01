@@ -186,3 +186,25 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
 	once = true,
 	command = "packadd trouble.nvim"
 })
+
+
+-- Colorizing
+vim.o.list = true
+vim.o.listchars = "tab:» ,trail:･"
+vim.cmd 'hi IndentBlanklineIndent1 guibg=#2f2b44 gui=nocombine'
+vim.cmd 'hi IndentBlanklineIndent2 guibg=#231d36 gui=nocombine'
+vim.cmd 'hi Whitespace guifg=#575385 gui=nocombine'  -- color of listchar
+require('indent_blankline').setup {
+	char = "",
+	char_highlight_list = {
+		"IndentBlanklineIndent1",
+		"IndentBlanklineIndent2",
+	},
+	space_char_highlight_list = {
+		"IndentBlanklineIndent1",
+		"IndentBlanklineIndent2",
+	},
+	show_trailing_blankline_indent = false,
+}
+require'colorizer'.setup()
+require("todo-comments").setup()
