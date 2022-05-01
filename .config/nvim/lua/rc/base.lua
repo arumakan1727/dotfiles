@@ -28,7 +28,7 @@ o.smartindent = false
 
 -- Invisible chars
 o.list = true  -- 不可視文字を表示する
-o.listchars = "tab:»»,trail:･"  -- タブ文字と末尾の空白文字
+o.listchars = "tab:» ,trail:･"  -- タブ文字と末尾の空白文字
 
 -- Search
 o.wrapscan = true -- 最後まで検索したら先頭へ戻る

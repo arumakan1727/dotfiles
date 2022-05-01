@@ -1,4 +1,5 @@
 local keymap = vim.keymap
+local MY_GROUP = 'vimrc_pluginconfig';
 
 -- Customize LSP signs
 do
@@ -84,6 +85,7 @@ do  -- Statusline
 	end
 
 	local gps = require('nvim-gps')
+	gps.setup{}
 
 	require'lualine'.setup {
 		options = {
@@ -134,61 +136,53 @@ do -- sonictemplate
 	}
 	vim.api.nvim_create_autocmd("CmdUndefined", {
 		pattern = "Template",
-		group = 'vimrc_pluginconfig',
+		group = MY_GROUP,
 		once = true,
 		command = "packadd vim-sonictemplate"
 	})
 end
 
 
-do -- treesitter
+-- https://github.com/nvim-telescope/telescope.nvim
+-- Telescope
+keymap.set("n", "z ", "<Cmd>Telescope<CR>", { noremap=true, silent=false })
+keymap.set("n", "za", "<Cmd>Telescope autocommands<CR>", { noremap=true, silent=false })
+keymap.set("n", "zb", "<Cmd>Telescope buffers<CR>", { noremap=true, silent=false })
+keymap.set("n", "zc", "<Cmd>Telescope commands<CR>", { noremap=true, silent=false })
+keymap.set("n", "zf", "<Cmd>Telescope find_files<CR>", { noremap=true, silent=false })
+keymap.set("n", "zg", "<Cmd>Telescope live_grep<CR>", { noremap=true, silent=false })
+keymap.set("n", "zh", "<Cmd>Telescope help_tags<CR>", { noremap=true, silent=false })
+keymap.set("n", "zk", "<Cmd>Telescope keymaps<CR>", { noremap=true, silent=false })
+keymap.set("n", "zl", "<Cmd>Telescope oldfiles<CR>", { noremap=true, silent=false })
+keymap.set("n", "zo", "<Cmd>Telescope vim_options<CR>", { noremap=true, silent=false })
+keymap.set("n", "zt", "<Cmd>Telescope sonictemplate templates<CR>", { noremap=true, silent=false })
+vim.api.nvim_create_autocmd("CmdUndefined", {
+	pattern = "Telescope",
+	group = MY_GROUP,
+	once = true,
+	callback = function()
+		vim.cmd "packadd telescope.nvim"
+		vim.cmd "packadd telescope-sonictemplate.nvim"
+		local telescope = require"telescope"
+		local layout_actions = require"telescope.actions.layout"
+		telescope.setup {
+			mappings = {
+				n = { ["<C-t>"] = layout_actions.toggle_preview },
+				i = { ["<C-t>"] = layout_actions.toggle_preview },
+			},
+			extensions = {
+			},
+		}
+		telescope.load_extension("sonictemplate")
+	end,
+})
 
-end
 
-
-do -- Telescope
-	keymap.set("n", "z ", "<Cmd>Telescope<CR>", { noremap=true, silent=false })
-	keymap.set("n", "za", "<Cmd>Telescope autocommands<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zb", "<Cmd>Telescope buffers<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zc", "<Cmd>Telescope commands<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zf", "<Cmd>Telescope find_files<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zg", "<Cmd>Telescope live_grep<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zh", "<Cmd>Telescope help_tags<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zk", "<Cmd>Telescope keymaps<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zl", "<Cmd>Telescope oldfiles<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zo", "<Cmd>Telescope vim_options<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zr", "<Cmd>Telescope frecency<CR>", { noremap=true, silent=false })
-	keymap.set("n", "zt", "<Cmd>Telescope sonictemplate templates<CR>", { noremap=true, silent=false })
-
-	-- 遅延ロード (Telescope コマンドが実行されてから初めて packadd する)
-	vim.api.nvim_create_autocmd("CmdUndefined", {
-		pattern = "Telescope",
-		group = 'vimrc_pluginconfig',
-		once = true,
-		callback = function()
-			vim.cmd "packadd telescope.nvim"
-			vim.cmd "packadd telescope-frecency.nvim"
-			vim.cmd "packadd telescope-sonictemplate.nvim"
-			local telescope = require"telescope"
-			local layout_actions = require"telescope.actions.layout"
-			telescope.setup {
-				mappings = {
-					n = { ["<C-t>"] = layout_actions.toggle_preview },
-					i = { ["<C-t>"] = layout_actions.toggle_preview },
-				},
-				extensions = {
-					frecency = {
-						show_scores = true,
-						ignore_patterns = {"*.git/*", "*/tmp/*", "/ramdisk/*"},
-						workspaces = {
-							["conf"] = vim.fn.expand("~/.config"),
-							["univ"] = vim.fn.expand("~/Univ"),
-						}
-					}
-				},
-			}
-			telescope.load_extension("frecency")
-			telescope.load_extension("sonictemplate")
-		end,
-	})
-end
+-- https://github.com/folke/trouble.nvim
+-- diagnostics list
+keymap.set("n", ",,d", "<Cmd>TroubleToggle<CR>", { noremap=true, silent=false })
+vim.api.nvim_create_autocmd("CmdUndefined", {
+	pattern = "Trouble*",
+	once = true,
+	command = "packadd trouble.nvim"
+})

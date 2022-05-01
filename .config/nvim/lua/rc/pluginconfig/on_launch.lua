@@ -19,7 +19,7 @@ do -- LSP
 
 	-- lspconfig の設定
 	-- https://github.com/neovim/nvim-lspconfig#suggested-configuration
-	local on_attach = function(client, bufnr)
+	local on_attach = function(_, bufnr)
 		local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 		local opts = { noremap = true, silent = true }
 		-- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -73,7 +73,54 @@ do -- LSP
 		end
 		lspconfig[lsp].setup(cfg)
 	end
+
+	require("fidget").setup()
 end
 
 
-vim.cmd("colorscheme duskfox")
+-- treesitter
+do
+	require("nvim-treesitter.configs").setup {
+		-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+		ensure_installed = "all",
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = false,
+		},
+		indent = { enable = false, }, -- yati を使うので disable
+		yati = { enable = true },
+		context_commentstring = { enable = true },
+		matchup = { enable = true },
+		nvimGPS = { enable = true },
+		autotag = { enable = true },
+	}
+	require('hlargs').setup()
+	require('nvim_context_vt').setup {
+		-- Disable display of virtual text below blocks for indentation based languages like Python
+		disable_virtual_lines = true,
+		-- How many lines required after starting position to show virtual text
+		min_rows = 6,
+	}
+end
+
+
+vim.cmd 'colorscheme duskfox'
+vim.o.list = true
+vim.o.listchars = "tab:» ,trail:･"
+vim.cmd 'hi IndentBlanklineIndent1 guibg=#2f2b44 gui=nocombine'
+vim.cmd 'hi IndentBlanklineIndent2 guibg=#231d36 gui=nocombine'
+vim.cmd 'hi Whitespace guifg=#575385 gui=nocombine'  -- color of listchar
+require('indent_blankline').setup {
+	char = "",
+	char_highlight_list = {
+		"IndentBlanklineIndent1",
+		"IndentBlanklineIndent2",
+	},
+	space_char_highlight_list = {
+		"IndentBlanklineIndent1",
+		"IndentBlanklineIndent2",
+	},
+	show_trailing_blankline_indent = false,
+}
+require'colorizer'.setup()
+require("todo-comments").setup()

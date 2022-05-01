@@ -24,107 +24,106 @@ require"jetpack".startup(function(use)
 		use {name, opt=1}
 	end
 
-  -- Package manager
-  use { "tani/vim-jetpack", opt=1 }
+	-- Package manager
+	use { "tani/vim-jetpack", opt=1 }
 
-  -- Library
-  use "tpope/vim-repeat"
-  use "nvim-lua/plenary.nvim"
+	-- Library
+	use "tpope/vim-repeat"
+	use "nvim-lua/plenary.nvim"
 	use "rcarriga/nvim-notify"
-  use "nvim-lua/popup.nvim"
-  use "MunifTanjim/nui.nvim"
-  use "tami5/sqlite.lua"
-  use "kyazdani42/nvim-web-devicons"
+	use "nvim-lua/popup.nvim"
+	use "MunifTanjim/nui.nvim"
+	use "tami5/sqlite.lua"
+	use "kyazdani42/nvim-web-devicons"
 
 	-- Project-local setting
-  use "gpanders/editorconfig.nvim"
+	use "gpanders/editorconfig.nvim"
 	use "klen/nvim-config-local"
 
-  -- Specific language
-  use { "mboughaba/i3config.vim", ft="i3config" }
-  use { "alaviss/nim.nvim", ft="nim" }
-  use { "iamcco/markdown-preview.nvim", ft="markdown", run=":call mkdp#util#install()" }
+	-- Specific language
+	use { "mboughaba/i3config.vim", ft="i3config" }
+	use { "alaviss/nim.nvim", ft="nim" }
+	use { "iamcco/markdown-preview.nvim", ft="markdown", run=":call mkdp#util#install()" }
 
-  -- Language Server Protocol
-  use "neovim/nvim-lspconfig"
-  use "williamboman/nvim-lsp-installer"
+	-- Language Server Protocol
+	use "neovim/nvim-lspconfig"
+	use "williamboman/nvim-lsp-installer"
 	use "tamago324/nlsp-settings.nvim"
-  use "jose-elias-alvarez/null-ls.nvim"
-  use "folke/lsp-colors.nvim"
-  use "j-hui/fidget.nvim"
-  opt_use "folke/trouble.nvim"
+	use "jose-elias-alvarez/null-ls.nvim"
+	use "folke/lsp-colors.nvim"
+	use "j-hui/fidget.nvim"
+	opt_use "folke/trouble.nvim"
 
-  -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter", run=":TSUpdate" }
-  use "JoosepAlviste/nvim-ts-context-commentstring"
-  use "yioneko/nvim-yati"
-  use "m-demare/hlargs.nvim"
-  use "haringsrob/nvim_context_vt"
-  use "windwp/nvim-ts-autotag"
+	-- Treesitter
+	use { "nvim-treesitter/nvim-treesitter", run=":TSUpdate" }
+	use "JoosepAlviste/nvim-ts-context-commentstring"
+	use "yioneko/nvim-yati"
+	use "m-demare/hlargs.nvim"
+	use "haringsrob/nvim_context_vt"
+	use "windwp/nvim-ts-autotag"
 
-  -- Editting utility
-  use "junegunn/vim-easy-align"
-  use "machakann/vim-sandwich"
-  use "AckslD/nvim-trevJ.lua"
-  use "deris/vim-rengbang"
-  use "numToStr/Comment.nvim"
-  use "andymass/vim-matchup"
-  use "t9md/vim-quickhl"
+	-- Editting utility
+	use "junegunn/vim-easy-align"
+	use "machakann/vim-sandwich"
+	use "AckslD/nvim-trevJ.lua"
+	use "deris/vim-rengbang"
+	use "numToStr/Comment.nvim"
+	use "andymass/vim-matchup"
+	use "t9md/vim-quickhl"
 
-  -- Cursor move, Search
-  use "phaazon/hop.nvim"
-  use "osyo-manga/vim-milfeulle"
-  use "kevinhwang91/nvim-hlslens"
-  use "haya14busa/vim-asterisk"
-  use "petertriho/nvim-scrollbar"
+	-- Cursor move, Search
+	use "phaazon/hop.nvim"
+	use "osyo-manga/vim-milfeulle"
+	use "kevinhwang91/nvim-hlslens"
+	use "haya14busa/vim-asterisk"
+	use "petertriho/nvim-scrollbar"
 
-  -- Completion
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-buffer"
-  use "hrsh7th/cmp-cmdline"
-  use "hrsh7th/cmp-emoji"
-  use "hrsh7th/cmp-nvim-lsp-signature-help"
-  use "hrsh7th/cmp-nvim-lua"
-  use "hrsh7th/cmp-path"
-  use "onsails/lspkind-nvim"
+	-- Completion
+	use "hrsh7th/cmp-nvim-lsp"
+	use "hrsh7th/nvim-cmp"
+	use "hrsh7th/cmp-buffer"
+	use "hrsh7th/cmp-cmdline"
+	use "hrsh7th/cmp-emoji"
+	use "hrsh7th/cmp-nvim-lsp-signature-help"
+	use "hrsh7th/cmp-nvim-lua"
+	use "hrsh7th/cmp-path"
+	use "onsails/lspkind-nvim"
 	use "L3MON4D3/LuaSnip"
 	use "saadparwaiz1/cmp_luasnip"
-  use "windwp/nvim-autopairs"
+	use "windwp/nvim-autopairs"
 
-  -- Telescope (Fuzzy finder)
-  opt_use "nvim-telescope/telescope.nvim"
-  opt_use "nvim-telescope/telescope-frecency.nvim"
-  opt_use "tamago324/telescope-sonictemplate.nvim"
+	-- Telescope (Fuzzy finder)
+	opt_use "nvim-telescope/telescope.nvim"
+	opt_use "tamago324/telescope-sonictemplate.nvim"
 
-  -- Template
-  opt_use "mattn/vim-sonictemplate"
+	-- Template
+	opt_use "mattn/vim-sonictemplate"
 
-  -- Statusline
-  use "nvim-lualine/lualine.nvim"
-  use "SmiteshP/nvim-gps"
+	-- Statusline
+	use "nvim-lualine/lualine.nvim"
+	use "SmiteshP/nvim-gps"
 
 	-- Buffer, Window
-  use "akinsho/bufferline.nvim"
-  use "famiu/bufdelete.nvim"
-  use "stevearc/stickybuf.nvim"
+	use "akinsho/bufferline.nvim"
+	use "famiu/bufdelete.nvim"
+	use "stevearc/stickybuf.nvim"
 
 	-- Utility panel
-  opt_use "GustavoKatel/sidebar.nvim"
-  opt_use "nvim-neo-tree/neo-tree.nvim"
+	opt_use "GustavoKatel/sidebar.nvim"
+	opt_use "nvim-neo-tree/neo-tree.nvim"
 
-  -- Git
-  use "lewis6991/gitsigns.nvim"
-  opt_use "TimUntersberger/neogit"
+	-- Git
+	use "lewis6991/gitsigns.nvim"
+	opt_use "TimUntersberger/neogit"
 
-  -- Memo
-  opt_use "renerocksai/calendar-vim"
-  opt_use "renerocksai/telekasten.nvim"
+	-- Memo
+	opt_use "renerocksai/calendar-vim"
+	opt_use "renerocksai/telekasten.nvim"
 
-  -- Colorscheme, Highlight
-  use "EdenEast/nightfox.nvim"
-  use "lukas-reineke/indent-blankline.nvim"
-  use "ntpeters/vim-better-whitespace"
-  use "norcalli/nvim-colorizer.lua"
-  use "folke/todo-comments.nvim"
+	-- Colorscheme, Highlight
+	use "EdenEast/nightfox.nvim"
+	use "lukas-reineke/indent-blankline.nvim"
+	use "ntpeters/vim-better-whitespace"
+	use "norcalli/nvim-colorizer.lua"
+	use "folke/todo-comments.nvim"
 end)
