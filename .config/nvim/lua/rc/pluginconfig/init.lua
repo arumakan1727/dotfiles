@@ -10,14 +10,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	once = true,
 	callback = function()
 		require "rc/pluginconfig/after_launch"
-	end,
-})
-
--- on Insert
-vim.api.nvim_create_autocmd("InsertEnter", {
-	group = MY_GROUP,
-	once = true,
-	callback = function()
-		require "rc/pluginconfig/on_insert"
+		require "rc/pluginconfig/completion"
 	end,
 })

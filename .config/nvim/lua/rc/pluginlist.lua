@@ -20,6 +20,10 @@ vim.g["jetpack#copy_method"] = "symlink"
 vim.cmd("packadd vim-jetpack")
 
 require"jetpack".startup(function(use)
+	local function opt_use(name)
+		use {name, opt=1}
+	end
+
   -- Package manager
   use { "tani/vim-jetpack", opt=1 }
 
@@ -32,6 +36,10 @@ require"jetpack".startup(function(use)
   use "tami5/sqlite.lua"
   use "kyazdani42/nvim-web-devicons"
 
+	-- Project-local setting
+  use "gpanders/editorconfig.nvim"
+	use "klen/nvim-config-local"
+
   -- Specific language
   use { "mboughaba/i3config.vim", ft="i3config" }
   use { "alaviss/nim.nvim", ft="nim" }
@@ -41,91 +49,82 @@ require"jetpack".startup(function(use)
   use "neovim/nvim-lspconfig"
   use "williamboman/nvim-lsp-installer"
 	use "tamago324/nlsp-settings.nvim"
-  use "folke/lsp-colors.nvim"
-  use "folke/trouble.nvim"
-  use "j-hui/fidget.nvim"
   use "jose-elias-alvarez/null-ls.nvim"
+  use "folke/lsp-colors.nvim"
+  use "j-hui/fidget.nvim"
+  opt_use "folke/trouble.nvim"
 
   -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter", --[[ run=":TSUpdate" --]] }
+  use { "nvim-treesitter/nvim-treesitter", run=":TSUpdate" }
   use "JoosepAlviste/nvim-ts-context-commentstring"
   use "yioneko/nvim-yati"
-  use "haringsrob/nvim_context_vt"
   use "m-demare/hlargs.nvim"
-
-  -- Paren
-  use "andymass/vim-matchup"
-  use "windwp/nvim-autopairs"
+  use "haringsrob/nvim_context_vt"
   use "windwp/nvim-ts-autotag"
 
-  -- Completion
-  use "hrsh7th/nvim-cmp"
-  use "hrsh7th/cmp-nvim-lsp"
-  use "hrsh7th/cmp-nvim-lsp-signature-help"
-  use "hrsh7th/cmp-buffer"
-  use "hrsh7th/cmp-path"
-  use "hrsh7th/cmp-nvim-lua"
-  use "hrsh7th/cmp-emoji"
-  use "f3fora/cmp-spell"
-  use "onsails/lspkind-nvim"
-  use "hrsh7th/cmp-cmdline"
-
-  -- Telescope (Fuzzy finder)
-  use { "nvim-telescope/telescope.nvim", opt=true }
-  use { "nvim-telescope/telescope-frecency.nvim", opt=true }
-  use { "tamago324/telescope-sonictemplate.nvim", opt=true }
-
-  -- Cursor move
-  use "phaazon/hop.nvim"
-  use "osyo-manga/vim-milfeulle"
-
-  -- Edit
+  -- Editting utility
   use "junegunn/vim-easy-align"
   use "machakann/vim-sandwich"
-  --use "mopp/vim-operator-convert-case"
   use "AckslD/nvim-trevJ.lua"
   use "deris/vim-rengbang"
-
-  -- Format
-  use "ntpeters/vim-better-whitespace"
-  use "gpanders/editorconfig.nvim"
-
-  -- Comment
   use "numToStr/Comment.nvim"
+  use "andymass/vim-matchup"
+  use "t9md/vim-quickhl"
 
-  -- Search
+  -- Cursor move, Search
+  use "phaazon/hop.nvim"
+  use "osyo-manga/vim-milfeulle"
   use "kevinhwang91/nvim-hlslens"
   use "haya14busa/vim-asterisk"
+  use "petertriho/nvim-scrollbar"
+
+  -- Completion
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/nvim-cmp"
+  use "hrsh7th/cmp-buffer"
+  use "hrsh7th/cmp-cmdline"
+  use "hrsh7th/cmp-emoji"
+  use "hrsh7th/cmp-nvim-lsp-signature-help"
+  use "hrsh7th/cmp-nvim-lua"
+  use "hrsh7th/cmp-path"
+  use "onsails/lspkind-nvim"
+	use "L3MON4D3/LuaSnip"
+	use "saadparwaiz1/cmp_luasnip"
+  use "windwp/nvim-autopairs"
+
+  -- Telescope (Fuzzy finder)
+  opt_use "nvim-telescope/telescope.nvim"
+  opt_use "nvim-telescope/telescope-frecency.nvim"
+  opt_use "tamago324/telescope-sonictemplate.nvim"
 
   -- Template
-  use "mattn/vim-sonictemplate"
+  opt_use "mattn/vim-sonictemplate"
 
-  -- UI Components (+helper)
+  -- Statusline
   use "nvim-lualine/lualine.nvim"
   use "SmiteshP/nvim-gps"
+
+	-- Buffer, Window
   use "akinsho/bufferline.nvim"
-  use "GustavoKatel/sidebar.nvim"
-  use "petertriho/nvim-scrollbar"
-  use "nvim-neo-tree/neo-tree.nvim"
   use "famiu/bufdelete.nvim"
   use "stevearc/stickybuf.nvim"
 
+	-- Utility panel
+  opt_use "GustavoKatel/sidebar.nvim"
+  opt_use "nvim-neo-tree/neo-tree.nvim"
+
   -- Git
-  use "TimUntersberger/neogit"
   use "lewis6991/gitsigns.nvim"
+  opt_use "TimUntersberger/neogit"
 
   -- Memo
-  use "renerocksai/calendar-vim"
-  use "renerocksai/telekasten.nvim"
+  opt_use "renerocksai/calendar-vim"
+  opt_use "renerocksai/telekasten.nvim"
 
-  -- Colorscheme
+  -- Colorscheme, Highlight
   use "EdenEast/nightfox.nvim"
-
-  -- Indent guide
   use "lukas-reineke/indent-blankline.nvim"
-
-  -- Highlight
+  use "ntpeters/vim-better-whitespace"
   use "norcalli/nvim-colorizer.lua"
-  use "t9md/vim-quickhl"
   use "folke/todo-comments.nvim"
 end)

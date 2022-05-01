@@ -125,6 +125,27 @@ do  -- Statusline
 	}
 end
 
+
+-- https://github.com/mattn/vim-sonictemplate/blob/master/doc/sonictemplate.txt
+do -- sonictemplate
+	vim.g.sonictemplate_vim_template_dir = {
+		vim.fn.expand('~/.config/nvim/sonictemplate'),
+		vim.fn.expand('~/kyopro/sonictemplate'),
+	}
+	vim.api.nvim_create_autocmd("CmdUndefined", {
+		pattern = "Template",
+		group = 'vimrc_pluginconfig',
+		once = true,
+		command = "packadd vim-sonictemplate"
+	})
+end
+
+
+do -- treesitter
+
+end
+
+
 do -- Telescope
 	keymap.set("n", "z ", "<Cmd>Telescope<CR>", { noremap=true, silent=false })
 	keymap.set("n", "za", "<Cmd>Telescope autocommands<CR>", { noremap=true, silent=false })
@@ -134,6 +155,7 @@ do -- Telescope
 	keymap.set("n", "zg", "<Cmd>Telescope live_grep<CR>", { noremap=true, silent=false })
 	keymap.set("n", "zh", "<Cmd>Telescope help_tags<CR>", { noremap=true, silent=false })
 	keymap.set("n", "zk", "<Cmd>Telescope keymaps<CR>", { noremap=true, silent=false })
+	keymap.set("n", "zl", "<Cmd>Telescope oldfiles<CR>", { noremap=true, silent=false })
 	keymap.set("n", "zo", "<Cmd>Telescope vim_options<CR>", { noremap=true, silent=false })
 	keymap.set("n", "zr", "<Cmd>Telescope frecency<CR>", { noremap=true, silent=false })
 	keymap.set("n", "zt", "<Cmd>Telescope sonictemplate templates<CR>", { noremap=true, silent=false })
@@ -141,22 +163,18 @@ do -- Telescope
 	-- 遅延ロード (Telescope コマンドが実行されてから初めて packadd する)
 	vim.api.nvim_create_autocmd("CmdUndefined", {
 		pattern = "Telescope",
-		group = MY_GROUP,
+		group = 'vimrc_pluginconfig',
 		once = true,
 		callback = function()
-			vim.cmd [[packadd telescope.nvim]]
-			vim.g.sonictemplate_vim_template_dir = {
-				vim.fn.expand('~/.config/nvim/sonictemplate'),
-				vim.fn.expand('~/kyopro/sonictemplate'),
-			}
+			vim.cmd "packadd telescope.nvim"
+			vim.cmd "packadd telescope-frecency.nvim"
+			vim.cmd "packadd telescope-sonictemplate.nvim"
 			local telescope = require"telescope"
 			local layout_actions = require"telescope.actions.layout"
 			telescope.setup {
 				mappings = {
 					n = { ["<C-t>"] = layout_actions.toggle_preview },
-					i = {
-						["<C-t>"] = layout_actions.toggle_preview,
-					},
+					i = { ["<C-t>"] = layout_actions.toggle_preview },
 				},
 				extensions = {
 					frecency = {

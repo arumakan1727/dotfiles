@@ -10,3 +10,5 @@ au! BufRead,BufNewFile tsconfig.json
       \ setlocal filetype=jsonc
 au! BufRead,BufNewFile .flake8
       \ setlocal filetype=cfg
+au! BufRead,BufNewFile *.nim
+      \ setlocal filetype=nim
