@@ -219,6 +219,12 @@ keymap.set({'n', 'x'}, '#', [[<Plug>(asterisk-z#)<Cmd>lua require('hlslens').sta
 keymap.set({'n', 'x'}, 'g*', [[<Plug>(asterisk-gz*)<Cmd>lua require('hlslens').start()<CR>]])
 keymap.set({'n', 'x'}, 'g#', [[<Plug>(asterisk-gz#)<Cmd>lua require('hlslens').start()<CR>]])
 
+-- https://github.com/osyo-manga/vim-milfeulle/blob/master/doc/milfeulle.jax
+vim.g['milfeulle_default_kind'] = 'buffer'
+vim.g['milfeulle_default_jumper_name'] = 'win_tab_bufnr_pos'
+keymap.set('n', '[g', '<Plug>(milfeulle-prev)')
+keymap.set('n', ']g', '<Plug>(milfeulle-next)')
+
 -- Colorizing
 vim.cmd "colorscheme duskfox"
 vim.o.list = true
