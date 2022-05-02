@@ -1,3 +1,13 @@
+-- https://github.com/klen/nvim-config-local
+require("config-local").setup {
+	config_files = { ".nvim/local.vim", ".nvim/local.lua" },
+	hashfile = vim.fn.stdpath("data") .. "/config-local",
+	autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
+	commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+	silent = false, -- Disable plugin messages (Config loaded/ignored)
+	lookup_parents = true,
+}
+
 do -- LSP
 	-- プロジェクト固有の LSP 設定を json/yaml で設定可能に
 	-- https://github.com/tamago324/nlsp-settings.nvim
