@@ -126,7 +126,46 @@ do
 		matchup = { enable = true },
 		nvimGPS = { enable = true },
 		autotag = { enable = true },
+		textobjects = { -- syntax-aware textobjects
+			select = {
+				enable = true,
+				disable = {},
+				keymaps = {
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					["ic"] = "@class.inner",
+					["ib"] = "@block.inner",
+					["ab"] = "@block.outer",
+					["ii"] = "@conditional.inner",
+					["ai"] = "@conditional.outer",
+					["il"] = "@loop.inner",
+					["al"] = "@loop.outer",
+					["ip"] = "@parameter.inner",
+					["ap"] = "@parameter.outer",
+					["iS"] = "@scopename.inner",
+					["aS"] = "@statement.outer",
+				},
+			},
+			swap = {
+				enable = true,
+				swap_next = { ["'>"] = "@parameter.inner" },
+				swap_previous = { ["'<"] = "@parameter.inner" },
+			},
+			move = {
+				enable = true,
+				goto_next_start = { ["]m"] = "@function.outer", ["]]"] = "@class.outer" },
+				goto_next_end = { ["]M"] = "@function.outer", ["]["] = "@class.outer" },
+				goto_previous_start = { ["[m"] = "@function.outer", ["[["] = "@class.outer" },
+				goto_previous_end = { ["[M"] = "@function.outer", ["[]"] = "@class.outer" },
+			},
+		},
 	}
+
+	vim.keymap.set('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
+	vim.keymap.set('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+	vim.keymap.set('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
+	vim.keymap.set('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
 
 	-- https://github.com/m-demare/hlargs.nvim
 	require('hlargs').setup()

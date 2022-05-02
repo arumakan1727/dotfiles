@@ -50,6 +50,7 @@ require"jetpack".startup(function(use)
 	use "neovim/nvim-lspconfig"
 	use "williamboman/nvim-lsp-installer"
 	use "tamago324/nlsp-settings.nvim"
+	use "tami5/lspsaga.nvim"
 	use "jose-elias-alvarez/null-ls.nvim"
 	use "folke/lsp-colors.nvim"
 	use "j-hui/fidget.nvim"
@@ -62,8 +63,10 @@ require"jetpack".startup(function(use)
 	use "m-demare/hlargs.nvim"
 	use "haringsrob/nvim_context_vt"
 	use "windwp/nvim-ts-autotag"
+	use "nvim-treesitter/nvim-treesitter-textobjects"
+	use "David-Kunz/treesitter-unit"
 
-	-- Editting utility
+	-- Editing utility
 	use "junegunn/vim-easy-align"
 	use "machakann/vim-sandwich"
 	use "AckslD/nvim-trevJ.lua"
@@ -78,6 +81,7 @@ require"jetpack".startup(function(use)
 	use "kevinhwang91/nvim-hlslens"
 	use "haya14busa/vim-asterisk"
 	use "petertriho/nvim-scrollbar"
+	use "edluffy/specs.nvim"
 
 	-- Completion
 	use "hrsh7th/cmp-nvim-lsp"

@@ -178,6 +178,9 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
 	end,
 })
 
+-- https://github.com/andymass/vim-matchup
+vim.g.matchup_matchparen_offscreen = {method = 'popup'}
+
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/MAIN.md
 do
 	local null_ls = require("null-ls")
@@ -293,6 +296,27 @@ require('gitsigns').setup {
 -- https://github.com/TimUntersberger/neogit
 require("neogit").setup()
 keymap.set('n', ',,g', '<Cmd>Neogit<CR>')
+
+
+-- https://github.com/edluffy/specs.nvim
+require('specs').setup{
+	show_jumps  = true,
+	min_jump = 30,
+	popup = {
+		delay_ms = 0, -- delay before popup displays
+		inc_ms = 5, -- time increments used for fade/resize effects
+		blend = 5, -- starting blend, between 0-100 (fully transparent), see :h winblend
+		width = 50,
+		winhl = "Todo",
+		fader = require('specs').linear_fader,
+		resizer = require('specs').shrink_resizer
+	},
+	ignore_filetypes = {},
+	ignore_buftypes = {
+		nofile = true,
+	},
+}
+keymap.set("n", "<Space><CR>", require("specs").show_specs)
 
 -- Colorizing
 vim.cmd "colorscheme duskfox"
