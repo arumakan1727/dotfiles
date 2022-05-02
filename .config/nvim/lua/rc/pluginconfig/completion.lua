@@ -1,4 +1,4 @@
-vim.o.completeopt = "menu,menuone,noselect,noinsert"
+vim.o.completeopt = "menu,menuone,noinsert"
 
 local cmp = require("cmp")
 local luasnip = require("luasnip")

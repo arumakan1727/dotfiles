@@ -178,6 +178,29 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
 	end,
 })
 
+-- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/MAIN.md
+do
+	local null_ls = require("null-ls")
+	null_ls.setup {
+		sources = {
+			-- formatter
+			null_ls.builtins.formatting.stylua,
+			null_ls.builtins.formatting.black,
+			null_ls.builtins.formatting.isort,
+			null_ls.builtins.formatting.prettier,
+			null_ls.builtins.formatting.shfmt,
+			null_ls.builtins.formatting.markdownlint,
+			-- linter
+			null_ls.builtins.diagnostics.shellcheck,
+			null_ls.builtins.diagnostics.cppcheck,
+			null_ls.builtins.diagnostics.eslint_d,
+			null_ls.builtins.diagnostics.hadolint,
+			null_ls.builtins.diagnostics.staticcheck,
+			null_ls.builtins.diagnostics.codespell,
+		}
+	}
+end
+
 
 -- https://github.com/folke/trouble.nvim
 keymap.set("n", ",,d", "<Cmd>TroubleToggle<CR>", { noremap=true, silent=false })
@@ -224,6 +247,52 @@ vim.g['milfeulle_default_kind'] = 'buffer'
 vim.g['milfeulle_default_jumper_name'] = 'win_tab_bufnr_pos'
 keymap.set('n', '[g', '<Plug>(milfeulle-prev)')
 keymap.set('n', ']g', '<Plug>(milfeulle-next)')
+
+
+-- https://github.com/lewis6991/gitsigns.nvim
+require('gitsigns').setup {
+	on_attach = function(bufnr)
+		local gs = package.loaded.gitsigns
+
+		local function map(mode, l, r, opts)
+			opts = opts or {}
+			opts.buffer = bufnr
+			vim.keymap.set(mode, l, r, opts)
+		end
+
+		-- Navigation
+		map('n', ']c', function()
+			if vim.wo.diff then return ']c' end
+			vim.schedule(gs.next_hunk)
+			return '<Ignore>'
+		end, {expr=true})
+
+		map('n', '[c', function()
+			if vim.wo.diff then return '[c' end
+			vim.schedule(gs.prev_hunk)
+			return '<Ignore>'
+		end, {expr=true})
+
+		-- Actions
+		map({'n', 'v'}, ',gs', ':Gitsigns stage_hunk<CR>')
+		map({'n', 'v'}, ',gr', ':Gitsigns reset_hunk<CR>')
+		map('n', ',gS', gs.stage_buffer)
+		map('n', ',gu', gs.undo_stage_hunk)
+		map('n', ',gR', gs.reset_buffer)
+		map('n', ',gp', gs.preview_hunk)
+		map('n', ',gb', function() gs.blame_line{full=true} end)
+		map('n', ',gl', gs.toggle_current_line_blame)
+		map('n', ',gd', gs.diffthis)
+		map('n', ',gD', function() gs.diffthis('~') end)
+
+		-- Text object
+		map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+	end,
+}
+
+-- https://github.com/TimUntersberger/neogit
+require("neogit").setup()
+keymap.set('n', ',,g', '<Cmd>Neogit<CR>')
 
 -- Colorizing
 vim.cmd "colorscheme duskfox"

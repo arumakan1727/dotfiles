@@ -44,6 +44,7 @@ require"jetpack".startup(function(use)
 	use { "mboughaba/i3config.vim", ft="i3config" }
 	use { "alaviss/nim.nvim", ft="nim" }
 	use { "iamcco/markdown-preview.nvim", ft="markdown", run=":call mkdp#util#install()" }
+	use { "preservim/vim-markdown", ft="markdown" }
 
 	-- Language Server Protocol
 	use "neovim/nvim-lspconfig"
@@ -107,13 +108,12 @@ require"jetpack".startup(function(use)
 	use "akinsho/bufferline.nvim"
 	use "famiu/bufdelete.nvim"
 
-	-- Utility panel
-	opt_use "GustavoKatel/sidebar.nvim"
-	opt_use "nvim-neo-tree/neo-tree.nvim"
+	-- Directory tree
+	use "nvim-neo-tree/neo-tree.nvim"
 
 	-- Git
 	use "lewis6991/gitsigns.nvim"
-	opt_use "TimUntersberger/neogit"
+	use "TimUntersberger/neogit"
 
 	-- Memo
 	opt_use "renerocksai/calendar-vim"
