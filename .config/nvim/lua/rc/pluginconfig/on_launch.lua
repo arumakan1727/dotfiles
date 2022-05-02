@@ -102,6 +102,3 @@ do
 		min_rows = 6,
 	}
 end
-
-
-vim.cmd 'colorscheme duskfox'

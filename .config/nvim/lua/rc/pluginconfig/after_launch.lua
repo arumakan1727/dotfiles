@@ -25,11 +25,11 @@ do -- Bufferline
 			tab_size = 18,
 			diagnostics = "nvim_lsp",
 			diagnostics_update_in_insert = false,
-			diagnostics_indicator = function(count, level, diagnostics_dict, context)
+			diagnostics_indicator = function(count, _, _, _)
 				return "("..count..")"
 			end,
 			-- NOTE: this will be called a lot so don't do any heavy processing here
-			custom_filter = function(buf_number, buf_numbers)
+			custom_filter = function(buf_number, _)
 				if vim.bo[buf_number].filetype == "qf" then
 					return false
 				end
@@ -144,8 +144,7 @@ end
 
 
 -- https://github.com/nvim-telescope/telescope.nvim
--- Telescope
-keymap.set("n", "z ", "<Cmd>Telescope<CR>", { noremap=true, silent=false })
+keymap.set("n", "z<Space>", "<Cmd>Telescope<CR>", { noremap=true, silent=false })
 keymap.set("n", "za", "<Cmd>Telescope autocommands<CR>", { noremap=true, silent=false })
 keymap.set("n", "zb", "<Cmd>Telescope buffers<CR>", { noremap=true, silent=false })
 keymap.set("n", "zc", "<Cmd>Telescope commands<CR>", { noremap=true, silent=false })
@@ -166,9 +165,11 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
 		local telescope = require"telescope"
 		local layout_actions = require"telescope.actions.layout"
 		telescope.setup {
-			mappings = {
-				n = { ["<C-t>"] = layout_actions.toggle_preview },
-				i = { ["<C-t>"] = layout_actions.toggle_preview },
+			defaults = {
+				mappings = {
+					n = { ["<C-t>"] = layout_actions.toggle_preview },
+					i = { ["<C-t>"] = layout_actions.toggle_preview },
+				},
 			},
 			extensions = {
 			},
@@ -179,7 +180,6 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
 
 
 -- https://github.com/folke/trouble.nvim
--- diagnostics list
 keymap.set("n", ",,d", "<Cmd>TroubleToggle<CR>", { noremap=true, silent=false })
 vim.api.nvim_create_autocmd("CmdUndefined", {
 	pattern = "Trouble*",
@@ -187,8 +187,40 @@ vim.api.nvim_create_autocmd("CmdUndefined", {
 	command = "packadd trouble.nvim"
 })
 
+-- https://github.com/junegunn/vim-easy-align
+keymap.set({"n", "x"}, "ga", "<Plug>(EasyAlign)", { noremap=true, silent=false })
+
+-- https://github.com/AckslD/nvim-trevJ.lua
+require('trevj').setup()
+keymap.set("n", "gJ",
+	function() require('trevj').format_at_cursor() end,
+	{ noremap=true, silent=false }
+)
+
+-- https://github.com/numToStr/Comment.nvim
+require('Comment').setup()
+
+-- https://github.com/t9md/vim-quickhl
+keymap.set({"n", "x"}, "<Space>;", "<Plug>(quickhl-manual-this)")
+
+-- https://github.com/phaazon/hop.nvim
+require('hop').setup()
+keymap.set({"n", "x"}, "<Space><Space>w", "<Cmd>HopWord<CR>")
+keymap.set({"n", "x"}, "<Space><Space>j", "<Cmd>HopWordAC<CR>")
+keymap.set({"n", "x"}, "<Space><Space>k", "<Cmd>HopWordBC<CR>")
+keymap.set({"n", "x"}, "<Space><Space>c", "<Cmd>HopChar1<CR>")
+keymap.set({"n", "x"}, "<Space><Space>l", "<Cmd>HopLine<CR>")
+
+-- https://github.com/kevinhwang91/nvim-hlslens
+-- https://github.com/haya14busa/vim-asterisk
+vim.g['asterisk#keeppos'] = 1
+keymap.set({'n', 'x'}, '*', [[<Plug>(asterisk-z*)<Cmd>lua require('hlslens').start()<CR>]])
+keymap.set({'n', 'x'}, '#', [[<Plug>(asterisk-z#)<Cmd>lua require('hlslens').start()<CR>]])
+keymap.set({'n', 'x'}, 'g*', [[<Plug>(asterisk-gz*)<Cmd>lua require('hlslens').start()<CR>]])
+keymap.set({'n', 'x'}, 'g#', [[<Plug>(asterisk-gz#)<Cmd>lua require('hlslens').start()<CR>]])
 
 -- Colorizing
+vim.cmd "colorscheme duskfox"
 vim.o.list = true
 vim.o.listchars = "tab:» ,trail:･"
 vim.cmd 'hi IndentBlanklineIndent1 guibg=#2f2b44 gui=nocombine'
@@ -207,4 +239,6 @@ require('indent_blankline').setup {
 	show_trailing_blankline_indent = false,
 }
 require'colorizer'.setup()
-require("todo-comments").setup()
+require'todo-comments'.setup()
+require'scrollbar'.setup()
+require'scrollbar.handlers.search'.setup()
