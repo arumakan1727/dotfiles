@@ -84,14 +84,15 @@ do -- LSP
 		lspconfig[lsp].setup(cfg)
 	end
 
+	-- https://github.com/j-hui/fidget.nvim
 	require("fidget").setup()
 end
 
 
--- treesitter
+-- Treesitter
 do
+	-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
 	require("nvim-treesitter.configs").setup {
-		-- https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
 		ensure_installed = "all",
 		highlight = {
 			enable = true,
@@ -104,11 +105,13 @@ do
 		nvimGPS = { enable = true },
 		autotag = { enable = true },
 	}
+
+	-- https://github.com/m-demare/hlargs.nvim
 	require('hlargs').setup()
+
+	-- https://github.com/haringsrob/nvim_context_vt
 	require('nvim_context_vt').setup {
-		-- Disable display of virtual text below blocks for indentation based languages like Python
-		disable_virtual_lines = true,
-		-- How many lines required after starting position to show virtual text
+		disable_virtual_lines = true, -- (Python 等のインデントベースの言語で) 仮想の行を作成しない
 		min_rows = 6,
 	}
 end

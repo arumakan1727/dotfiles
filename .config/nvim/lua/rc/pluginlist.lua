@@ -106,7 +106,6 @@ require"jetpack".startup(function(use)
 	-- Buffer, Window
 	use "akinsho/bufferline.nvim"
 	use "famiu/bufdelete.nvim"
-	use "stevearc/stickybuf.nvim"
 
 	-- Utility panel
 	opt_use "GustavoKatel/sidebar.nvim"
