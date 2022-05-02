@@ -62,7 +62,7 @@ o.directory = vim.fn.stdpath("data") .. "/swap/"
 vim.fn.mkdir(o.directory, "p")
 
 -- Undo
-o.undofile = true
+o.undofile = false
 o.undodir = vim.fn.stdpath("data") .. "/undo/"
 vim.fn.mkdir(o.undodir, "p")
 
