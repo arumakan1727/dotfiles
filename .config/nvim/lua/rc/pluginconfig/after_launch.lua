@@ -50,7 +50,7 @@ do -- Bufferline
 	keymap.set("n", "[b", "<Cmd>BufferLineCyclePrev<CR>", { noremap=true, silent=true })
 	keymap.set("n", "]b", "<Cmd>BufferLineCycleNext<CR>", { noremap=true, silent=true })
 	keymap.set("n", ",bp", "<Cmd>BufferLinePick<CR>", { noremap=true, silent=true })
-	keymap.set("n", ",bd", "<Cmd>bdelete!<CR>", { noremap=true, silent=true })
+	keymap.set("n", ",bd", "<Cmd>lua require'bufdelete'.bufdelete(0, false)<CR>", { noremap=true, silent=true })
 	keymap.set("n", ",bH", "<Cmd>BufferLineMovePrev<CR>", { noremap=true, silent=true })
 	keymap.set("n", ",bL", "<Cmd>BufferLineMoveNext<CR>", { noremap=true, silent=true })
 
