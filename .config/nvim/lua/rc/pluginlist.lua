@@ -45,6 +45,7 @@ require"jetpack".startup(function(use)
 	use { "alaviss/nim.nvim", ft="nim" }
 	use { "iamcco/markdown-preview.nvim", ft="markdown", run=":call mkdp#util#install()" }
 	use { "preservim/vim-markdown", ft="markdown" }
+	use { "qnighy/satysfi.vim" }
 
 	-- Language Server Protocol
 	use "neovim/nvim-lspconfig"

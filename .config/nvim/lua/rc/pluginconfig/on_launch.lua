@@ -36,6 +36,28 @@ do -- LSP
 	-- https://github.com/williamboman/nvim-lsp-installer
 	require("nvim-lsp-installer").setup {}
 
+	-- https://zenn.dev/monaqa/articles/2021-12-10-satysfi-language-server
+	local configs = require("lspconfig.configs")
+	local util = require("lspconfig.util")
+	if not configs.satysfi_ls then
+		configs.satysfi_ls = {
+			default_config = {
+				cmd = { 'satysfi-language-server' },
+				filetypes = { 'satysfi' },
+				root_dir = util.root_pattern('.git'),
+				single_file_support = true,
+			},
+			docs = {
+				description = [[
+	https://github.com/monaqa/satysfi-language-server
+	Language server for SATySFi. ]],
+				default_config = {
+					root_dir = [[root_pattern(".git")]],
+				},
+			},
+		}
+	end
+
 
 	-- lspconfig の設定
 	-- https://github.com/neovim/nvim-lspconfig#suggested-configuration
@@ -70,6 +92,7 @@ do -- LSP
 		'ocamllsp',
 		'pyright',
 		'rust_analyzer',
+		'satysfi_ls',
 		'sumneko_lua',
 		'tsserver',
 		'vimls',

@@ -12,3 +12,7 @@ au! BufRead,BufNewFile .flake8
       \ setlocal filetype=cfg
 au! BufRead,BufNewFile *.nim
       \ setlocal filetype=nim
+au! BufRead,BufNewFile *.saty,*.satyh,*satyh-*,*.satyg
+      \ setlocal filetype=satysfi
+au! BufRead,BufNewFile Makefile
+      \ setlocal filetype=make
