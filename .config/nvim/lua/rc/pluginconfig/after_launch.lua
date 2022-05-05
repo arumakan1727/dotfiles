@@ -300,7 +300,7 @@ keymap.set('n', ',,g', '<Cmd>Neogit<CR>')
 
 -- https://github.com/edluffy/specs.nvim
 require('specs').setup{
-	show_jumps  = true,
+	show_jumps  = false,
 	min_jump = 30,
 	popup = {
 		delay_ms = 0, -- delay before popup displays
