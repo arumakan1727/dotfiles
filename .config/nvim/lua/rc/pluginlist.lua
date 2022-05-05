@@ -61,7 +61,7 @@ require"jetpack".startup(function(use)
 	use "JoosepAlviste/nvim-ts-context-commentstring"
 	use "yioneko/nvim-yati"
 	use "m-demare/hlargs.nvim"
-	use "haringsrob/nvim_context_vt"
+	-- use "haringsrob/nvim_context_vt"
 	use "windwp/nvim-ts-autotag"
 	use "nvim-treesitter/nvim-treesitter-textobjects"
 	use "David-Kunz/treesitter-unit"

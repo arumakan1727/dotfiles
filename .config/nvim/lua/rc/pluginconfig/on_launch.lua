@@ -171,10 +171,10 @@ do
 	require('hlargs').setup()
 
 	-- https://github.com/haringsrob/nvim_context_vt
-	require('nvim_context_vt').setup {
+	--[[ require('nvim_context_vt').setup {
 		disable_virtual_lines = true, -- (Python 等のインデントベースの言語で) 仮想の行を作成しない
 		min_rows = 6,
-	}
+	} ]]
 end
 
 -- NeoTree
