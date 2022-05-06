@@ -12,8 +12,10 @@ create_autocmd("BufWritePost", {
 	group = MY_GROUP,
 	callback = function()
 		local head = vim.fn.getline(1)
-		if vim.startswith(head, "#!") and head:find("/bin/") then
-			vim.cmd "chmod u+x <afile>"
+		local filepath = vim.fn.fnamemodify(vim.fn.expand('%'), ':p')
+		local is_executable = vim.fn.executable(filepath) == 1
+		if vim.startswith(head, "#!") and head:find("/bin/") and not is_executable then
+			vim.cmd("! chmod u+x " .. filepath)
 		end
 	end,
 })
