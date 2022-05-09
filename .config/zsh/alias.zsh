@@ -61,6 +61,8 @@ alias open='xdg-open'
 # g++
 alias g+='g++ -std=c++17 -g2 -Og -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -fsanitize=address,undefined -ftrapv'
 
+alias vim='vim -X'
+
 # nim
 alias nimr='nim cpp --hints:off --run'
 alias nimfr='nim cpp -d:release --opt:speed --multimethods:on --warning[SmallLshouldNotBeUsed]:off --hints:off --run'

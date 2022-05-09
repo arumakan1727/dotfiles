@@ -1,4 +1,9 @@
-vim.cmd 'source ~/.config/nvim/rc/base.vim'
-vim.cmd 'source ~/.config/nvim/rc/mappings.vim'
-require 'rc/plugin_list'
-vim.cmd 'source ~/.config/nvim/rc/functions.vim'
+vim.o.encoding = "utf-8"
+vim.o.fileencodings = "ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,sjis,latin1"
+vim.o.fileformats = "unix,dos,mac"
+
+require "rc/base"
+require "rc/keymaps"
+require "rc/autocmd"
+require "rc/pluginlist"
+require "rc/pluginconfig"
