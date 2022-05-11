@@ -81,7 +81,6 @@ require"jetpack".startup(function(use)
 	use "osyo-manga/vim-milfeulle"
 	use "kevinhwang91/nvim-hlslens"
 	use "haya14busa/vim-asterisk"
-	use "petertriho/nvim-scrollbar"
 	use "edluffy/specs.nvim"
 
 	-- Completion
