@@ -65,68 +65,6 @@ do -- Bufferline
 	keymap.set("n", ",9", "<Cmd>BufferLineGoToBuffer 9<CR>", { noremap=true, silent=true })
 end
 
--- https://github.com/nvim-lualine/lualine.nvim
-do  -- Statusline
-	local function get_active_lsp_names()
-		local FALLBACK_MSG = 'No Active LSP'
-		local clients = vim.lsp.get_active_clients()
-		if #clients == 0 then
-			return FALLBACK_MSG
-		end
-
-		local bufnr = vim.fn.bufnr()
-		local res = nil
-		for _, c in ipairs(clients) do
-			if c.attached_buffers[bufnr] then
-				res = res and (res .. ',' .. c.name) or c.name
-			end
-		end
-		return res or FALLBACK_MSG
-	end
-
-	local gps = require('nvim-gps')
-	gps.setup{}
-
-	require'lualine'.setup {
-		options = {
-			theme = 'solarized_dark'
-		},
-		sections = {
-			lualine_b = {
-				{
-					'filename',
-					path = 1,  -- 0: Just the filename / 1: Relative path / 2: Absolute path
-				}
-			},
-			lualine_c = {
-				'branch',
-				'diff',
-				{
-					'diagnostics',
-					sources = {'nvim_lsp'},
-					diagnostics_color = {
-						error = {fg = '#ff3333'}
-					}
-				},
-				{
-					gps.get_location,
-					cond = gps.is_available
-				},
-			},
-			lualine_x = {
-				'encoding',
-				'fileformat',
-				'filetype',
-				{
-					'active_lsp_name',
-					fmt = get_active_lsp_names,
-					color = {fg = '#60c3c0'}
-				},
-			},
-		},
-	}
-end
-
 
 -- https://github.com/mattn/vim-sonictemplate/blob/master/doc/sonictemplate.txt
 do -- sonictemplate
@@ -318,12 +256,21 @@ require('specs').setup{
 keymap.set("n", "<Space><CR>", require("specs").show_specs)
 
 -- Colorizing
+local function setup_highlight()
+	vim.o.list = true
+	vim.o.listchars = "tab:» ,trail:･"
+	vim.cmd 'hi IndentBlanklineIndent1 guibg=#2f2b44 gui=nocombine'
+	vim.cmd 'hi IndentBlanklineIndent2 guibg=#231d36 gui=nocombine'
+	vim.cmd 'hi Whitespace guifg=#575385 gui=nocombine'  -- color of listchar
+end
+vim.api.nvim_create_autocmd("ColorScheme", {
+	group = MY_GROUP,
+	callback = setup_highlight
+})
+
 vim.cmd "colorscheme duskfox"
-vim.o.list = true
-vim.o.listchars = "tab:» ,trail:･"
-vim.cmd 'hi IndentBlanklineIndent1 guibg=#2f2b44 gui=nocombine'
-vim.cmd 'hi IndentBlanklineIndent2 guibg=#231d36 gui=nocombine'
-vim.cmd 'hi Whitespace guifg=#575385 gui=nocombine'  -- color of listchar
+setup_highlight()
+
 require('indent_blankline').setup {
 	char = "",
 	char_highlight_list = {
@@ -338,5 +285,65 @@ require('indent_blankline').setup {
 }
 require'colorizer'.setup()
 require'todo-comments'.setup()
-require'scrollbar'.setup()
-require'scrollbar.handlers.search'.setup()
+
+-- https://github.com/nvim-lualine/lualine.nvim
+do  -- Statusline
+	local function get_active_lsp_names()
+		local FALLBACK_MSG = 'No Active LSP'
+		local clients = vim.lsp.get_active_clients()
+		if #clients == 0 then
+			return FALLBACK_MSG
+		end
+
+		local bufnr = vim.fn.bufnr()
+		local res = nil
+		for _, c in ipairs(clients) do
+			if c.attached_buffers[bufnr] then
+				res = res and (res .. ',' .. c.name) or c.name
+			end
+		end
+		return res or FALLBACK_MSG
+	end
+
+	local gps = require('nvim-gps')
+	gps.setup{}
+
+	require'lualine'.setup {
+		options = {
+			theme = 'solarized_dark'
+		},
+		sections = {
+			lualine_b = {
+				{
+					'filename',
+					path = 1,  -- 0: Just the filename / 1: Relative path / 2: Absolute path
+				}
+			},
+			lualine_c = {
+				'branch',
+				'diff',
+				{
+					'diagnostics',
+					sources = {'nvim_lsp'},
+					diagnostics_color = {
+						error = {fg = '#ff3333'}
+					}
+				},
+				{
+					gps.get_location,
+					cond = gps.is_available
+				},
+			},
+			lualine_x = {
+				'encoding',
+				'fileformat',
+				'filetype',
+				{
+					'active_lsp_name',
+					fmt = get_active_lsp_names,
+					color = {fg = '#60c3c0'}
+				},
+			},
+		},
+	}
+end
