@@ -96,6 +96,7 @@ do -- LSP
 		'sumneko_lua',
 		'tsserver',
 		'vimls',
+		'vuels',
 		'volar',
 	}
 	local custom_configs = {
@@ -109,6 +110,12 @@ do -- LSP
 				'javascript', 'javascriptreact', 'typescript', 'typescriptreact',
 				'vue', 'astro',
 			}
+		},
+		["vuels"] = {
+			autostart = false,
+		},
+		["volar"] = {
+			autostart = false,
 		},
 	}
 	local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
