@@ -98,8 +98,8 @@ require"jetpack".startup(function(use)
 	use "windwp/nvim-autopairs"
 
 	-- Telescope (Fuzzy finder)
-	opt_use "nvim-telescope/telescope.nvim"
-	opt_use "tamago324/telescope-sonictemplate.nvim"
+	use "nvim-telescope/telescope.nvim"
+	use "tamago324/telescope-sonictemplate.nvim"
 
 	-- Template
 	opt_use "mattn/vim-sonictemplate"
@@ -120,8 +120,8 @@ require"jetpack".startup(function(use)
 	use "TimUntersberger/neogit"
 
 	-- Memo
-	opt_use "renerocksai/calendar-vim"
-	opt_use "renerocksai/telekasten.nvim"
+	use "renerocksai/calendar-vim"
+	use "renerocksai/telekasten.nvim"
 
 	-- Colorscheme, Highlight
 	use "EdenEast/nightfox.nvim"

@@ -114,4 +114,5 @@ do
 	autopairs.setup{}
 	autopairs.add_rule(Rule('"""', '"""', 'nim'))
 	autopairs.add_rule(Rule('{.', '.', 'nim'))
+	autopairs.add_rule(Rule('```', '```', 'telekasten'))
 end
