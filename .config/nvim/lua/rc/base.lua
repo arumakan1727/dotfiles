@@ -105,6 +105,7 @@ end
 
 -- UI, Visual, Display
 o.cursorline = true -- 現在行をハイライト
+o.cursorcolumn = true -- 現在列をハイライト
 o.display = "lastline" -- 長い行も一行で収まるように
 o.showmode = false
 o.showmatch = true -- 括弧の対応をハイライト
