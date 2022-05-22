@@ -147,7 +147,7 @@ do
 			-- calendar week display mode: 1 .. 'WK01', 2 .. 'WK 1', 3 .. 'KW01', 4 .. 'KW 1', 5 .. '1'
 			weeknm = 4,
 			-- use monday as first day of week: 1 .. true, 0 .. false
-			calendar_monday = 1,
+			calendar_monday = 0,
 			-- calendar mark: where to put mark for marked days: 'left', 'right', 'left-fit'
 			calendar_mark = 'left-fit',
 		},
@@ -210,7 +210,7 @@ do
 
 	-- search
 	keymap.set("n", ",zf", "<Cmd>Telekasten find_notes<CR>")
-	keymap.set("n", ",zd", "<Cmd>Telekasten find_dayly_notes<CR>")
+	keymap.set("n", ",zd", "<Cmd>Telekasten find_daily_notes<CR>")
 	keymap.set("n", ",zw", "<Cmd>Telekasten find_weekly_notes<CR>")
 	keymap.set("n", ",zg", "<Cmd>Telekasten search_notes<CR>")
 
