@@ -16,3 +16,5 @@ au! BufRead,BufNewFile *.saty,*.satyh,*satyh-*,*.satyg
       \ setlocal filetype=satysfi
 au! BufRead,BufNewFile Makefile
       \ setlocal filetype=make
+au! BufRead,BufNewFile *.snippets
+      \ setlocal filetype=snippets
