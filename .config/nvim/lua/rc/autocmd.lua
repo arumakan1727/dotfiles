@@ -33,3 +33,14 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		})
 	end,
 })
+
+-- 前回閉じた時点の位置にカーソルを移動
+vim.api.nvim_create_autocmd("BufRead", {
+	group = MY_GROUP,
+	callback = function ()
+		local last_row = vim.fn.line([['"]])
+		if last_row > 0 and last_row <= vim.fn.line("$") then
+			vim.cmd [[normal g`"]]
+		end
+	end
+})
