@@ -4,7 +4,7 @@ SAVEHIST=100000            # HISTFILE に保存される履歴の件数
 HISTORY_IGNORE="(ls|ll|la|pwd|cd ..|cd|task *|jrnl *)"
 
 # C-w などで単語ごとの削除をする際の「単語境界にならない記号リスト」
-WORDCHARS='*?_-.[]~&;=!#$%^(){}<>'
+WORDCHARS='*?[]~&;!#$%^(){}<>'
 # cd が検索するディレクトリのパス
 cdpath=("${HOME} ..")
 
@@ -48,6 +48,7 @@ setopt hist_expire_dups_first   # 履歴リストのイベント数が上限(HIS
 unsetopt hist_fcntl_lock        # よくわからんけど、ファイルロックに関する設定。man によるとパフォーマンスが向上するらしい。
 unsetopt hist_find_no_dups      # ラインエディタでヒストリ検索するときに一度見つかったものは後続で表示しない、をしない
 unsetopt hist_no_functions      # 関数定義のコマンドを履歴リストに追加しない、をしない
+setopt nomultios                # リダイレクトが上手く行くように (参考: https://unix.stackexchange.com/questions/265061/how-can-i-pipe-only-stderr-in-zsh)
 
 ## 以下の三つは それぞれ排他的な(同時にONにすべきじゃない)オプション
 #setopt inc_append_history;     # 履歴リストにイベントを登録するのと同時に、履歴ファイルにも書き込みを行う(追加する)。
@@ -107,7 +108,7 @@ setopt pushd_to_home         # pushd 引数ナシ == pushd $HOME
 setopt pushd_silent          # pushd,popdの度にディレクトリスタックの中身を表示しない
 setopt pushdminus            # + - の動作を入れ替える
 
-setopt no_rm_star_wait       # rm * を実行する前に確認
+setopt no_rm_star_wait       # rm * を実行する前に確認しない
 #setopt rm_star_silent       # rm * を実行する前に確認しない
 setopt notify                # バックグラウンドジョブが終了したら(プロンプトの表示を待たずに)すぐに知らせる
 
