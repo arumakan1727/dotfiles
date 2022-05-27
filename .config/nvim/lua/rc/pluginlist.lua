@@ -46,6 +46,7 @@ require"jetpack".startup(function(use)
 	use { "iamcco/markdown-preview.nvim", ft="markdown", run=":call mkdp#util#install()" }
 	use { "preservim/vim-markdown", ft="markdown" }
 	use { "qnighy/satysfi.vim" }
+	use { "mechatroner/rainbow_csv", ft={"csv", "tsv"} }
 
 	-- Language Server Protocol
 	use "neovim/nvim-lspconfig"

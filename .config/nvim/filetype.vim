@@ -1,7 +1,9 @@
 au! BufRead,BufNewFile */i3/config
       \ setlocal filetype=i3config
 au! BufRead,BufNewFile *.tsv
-      \ setlocal filetype=tsv
+      \ setlocal filetype=tsv tabstop=8
+au! BufRead,BufNewFile *.csv
+      \ setlocal filetype=csv
 au! BufRead,BufNewFile .clang-format
       \ setlocal filetype=yaml
 au! BufRead,BufNewFile *.en
