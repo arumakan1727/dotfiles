@@ -49,7 +49,7 @@ alias ...='cd ../..'
 
 # Clipboard
 alias pbcopy='xsel --input --clipboard'
-alias pbpaste='xsel --output'
+alias pbpaste='xsel --output --clipboard'
 
 # move prompt to bottom of terminal
 alias move-buttom='tput cup $(($(stty size|cut -d " " -f 1))) 0 && tput ed'
