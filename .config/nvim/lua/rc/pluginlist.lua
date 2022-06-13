@@ -18,6 +18,7 @@ vim.g["jetpack#optimization"] = 1
 vim.g["jetpack#copy_method"] = "symlink"
 
 vim.cmd("packadd vim-jetpack")
+vim.cmd("runtime */jetpack.vim")
 
 require"jetpack".startup(function(use)
 	local function opt_use(name)

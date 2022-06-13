@@ -20,3 +20,5 @@ au! BufRead,BufNewFile Makefile
       \ setlocal filetype=make
 au! BufRead,BufNewFile *.snippets
       \ setlocal filetype=snippets
+au! BufRead,BufNewFile *.prolog
+      \ setlocal filetype=prolog
