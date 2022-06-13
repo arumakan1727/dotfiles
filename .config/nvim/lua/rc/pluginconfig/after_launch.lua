@@ -17,12 +17,6 @@ do -- sonictemplate
 		vim.fn.expand('~/.config/nvim/sonictemplate'),
 		vim.fn.expand('~/kyopro/sonictemplate'),
 	}
-	vim.api.nvim_create_autocmd("CmdUndefined", {
-		pattern = "Template",
-		group = MY_GROUP,
-		once = true,
-		command = "packadd vim-sonictemplate"
-	})
 end
 
 

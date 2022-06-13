@@ -104,7 +104,7 @@ require"jetpack".startup(function(use)
 	use "tamago324/telescope-sonictemplate.nvim"
 
 	-- Template
-	opt_use "mattn/vim-sonictemplate"
+	use "mattn/vim-sonictemplate"
 
 	-- Statusline
 	use "nvim-lualine/lualine.nvim"
