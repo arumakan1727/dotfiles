@@ -81,6 +81,7 @@ do -- LSP
 	local servers = {
 		'bashls',
 		'clangd',
+		'cmake',
 		'cssls',
 		'dockerls',
 		'gopls',
