@@ -61,7 +61,6 @@ cmp.setup {
 		{ name = "nvim_lua", priority = 50 },
 		{ name = "emoji", priority = 50 },
 		{ name = "luasnip", priority = 40 },
-	}, {
 		{ name = "buffer", priority = 50 },
 	}),
 	formatting = {
