@@ -91,6 +91,7 @@ do -- LSP
 		'jsonls',
 		'nimls',
 		'ocamllsp',
+		'phpactor',
 		'pyright',
 		'rust_analyzer',
 		'satysfi_ls',

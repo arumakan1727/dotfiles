@@ -69,6 +69,8 @@ do
 			null_ls.builtins.diagnostics.eslint_d,
 			null_ls.builtins.diagnostics.hadolint,
 			null_ls.builtins.diagnostics.staticcheck,
+			null_ls.builtins.diagnostics.phpstan,
+			null_ls.builtins.diagnostics.phpsmd,
 		}
 	}
 end
