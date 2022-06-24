@@ -70,7 +70,7 @@ do
 			null_ls.builtins.diagnostics.hadolint,
 			null_ls.builtins.diagnostics.staticcheck,
 			null_ls.builtins.diagnostics.phpstan,
-			null_ls.builtins.diagnostics.phpsmd,
+			null_ls.builtins.diagnostics.phpmd,
 		}
 	}
 end
