@@ -4,7 +4,7 @@
 (command -v rebenv > /dev/null 2>&1) && eval "$(rbenv init -)"
 
 [ -r ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --hidden'
-export FZF_CTRL_T_COMMAND='rg --files --hidden'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
+export FZF_CTRL_T_COMMAND='rg --files --hidden --follow'
 export FZF_DEFAULT_OPTS='--height 60% --reverse --border'
-export FZF_ALT_C_COMMAND='fd --type=d --follow --hidden --exclude=.git'
+export FZF_ALT_C_COMMAND='fd --type=d --follow --hidden --follow --exclude=.git'
