@@ -25,7 +25,7 @@ keymap.set("n", "z<Space>", "<Cmd>Telescope<CR>", { noremap=true, silent=false }
 keymap.set("n", "za", "<Cmd>Telescope autocommands<CR>", { noremap=true, silent=false })
 keymap.set("n", "zb", "<Cmd>Telescope buffers<CR>", { noremap=true, silent=false })
 keymap.set("n", "zc", "<Cmd>Telescope commands<CR>", { noremap=true, silent=false })
-keymap.set("n", "zf", "<Cmd>Telescope find_files<CR>", { noremap=true, silent=false })
+keymap.set("n", "zf", "<Cmd>Telescope find_files hidden=true follow=true<CR>", { noremap=true, silent=false })
 keymap.set("n", "zg", "<Cmd>Telescope live_grep<CR>", { noremap=true, silent=false })
 keymap.set("n", "zh", "<Cmd>Telescope help_tags<CR>", { noremap=true, silent=false })
 keymap.set("n", "zk", "<Cmd>Telescope keymaps<CR>", { noremap=true, silent=false })
