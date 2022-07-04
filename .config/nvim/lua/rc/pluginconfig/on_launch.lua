@@ -109,7 +109,7 @@ do -- LSP
 			filetypes = {
 				'html', 'xml',
 				'css', 'scss', 'sass', 'stylus',
-				'javascript', 'javascriptreact', 'typescript', 'typescriptreact',
+				'javascriptreact', 'typescriptreact',
 				'vue', 'astro',
 			}
 		},
