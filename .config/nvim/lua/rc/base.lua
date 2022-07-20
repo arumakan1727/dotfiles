@@ -19,7 +19,7 @@ opt.complete:append("k") -- 補完に辞書ファイル追加
 o.completeopt = "menuone,noselect,noinsert"
 
 -- Indent
-o.tabstop = 2  -- タブ文字の画面上での表示幅
+o.tabstop = 4  -- タブ文字の画面上での表示幅
 o.shiftwidth = 2  -- cindentやautoindent時に挿入されるインデント幅
 o.softtabstop = 0  -- Tabキー押下時に挿入される空白文字数, 0の場合はtabstopと同じ, BSにも影響する
 o.expandtab = true
