@@ -11,12 +11,12 @@ set clipboard+=unnamed
 nnoremap j gj
 nnoremap k gk
 nnoremap Y y$
-nnoremap L :tabnext<CR>
-nnoremap H :tabprev<CR>
+nnoremap [b :tabprev<CR>
+nnoremap ]b :tabnext<CR>
 
 "改行の挿入
 nnoremap <Space><CR> i<CR><ESC>
 
 nnoremap <Space>w <C-w>
 
-nnoremap <ESC><ESC> :nohlsearch<CR>
+nnoremap ,<ESC> :nohlsearch<CR>
