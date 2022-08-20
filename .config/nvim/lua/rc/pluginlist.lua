@@ -43,7 +43,7 @@ require"jetpack".startup(function(use)
 
 	-- Specific language
 	use { "mboughaba/i3config.vim", ft="i3config" }
-	use { "alaviss/nim.nvim", ft="nim" }
+	use { "alaviss/nim.nvim" }
 	use { "iamcco/markdown-preview.nvim", ft="markdown", run=":call mkdp#util#install()" }
 	use { "preservim/vim-markdown", ft="markdown" }
 	use { "qnighy/satysfi.vim" }

@@ -22,3 +22,5 @@ au! BufRead,BufNewFile *.snippets
       \ setlocal filetype=snippets
 au! BufRead,BufNewFile *.prolog
       \ setlocal filetype=prolog
+au! BufRead,BufNewFile *.nasm
+      \ setlocal filetype=nasm

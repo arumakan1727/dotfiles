@@ -84,10 +84,12 @@ do -- LSP
 		'cmake',
 		'cssls',
 		'dockerls',
+		'dartls',
 		'gopls',
 		'emmet_ls',
 		'hls',
 		'html',
+		'jdtls',
 		'jsonls',
 		'nimls',
 		'ocamllsp',
@@ -100,6 +102,7 @@ do -- LSP
 		'vimls',
 		'vuels',
 		'volar',
+		'yamlls',
 	}
 	local custom_configs = {
 		["clangd"] = {

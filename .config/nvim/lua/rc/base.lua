@@ -128,7 +128,7 @@ o.signcolumn = "yes"
 -- o.foldmethod="marker"
 o.foldmethod = "manual"
 o.foldlevel = 1
-o.foldlevelstart = 99
+-- o.foldlevelstart = 99
 vim.w.foldcolumn = "0:"
 
 -- Cursor style
