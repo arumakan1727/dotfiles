@@ -1,5 +1,6 @@
 font:
-  size: 8.5
+  use_thin_strokes: true
+  size: 11
   normal:
     family: 'JetBrainsMono Nerd Font'
 
