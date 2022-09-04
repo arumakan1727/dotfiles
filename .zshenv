@@ -66,7 +66,7 @@ export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 if builtin command -v dircolors > /dev/null 2>&1 && [ -f "$HOME/.config/dircolors" ]; then
   eval "$(dircolors "$HOME/.config/dircolors")"
 else
-  eval "$(dircolors -b)"
+  ( builtin command -v dircolors > /dev/null 2>&1 ) && eval "$(dircolors -b)"
 fi
 
 if [ -z "$LS_COLORS" ]; then

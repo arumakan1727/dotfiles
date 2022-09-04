@@ -44,4 +44,4 @@ fi
 
 # fnm
 export PATH=/home/armkn/.fnm:$PATH
-eval "`fnm env`"
+(command -v fnm > /dev/null 2>&1) && eval "`fnm env`"

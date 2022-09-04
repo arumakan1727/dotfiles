@@ -56,7 +56,7 @@ alias move-buttom='tput cup $(($(stty size|cut -d " " -f 1))) 0 && tput ed'
 
 (command -v batcat > /dev/null 2>&1) && alias bat='batcat'
 
-alias open='xdg-open'
+(command -v open > /dev/null 2>&1) || alias open='xdg-open'
 
 # g++
 alias g+='g++ -std=c++17 -g2 -Og -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -fsanitize=address,undefined -ftrapv'
