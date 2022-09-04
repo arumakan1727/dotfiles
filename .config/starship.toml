@@ -62,6 +62,12 @@ $battery\
 $shell\
 $character"""
 
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
 [directory]
 truncate_to_repo = false
 fish_style_pwd_dir_length = 1
