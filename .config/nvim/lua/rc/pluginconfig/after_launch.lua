@@ -57,20 +57,25 @@ do
 	null_ls.setup {
 		sources = {
 			-- formatter
-			null_ls.builtins.formatting.stylua,
 			null_ls.builtins.formatting.black,
+			null_ls.builtins.formatting.erb_lint,
 			null_ls.builtins.formatting.isort,
-			null_ls.builtins.formatting.prettier,
-			null_ls.builtins.formatting.shfmt,
 			null_ls.builtins.formatting.markdownlint,
+			null_ls.builtins.formatting.prettier,
+			null_ls.builtins.formatting.rubocop,
+			null_ls.builtins.formatting.shfmt,
+			null_ls.builtins.formatting.stylua,
 			-- linter
-			null_ls.builtins.diagnostics.shellcheck,
 			null_ls.builtins.diagnostics.cppcheck,
+			null_ls.builtins.diagnostics.erb_lint,
 			null_ls.builtins.diagnostics.eslint,
 			null_ls.builtins.diagnostics.hadolint,
-			null_ls.builtins.diagnostics.staticcheck,
-			null_ls.builtins.diagnostics.phpstan,
+			null_ls.builtins.diagnostics.misspell,
 			null_ls.builtins.diagnostics.phpmd,
+			null_ls.builtins.diagnostics.phpstan,
+			null_ls.builtins.diagnostics.rubocop,
+			null_ls.builtins.diagnostics.shellcheck,
+			null_ls.builtins.diagnostics.staticcheck,
 		}
 	}
 end
