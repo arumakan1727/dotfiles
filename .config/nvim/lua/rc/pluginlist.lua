@@ -48,6 +48,8 @@ require"jetpack".startup(function(use)
 	use { "preservim/vim-markdown", ft="markdown" }
 	use { "qnighy/satysfi.vim" }
 	use { "mechatroner/rainbow_csv", ft={"csv", "tsv"} }
+	use { "kchmck/vim-coffee-script" }
+
 
 	-- Language Server Protocol
 	use "neovim/nvim-lspconfig"
