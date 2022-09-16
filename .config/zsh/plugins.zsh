@@ -31,4 +31,4 @@ zinit wait'!1' atinit'zpcompinit' lucid light-mode for \
 zinit wait'!3' lucid light-mode for \
   mollifier/cd-gitroot \
   paulirish/git-open \
-  Tarrasch/zsh-bd \
+  Tarrasch/zsh-bd
