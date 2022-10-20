@@ -22,8 +22,8 @@
   d = diff
   ds = diff --staged
   pf = push --force-with-lease
-  st = status
-  sta = status --untracked-files=all
+  s = status
+  sa = status --untracked-files=all
   graph = log --graph --oneline
   sw = switch
   rstr = restore --staged

@@ -2,6 +2,7 @@
 (command -v direnv > /dev/null 2>&1) && eval "$(direnv hook zsh)"
 (command -v starship > /dev/null 2>&1) && eval "$(starship init zsh)"
 (command -v rebenv > /dev/null 2>&1) && eval "$(rbenv init -)"
+(command -v phpenv > /dev/null 2>&1) && eval "$(phpenv init -)"
 
 [ -r ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
