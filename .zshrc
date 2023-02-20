@@ -28,6 +28,7 @@ if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux > /dev/null 2>&1 }; t
   fi
 fi
 
+
 source $HOME/.config/zsh/base.zsh
 source $HOME/.config/zsh/completion.zsh
 source $HOME/.config/zsh/function.zsh
@@ -38,10 +39,10 @@ source $HOME/.config/zsh/external_tool_init.zsh
 
 [[ -r $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
 
-if command -v zprof > /dev/null 2>&1 ; then
-  zprof
-fi
-
 # fnm
 export PATH=/home/armkn/.fnm:$PATH
 (command -v fnm > /dev/null 2>&1) && eval "`fnm env`"
+
+if command -v zprof > /dev/null 2>&1 ; then
+  zprof
+fi

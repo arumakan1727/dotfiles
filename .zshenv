@@ -5,6 +5,8 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 typeset -U path PATH manpath sudo_path
 typeset -xT SUDO_PATH sudo_path
 
+export DENO_INSTALL="$HOME/.deno/"
+
 path=(
   $HOME/.bin(N-/)
   $HOME/bin(N-/)
@@ -21,6 +23,7 @@ path=(
   $HOME/.fnm(N-/)
   $HOME/.phpenv/bin(N-/)
   $HOME/.cargo/bin(N-/)
+  $DENO_INSTALL/bin/deno
   /usr/local/go/bin(N-/)
   $path
 )
