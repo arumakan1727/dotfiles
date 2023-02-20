@@ -1,5 +1,7 @@
 au! BufRead,BufNewFile */i3/config
       \ setlocal filetype=i3config
+au! BufRead,BufNewFile *.bnf,*.ebnf
+      \ setlocal filetype=ebnf
 au! BufRead,BufNewFile *.tsv
       \ setlocal filetype=tsv tabstop=8
 au! BufRead,BufNewFile *.csv
