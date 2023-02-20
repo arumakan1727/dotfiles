@@ -98,7 +98,7 @@ do -- LSP
 		'rust_analyzer',
 		'satysfi_ls',
 		'solargraph',
-		'sumneko_lua',
+		'lua_ls',
 		'tsserver',
 		'vimls',
 		'volar',
@@ -154,6 +154,7 @@ do
 		ensure_installed = "all",
 		highlight = {
 			enable = true,
+			disable = { "yaml" },
 			additional_vim_regex_highlighting = false,
 		},
 		indent = { enable = false, }, -- yati を使うので disable
