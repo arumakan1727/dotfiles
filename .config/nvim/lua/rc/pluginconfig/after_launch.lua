@@ -68,14 +68,16 @@ do
 			-- linter
 			null_ls.builtins.diagnostics.cppcheck,
 			null_ls.builtins.diagnostics.erb_lint,
-			null_ls.builtins.diagnostics.eslint,
+			null_ls.builtins.diagnostics.eslint_d.with({
+				method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+			}),
 			null_ls.builtins.diagnostics.hadolint,
 			null_ls.builtins.diagnostics.misspell,
 			-- null_ls.builtins.diagnostics.phpmd,
 			-- null_ls.builtins.diagnostics.phpstan,
 			null_ls.builtins.diagnostics.rubocop,
 			null_ls.builtins.diagnostics.shellcheck,
-			null_ls.builtins.diagnostics.staticcheck,
+			null_ls.builtins.diagnostics.golangci_lint,
 		}
 	}
 end
