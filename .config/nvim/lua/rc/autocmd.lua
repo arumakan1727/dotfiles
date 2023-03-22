@@ -11,10 +11,15 @@ create_autocmd("WinLeave", { group=MY_GROUP, command="setlocal nocursorline nocu
 create_autocmd("BufWritePost", {
 	group = MY_GROUP,
 	callback = function()
-		local head = vim.fn.getline(1)
+		local line = vim.fn.getline(1)
+		if not (vim.startswith(line, "#!") and line:find("/bin/")) then
+			return
+		end
 		local filepath = vim.fn.fnamemodify(vim.fn.expand('%'), ':p')
-		local is_executable = vim.fn.executable(filepath) == 1
-		if vim.startswith(head, "#!") and head:find("/bin/") and not is_executable then
+		if vim.endswith(filepath, '.env') or (not vim.startswith(filepath, '/home/') and not vim.startswith(filepath, '/ramdisk/')) then
+			return
+		end
+		if vim.fn.executable(filepath) ~= 1 then
 			vim.cmd("! chmod u+x " .. filepath)
 		end
 	end,
