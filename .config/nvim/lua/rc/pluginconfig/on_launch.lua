@@ -102,7 +102,6 @@ do -- LSP
 		'tsserver',
 		'vimls',
 		'volar',
-		'vuels',
 		'yamlls',
 	}
 	local custom_configs = {
@@ -114,14 +113,7 @@ do -- LSP
 				'html', 'xml',
 				'css', 'scss', 'sass', 'stylus',
 				'javascriptreact', 'typescriptreact',
-				'vue', 'astro',
 			}
-		},
-		["vuels"] = {
-			autostart = false,
-		},
-		["volar"] = {
-			autostart = false,
 		},
 	}
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()
