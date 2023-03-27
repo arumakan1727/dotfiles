@@ -4,7 +4,10 @@ import { SupportedSysName } from "../SUPPORTED_SYSTEMS.ts";
 import { detectSysName, fetchLinuxDistribName } from "../libs/sys_info.ts";
 
 const scope2pkgs: {
-  [scope: string]: Iterable<InstallWay> | (() => Iterable<InstallWay>) | undefined;
+  [scope: string]:
+    | ReadonlyArray<InstallWay>
+    | (() => ReadonlyArray<InstallWay>)
+    | undefined;
 } = {
   "cli.all": () => Array.prototype.concat(...Object.values(PKG_LIST.cli)),
   "cli.essentials": PKG_LIST.cli.essentials,
@@ -34,15 +37,19 @@ export default async function main(args: string[]) {
   const pkgs = selectPkgsOrFatal(pkgScope);
   const sysName = await detectSysName(Deno.build.os, fetchLinuxDistribName);
 
-  for (const pkg of pkgs) {
-    const { success } = await install(pkg, sysName, { dryRun: true });
+  for (let i = 0; i < pkgs.length; ++i) {
+    const pkg = pkgs[i];
+    const { success } = await install(pkg, sysName, {
+      dryRun: true,
+      outputPrefix: `[${i + 1}/${pkgs.length}]`,
+    });
     if (!success) {
       Deno.exit(255);
     }
   }
 }
 
-function selectPkgsOrFatal(scope: string): Iterable<InstallWay> {
+function selectPkgsOrFatal(scope: string): ReadonlyArray<InstallWay> {
   const pkgs = scope2pkgs[scope];
   if (pkgs == null) {
     console.error(`Error: invalid scope:`, scope);
@@ -59,14 +66,14 @@ function selectPkgsOrFatal(scope: string): Iterable<InstallWay> {
 async function install(
   way: InstallWay,
   sysName: SupportedSysName,
-  opts: { dryRun: boolean },
+  opt: { dryRun: boolean; outputPrefix: string },
 ): Promise<Deno.ProcessStatus> {
   const cmd = determineInstallCmd(way, sysName);
 
   console.log();
-  console.log(new Date().toISOString(), cmd.join(" "));
+  console.log(opt.outputPrefix, new Date().toLocaleTimeString(), cmd.join(" "));
 
-  if (opts.dryRun) {
+  if (opt.dryRun) {
     return { success: true, code: 0 };
   } else {
     return await Deno.run({ cmd }).status();
