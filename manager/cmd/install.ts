@@ -2,6 +2,7 @@ import * as PKG_LIST from "../PKG_LIST.ts";
 import { determineInstallCmd, InstallWay } from "../INSTALL_CMD.ts";
 import { SupportedSysName } from "../SUPPORTED_SYSTEMS.ts";
 import { detectSysName, fetchLinuxDistribName } from "../libs/sys_info.ts";
+import { CYAN, MAGENTA, RESET } from "../libs/ansi_color.ts";
 
 const scope2pkgs: {
   [scope: string]:
@@ -70,8 +71,11 @@ async function install(
 ): Promise<Deno.ProcessStatus> {
   const cmd = determineInstallCmd(way, sysName);
 
-  console.log();
-  console.log(opt.outputPrefix, new Date().toLocaleTimeString(), cmd.join(" "));
+  console.log(
+    `\n` + opt.outputPrefix,
+    `${MAGENTA}${new Date().toLocaleTimeString()}`,
+    `${CYAN}${cmd.join(" ")}${RESET}`,
+  );
 
   if (opt.dryRun) {
     return { success: true, code: 0 };
