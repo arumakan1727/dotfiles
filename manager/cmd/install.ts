@@ -2,62 +2,57 @@ import * as PKG_LIST from "../PKG_LIST.ts";
 import { determineInstallCmd, InstallWay } from "../INSTALL_CMD.ts";
 import { SupportedSysName } from "../SUPPORTED_SYSTEMS.ts";
 import { detectSysName, fetchLinuxDistribName } from "../libs/sys_info.ts";
-import { CYAN, MAGENTA, RESET } from "../libs/ansi_color.ts";
+import { colors, Command, EnumType } from "../deps.ts";
+import { concat } from "../libs/collection.ts";
 
-const scope2pkgs: {
-  [scope: string]:
-    | ReadonlyArray<InstallWay>
-    | (() => ReadonlyArray<InstallWay>)
-    | undefined;
-} = {
-  "cli.all": () => Array.prototype.concat(...Object.values(PKG_LIST.cli)),
+const scope2pkgs = {
+  "cli.all": () => concat(...Object.values(PKG_LIST.cli)),
   "cli.essentials": PKG_LIST.cli.essentials,
   "cli.extras": PKG_LIST.cli.extras,
   "cli.devs": PKG_LIST.cli.devs,
   "fonts.all": PKG_LIST.fonts,
   "gui.all": PKG_LIST.gui,
-};
+} as const;
 
-function printUsage() {
-  console.log(`\
-USAGE:
-  install.ts <SCOPE>
+type Scope = keyof typeof scope2pkgs;
 
-ARGS:
-  <SCOPE>: ${Object.keys(scope2pkgs).map((s) => `'${s}'`).join("\n         | ")}
-`);
-}
+const command = new Command()
+  .name("install.ts")
+  .description("Install packages - cli, gui, fonts, ... etc.")
+  .env("NO_COLOR=<value:any>", "Disable colored output")
+  .option("--dry-run", "Do not actually install, just show output")
+  .type(
+    "scope",
+    new EnumType(Object.keys(scope2pkgs)) as EnumType<Scope>,
+  )
+  .arguments("<scope:scope>")
+  .action(async (opt, scope) => {
+    const pkgs = selectPkgs(scope);
+    const sysName = await detectSysName(Deno.build.os, fetchLinuxDistribName);
+
+    for (let i = 0; i < pkgs.length; ++i) {
+      const pkg = pkgs[i];
+      const { success } = await install(pkg, sysName, {
+        dryRun: opt.dryRun ?? false,
+        outputPrefix: `[${i + 1}/${pkgs.length}]`,
+      });
+      if (!success) {
+        Deno.exit(255);
+      }
+    }
+
+    console.log(
+      "\n",
+      colors.green(`Successflly installed ${pkgs.length} packages! Good bye👋`),
+    );
+  });
 
 export default async function main(args: string[]) {
-  if (args.length != 1) {
-    console.error("Error: Please specify exactly one argument");
-    printUsage();
-    Deno.exit(1);
-  }
-  const pkgScope = args[0];
-  const pkgs = selectPkgsOrFatal(pkgScope);
-  const sysName = await detectSysName(Deno.build.os, fetchLinuxDistribName);
-
-  for (let i = 0; i < pkgs.length; ++i) {
-    const pkg = pkgs[i];
-    const { success } = await install(pkg, sysName, {
-      dryRun: true,
-      outputPrefix: `[${i + 1}/${pkgs.length}]`,
-    });
-    if (!success) {
-      Deno.exit(255);
-    }
-  }
+  await command.parse(args);
 }
 
-function selectPkgsOrFatal(scope: string): ReadonlyArray<InstallWay> {
+function selectPkgs(scope: Scope): ReadonlyArray<InstallWay> {
   const pkgs = scope2pkgs[scope];
-  if (pkgs == null) {
-    console.error(`Error: invalid scope:`, scope);
-    printUsage();
-    Deno.exit(1);
-  }
-
   if (pkgs instanceof Function) {
     return pkgs();
   }
@@ -73,8 +68,8 @@ async function install(
 
   console.log(
     `\n` + opt.outputPrefix,
-    `${MAGENTA}${new Date().toLocaleTimeString()}`,
-    `${CYAN}${cmd.join(" ")}${RESET}`,
+    colors.magenta(new Date().toLocaleTimeString()),
+    colors.cyan(cmd.join(" ")),
   );
 
   if (opt.dryRun) {
