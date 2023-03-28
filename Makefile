@@ -6,7 +6,7 @@ MAGENTA := \033[35m
 RESET   := \033[0m
 
 DENO_INSTALL ?= $(HOME)/.deno
-PATH := $(PATH):$(DENO_INSTALL)/bin
+DENO := $(DENO_INSTALL)/bin/deno
 
 .PHONY:	_bootstrap
 _bootstrap:
@@ -14,7 +14,7 @@ _bootstrap:
 
 .PHONY:	lint/Makefile	## Lint makefiles
 lint/Makefile:	_bootstrap
-	deno run --allow-read=Makefile ./manager/cmd/lint_makefile.ts Makefile
+	$(DENO) run --allow-read=Makefile ./manager/cmd/lint_makefile.ts Makefile
 
 .PHONY:	symlink/update	## Set symlinks pointing to this dotifiles & remove dead symlinks
 symlink/update:
@@ -29,23 +29,23 @@ INSTALL_ARGS := --allow-read=/etc/os-release ./manager/cmd/install.ts
 
 .PHONY:	install/cli/essentials	## Install essential CLI
 install/cli/essentials:	_bootstrap
-	deno run $(INSTALL_ARGS)  cli.essentials
+	$(DENO) run $(INSTALL_ARGS)  cli.essentials
 
 .PHONY:	install/cli/extras	## Install additional CLI
 install/cli/extras:	_bootstrap
-	deno run $(INSTALL_ARGS) cli.extras
+	$(DENO) run $(INSTALL_ARGS) cli.extras
 
 .PHONY:	install/cli/devs	## Install development tools CLI
 install/cli/devs:	_bootstrap
-	deno run $(INSTALL_ARGS) cli.devs
+	$(DENO) run $(INSTALL_ARGS) cli.devs
 
 .PHONY:	install/fonts	## Install fonts
 install/fonts:	_bootstrap
-	deno run $(INSTALL_ARGS) fonts.all
+	$(DENO) run $(INSTALL_ARGS) fonts.all
 
 .PHONY:	install/gui	## Install GUI applications
 install/gui:	_bootstrap
-	deno run $(INSTALL_ARGS) gui.all
+	$(DENO) run $(INSTALL_ARGS) gui.all
 
 .PHONY:	help	## Show Makefile tasks
 help:
