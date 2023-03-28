@@ -5,8 +5,15 @@ CYAN    := \033[36m
 MAGENTA := \033[35m
 RESET   := \033[0m
 
+DENO_INSTALL ?= $(HOME)/.deno
+PATH := $(PATH):$(DENO_INSTALL)/bin
+
+.PHONY:	_bootstrap
+_bootstrap:
+	@command -v deno > /dev/null || curl -fsSL https://deno.land/x/install/install.sh | sh
+
 .PHONY:	lint/Makefile	## Lint makefiles
-lint/Makefile:
+lint/Makefile:	_bootstrap
 	deno run --allow-read=Makefile ./manager/cmd/lint_makefile.ts Makefile
 
 .PHONY:	symlink/update	## Set symlinks pointing to this dotifiles & remove dead symlinks
@@ -21,26 +28,26 @@ symlink/remove:
 INSTALL_ARGS := --allow-read=/etc/os-release ./manager/cmd/install.ts
 
 .PHONY:	install/cli/essentials	## Install essential CLI
-install/cli/essentials:
+install/cli/essentials:	_bootstrap
 	deno run $(INSTALL_ARGS)  cli.essentials
 
 .PHONY:	install/cli/extras	## Install additional CLI
-install/cli/extras:
+install/cli/extras:	_bootstrap
 	deno run $(INSTALL_ARGS) cli.extras
 
 .PHONY:	install/cli/devs	## Install development tools CLI
-install/cli/devs:
+install/cli/devs:	_bootstrap
 	deno run $(INSTALL_ARGS) cli.devs
 
 .PHONY:	install/fonts	## Install fonts
-install/fonts:
+install/fonts:	_bootstrap
 	deno run $(INSTALL_ARGS) fonts.all
 
 .PHONY:	install/gui	## Install GUI applications
-install/gui:
+install/gui:	_bootstrap
 	deno run $(INSTALL_ARGS) gui.all
 
 .PHONY:	help	## Show Makefile tasks
 help:
-	@grep -oP '(?<=\.PHONY:\s).*' Makefile | \
+	@grep -oP '(?<=\.PHONY:\s)\S+\s+#.*' Makefile | \
 		awk 'BEGIN {FS = "(\\s*##\\s*)?"}; {printf "$(CYAN)%-22s$(RESET) %s\n", $$1, $$2}'
