@@ -10,7 +10,7 @@ DENO := $(DENO_INSTALL)/bin/deno
 
 .PHONY:	_bootstrap
 _bootstrap:
-	@command -v deno > /dev/null || curl -fsSL https://deno.land/x/install/install.sh | sh
+	test -x $(DENO) || curl -fsSL https://deno.land/x/install/install.sh | sh
 
 .PHONY:	lint/Makefile	## Lint makefiles
 lint/Makefile:	_bootstrap
