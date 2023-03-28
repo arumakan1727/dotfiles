@@ -49,5 +49,6 @@ install/gui:	_bootstrap
 
 .PHONY:	help	## Show Makefile tasks
 help:
-	@grep -oP '(?<=\.PHONY:\s)\S+\s+#.*' Makefile | \
+	@grep -E '^.PHONY:\s*\S+\s+#' Makefile | \
+		sed -E 's/.PHONY:\s*//' | \
 		awk 'BEGIN {FS = "(\\s*##\\s*)?"}; {printf "$(CYAN)%-22s$(RESET) %s\n", $$1, $$2}'
