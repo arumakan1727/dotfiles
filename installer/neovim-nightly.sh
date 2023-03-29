@@ -7,7 +7,7 @@ workDir="$(mktemp -d)"
 
 cleanup() {
   trap - SIGINT SIGTERM ERR EXIT
-  echo "${CYAN}cleanup ${workDir}${NOFORMAT}"
+  echo -e "${CYAN}cleanup ${workDir}${NOFORMAT}"
   rm -rf "$workDir"
 }
 
@@ -65,4 +65,4 @@ fi
 
 # NOTE: DO NOT remove trailing slash at 1st argument.
 $sudo rsync -au "$extractedDir/" "$installDir"
-echo "${GREEN}Successfully installed neovim nightly in ${installDir}${NOFORMAT}"
+echo -e "${GREEN}Successfully installed neovim nightly in ${installDir}${NOFORMAT}"
