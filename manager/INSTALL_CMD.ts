@@ -12,28 +12,25 @@ export const installCmdOf: { [k in PackageManager]: string[] } = {
   apt: ["sudo", "apt", "install"],
 };
 
-export type PackageName = string;
-
 export type InstallWay =
-  | ({ [k in PackageManager]: string } & { cmd?: never })
-  | { cmd: string[] }
-  | PackageName;
+  | { id: string; cmd?: never; shUrl?: never } & { [k in PackageManager]?: string }
+  | { id: string; cmd: readonly string[]; shUrl?: never }
+  | { id: string; cmd?: never; shUrl: string; github?: true };
 
 export const determineInstallCmd = (
-  way: InstallWay,
+  pkg: InstallWay,
   sysName: SupportedSysName,
 ): string[] => {
   const pkgManager = pkgManagerOf[sysName];
 
-  if (typeof way === "string") {
-    const pkgName = way;
-    const args = installCmdOf[pkgManager];
-    return [...args, pkgName];
-  } else if (way.cmd != null) {
-    return way.cmd;
+  if (pkg.cmd != null) {
+    return [...pkg.cmd];
+  } else if (pkg.shUrl != null) {
+    const urlPrefix = pkg.github ? "https://raw.githubusercontent.com/" : "";
+    return ["sh", "-c", `curl -fsSL '${urlPrefix}${pkg.shUrl}' | bash`];
   } else {
     const args = installCmdOf[pkgManager];
-    const pkgName = way[pkgManager];
+    const pkgName = pkg[pkgManager] ?? pkg.id;
     return [...args, pkgName];
   }
 };
