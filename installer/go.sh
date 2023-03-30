@@ -9,7 +9,7 @@ logInfo "${pkgName} latest version:  ${latestVer}"
 logInfo "${pkgName} current version: ${currentVer}"
 
 if [ "$currentVer" == "$latestVer" ] && [[ ! -v FORCE_INSTALL_GO ]]; then
-  logOK "Skip installation: already latest version${NOFORMAT}"
+  logOK "Skip installation: already latest version"
   exit 0
 fi
 
