@@ -25,7 +25,7 @@ symlink/remove:
 	echo "TODO"
 
 
-INSTALL_ARGS := --allow-read=/etc/os-release ./manager/cmd/install.ts
+INSTALL_ARGS := --allow-read=/etc/os-release --allow-run ./manager/cmd/install.ts
 
 .PHONY:	install/cli/essentials	## Install essential CLI
 install/cli/essentials:	_bootstrap
