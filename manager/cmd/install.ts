@@ -69,7 +69,8 @@ async function install(
   console.log(
     `\n` + opt.outputPrefix,
     colors.magenta(new Date().toLocaleTimeString()),
-    colors.cyan(cmd.join(" ")),
+    colors.brightYellow.bold(way.id) + ':',
+    colors.cyan((cmd[0] === "sh" && cmd[1] === "-c" ? cmd.slice(2) : cmd).join(" ")),
   );
 
   if (opt.dryRun) {
