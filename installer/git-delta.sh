@@ -8,7 +8,7 @@ currentVer="$(delta --version 2>/dev/null | grep -wo '[0-9][0-9.]*' || echo 'Not
 logInfo "${pkgName} latest version:  ${latestVer}"
 logInfo "${pkgName} current version: ${currentVer}"
 
-if [ "$currentVer" == "$latestVer" ] && [[ ! -v FORCE_INSTALL_DELTA ]]; then
+if [ "$currentVer" == "$latestVer" ] && [ "${DELTA_FORCE_INSTALL:-off}" == off ]; then
   logOK "Skip installation: already latest version"
   exit 0
 fi
