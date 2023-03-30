@@ -21,7 +21,7 @@ export const cli: {
     { id: "git-delta", cmd: ["./installer/git-delta.sh"] },
     { id: "htop" },
     { id: "lsd", cmd: ["./installer/lsd.sh"] },
-    { id: "xh", shUrl: "ducaale/xh/master/install.sh", github: true },
+    { id: "xh", cmd: ["./installer/xh.sh"] },
     { id: "zoxide", shUrl: "ajeetdsouza/zoxide/main/install.sh", github: true },
 
     // utils
