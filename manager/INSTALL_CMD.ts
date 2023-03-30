@@ -27,7 +27,7 @@ export const determineInstallCmd = (
     return [...pkg.cmd];
   } else if (pkg.shUrl != null) {
     const urlPrefix = pkg.github ? "https://raw.githubusercontent.com/" : "";
-    return ["sh", "-c", `curl -fsSL '${urlPrefix}${pkg.shUrl}' | bash`];
+    return ["sh", "-c", `curl -fsSL '${urlPrefix}${pkg.shUrl}' | sh`];
   } else {
     const args = installCmdOf[pkgManager];
     const pkgName = pkg[pkgManager] ?? pkg.id;
