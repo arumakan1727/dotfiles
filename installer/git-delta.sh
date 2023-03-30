@@ -41,7 +41,7 @@ installByTar() {
   extractedDir="${tgz%.tar.gz}"
 
   if [ ! -O "$installDir" ]; then
-    sudo chown -R root:root "$extractedDir"
+    sudo chown root:root "$extractedDir/delta"
     sudo=sudo
   else
     sudo=''
