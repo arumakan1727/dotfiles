@@ -28,7 +28,7 @@ tar xf "$tgz"
 extractedDir="${tgz%.tar.gz}"
 
 if [ ! -O "$installDir" ]; then
-  sudo chown -R root:root "$extractedDir"
+  sudo chown -R 0:0 "$extractedDir"
   sudo=sudo
 else
   sudo=''

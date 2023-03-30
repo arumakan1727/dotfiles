@@ -45,7 +45,7 @@ installByTar() {
   local pkgDir="$installDir/$binName"
 
   if [ ! -O "$installDir" ]; then
-    sudo chown -R root:root "$extractedDir"
+    sudo chown -R 0:0 "$extractedDir"
     sudo mkdir -p /usr/local/share/{man/man1,bash-completion/completions,zsh/site-functions}
 
     sudo rm -rf "$pkgDir"
