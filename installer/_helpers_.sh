@@ -27,11 +27,22 @@ logErr() {
   echo >&2 -e "${RED}[ERROR] ${1-}${NOFORMAT}"
 }
 
+logRun() {
+  echo -e >&2 "$PURPLE" "$@" "$NOFORMAT"
+  "$@"
+}
+
 die() {
   local msg=$1
   local code=${2-1} # default exit status 1
   logErr "$msg"
   exit "$code"
+}
+
+fetchLatestTagInGitHub() {
+  local repoName="$1"
+  curl -fsSL "https://api.github.com/repos/$repoName/releases/latest" \
+    | jq -r '.tag_name'
 }
 
 _tempDir1234xyz=""
@@ -46,4 +57,8 @@ _cleanupTempDir1234xyz() {
     trap - SIGINT SIGTERM ERR EXIT
     echo >&2 "cleanup $_tempDir1234xyz"
     rm -rf "$_tempDir1234xyz"
+}
+
+fetchDistribName() {
+  sed -nE 's/^NAME="?([^"]+)"?/\1/p' /etc/os-release
 }
