@@ -45,21 +45,23 @@ export const cli: {
     { id: "dust" },
     { id: "ffmpeg" },
     { id: "imagemagick" },
-    { id: "pastel" },
     { id: "starship", shUrl: "https://starship.rs/install.sh" },
     { id: "tealdeer" },
     { id: "translate-shell" },
   ],
   devs: [
+    // version-multiplexer
+    { id: "pyenv", shUrl: "https://pyenv.run", sh: "bash" },
+    { id: "rbenv" },
+    { id: "rustup", shUrl: "https://sh.rustup.rs" },
+    { id: "sdkman", shUrl: "https://get.sdkman.io", sh: "bash" },
+    { id: "volta", shUrl: "https://get.volta.sh", sh: "bash" },
+
+    // misc
     { id: "docker", cmd: ["./installer/docker.sh"] },
     { id: "ghq", cmd: ["go", "install", "github.com/x-motemen/ghq@latest"] },
     { id: "gibo", cmd: ["./installer/gibo.sh"] },
-    { id: "pyenv", shUrl: "https://pyenv.run", sh: "bash" },
-    { id: "rbenv" },
-    { id: "rustup" },
-    { id: "sdkman" },
-    { id: "volta" },
-    { id: "yarn" },
+    { id: "pnpm", shUrl: "https://get.pnpm.io/install.sh" },
   ],
 } as const;
 
