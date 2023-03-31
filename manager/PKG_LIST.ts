@@ -36,6 +36,7 @@ export const cli: {
 
     // utils
     { id: "ag", apt: "silver-searcher-ag" },
+    { id: "direnv" },
     { id: "fzf" },
     { id: "rg", apt: "ripgrep" },
   ],
@@ -50,17 +51,13 @@ export const cli: {
     { id: "translate-shell" },
   ],
   devs: [
-    { id: "asdf" }, // TODO:
     { id: "docker", cmd: ["./installer/docker.sh"] },
-    { id: "gh" },
     { id: "ghq", cmd: ["go", "install", "github.com/x-motemen/ghq@latest"] },
-    { id: "gibo" },
-    { id: "julia" },
-    { id: "pyenv" },
+    { id: "gibo", cmd: ["./installer/gibo.sh"] },
+    { id: "pyenv", shUrl: "https://pyenv.run", sh: "bash" },
     { id: "rbenv" },
     { id: "rustup" },
     { id: "sdkman" },
-    { id: "stack" },
     { id: "volta" },
     { id: "yarn" },
   ],
