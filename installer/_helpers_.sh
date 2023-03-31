@@ -11,6 +11,8 @@ setup_colors() {
 
 setup_colors
 
+export dotfilesCacheHome=${XDG_CACHE_HOME:-$HOME/.cache}/armkn-dotfiles
+
 logOK() {
   echo >&2 -e "${GREEN}[OK] ${1-}${NOFORMAT}"
 }

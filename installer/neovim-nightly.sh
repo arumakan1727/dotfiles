@@ -5,7 +5,7 @@ source "$scriptDir"/_helpers_.sh
 installDir="${NVIM_INSTALL_DIR:-/usr/local}"
 [ ! -e "$installDir" ] && die "Directory not found: $installDir"
 
-workDir="${XDG_CACHE_HOME:-$HOME/.cache}/nvim-install/nightly"
+workDir="${dotfilesCacheHome}/nvim-nightly"
 mkdir -p "$workDir"
 
 pkgName='Neovim-nightly'
