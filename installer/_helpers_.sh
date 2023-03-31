@@ -62,5 +62,6 @@ _cleanupTempDir1234xyz() {
 }
 
 fetchDistribName() {
-  sed -nE 's/^NAME="?([^"]+)"?/\1/p' /etc/os-release
+  # run in subshell to avoid pollution of env variable
+  ( source /etc/os-release 2>/dev/null || true; echo "${NAME:-none}" )
 }
