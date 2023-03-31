@@ -19,7 +19,7 @@ installDockerDesktopForMac() {
 
   dmg=Docker.dmg
   if [ -e "$dmg" ]; then
-    if command -v docker 2>/dev/null; then
+    if command -v docker &>/dev/null; then
       logInfo "Skip install: recent version is already installed"
       exit 0
     fi
