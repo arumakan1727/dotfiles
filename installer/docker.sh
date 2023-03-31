@@ -21,7 +21,7 @@ installDockerDesktopForMac() {
   if [ -e "$dmg" ]; then
     logInfo "Skip curl: using cached $dmg"
   else
-    logRun curl --progress-bar -fsSLO "https://desktop.docker.com/mac/main/$archCode/$dmg"
+    logRun curl --progress-bar -fLO "https://desktop.docker.com/mac/main/$archCode/$dmg"
     logRun softwareupdate --install-rosetta
   fi
 
