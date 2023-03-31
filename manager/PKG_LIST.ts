@@ -65,6 +65,4 @@ export const cli: {
   ],
 } as const;
 
-export const fonts: readonly InstallWay[] = [] as const;
-
 export const gui: readonly InstallWay[] = [] as const;

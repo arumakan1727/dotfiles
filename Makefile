@@ -46,10 +46,6 @@ install/cli/extras:	_bootstrap
 install/cli/devs:	_bootstrap
 	$(DENO) run $(INSTALL_ARGS) cli.devs
 
-.PHONY:	install/fonts	## Install fonts
-install/fonts:	_bootstrap
-	$(DENO) run $(INSTALL_ARGS) fonts.all
-
 .PHONY:	install/gui	## Install GUI applications
 install/gui:	_bootstrap
 	$(DENO) run $(INSTALL_ARGS) gui.all

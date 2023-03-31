@@ -10,7 +10,6 @@ const scope2pkgs = {
   "cli.essentials": PKG_LIST.cli.essentials,
   "cli.extras": PKG_LIST.cli.extras,
   "cli.devs": PKG_LIST.cli.devs,
-  "fonts.all": PKG_LIST.fonts,
   "gui.all": PKG_LIST.gui,
 } as const;
 
