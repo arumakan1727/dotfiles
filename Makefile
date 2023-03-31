@@ -10,7 +10,7 @@ DENO := $(DENO_INSTALL)/bin/deno
 
 .PHONY:	_bootstrap
 _bootstrap:
-	test -x $(DENO) || curl -fsSL https://deno.land/x/install/install.sh | sh
+	@test -x $(DENO) || curl -fsSL https://deno.land/x/install/install.sh | sh
 
 .PHONY:	lint/Makefile	## Lint makefiles
 lint/Makefile:	_bootstrap
@@ -24,8 +24,15 @@ symlink/update:
 symlink/remove:
 	echo "TODO"
 
+XDG_CACHE_HOME ?= $(HOME)/.cache
+DOTFILES_CACHE_HOME := $(XDG_CACHE_HOME)/armkn-dotfiles
+LAST_INSTALL_DATE_JSON := $(DOTFILES_CACHE_HOME)/last-install-date.json
 
-INSTALL_ARGS := --allow-read=/etc/os-release --allow-run ./manager/cmd/install.ts
+INSTALL_ARGS := --allow-read=/etc/os-release,$(LAST_INSTALL_DATE_JSON) \
+				--allow-write=$(DOTFILES_CACHE_HOME),$(LAST_INSTALL_DATE_JSON) \
+				--allow-env=XDG_CACHE_HOME,HOME \
+				--allow-run \
+				manager/cmd/install.ts --dry-run
 
 .PHONY:	install/cli/essentials	## Install essential CLI
 install/cli/essentials:	_bootstrap
