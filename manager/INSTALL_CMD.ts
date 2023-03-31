@@ -2,15 +2,15 @@ import { SupportedSysName } from "./SUPPORTED_SYSTEMS.ts";
 
 export type PackageManager = "brew" | "apt";
 
-export const pkgManagerOf: { [k in SupportedSysName]: PackageManager } = {
+export const pkgManagerOf: Record<SupportedSysName, PackageManager> = {
   Darwin: "brew",
   Ubuntu: "apt",
 } as const;
 
-export const installCmdOf: { [k in PackageManager]: string[] } = {
+export const installCmdOf: Record<PackageManager, readonly string[]> = {
   brew: ["brew", "install"],
   apt: ["sudo", "apt", "install"],
-};
+} as const;
 
 export type InstallWay =
   | { id: string; cmd?: never; shUrl?: never } & { [k in PackageManager]?: string }
