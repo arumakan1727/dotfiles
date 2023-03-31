@@ -54,13 +54,13 @@ installDockerEngine+ComposeForUbuntu() {
 }
 
 case "$(uname -s)" in
-  Darwin) installDockerDesktopForMac ;;
+  Darwin) installDockerDesktopForMac && exit ;;
   Linux) ;;
   *) die "Unsupported kernel: $(uname -s)" ;;
 esac
 
 distrib="$(fetchDistribName)"
 case "$distrib" in
-  Ubuntu) installDockerEngine+ComposeForUbuntu ;;
+  Ubuntu) installDockerEngine+ComposeForUbuntu && exit ;;
   *) die "Unsupported linux distribution: $distrib" ;;
 esac
