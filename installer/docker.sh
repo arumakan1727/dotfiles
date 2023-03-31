@@ -19,6 +19,10 @@ installDockerDesktopForMac() {
 
   dmg=Docker.dmg
   if [ -e "$dmg" ]; then
+    if command -v docker 2>/dev/null; then
+      logInfo "Skip install: recent version is already installed"
+      exit 0
+    fi
     logInfo "Skip curl: using cached $dmg"
   else
     logRun curl --progress-bar -fLO "https://desktop.docker.com/mac/main/$archCode/$dmg"
