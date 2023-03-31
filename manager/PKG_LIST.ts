@@ -6,17 +6,27 @@ export const cli: {
   devs: readonly InstallWay[];
 } = {
   essentials: [
-    // core (needed by other install script)
-    { id: "GNU/Linux-commands", cmd: ["./installer/brew-GNU-Linux-commands.sh"] },
+    // GNU/Linux commands (needed by other install script)
+    { id: "coreutils" },
+    { id: "diffutils" },
+    { id: "findutils" },
+    { id: "gawk" },
+    { id: "gpg" },
+    { id: "grep" },
+    { id: "gzip" },
+    { id: "moreutils" },
+    { id: "sed", brew: "gnu-sed" },
+    { id: "tar", brew: "gnu-tar" },
+
+    // other essentials (needed by other install script)
     { id: "go", cmd: ["./installer/go.sh"] },
     { id: "jq" },
 
     // terminal apps
     { id: "neovim", cmd: ["./installer/neovim-nightly.sh"] },
-    { id: "starship", shUrl: "https://starship.rs/install.sh" },
     { id: "tmux" },
 
-    // modern alternatives gnu linux command
+    // modern alternatives of gnu linux command
     { id: "bat" },
     { id: "git-delta", cmd: ["./installer/git-delta.sh"] },
     { id: "htop" },
@@ -27,7 +37,6 @@ export const cli: {
     // utils
     { id: "ag", apt: "silver-searcher-ag" },
     { id: "fzf" },
-    { id: "ghq", cmd: ["go", "install", "github.com/x-motemen/ghq@latest"] },
     { id: "rg", apt: "ripgrep" },
   ],
   extras: [
@@ -36,6 +45,7 @@ export const cli: {
     { id: "ffmpeg" },
     { id: "imagemagick" },
     { id: "pastel" },
+    { id: "starship", shUrl: "https://starship.rs/install.sh" },
     { id: "tealdeer" },
     { id: "translate-shell" },
   ],
@@ -43,6 +53,7 @@ export const cli: {
     { id: "asdf" }, // TODO:
     { id: "docker", cmd: ["./installer/docker.sh"] },
     { id: "gh" },
+    { id: "ghq", cmd: ["go", "install", "github.com/x-motemen/ghq@latest"] },
     { id: "gibo" },
     { id: "julia" },
     { id: "pyenv" },
