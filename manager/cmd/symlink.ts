@@ -50,6 +50,9 @@ function removeDeadSymlink(
 ): SymlinkPath[] {
   const cleanedPaths: SymlinkPath[] = [];
   const dryRun = opt?.dryRun;
+  let deadLinkCount = 0;
+
+  console.log(colors.brightMagenta.bold("Checking dead symlinks..."));
 
   symlinks.forEach((filepath) => {
     if (fileOrDirExists(filepath)) {
@@ -57,6 +60,7 @@ function removeDeadSymlink(
       return;
     }
     if (symlinkExists(filepath)) {
+      ++deadLinkCount;
       console.log(
         colors.cyan("[INFO] remove dead symlink:"),
         colors.yellow(abbrHomePathToTilde(filepath)),
@@ -64,6 +68,12 @@ function removeDeadSymlink(
       if (!dryRun) Deno.removeSync(filepath);
     }
   });
+
+  if (deadLinkCount === 0) {
+    console.log(colors.green.bold("[OK] No dead symlinks found."))
+  } else {
+    console.log(colors.green.bold(`[OK] Removed ${deadLinkCount} dead symlinks.`))
+  }
   return cleanedPaths;
 }
 
@@ -81,6 +91,7 @@ async function applyRepoDotfiles(option: {
 
   const apply = strategy === "copy" ? Deno.copyFileSync : Deno.symlinkSync;
   const isSymlink = strategy === "symlink";
+  let appliedCount = 0;
 
   dotfiles.forEach((dotfile) => {
     const origin = path.join(gitRootAbsPath, dotfile);
@@ -88,6 +99,7 @@ async function applyRepoDotfiles(option: {
 
     const opNeed = !isSymlink || (isSymlink && !isSameInodeSameDevice(origin, dest));
     if (!opNeed) return;
+    ++appliedCount;
 
     console.log(
       dryRun ? " (dry-run)" : "",
@@ -101,6 +113,8 @@ async function applyRepoDotfiles(option: {
     }
     onSuccess(origin, dest);
   });
+
+  console.log(colors.green.bold(`[OK] Applied ${appliedCount} dotfiles.`))
 }
 
 async function runSync(opt: { dryRun?: boolean }) {
