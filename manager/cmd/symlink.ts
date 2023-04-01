@@ -1,11 +1,27 @@
 import { CONTENT_ROOT, SYMLINK_STATE_FILE } from "../CONFIG.ts";
-import { Command, path } from "../deps.ts";
-import { fileOrDirExists, symlinkExists } from "../libs/fs.ts";
+import { colors, Command, path } from "../deps.ts";
+import {
+  abbrHomePathToTilde,
+  fileOrDirExists,
+  replacePathPrefix,
+  symlinkExists,
+} from "../libs/fs.ts";
 import { fetchGitRootAbsPath, fetchGitTrackedFileList } from "../libs/git.ts";
 
-const cmdSync = new Command()
+const subcmdSync = new Command()
   .description("sync dotfiles with auto clean")
+  .option("--dry-run", "Dry run")
   .action(runSync);
+
+const rootCommand = new Command()
+  .name("symlink.ts")
+  .description("Sync, auto remove, restore dotfiles")
+  .globalEnv("NO_COLOR=<value:any>", "Disable colored output")
+  .command("sync", subcmdSync);
+
+function main(args: string[]) {
+  rootCommand.parse(args);
+}
 
 type SymlinkPath = string;
 type Path = string;
@@ -27,8 +43,12 @@ function saveSymlinkState(filepath: string, paths: readonly SymlinkPath[]) {
   Deno.writeTextFileSync(filepath, JSON.stringify(paths));
 }
 
-function removeDeadSymlink(symlinks: readonly SymlinkPath[]): SymlinkPath[] {
+function removeDeadSymlink(
+  symlinks: readonly SymlinkPath[],
+  opt?: { dryRun?: boolean },
+): SymlinkPath[] {
   const cleanedPaths: SymlinkPath[] = [];
+  const dryRun = opt?.dryRun;
 
   symlinks.forEach((filepath) => {
     if (fileOrDirExists(filepath)) {
@@ -36,7 +56,11 @@ function removeDeadSymlink(symlinks: readonly SymlinkPath[]): SymlinkPath[] {
       return;
     }
     if (symlinkExists(filepath)) {
-      Deno.removeSync(filepath);
+      console.log(
+        colors.cyan("[INFO] remove dead symlink:"),
+        colors.yellow(abbrHomePathToTilde(filepath)),
+      );
+      if (!dryRun) Deno.removeSync(filepath);
     }
   });
   return cleanedPaths;
@@ -45,8 +69,9 @@ function removeDeadSymlink(symlinks: readonly SymlinkPath[]): SymlinkPath[] {
 async function applyRepoDotfiles(option: {
   strategy: "symlink" | "copy";
   onSuccess: (origin: Path, dest: Path) => void;
+  dryRun?: boolean;
 }) {
-  const { strategy, onSuccess } = option;
+  const { strategy, onSuccess, dryRun } = option;
   const HOME = Deno.env.get("HOME")!;
   const gitRootAbsPath = await fetchGitRootAbsPath();
   const dotfiles = await fetchGitTrackedFileList(CONTENT_ROOT, {
@@ -55,16 +80,24 @@ async function applyRepoDotfiles(option: {
 
   const apply = strategy === "copy" ? Deno.copyFileSync : Deno.symlinkSync;
 
-  for (const dotfile of dotfiles) {
+  dotfiles.forEach((dotfile, i) => {
     const origin = path.join(gitRootAbsPath, dotfile);
     const dest = dotfile.replace(CONTENT_ROOT, HOME);
-    Deno.mkdirSync(path.dirname(dest), { recursive: true });
-    apply(origin, dest);
+    console.log(
+      `[${i + 1}/${dotfiles.length}]`.padEnd(8) + (dryRun ? " (dry-run)" : ""),
+      colors.cyan(replacePathPrefix(origin, gitRootAbsPath, ".").padEnd(70)),
+      "->",
+      colors.magenta(abbrHomePathToTilde(dest)),
+    );
+    if (!dryRun) {
+      Deno.mkdirSync(path.dirname(dest), { recursive: true });
+      apply(origin, dest);
+    }
     onSuccess(origin, dest);
-  }
+  });
 }
 
-async function runSync() {
+async function runSync(opt: { dryRun?: boolean }) {
   let symlinks = loadSymlinkState(SYMLINK_STATE_FILE);
   try {
     symlinks = removeDeadSymlink(symlinks);
@@ -72,9 +105,16 @@ async function runSync() {
     await applyRepoDotfiles({
       strategy: "symlink",
       onSuccess: (_entityPath, linkPath) => symlinkSet.add(linkPath),
+      dryRun: true,
     });
     symlinks = Array.from(symlinkSet).sort();
   } finally {
-    saveSymlinkState(SYMLINK_STATE_FILE, symlinks);
+    if (!opt.dryRun) {
+      saveSymlinkState(SYMLINK_STATE_FILE, symlinks);
+    }
   }
+}
+
+if (import.meta.main) {
+  main(Deno.args);
 }
