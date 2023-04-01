@@ -1,11 +1,16 @@
-import { CONTENT_ROOT, SYMLINK_STATE_FILE } from "../CONFIG.ts";
-import { colors, Command, path } from "../deps.ts";
+import {
+  BACKUP_DATE_FORMAT,
+  BACKUP_ROOT,
+  CONTENT_ROOT,
+  SYMLINK_STATE_FILE,
+} from "../CONFIG.ts";
+import { colors, Command, datetime, path } from "../deps.ts";
 import {
   abbrHomePathToTilde,
-  fileOrDirExists,
+  isFileOrDir,
   isSameInodeSameDevice,
+  isSymlink,
   replacePathPrefix,
-  symlinkExists,
 } from "../libs/fs.ts";
 import { fetchGitRootAbsPath, fetchGitTrackedFileList } from "../libs/git.ts";
 
@@ -55,11 +60,11 @@ function removeDeadSymlink(
   console.log(colors.brightMagenta.bold("Checking dead symlinks..."));
 
   symlinks.forEach((filepath) => {
-    if (fileOrDirExists(filepath)) {
+    if (isFileOrDir(filepath, { followSymlink: true })) {
       cleanedPaths.push(filepath);
       return;
     }
-    if (symlinkExists(filepath)) {
+    if (isSymlink(filepath)) {
       ++deadLinkCount;
       console.log(
         colors.cyan("[INFO] remove dead symlink:"),
@@ -70,9 +75,9 @@ function removeDeadSymlink(
   });
 
   if (deadLinkCount === 0) {
-    console.log(colors.green.bold("[OK] No dead symlinks found."))
+    console.log(colors.green.bold("[OK] No dead symlinks found."));
   } else {
-    console.log(colors.green.bold(`[OK] Removed ${deadLinkCount} dead symlinks.`))
+    console.log(colors.green.bold(`[OK] Removed ${deadLinkCount} dead symlinks.`));
   }
   return cleanedPaths;
 }
@@ -80,9 +85,10 @@ function removeDeadSymlink(
 async function applyRepoDotfiles(option: {
   strategy: "symlink" | "copy";
   onSuccess: (origin: Path, dest: Path) => void;
+  backupDir: string;
   dryRun?: boolean;
 }) {
-  const { strategy, onSuccess, dryRun } = option;
+  const { strategy, onSuccess, backupDir, dryRun } = option;
   const HOME = Deno.env.get("HOME")!;
   const gitRootAbsPath = await fetchGitRootAbsPath();
   const dotfiles = await fetchGitTrackedFileList(CONTENT_ROOT, {
@@ -90,16 +96,16 @@ async function applyRepoDotfiles(option: {
   });
 
   const apply = strategy === "copy" ? Deno.copyFileSync : Deno.symlinkSync;
-  const isSymlink = strategy === "symlink";
+  const usingSymlink = strategy === "symlink";
   let appliedCount = 0;
 
   dotfiles.forEach((dotfile) => {
     const origin = path.join(gitRootAbsPath, dotfile);
     const dest = dotfile.replace(CONTENT_ROOT, HOME);
 
-    const opNeed = !isSymlink || (isSymlink && !isSameInodeSameDevice(origin, dest));
+    const opNeed = !usingSymlink ||
+      (usingSymlink && !isSameInodeSameDevice(origin, dest));
     if (!opNeed) return;
-    ++appliedCount;
 
     console.log(
       dryRun ? " (dry-run)" : "",
@@ -107,14 +113,29 @@ async function applyRepoDotfiles(option: {
       "->",
       colors.green(abbrHomePathToTilde(dest)),
     );
+
+    const backupNeed = !usingSymlink ||
+      usingSymlink && isFileOrDir(dest, { followSymlink: false });
+    if (backupNeed) {
+      const backupPath = dotfile.replace(CONTENT_ROOT, backupDir);
+      console.log(
+        colors.dim.gray(`  ... copy backup to ${abbrHomePathToTilde(backupPath)}`),
+      );
+      if (!dryRun) {
+        Deno.mkdirSync(path.dirname(backupPath), { recursive: true });
+        Deno.copyFileSync(dest, backupPath);
+        if (usingSymlink) Deno.removeSync(dest);
+      }
+    }
     if (!dryRun) {
       Deno.mkdirSync(path.dirname(dest), { recursive: true });
       apply(origin, dest);
     }
+    ++appliedCount;
     onSuccess(origin, dest);
   });
 
-  console.log(colors.green.bold(`[OK] Applied ${appliedCount} dotfiles.`))
+  console.log(colors.green.bold(`[OK] Applied ${appliedCount} dotfiles.`));
 }
 
 async function runSync(opt: { dryRun?: boolean }) {
@@ -122,9 +143,14 @@ async function runSync(opt: { dryRun?: boolean }) {
   try {
     symlinks = removeDeadSymlink(symlinks);
     const symlinkSet = new Set(symlinks);
+    const backupDir = path.join(
+      BACKUP_ROOT,
+      datetime.format(new Date(), BACKUP_DATE_FORMAT),
+    );
     await applyRepoDotfiles({
       strategy: "symlink",
       onSuccess: (_entityPath, linkPath) => symlinkSet.add(linkPath),
+      backupDir,
       dryRun: true,
     });
     symlinks = Array.from(symlinkSet).sort();

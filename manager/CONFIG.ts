@@ -19,3 +19,6 @@ export const SYMLINK_STATE_FILE = path.join(
 );
 
 export const CONTENT_ROOT = "homedir";
+
+export const BACKUP_ROOT = path.join(DOTFILES_CACHE_HOME, "backup");
+export const BACKUP_DATE_FORMAT = "yyyy-MMdd-HHmmss";

@@ -1,9 +1,10 @@
 import { path } from "../deps.ts";
 
-export function fileExists(filepath: string): boolean {
+export function isFileOrDir(filepath: string, opt: { followSymlink: boolean }): boolean {
+  const stat = opt.followSymlink ? Deno.statSync : Deno.lstatSync;
   try {
-    const s = Deno.statSync(filepath);
-    return s.isFile;
+    const s = stat(filepath);
+    return !s.isSymlink && (s.isFile || s.isDirectory);
   } catch (e) {
     if (e instanceof Deno.errors.NotFound) {
       return false;
@@ -12,19 +13,7 @@ export function fileExists(filepath: string): boolean {
   }
 }
 
-export function fileOrDirExists(filepath: string): boolean {
-  try {
-    const s = Deno.statSync(filepath);
-    return s.isFile || s.isDirectory;
-  } catch (e) {
-    if (e instanceof Deno.errors.NotFound) {
-      return false;
-    }
-    throw e;
-  }
-}
-
-export function symlinkExists(filepath: string): boolean {
+export function isSymlink(filepath: string): boolean {
   try {
     const s = Deno.lstatSync(filepath);
     return s.isSymlink;
