@@ -78,12 +78,15 @@ do -- LSP
 		buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
 		buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
 	end
+
+	local lspconfig = require("lspconfig")
 	local servers = {
 		'bashls',
 		'clangd',
 		'cmake',
 		'cssls',
 		'dartls',
+		'denols',
 		'dockerls',
 		'emmet_ls',
 		'gopls',
@@ -115,9 +118,29 @@ do -- LSP
 				'javascriptreact', 'typescriptreact',
 			}
 		},
+		['denols'] = {
+			root_dir = lspconfig.util.root_pattern("deno.json"),
+			single_file_support = false,
+			init_options = {
+				lint = true,
+				unstable = true,
+				suggest = {
+					imports = {
+						hosts = {
+							["https://deno.land"] = true,
+							["https://cdn.nest.land"] = true,
+							["https://crux.land"] = true,
+						},
+					},
+				},
+			},
+		},
+		['tsserver'] = {
+			root_dir = lspconfig.util.root_pattern("package.json"),
+			single_file_support = false,
+		}
 	}
 	local capabilities = require("cmp_nvim_lsp").default_capabilities()
-	local lspconfig = require("lspconfig")
 	for _, lsp in pairs(servers) do
 		local cfg = {
 			autostart = true,
