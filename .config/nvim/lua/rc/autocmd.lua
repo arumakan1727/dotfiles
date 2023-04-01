@@ -16,11 +16,12 @@ create_autocmd("BufWritePost", {
 			return
 		end
 		local filepath = vim.fn.fnamemodify(vim.fn.expand('%'), ':p')
-		if vim.endswith(filepath, '.env') or (not vim.startswith(filepath, '/home/') and not vim.startswith(filepath, '/ramdisk/')) then
+		local filename = vim.fn.expand('%:t')
+		if vim.startswith(filename, '.') or (not vim.startswith(filepath, '/home/') and not vim.startswith(filepath, '/ramdisk/')) then
 			return
 		end
 		if vim.fn.executable(filepath) ~= 1 then
-			vim.cmd("! chmod u+x " .. filepath)
+			vim.cmd("! chmod +x " .. filepath)
 		end
 	end,
 })
