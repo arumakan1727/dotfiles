@@ -23,6 +23,9 @@ const rootCommand = new Command()
   .name("symlink.ts")
   .description("Sync, auto remove, restore dotfiles")
   .globalEnv("NO_COLOR=<value:any>", "Disable colored output")
+  .action(() => {
+    rootCommand.showHelp();
+  })
   .command("sync", subcmdSync);
 
 function main(args: string[]) {
@@ -57,7 +60,7 @@ function removeDeadSymlink(
   const dryRun = opt?.dryRun;
   let deadLinkCount = 0;
 
-  console.log(colors.brightMagenta.bold("Checking dead symlinks..."));
+  console.log(colors.brightYellow.bold("Checking dead symlinks..."));
 
   symlinks.forEach((filepath) => {
     if (isFileOrDir(filepath, { followSymlink: true })) {
@@ -109,7 +112,7 @@ async function applyRepoDotfiles(option: {
 
     console.log(
       dryRun ? " (dry-run)" : "",
-      colors.magenta(replacePathPrefix(origin, gitRootAbsPath, ".").padEnd(70)),
+      colors.magenta(replacePathPrefix(origin, gitRootAbsPath, "dotfiles")),
       "->",
       colors.green(abbrHomePathToTilde(dest)),
     );
@@ -119,7 +122,7 @@ async function applyRepoDotfiles(option: {
     if (backupNeed) {
       const backupPath = dotfile.replace(CONTENT_ROOT, backupDir);
       console.log(
-        colors.dim.gray(`  ... copy backup to ${abbrHomePathToTilde(backupPath)}`),
+        colors.dim.white(`  ... copy backup to ${abbrHomePathToTilde(backupPath)}`),
       );
       if (!dryRun) {
         Deno.mkdirSync(path.dirname(backupPath), { recursive: true });
@@ -147,11 +150,14 @@ async function runSync(opt: { dryRun?: boolean }) {
       BACKUP_ROOT,
       datetime.format(new Date(), BACKUP_DATE_FORMAT),
     );
+
+    console.log(); // new line
+
     await applyRepoDotfiles({
       strategy: "symlink",
       onSuccess: (_entityPath, linkPath) => symlinkSet.add(linkPath),
       backupDir,
-      dryRun: true,
+      dryRun: opt.dryRun,
     });
     symlinks = Array.from(symlinkSet).sort();
   } finally {
