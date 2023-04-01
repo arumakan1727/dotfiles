@@ -1,27 +1,6 @@
-typeset -U path PATH manpath sudo_path
-typeset -xT SUDO_PATH sudo_path
+# shellcheck shell=bash
 
-path=(
-  /usr/local/go/bin
-  "$HOME/bin"
-  "$HOME/.local/bin"
-  "$HOME/.cargo/bin"
-  "$HOME/.deno/bin"
-  "$HOME/.go/bin"
-  "$HOME/.volta/bin"
-  "$HOME/.pyenv/bin"
-  "$HOME/.nimble/bin"(N-/)
-  "$HOME/.rbenv/shims"(N-/)
-  $path
-)
-
-fpath=(
-  $HOME/.config/zsh/zfunc(N-/)
-  $HOME/.config/zsh/completion(N-/)
-  /usr/local/share/zsh/site-functions
-  /usr/share/zsh/site-functions
-  $fpath
-)
+export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.deno/bin:$HOME/.go/bin:/usr/local/go/bin:$PATH"
 
 export LESS_TERMCAP_mb=$'\e[1;31m'     # begin bold
 export LESS_TERMCAP_md=$'\e[1;33m'     # begin blink
