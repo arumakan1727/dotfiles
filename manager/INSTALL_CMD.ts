@@ -1,12 +1,4 @@
 import { SupportedSysName } from "./SUPPORTED_SYSTEMS.ts";
-import { path } from "./deps.ts";
-
-const env = Deno.env.get;
-
-export const dotfilesCacheHome = path.join(
-  env("XDG_CACHE_HOME") ?? path.join(env("HOME")!, ".cache"),
-  "armkn-dotfiles",
-);
 
 export type PackageManager = "brew" | "apt";
 

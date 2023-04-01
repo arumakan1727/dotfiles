@@ -1,9 +1,10 @@
 import * as PKG_LIST from "../PKG_LIST.ts";
-import { determineInstallCmd, dotfilesCacheHome, InstallWay } from "../INSTALL_CMD.ts";
+import { determineInstallCmd, InstallWay } from "../INSTALL_CMD.ts";
 import { SupportedSysName } from "../SUPPORTED_SYSTEMS.ts";
 import { detectSysName, fetchLinuxDistribName } from "../libs/sys_info.ts";
 import { colors, Command, datetime, EnumType, path } from "../deps.ts";
 import { concat } from "../libs/collection.ts";
+import { DOTFILES_CACHE_HOME } from "../CONFIG.ts";
 
 const scope2pkgs = {
   "cli.all": () => concat(...Object.values(PKG_LIST.cli)),
@@ -138,7 +139,7 @@ async function install(
 }
 
 const lastInstallDateRecordPath = path.join(
-  dotfilesCacheHome,
+  DOTFILES_CACHE_HOME,
   "last-install-date.json",
 );
 
