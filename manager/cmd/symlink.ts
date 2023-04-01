@@ -3,6 +3,7 @@ import { colors, Command, path } from "../deps.ts";
 import {
   abbrHomePathToTilde,
   fileOrDirExists,
+  isSameInodeSameDevice,
   replacePathPrefix,
   symlinkExists,
 } from "../libs/fs.ts";
@@ -79,15 +80,20 @@ async function applyRepoDotfiles(option: {
   });
 
   const apply = strategy === "copy" ? Deno.copyFileSync : Deno.symlinkSync;
+  const isSymlink = strategy === "symlink";
 
-  dotfiles.forEach((dotfile, i) => {
+  dotfiles.forEach((dotfile) => {
     const origin = path.join(gitRootAbsPath, dotfile);
     const dest = dotfile.replace(CONTENT_ROOT, HOME);
+
+    const opNeed = !isSymlink || (isSymlink && !isSameInodeSameDevice(origin, dest));
+    if (!opNeed) return;
+
     console.log(
-      `[${i + 1}/${dotfiles.length}]`.padEnd(8) + (dryRun ? " (dry-run)" : ""),
-      colors.cyan(replacePathPrefix(origin, gitRootAbsPath, ".").padEnd(70)),
+      dryRun ? " (dry-run)" : "",
+      colors.magenta(replacePathPrefix(origin, gitRootAbsPath, ".").padEnd(70)),
       "->",
-      colors.magenta(abbrHomePathToTilde(dest)),
+      colors.green(abbrHomePathToTilde(dest)),
     );
     if (!dryRun) {
       Deno.mkdirSync(path.dirname(dest), { recursive: true });

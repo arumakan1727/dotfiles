@@ -36,6 +36,30 @@ export function symlinkExists(filepath: string): boolean {
   }
 }
 
+class ErrCannotGetInode extends Error {
+  constructor(path: string) {
+    super(`cannot get inode of ${path}`);
+    this.name = "ErrCannotGetInode";
+  }
+}
+
+export function isSameInodeSameDevice(path1: string, path2: string): boolean {
+  try {
+    const s1 = Deno.statSync(path1);
+    if (s1.ino == null) throw new ErrCannotGetInode(path1);
+
+    const s2 = Deno.statSync(path2);
+    if (s2.ino == null) throw new ErrCannotGetInode(path2);
+
+    return s1.dev === s2.dev && s1.ino === s2.ino;
+  } catch (e) {
+    if (e instanceof Deno.errors.NotFound) {
+      return false;
+    }
+    throw e;
+  }
+}
+
 const HOME = Deno.env.get("HOME")!;
 
 export function expandTildePath(filepath: string): string {
@@ -47,7 +71,6 @@ export function abbrHomePathToTilde(filepath: string): string {
 }
 
 export function replacePathPrefix(filepath: string, prefix: string, into: string) {
-  filepath = path.normalize(filepath);
   if (filepath === prefix) {
     return into;
   }
