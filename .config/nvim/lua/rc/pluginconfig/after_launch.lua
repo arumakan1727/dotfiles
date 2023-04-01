@@ -61,7 +61,11 @@ do
 			null_ls.builtins.formatting.erb_lint,
 			null_ls.builtins.formatting.isort,
 			null_ls.builtins.formatting.markdownlint,
-			null_ls.builtins.formatting.prettier,
+			null_ls.builtins.formatting.prettier.with({
+				condition = function(utils)
+					return utils.root_has_file({ "package.json" })
+				end,
+			}),
 			null_ls.builtins.formatting.rubocop,
 			null_ls.builtins.formatting.shfmt,
 			null_ls.builtins.formatting.stylua,
@@ -70,6 +74,9 @@ do
 			null_ls.builtins.diagnostics.erb_lint,
 			null_ls.builtins.diagnostics.eslint_d.with({
 				method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+				condition = function(utils)
+					return utils.root_has_file({ "package.json" })
+				end,
 			}),
 			null_ls.builtins.diagnostics.hadolint,
 			null_ls.builtins.diagnostics.misspell,
