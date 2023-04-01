@@ -6,7 +6,7 @@ HISTORY_IGNORE="(ls|ll|la|pwd|cd ..|cd|task *|jrnl *)"
 # C-w などで単語ごとの削除をする際の「単語境界にならない記号リスト」
 WORDCHARS='*?[]~&;!#$%^(){}<>'
 # cd が検索するディレクトリのパス
-cdpath=("${HOME} ..")
+cdpath=(~ ..)
 
 # 失敗するコマンドは履歴に追加しない
 # 参考: https://superuser.com/questions/902241/how-to-make-zsh-not-store-failed-command

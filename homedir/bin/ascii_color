@@ -1,0 +1,8 @@
+#!/bin/bash
+set -Eeuo pipefail
+
+for c in {30..37} {40..47} {90..97}; do
+  printf "\x1b[${c}m\\\\x1b[${c}m\x1b[m "
+  seq 1 9 | xargs -n1 -I@ printf "\x1b[${c};@m\\\\x1b[${c};@m\x1b[m "
+  printf "\n"
+done

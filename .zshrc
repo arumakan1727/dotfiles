@@ -1,48 +1,67 @@
-if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux > /dev/null 2>&1 }; then
-  sessions="$(tmux list-sessions)"
+# Select tmux session interactively
+#====================================
+select_tmux_session() {
+  local sessions="$(tmux list-sessions)"
+  [[ -z "$sessions" ]] && exec tmux new-session
 
-  if [[ -z "$sessions" ]]; then
-    exec tmux new-session
-  fi
+  local dont_use_tmux="-- Don't use tmux"
+  local create_new_session="-- Create New Session"
+  local exit="-- Exit"
 
-  dont_use_tmux="-- Don't use tmux"
-  create_new_session="-- Create New Session"
+  local ans="$(echo -e "$sessions\n$create_new_session\n$dont_use_tmux\n$exit" | fzf | cut -d: -f1)"
 
-  if command -v fzf > /dev/null 2>&1 ; then
-    id="$(echo "$sessions\n$create_new_session\n$dont_use_tmux" | fzf | cut -d: -f1)"
-  else
-    sessions=( ${(@f)"$(echo "$sessions\n$create_new_session\n$dont_use_tmux")"} )
-    select res in $sessions
-    do
-      id="$(echo $res | cut -d: -f1)"
-      break
-    done
-  fi
+  case "$ans" in
+    "$dont_use_tmux") ;; # do nothing
+    "$create_new_session") exec tmux new-session ;;
+    "$exit") exit ;;
+    *) exec tmux attach-session -t "$ans" ;;
+  esac
+}
 
-  if [[ "$id" = "$create_new_session" ]]; then
-    exec tmux new-session
-  elif [[ "$id" = "$dont_use_tmux" ]]; then
-    :  # do nothing
-  else
-    exec tmux attach-session -t "$id"
-  fi
+if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux &>/dev/null } && { command -v fzf &>/dev/null }; then
+  select_tmux_session
 fi
 
 
-source $HOME/.config/zsh/base.zsh
-source $HOME/.config/zsh/completion.zsh
-source $HOME/.config/zsh/function.zsh
-source $HOME/.config/zsh/alias.zsh
-source $HOME/.config/zsh/bindkey.zsh
-source $HOME/.config/zsh/plugins.zsh
-source $HOME/.config/zsh/external_tool_init.zsh
 
-[[ -r $HOME/.zshrc.local ]] && source $HOME/.zshrc.local
+# plugins
+#====================================
+export ZSH_PLUGIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zsh-plugin"
 
-# fnm
-export PATH=/home/armkn/.fnm:$PATH
-(command -v fnm > /dev/null 2>&1) && eval "`fnm env`"
+plugin() {
+  local repo="$1"
+  local dir="$ZSH_PLUGIN_HOME/$repo"
+  if [[ ! -d "$dir" ]]; then
+    echo >&2 -e "\x1b[36;1m[INFO] Installing zsh plugin $repo\x1b[m"
+    git clone https://github.com/$repo "$dir"
+  fi
+  . "$dir/$(basename $repo).plugin.zsh"
+}
+plugin zdharma-continuum/fast-syntax-highlighting
+plugin zsh-users/zsh-autosuggestions
+plugin zsh-users/zsh-completions
+plugin zsh-users/zsh-history-substring-search
+unset -f plugin
 
-if command -v zprof > /dev/null 2>&1 ; then
-  zprof
-fi
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
+
+command -v starship &>/dev/null && eval "$(starship init zsh)"
+command -v direnv   &>/dev/null && eval "$(direnv hook zsh)"
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
+export FZF_CTRL_T_COMMAND='rg --files --hidden --follow'
+export FZF_DEFAULT_OPTS='--height 60% --reverse --border'
+export FZF_ALT_C_COMMAND='fd --type=d --follow --hidden --follow --exclude=.git'
+safe_source "$HOME/.fzf.zsh"
+
+
+
+# my config modules
+#====================================
+d="$HOME/.config/zsh"
+. "$d/base.zsh"
+. "$d/completion.zsh"
+. "$d/bindkey.zsh"
+. "$HOME/.config/sh/alias.sh"
+unset d
+safe_source "$HOME/.zshrc.local"

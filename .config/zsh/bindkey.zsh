@@ -1,5 +1,5 @@
 # Emacs 風のキーバインドを使用 (他に Vim 風もある)
-bindkey -e 
+bindkey -e
 
 function ghq-fzf() {
   local src="$(ghq list | fzf)"
