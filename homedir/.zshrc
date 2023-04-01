@@ -33,7 +33,7 @@ plugin() {
   local dir="$ZSH_PLUGIN_HOME/$repo"
   if [[ ! -d "$dir" ]]; then
     echo >&2 -e "\x1b[36;1m[INFO] Installing zsh plugin $repo\x1b[m"
-    git clone https://github.com/$repo "$dir"
+    git clone --depth 1 https://github.com/$repo "$dir"
   fi
   . "$dir/$(basename $repo).plugin.zsh"
 }
