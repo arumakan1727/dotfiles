@@ -1,5 +1,5 @@
 import { SYMLINK_STATE_FILE } from "../CONFIG.ts";
-import { Command } from "../deps.ts";
+import { Command, colors } from "../deps.ts";
 import { loadSymlinkState, runApply } from "../lib/dotfile_manager.ts";
 import { path } from "../util/mod.ts";
 
@@ -21,7 +21,7 @@ export const subcmdSymlinks = new Command()
   .action((opt) => {
     const links = loadSymlinkState(SYMLINK_STATE_FILE);
     if (links.length === 0) {
-      console.error("[INFO] No symlinks applied.");
+      console.error(colors.cyan("No symlinks applied."));
     }
     links.forEach((s) => {
       console.log(opt.abspath ? s : path.abbrHomePathToTilde(s));
