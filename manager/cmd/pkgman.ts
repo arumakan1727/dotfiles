@@ -26,7 +26,7 @@ type CmdArgs = {
 };
 
 const command = new Command()
-  .name("install.ts")
+  .name("pkgman.ts")
   .description("Install packages - cli, gui, fonts, ... etc.")
   .env("NO_COLOR=<value:any>", "Disable colored output")
   .option("--dry-run", "Do not actually install, just show output")
