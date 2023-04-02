@@ -1,18 +1,19 @@
 .DEFAULT_GOAL := help
-SHELL         := /bin/bash
+DENO_INSTALL ?= $(HOME)/.deno
+PATH         := $(DENO_INSTALL)/bin:$(PATH)
+SHELL        := env PATH=$(PATH) /bin/bash
 RED     := \033[31m
 CYAN    := \033[36m
 MAGENTA := \033[35m
 RESET   := \033[0m
 
-export DENO_INSTALL ?= $(HOME)/.deno
-export PATH := $(DENO_INSTALL)/bin:$(PATH)
 
 .PHONY:    deno
 deno:	$(DENO_INSTALL)/bin/deno
 
 $(DENO_INSTALL)/bin/deno:
-    curl -fsSL https://deno.land/x/install/install.sh | sh
+    DENO_INSTALL=$(DENO_INSTALL) curl -fsSL https://deno.land/x/install/install.sh | sh
+
 
 .PHONY:	lint/Makefile	## Lint makefiles
 lint/Makefile:	deno
