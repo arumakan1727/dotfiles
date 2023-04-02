@@ -35,7 +35,7 @@ export const rootCommand = new Command()
   .action(() => {
     rootCommand.showHelp();
   })
-  .command("sync", subcmdApply)
+  .command("apply", subcmdApply)
   .command("symlinks", subcmdSymlinks);
 
 function main(args: string[]) {
