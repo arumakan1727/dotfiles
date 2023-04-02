@@ -4,8 +4,8 @@ import {
   CONTENT_ROOT,
   SYMLINK_STATE_FILE,
 } from "../CONFIG.ts";
-import { colors, datetime, path } from "../deps.ts";
-import * as fs from "../util/fs.ts";
+import { colors, datetime, fs, path } from "../deps.ts";
+import * as fs_util from "../util/fs.ts";
 import * as textfile from "../util/textfile.ts";
 import { fetchGitRootAbsPath, fetchGitTrackedFileList } from "../lib/repository.ts";
 
@@ -20,19 +20,17 @@ export function saveSymlinkState(filepath: string, symlinks: readonly SymlinkPat
   textfile.writeJSONWithMkdir(filepath, symlinks);
 }
 
-type RemoveDeadSymlinksOption = {
+export type RemoveDeadSymlinksOption = {
   dryRun?: boolean;
-};
-
-type RemoveDeadSymlinksOptionWithHook = RemoveDeadSymlinksOption & {
   onStart?: () => void;
-  onDeadlinkFound?: (filepath: string) => void;
+  beforeDeadlinkRemove?: (filepath: string) => void;
+  afterDeadlinkRemove?: (filepath: string) => void;
   onFinish?: (deadLinkCount: number) => void;
 };
 
 export function removeDeadSymlinks(
   symlinks: readonly SymlinkPath[],
-  opt?: RemoveDeadSymlinksOptionWithHook,
+  opt?: RemoveDeadSymlinksOption,
 ): SymlinkPath[] {
   opt?.onStart?.();
 
@@ -41,14 +39,15 @@ export function removeDeadSymlinks(
   let deadLinkCount = 0;
 
   symlinks.forEach((linkName) => {
-    if (fs.isFileOrDir(linkName, { followSymlink: true })) {
+    if (fs_util.isFileOrDir(linkName, { followSymlink: true })) {
       cleanedPaths.push(linkName);
       return;
     }
-    if (fs.isSymlink(linkName)) {
+    if (fs_util.isSymlink(linkName)) {
       ++deadLinkCount;
-      opt?.onDeadlinkFound?.(linkName);
+      opt?.beforeDeadlinkRemove?.(linkName);
       if (!dryRun) Deno.removeSync(linkName);
+      opt?.afterDeadlinkRemove?.(linkName);
     }
   });
 
@@ -58,22 +57,29 @@ export function removeDeadSymlinks(
 
 export function removeDeadSymlinksVerbose(
   symlinks: readonly SymlinkPath[],
-  { dryRun }: RemoveDeadSymlinksOption,
+  opt?: RemoveDeadSymlinksOption,
 ): SymlinkPath[] {
   return removeDeadSymlinks(symlinks, {
-    dryRun,
-    onStart: () => console.log(colors.brightYellow.bold("Checking dead symlinks...")),
-    onDeadlinkFound: (filepath) =>
+    ...opt,
+    onStart: () => {
+      console.log(colors.brightYellow.bold("Checking dead symlinks..."));
+      opt?.onStart?.();
+    },
+    beforeDeadlinkRemove: (filepath) => {
       console.log(
         colors.cyan("[INFO] remove dead symlink:"),
-        colors.yellow(fs.abbrHomePathToTilde(filepath)),
-      ),
-    onFinish: (deadLinkCount) =>
+        colors.yellow(fs_util.abbrHomePathToTilde(filepath)),
+      );
+      opt?.beforeDeadlinkRemove?.(filepath);
+    },
+    onFinish: (deadLinkCount) => {
       console.log(
         deadLinkCount === 0
           ? colors.green.bold("[OK] No dead symlinks found.")
           : colors.green.bold(`[OK] Removed ${deadLinkCount} dead symlinks.`),
-      ),
+      );
+      opt?.onFinish?.(deadLinkCount);
+    },
   });
 }
 
@@ -92,13 +98,12 @@ function calcOptimizedSymlinkTargets(dotfiles: readonly Path[]): Path[] {
   return Array.from(set);
 }
 
-type ApplyRepoDotfilesOption = {
-  strategy: "symlink" | "copy";
-  backupDir: string;
-  dryRun?: boolean;
-};
+export type DotfileApplyStrategy = "symlink" | "copy";
 
-type ApplyRepoDotfilesOptionWithHook = ApplyRepoDotfilesOption & {
+export type ApplyRepoDotfilesOption = {
+  strategy: DotfileApplyStrategy;
+  backupDir?: string;
+  dryRun?: boolean;
   onStart?: (gitRootAbsPath: Path) => void;
   beforeApply?: (repoFile: Path, dest: Path) => void;
   afterApplySuccess?: (repoFile: Path, dest: Path) => void;
@@ -107,7 +112,7 @@ type ApplyRepoDotfilesOptionWithHook = ApplyRepoDotfilesOption & {
   onFinish?: (appliedCount: number) => void;
 };
 
-async function applyRepoDotfiles(opt: ApplyRepoDotfilesOptionWithHook) {
+export async function applyRepoDotfiles(opt: ApplyRepoDotfilesOption) {
   const { strategy, backupDir, dryRun } = opt;
   const HOME = Deno.env.get("HOME")!;
   const gitRootAbsPath = await fetchGitRootAbsPath();
@@ -117,7 +122,9 @@ async function applyRepoDotfiles(opt: ApplyRepoDotfilesOptionWithHook) {
   const symlinkTargets = calcOptimizedSymlinkTargets(dotfiles);
 
   const usingSymlink = strategy === "symlink";
-  const applyFn = usingSymlink ? Deno.symlinkSync : Deno.copyFileSync;
+  const applyFn: (repoFile: Path, dest: Path) => void = usingSymlink
+    ? Deno.symlinkSync
+    : fs.copy;
   let appliedCount = 0;
 
   symlinkTargets.forEach((dotfile) => {
@@ -125,15 +132,19 @@ async function applyRepoDotfiles(opt: ApplyRepoDotfilesOptionWithHook) {
     const dest = dotfile.replace(CONTENT_ROOT, HOME);
 
     // シンボリックリンク先が既にリポジトリ内の dotfile を指しているならスキップ
-    if (usingSymlink && fs.isSameInodeSameDevice(dest, repoFile)) return;
+    if (usingSymlink && fs_util.isSameInodeSameDevice(dest, repoFile)) return;
     opt.beforeApply?.(repoFile, dest);
 
     // dest が存在し、それがシンボリックリンクでないならバックアップへ移動
-    if (fs.isFileOrDir(dest, { followSymlink: false })) {
-      const backupPath = dotfile.replace(CONTENT_ROOT, backupDir);
+    if (fs_util.isFileOrDir(dest, { followSymlink: false })) {
+      const backupPath = dotfile.replace(
+        CONTENT_ROOT,
+        backupDir ??
+          path.join(BACKUP_ROOT, datetime.format(new Date(), BACKUP_DATE_FORMAT)),
+      );
       opt.beforeBackup?.(dest, backupPath);
       if (!dryRun) {
-        fs.mkdirRecursive(path.dirname(backupPath));
+        fs_util.mkdirRecursive(path.dirname(backupPath));
         Deno.renameSync(dest, backupPath);
       }
       opt.afterBackupSuccess?.(dest, backupPath);
@@ -141,8 +152,8 @@ async function applyRepoDotfiles(opt: ApplyRepoDotfilesOptionWithHook) {
 
     // copy または symlink を適用
     if (!dryRun) {
-      fs.ensureRemoved(dest);
-      fs.mkdirRecursive(path.dirname(dest));
+      fs_util.ensureRemoved(dest);
+      fs_util.mkdirRecursive(path.dirname(dest));
       applyFn(repoFile, dest);
     }
     ++appliedCount;
@@ -152,64 +163,65 @@ async function applyRepoDotfiles(opt: ApplyRepoDotfilesOptionWithHook) {
   opt.onFinish?.(appliedCount);
 }
 
-export async function applyRepoDotfilesVerbose(
-  { strategy, dryRun, afterApplySuccess }:
-    & ApplyRepoDotfilesOption
-    & Pick<ApplyRepoDotfilesOptionWithHook, "afterApplySuccess">,
-) {
-  const backupDir = path.join(
-    BACKUP_ROOT,
-    datetime.format(new Date(), BACKUP_DATE_FORMAT),
-  );
-
+export async function applyRepoDotfilesVerbose(opt: ApplyRepoDotfilesOption) {
+  const { dryRun, strategy } = opt;
   let gitRootAbsPath: Path;
 
   await applyRepoDotfiles({
-    strategy,
-    dryRun,
-    backupDir,
-    onStart: (s) => gitRootAbsPath = s,
-    beforeApply: (repoFile, dest) =>
+    ...opt,
+    onStart: (s) => {
+      gitRootAbsPath = s;
+      opt.onStart?.(s);
+    },
+    beforeApply: (repoFile, dest) => {
       console.log(
         dryRun ? " (dry-run)" : "",
-        colors.magenta(fs.replacePathPrefix(repoFile, gitRootAbsPath, "dotfiles")),
+        colors.magenta(fs_util.replacePathPrefix(repoFile, gitRootAbsPath, "dotfiles")),
         "->",
-        colors.green(fs.abbrHomePathToTilde(dest)),
-      ),
-    beforeBackup: (_orig, backup) =>
+        colors.green(fs_util.abbrHomePathToTilde(dest)),
+      );
+      opt.beforeApply?.(repoFile, dest);
+    },
+    beforeBackup: (orig, backup) => {
       console.log(
-        colors.dim.white(`  ... backup to ${fs.abbrHomePathToTilde(backup)}`),
-      ),
-    afterApplySuccess,
-    onFinish: (appliedCount) =>
+        colors.dim.white(`  ... backup to ${fs_util.abbrHomePathToTilde(backup)}`),
+      );
+      opt.beforeBackup?.(orig, backup);
+    },
+    onFinish: (appliedCount) => {
       console.log(
-        colors.green.bold(`[OK] Applied ${appliedCount} dotfiles using symlink`),
-      ),
+        colors.green.bold(`[OK] Applied ${appliedCount} dotfiles using ${strategy}`),
+      );
+      opt.onFinish?.(appliedCount);
+    },
   });
 }
 
-export async function syncDotfilesUsingSymlink({ dryRun }: { dryRun?: boolean }) {
-  let symlinks = loadSymlinkState(SYMLINK_STATE_FILE);
+export async function runApply(opt: {
+  strategy: DotfileApplyStrategy;
+  dryRun?: boolean;
+}) {
+  const { strategy, dryRun } = opt;
+  const symlinksBeforeApply: ReadonlyArray<Path> = loadSymlinkState(SYMLINK_STATE_FILE);
+  const symlinkSet = new Set<Path>(symlinksBeforeApply);
 
   try {
-    symlinks = removeDeadSymlinksVerbose(symlinks, { dryRun });
-
-    const backupDir = path.join(
-      BACKUP_ROOT,
-      datetime.format(new Date(), BACKUP_DATE_FORMAT),
-    );
+    removeDeadSymlinksVerbose(symlinksBeforeApply, {
+      dryRun,
+      afterDeadlinkRemove: (path) => symlinkSet.delete(path),
+    });
 
     console.log(); // new line
-    await applyRepoDotfilesVerbose({
-      strategy: "symlink",
-      dryRun,
-      backupDir,
-      afterApplySuccess: (_repoFile, dest) => symlinks.push(dest),
-    });
+
+    const afterApplySuccess = (strategy === "symlink")
+      ? (_repoFile: Path, dest: Path) => symlinkSet.add(dest)
+      : (_repoFile: Path, dest: Path) => symlinkSet.delete(dest);
+
+    await applyRepoDotfilesVerbose({ strategy, dryRun, afterApplySuccess });
   } finally {
     if (!dryRun) {
-      symlinks = Array.from(new Set(symlinks.sort()));
-      saveSymlinkState(SYMLINK_STATE_FILE, symlinks);
+      const symlinkList = Array.from(symlinkSet).sort();
+      saveSymlinkState(SYMLINK_STATE_FILE, symlinkList);
     }
   }
 }

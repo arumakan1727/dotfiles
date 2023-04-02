@@ -1,12 +1,17 @@
 import { Command } from "../deps.ts";
-import { syncDotfilesUsingSymlink } from "../lib/dotfile_manager.ts";
+import { runApply } from "../lib/dotfile_manager.ts";
 
-export const subcmdSync = new Command()
+export const subcmdApply = new Command()
   .description(
-    "sync dotfiles into your HOME dir, and remove dead symlink automatically",
+    "Apply dotfiles into your HOME dir, and remove dead symlink automatically",
   )
   .option("--dry-run", "Dry run")
-  .action(syncDotfilesUsingSymlink);
+  .option("--copy", "Use copy strategy instead of symlink")
+  .action(async (opt) => {
+    const { dryRun } = opt;
+    const strategy = opt.copy ? "copy" : "symlink";
+    await runApply({ strategy, dryRun });
+  });
 
 export const rootCommand = new Command()
   .name("dotfile")
@@ -15,7 +20,7 @@ export const rootCommand = new Command()
   .action(() => {
     rootCommand.showHelp();
   })
-  .command("sync", subcmdSync);
+  .command("sync", subcmdApply);
 
 function main(args: string[]) {
   rootCommand.parse(args);
