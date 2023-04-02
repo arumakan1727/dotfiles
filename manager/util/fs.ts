@@ -28,6 +28,20 @@ export function isSymlink(filepath: string): boolean {
   }
 }
 
+export function ensureRemoved(filepath: string) {
+  try {
+    Deno.removeSync(filepath);
+  } catch (e) {
+    if (e! instanceof Deno.errors.NotFound) {
+      throw e;
+    }
+  }
+}
+
+export function mkdirRecursive(path: string) {
+  Deno.mkdirSync(path, { recursive: true });
+}
+
 class ErrCannotGetInode extends Error {
   constructor(path: string) {
     super(`cannot get inode of ${path}`);

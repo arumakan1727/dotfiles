@@ -34,18 +34,14 @@ export async function fetchGitRootAbsPath(): Promise<string> {
 
 export async function fetchGitTrackedFileList(
   startPointDir: string,
-  opt: { resultPathStyle: "abs" | "rel" },
 ): Promise<string[]> {
   const gitRootDir = await fetchGitRootAbsPath();
   const cmd = ["git", "-C", gitRootDir, "ls-files", startPointDir];
 
   const p = Deno.run({ cmd, stdout: "piped" });
-  const res: string[] = [];
-  const pathPrefix = opt.resultPathStyle === "abs" ? gitRootDir : "";
+  let res: string[];
   try {
-    for await (const filepath of io.readLines(p.stdout)) {
-      res.push(pathPrefix + filepath);
-    }
+    res = await ioutil.readLinesIntoArray(p.stdout);
   } finally {
     p.stdout.close();
     p.close();
