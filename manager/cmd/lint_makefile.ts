@@ -1,5 +1,5 @@
 import { colors, Command } from "../deps.ts";
-import * as textfile from "../util/textfile.ts";
+import { textfile } from "../util/mod.ts";
 import { LintError, lintOrphanPhony } from "../lib/makefile_lint.ts";
 
 const command = new Command()

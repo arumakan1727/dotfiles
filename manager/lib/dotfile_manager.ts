@@ -5,19 +5,18 @@ import {
   SYMLINK_STATE_FILE,
 } from "../CONFIG.ts";
 import { colors, datetime, fs, path } from "../deps.ts";
-import * as fs_util from "../util/fs.ts";
-import * as textfile from "../util/textfile.ts";
+import * as util from "../util/mod.ts";
 import { fetchGitRootAbsPath, fetchGitTrackedFileList } from "../lib/repository.ts";
 
 type SymlinkPath = string;
 type Path = string;
 
 export function loadSymlinkState(filepath: string): SymlinkPath[] {
-  return textfile.readJSON(filepath, { fallback: [] });
+  return util.textfile.readJSON(filepath, { fallback: [] });
 }
 
 export function saveSymlinkState(filepath: string, symlinks: readonly SymlinkPath[]) {
-  textfile.writeJSONWithMkdir(filepath, symlinks);
+  util.textfile.writeJSONWithMkdir(filepath, symlinks);
 }
 
 export type RemoveDeadSymlinksOption = {
@@ -39,11 +38,11 @@ export function removeDeadSymlinks(
   let deadLinkCount = 0;
 
   symlinks.forEach((linkName) => {
-    if (fs_util.isFileOrDir(linkName, { followSymlink: true })) {
+    if (util.fs.isFileOrDir(linkName, { followSymlink: true })) {
       cleanedPaths.push(linkName);
       return;
     }
-    if (fs_util.isSymlink(linkName)) {
+    if (util.fs.isSymlink(linkName)) {
       ++deadLinkCount;
       opt?.beforeDeadlinkRemove?.(linkName);
       if (!dryRun) Deno.removeSync(linkName);
@@ -68,7 +67,7 @@ export function removeDeadSymlinksVerbose(
     beforeDeadlinkRemove: (filepath) => {
       console.log(
         colors.cyan("[INFO] remove dead symlink:"),
-        colors.yellow(fs_util.abbrHomePathToTilde(filepath)),
+        colors.yellow(util.path.abbrHomePathToTilde(filepath)),
       );
       opt?.beforeDeadlinkRemove?.(filepath);
     },
@@ -132,11 +131,11 @@ export async function applyRepoDotfiles(opt: ApplyRepoDotfilesOption) {
     const dest = dotfile.replace(CONTENT_ROOT, HOME);
 
     // シンボリックリンク先が既にリポジトリ内の dotfile を指しているならスキップ
-    if (usingSymlink && fs_util.isSameInodeSameDevice(dest, repoFile)) return;
+    if (usingSymlink && util.fs.isSameInodeSameDevice(dest, repoFile)) return;
     opt.beforeApply?.(repoFile, dest);
 
     // dest が存在し、それがシンボリックリンクでないならバックアップへ移動
-    if (fs_util.isFileOrDir(dest, { followSymlink: false })) {
+    if (util.fs.isFileOrDir(dest, { followSymlink: false })) {
       const backupPath = dotfile.replace(
         CONTENT_ROOT,
         backupDir ??
@@ -144,7 +143,7 @@ export async function applyRepoDotfiles(opt: ApplyRepoDotfilesOption) {
       );
       opt.beforeBackup?.(dest, backupPath);
       if (!dryRun) {
-        fs_util.mkdirRecursive(path.dirname(backupPath));
+        util.fs.mkdirRecursive(path.dirname(backupPath));
         Deno.renameSync(dest, backupPath);
       }
       opt.afterBackupSuccess?.(dest, backupPath);
@@ -152,8 +151,8 @@ export async function applyRepoDotfiles(opt: ApplyRepoDotfilesOption) {
 
     // copy または symlink を適用
     if (!dryRun) {
-      fs_util.ensureRemoved(dest);
-      fs_util.mkdirRecursive(path.dirname(dest));
+      util.fs.ensureRemoved(dest);
+      util.fs.mkdirRecursive(path.dirname(dest));
       applyFn(repoFile, dest);
     }
     ++appliedCount;
@@ -176,15 +175,17 @@ export async function applyRepoDotfilesVerbose(opt: ApplyRepoDotfilesOption) {
     beforeApply: (repoFile, dest) => {
       console.log(
         dryRun ? " (dry-run)" : "",
-        colors.magenta(fs_util.replacePathPrefix(repoFile, gitRootAbsPath, "dotfiles")),
+        colors.magenta(
+          util.path.replacePathPrefix(repoFile, gitRootAbsPath, "dotfiles"),
+        ),
         "->",
-        colors.green(fs_util.abbrHomePathToTilde(dest)),
+        colors.green(util.path.abbrHomePathToTilde(dest)),
       );
       opt.beforeApply?.(repoFile, dest);
     },
     beforeBackup: (orig, backup) => {
       console.log(
-        colors.dim.white(`  ... backup to ${fs_util.abbrHomePathToTilde(backup)}`),
+        colors.dim.white(`  ... backup to ${util.path.abbrHomePathToTilde(backup)}`),
       );
       opt.beforeBackup?.(orig, backup);
     },

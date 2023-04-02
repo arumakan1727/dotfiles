@@ -1,5 +1,5 @@
-import { io, path } from "../deps.ts";
-import * as ioutil from "../util/io.ts";
+import { path } from "../deps.ts";
+import { io } from "../util/mod.ts";
 
 function getModuleDir(importMeta: ImportMeta): string {
   return path.resolve(path.dirname(path.fromFileUrl(importMeta.url)));
@@ -19,7 +19,7 @@ export async function fetchGitRootAbsPath(): Promise<string> {
   const p = Deno.run({ cmd, stdout: "piped" });
   let stdout1stLine: string | undefined;
   try {
-    stdout1stLine = await ioutil.readLine(p.stdout);
+    stdout1stLine = await io.readLine(p.stdout);
 
     const { success } = await p.status();
     if (stdout1stLine == null || !success) {
@@ -41,7 +41,7 @@ export async function fetchGitTrackedFileList(
   const p = Deno.run({ cmd, stdout: "piped" });
   let res: string[];
   try {
-    res = await ioutil.readLinesIntoArray(p.stdout);
+    res = await io.readLinesIntoArray(p.stdout);
   } finally {
     p.stdout.close();
     p.close();
