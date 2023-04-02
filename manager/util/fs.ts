@@ -30,7 +30,7 @@ export function ensureRemoved(filepath: string) {
   try {
     Deno.removeSync(filepath);
   } catch (e) {
-    if (e! instanceof Deno.errors.NotFound) {
+    if (!(e instanceof Deno.errors.NotFound)) {
       throw e;
     }
   }
