@@ -1,6 +1,6 @@
 import { colors, Command } from "../deps.ts";
-import { readLinesIntoArray } from "../libs/io.ts";
-import { LintError, lintOrphanPhony } from "../libs/makefile_lint.ts";
+import * as textfile from "../util/textfile.ts";
+import { LintError, lintOrphanPhony } from "../lib/makefile_lint.ts";
 
 const command = new Command()
   .name("lint_makefile.ts")
@@ -22,7 +22,7 @@ export default async function main(args: string[]) {
 }
 
 async function lint(path: string): Promise<LintError[]> {
-  const lines = await readLinesIntoArray(path);
+  const lines = await textfile.readLinesIntoArray(path);
   const errs: LintError[] = [];
 
   errs.push(...lintOrphanPhony(lines, path));

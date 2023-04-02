@@ -1,6 +1,9 @@
 import { path } from "../deps.ts";
 
-export function isFileOrDir(filepath: string, opt: { followSymlink: boolean }): boolean {
+export function isFileOrDir(
+  filepath: string,
+  opt: { followSymlink: boolean },
+): boolean {
   const stat = opt.followSymlink ? Deno.statSync : Deno.lstatSync;
   try {
     const s = stat(filepath);

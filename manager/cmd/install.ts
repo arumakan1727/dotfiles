@@ -1,9 +1,10 @@
 import * as PKG_LIST from "../PKG_LIST.ts";
 import { determineInstallCmd, InstallWay } from "../INSTALL_CMD.ts";
 import { SupportedSysName } from "../SUPPORTED_SYSTEMS.ts";
-import { detectSysName, fetchLinuxDistribName } from "../libs/sys_info.ts";
+import * as os from "../util/os.ts";
+import { detectSysName } from "../lib/sys_info.ts";
 import { colors, Command, datetime, EnumType, path } from "../deps.ts";
-import { concat } from "../libs/collection.ts";
+import { concat } from "../util/collection.ts";
 import { DOTFILES_CACHE_HOME } from "../CONFIG.ts";
 
 const scope2pkgs = {
@@ -70,7 +71,7 @@ async function run(
 ): Promise<number> {
   const scope = args[0];
   const pkgs = selectPkgs(scope);
-  const sysName = await detectSysName(Deno.build.os, fetchLinuxDistribName);
+  const sysName = await detectSysName(Deno.build.os, os.fetchLinuxDistribName);
   const now = new Date();
 
   for (let i = 0; i < pkgs.length; ++i) {

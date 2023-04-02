@@ -5,14 +5,8 @@ import {
   SYMLINK_STATE_FILE,
 } from "../CONFIG.ts";
 import { colors, Command, datetime, path } from "../deps.ts";
-import {
-  abbrHomePathToTilde,
-  isFileOrDir,
-  isSameInodeSameDevice,
-  isSymlink,
-  replacePathPrefix,
-} from "../libs/fs.ts";
-import { fetchGitRootAbsPath, fetchGitTrackedFileList } from "../libs/git.ts";
+import * as fs from "../util/fs.ts";
+import { fetchGitRootAbsPath, fetchGitTrackedFileList } from "../lib/repository.ts";
 
 const subcmdSync = new Command()
   .description("sync dotfiles with auto clean")
@@ -63,15 +57,15 @@ function removeDeadSymlink(
   console.log(colors.brightYellow.bold("Checking dead symlinks..."));
 
   symlinks.forEach((filepath) => {
-    if (isFileOrDir(filepath, { followSymlink: true })) {
+    if (fs.isFileOrDir(filepath, { followSymlink: true })) {
       cleanedPaths.push(filepath);
       return;
     }
-    if (isSymlink(filepath)) {
+    if (fs.isSymlink(filepath)) {
       ++deadLinkCount;
       console.log(
         colors.cyan("[INFO] remove dead symlink:"),
-        colors.yellow(abbrHomePathToTilde(filepath)),
+        colors.yellow(fs.abbrHomePathToTilde(filepath)),
       );
       if (!dryRun) Deno.removeSync(filepath);
     }
@@ -107,22 +101,22 @@ async function applyRepoDotfiles(option: {
     const dest = dotfile.replace(CONTENT_ROOT, HOME);
 
     const opNeed = !usingSymlink ||
-      (usingSymlink && !isSameInodeSameDevice(origin, dest));
+      (usingSymlink && !fs.isSameInodeSameDevice(origin, dest));
     if (!opNeed) return;
 
     console.log(
       dryRun ? " (dry-run)" : "",
-      colors.magenta(replacePathPrefix(origin, gitRootAbsPath, "dotfiles")),
+      colors.magenta(fs.replacePathPrefix(origin, gitRootAbsPath, "dotfiles")),
       "->",
-      colors.green(abbrHomePathToTilde(dest)),
+      colors.green(fs.abbrHomePathToTilde(dest)),
     );
 
     const backupNeed = !usingSymlink ||
-      usingSymlink && isFileOrDir(dest, { followSymlink: false });
+      usingSymlink && fs.isFileOrDir(dest, { followSymlink: false });
     if (backupNeed) {
       const backupPath = dotfile.replace(CONTENT_ROOT, backupDir);
       console.log(
-        colors.dim.white(`  ... copy backup to ${abbrHomePathToTilde(backupPath)}`),
+        colors.dim.white(`  ... copy backup to ${fs.abbrHomePathToTilde(backupPath)}`),
       );
       if (!dryRun) {
         Deno.mkdirSync(path.dirname(backupPath), { recursive: true });
