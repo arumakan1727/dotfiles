@@ -7,16 +7,25 @@ RESET   := \033[0m
 
 
 .PHONY:	lint/Makefile	## Lint makefiles
-lint/Makefile:	_bootstrap
-	$(DENO) run --allow-read=Makefile ./manager/cmd/lint_makefile.ts Makefile
+lint/Makefile:
+	deno run --allow-read=Makefile ./manager/cmd/lint_makefile.ts Makefile
 
-.PHONY:	symlink/update	## Set symlinks pointing to this dotifiles & remove dead symlinks
-symlink/update:
-	echo "TODO"
 
-.PHONY:	symlink/remove	## Remove all symlinks
-symlink/remove:
-	echo "TODO"
+DOTFILE_ARGS := -A manager/cmd/dotfile.ts
+
+.PHONY:	dotfile/apply/symlink	## Apply dotfiles using symlink, and remove deadlinks
+dotfiles/apply/symlink:
+	deno run $(DOTFILE_ARGS) apply
+
+.PHONY:	dotfile/apply/copy	## Apply dotfiles using copy, and remove deadlinks
+dotfiles/apply/copy:
+	deno run $(DOTFILE_ARGS) apply --copy
+
+.PHONY:	dotfile/list-symlinks	## List applied symlinks
+dotfile/list-symlinks:
+	deno run $(DOTFILE_ARGS) symlinks
+
+
 
 XDG_CACHE_HOME ?= $(HOME)/.cache
 DOTFILES_CACHE_HOME := $(XDG_CACHE_HOME)/armkn-dotfiles
