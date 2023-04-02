@@ -6,6 +6,11 @@ MAGENTA := \033[35m
 RESET   := \033[0m
 
 
+.PHONY:	prerequisites/install	## Install prerequisites
+prerequisites/install:
+	curl -fsSL https://deno.land/x/install/install.sh | sh
+
+
 .PHONY:	lint/Makefile	## Lint makefiles
 lint/Makefile:
 	deno run --allow-read=Makefile --allow-env ./manager/cmd/lint_makefile.ts Makefile
