@@ -8,21 +8,21 @@ RESET   := \033[0m
 
 .PHONY:	lint/Makefile	## Lint makefiles
 lint/Makefile:
-	deno run --allow-read=Makefile ./manager/cmd/lint_makefile.ts Makefile
+	deno run --allow-read=Makefile --allow-env ./manager/cmd/lint_makefile.ts Makefile
 
 
 DOTFILE_ARGS := -A manager/cmd/dotfile.ts
 
-.PHONY:	dotfile/apply/symlink	## Apply dotfiles using symlink, and remove deadlinks
+.PHONY:	dotfiles/apply/symlink	## Apply dotfiles using symlink, and remove deadlinks
 dotfiles/apply/symlink:
 	deno run $(DOTFILE_ARGS) apply
 
-.PHONY:	dotfile/apply/copy	## Apply dotfiles using copy, and remove deadlinks
+.PHONY:	dotfiles/apply/copy	## Apply dotfiles using copy, and remove deadlinks
 dotfiles/apply/copy:
 	deno run $(DOTFILE_ARGS) apply --copy
 
-.PHONY:	dotfile/list-symlinks	## List applied symlinks
-dotfile/list-symlinks:
+.PHONY:	dotfiles/list-symlinks	## List applied symlinks
+dotfiles/list-symlinks:
 	deno run $(DOTFILE_ARGS) symlinks
 
 
