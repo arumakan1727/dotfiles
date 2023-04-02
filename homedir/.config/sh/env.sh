@@ -8,9 +8,6 @@ export PAGER=less
 export LESS='--no-init --quit-if-one-screen -R --LONG-PROMPT -i --shift 4 --jump-target=3'
 export GROFF_NO_SGR=1  # for konsole and gnome-terminal
 
-export ZIPINFOOPT="-OCP932"
-export UNZIPOPT="-OCP932"
-
 if command -v dircolors >/dev/null 2>&1 ; then
     [ -r "$HOME/.dircolors" ] && eval "$(dircolors -b "$HOME/.dircolors")" || eval "$(dircolors -b)"
 fi
