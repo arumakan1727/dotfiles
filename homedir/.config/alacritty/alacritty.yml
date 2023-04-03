@@ -1,8 +1,11 @@
 font:
-  use_thin_strokes: true
-  size: 11
+  size: 13
   normal:
     family: 'JetBrainsMono Nerd Font'
+    style: Light
+
+key_bindings:
+  - { key: Yen, chars: "\\" }
 
 color_schemes:
   substrata: &substrata
