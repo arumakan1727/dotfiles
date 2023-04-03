@@ -18,9 +18,14 @@ select_tmux_session() {
   esac
 }
 
-if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux &>/dev/null } && { command -v fzf &>/dev/null }; then
-  select_tmux_session
-fi
+safe_source() {
+  if [[ -s "$1" ]]; then source "$1"; fi
+}
+
+
+# if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux &>/dev/null } && { command -v fzf &>/dev/null }; then
+#   select_tmux_session
+# fi
 
 
 
@@ -35,7 +40,7 @@ plugin() {
     echo >&2 -e "\x1b[36;1m[INFO] Installing zsh plugin $repo\x1b[m"
     git clone --depth 1 https://github.com/$repo "$dir"
   fi
-  . "$dir/$(basename $repo).plugin.zsh"
+  source "$dir/$(basename $repo).plugin.zsh"
 }
 plugin zdharma-continuum/fast-syntax-highlighting
 plugin zsh-users/zsh-autosuggestions
@@ -59,9 +64,9 @@ safe_source "$HOME/.fzf.zsh"
 # my config modules
 #====================================
 d="$HOME/.config/zsh"
-. "$d/base.zsh"
-. "$d/completion.zsh"
-. "$d/bindkey.zsh"
-. "$HOME/.config/sh/alias.sh"
+source "$d/base.zsh"
+source "$d/completion.zsh"
+source "$d/bindkey.zsh"
+source "$HOME/.config/sh/alias.sh"
 unset d
 safe_source "$HOME/.zshrc.local"

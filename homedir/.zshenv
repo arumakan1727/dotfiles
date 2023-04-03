@@ -1,7 +1,16 @@
-typeset -U path PATH manpath sudo_path
+typeset -U path manpath infopath sudo_path
+typeset -xT PATH path
+typeset -xT MANPATH manpath
+typeset -xT INFOPATH infopath
 typeset -xT SUDO_PATH sudo_path
 
+
 if [[ -d /opt/homebrew ]]; then
+  export HOMEBREW_PREFIX=/opt/homebrew
+  export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+  export HOMEBREW_REPOSITORY=/opt/homebrew
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+
   # GNU コマンドは確実にインストールするので (N-/) によるチェックはしない
   path=(
     /opt/homebrew/opt/coreutils/libexec/gnubin
@@ -9,6 +18,8 @@ if [[ -d /opt/homebrew ]]; then
     /opt/homebrew/opt/gnu-sed/libexec/gnubin
     /opt/homebrew/opt/gnu-tar/libexec/gnubin
     /opt/homebrew/opt/grep/libexec/gnubin
+    /opt/homebrew/bin
+    /opt/homebrew/sbin
     $path
   )
   manpath=(
@@ -17,11 +28,16 @@ if [[ -d /opt/homebrew ]]; then
     /opt/homebrew/opt/gnu-sed/libexec/gnuman
     /opt/homebrew/opt/gnu-tar/libexec/gnuman
     /opt/homebrew/opt/grep/libexec/gnuman
+    /opt/homebrew/share/man
+    $manpath
+  )
+  infopath=(
+    /opt/homebrew/share/info
+    $infopath
   )
 fi
 
 path=(
-  /usr/local/go/bin
   "$HOME/bin"
   "$HOME/.local/bin"
   "$HOME/.cargo/bin"
@@ -32,6 +48,12 @@ path=(
   "$HOME/.nimble/bin"(N-/)
   "$HOME/.rbenv/shims"(N-/)
   $path
+  /usr/local/go/bin
+  /usr/local/bin
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
 )
 
 fpath=(
@@ -51,7 +73,7 @@ export LESS_TERMCAP_se=$'\e[0m'        # reset reverse video
 export LESS_TERMCAP_ue=$'\e[0m'        # reset underline
 
 safe_source() {
-  [[ -s "$1" ]] && . "$1"
+  if [[ -s "$1" ]]; then source "$1"; fi
 }
 
 safe_source "$HOME/.config/sh/env.sh"
