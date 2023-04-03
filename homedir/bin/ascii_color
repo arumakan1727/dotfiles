@@ -1,8 +1,15 @@
 #!/bin/bash
 set -Eeuo pipefail
 
+show() {
+  s="\x1b[${1};${2-}m"
+  printf "${s}%s\x1b[m " "$s"
+}
+
 for c in {30..37} {40..47} {90..97}; do
-  printf "\x1b[${c}m\\\\x1b[${c}m\x1b[m "
-  seq 1 9 | xargs -n1 -I@ printf "\x1b[${c};@m\\\\x1b[${c};@m\x1b[m "
+  show $c
+  for k in {1..9}; do
+    show $c $k
+  done
   printf "\n"
 done
