@@ -1,6 +1,31 @@
 # shellcheck shell=bash
 
-export PATH="$HOME/bin:$HOME/.cargo/bin:$HOME/.deno/bin:$HOME/.go/bin:/usr/local/go/bin:$PATH"
+d=/opt/homebrew/opt
+path=""
+manpath=""
+if [[ -d $d ]]; then
+  path+=$d/coreutils/libexec/gnubin:
+  path+=$d/findutils/libexec/gnubin:
+  path+=$d/gnu-sed/libexec/gnubin:
+  path+=$d/gnu-tar/libexec/gnubin:
+  path+=$d/grep/libexec/gnubin:
+
+  manpath+=$d/coreutils/libexec/gnuman:
+  manpath+=$d/findutils/libexec/gnuman:
+  manpath+=$d/gnu-sed/libexec/gnuman:
+  manpath+=$d/gnu-tar/libexec/gnuman:
+  manpath+=$d/grep/libexec/gnuman:
+fi
+
+path+="$HOME/bin:"
+path+="$HOME/.cargo/bin:"
+path+="$HOME/.deno/bin:"
+path+="$HOME/.go/bin:"
+path+=/usr/local/go/bin:
+
+export PATH="$path$PATH"
+export MANPATH="$manpath$MANPATH"
+unset d path manpath
 
 export LESS_TERMCAP_mb=$'\e[1;31m'     # begin bold
 export LESS_TERMCAP_md=$'\e[1;33m'     # begin blink

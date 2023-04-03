@@ -1,6 +1,25 @@
 typeset -U path PATH manpath sudo_path
 typeset -xT SUDO_PATH sudo_path
 
+if [[ -d /opt/homebrew ]]; then
+  # GNU コマンドは確実にインストールするので (N-/) によるチェックはしない
+  path=(
+    /opt/homebrew/opt/coreutils/libexec/gnubin
+    /opt/homebrew/opt/findutils/libexec/gnubin
+    /opt/homebrew/opt/gnu-sed/libexec/gnubin
+    /opt/homebrew/opt/gnu-tar/libexec/gnubin
+    /opt/homebrew/opt/grep/libexec/gnubin
+    $path
+  )
+  manpath=(
+    /opt/homebrew/opt/coreutils/libexec/gnuman
+    /opt/homebrew/opt/findutils/libexec/gnuman
+    /opt/homebrew/opt/gnu-sed/libexec/gnuman
+    /opt/homebrew/opt/gnu-tar/libexec/gnuman
+    /opt/homebrew/opt/grep/libexec/gnuman
+  )
+fi
+
 path=(
   /usr/local/go/bin
   "$HOME/bin"
