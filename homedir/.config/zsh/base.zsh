@@ -15,8 +15,8 @@ zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 autoload -Uz run-help               # ESC h でコマンドラインに表示されているコマンドについての man を見れる
 autoload -Uz add-zsh-hook           # add-zsh-hook {イベント種類} {関数名} の書式で hook できる
 autoload -Uz is-at-least            # is-at-least {バージョン番号} の書式で現在の zsh が指定バージョン以降かどうか判定できる
-autoload -Uz colors && colors       # 色がつく
-# autoload -Uz compinit && compinit   # 強力な補完
+autoload -Uz colors && colors
+autoload -Uz compinit && compinit
 
 # ファイル作成時のパーミッション。 022 => group と other の write 権限をOFFにする
 umask 022

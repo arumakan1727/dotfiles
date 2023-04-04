@@ -18,15 +18,22 @@ select_tmux_session() {
   esac
 }
 
+if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux &>/dev/null } && { command -v fzf &>/dev/null }; then
+  select_tmux_session
+fi
+
 safe_source() {
   if [[ -s "$1" ]]; then source "$1"; fi
 }
 
-
-# if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux &>/dev/null } && { command -v fzf &>/dev/null }; then
-#   select_tmux_session
-# fi
-
+# my config modules
+#====================================
+d="$HOME/.config/zsh"
+source "$d/base.zsh"
+source "$d/completion.zsh"
+source "$d/bindkey.zsh"
+source "$HOME/.config/sh/alias.sh"
+unset d
 
 
 # plugins
@@ -60,13 +67,4 @@ export FZF_ALT_C_COMMAND='fd --type=d --follow --hidden --follow --exclude=.git'
 safe_source "$HOME/.fzf.zsh"
 
 
-
-# my config modules
-#====================================
-d="$HOME/.config/zsh"
-source "$d/base.zsh"
-source "$d/completion.zsh"
-source "$d/bindkey.zsh"
-source "$HOME/.config/sh/alias.sh"
-unset d
 safe_source "$HOME/.zshrc.local"

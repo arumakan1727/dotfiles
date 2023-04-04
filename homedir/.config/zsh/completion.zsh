@@ -1,8 +1,3 @@
-#======================================================================================
-# Completion
-# 参考: https://github.com/yutkat/dotfiles/blob/master/.config/zsh/rc/completion.zsh
-#======================================================================================
-
 # :completion:function:completer:command:argument:tag
 
 # オプション補完で解説部分を表示
