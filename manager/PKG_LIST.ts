@@ -61,7 +61,6 @@ export const cli: {
     { id: "docker", cmd: ["./installer/docker.sh"] },
     { id: "ghq", cmd: ["go", "install", "github.com/x-motemen/ghq@latest"] },
     { id: "gibo", cmd: ["./installer/gibo.sh"] },
-    { id: "pnpm", shUrl: "https://get.pnpm.io/install.sh" },
   ],
 } as const;
 
