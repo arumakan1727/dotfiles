@@ -1,7 +1,7 @@
 HISTFILE=~/.zsh_history    # ヒストリ保存先ファイル
 HISTSIZE=32768             # メモリに保存される履歴の件数 (保存数だけ履歴を検索できる)
 SAVEHIST=100000            # HISTFILE に保存される履歴の件数
-HISTORY_IGNORE="(ls|ll|la|lla|pwd|cd ..|cd|popd|ja|en|task *|jrnl *)"
+HISTORY_IGNORE="(ls|ll|la|lla|pwd|cd ..|cd|popd|ja *|en *|task *|jrnl *|git s|git sa|git ds|git aa|git au|git ap|git pull|git push)"
 
 # C-w などで単語ごとの削除をする際の「単語境界にならない記号リスト」
 WORDCHARS='*?[]~&;!#$%^(){}<>'
@@ -10,7 +10,15 @@ cdpath=(~ ..)
 
 # 失敗するコマンドは履歴に追加しない
 # 参考: https://superuser.com/questions/902241/how-to-make-zsh-not-store-failed-command
-zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
+zshaddhistory() {
+  if ! whence ${${(z)1}[1]} >| /dev/null; then
+    return 1
+  fi
+
+  # https://qiita.com/sho-t/items/d44bfbc783db7ca278c0
+  emulate -L zsh
+  [[ ${1%%$'\n'} != ${~HISTORY_IGNORE} ]]
+}
 
 autoload -Uz run-help               # ESC h でコマンドラインに表示されているコマンドについての man を見れる
 autoload -Uz add-zsh-hook           # add-zsh-hook {イベント種類} {関数名} の書式で hook できる
