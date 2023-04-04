@@ -18,6 +18,8 @@ if command -v dircolors >/dev/null 2>&1 ; then
     [ -r "$HOME/.dircolors" ] && source "$HOME/.dircolors" || eval "$(dircolors -b)"
 fi
 
+export GOHOME="$HOME/.go"
+export PYENV_ROOT="$HOME/.pyenv"
 export SDKMAN_DIR="$HOME/.sdkman"
 export VOLTA_HOME="$HOME/.volta"
 
