@@ -1,7 +1,7 @@
 HISTFILE=~/.zsh_history    # ヒストリ保存先ファイル
 HISTSIZE=32768             # メモリに保存される履歴の件数 (保存数だけ履歴を検索できる)
 SAVEHIST=100000            # HISTFILE に保存される履歴の件数
-HISTORY_IGNORE="(ls|ll|la|pwd|cd ..|cd|task *|jrnl *)"
+HISTORY_IGNORE="(ls|ll|la|lla|pwd|cd ..|cd|popd|ja|en|task *|jrnl *)"
 
 # C-w などで単語ごとの削除をする際の「単語境界にならない記号リスト」
 WORDCHARS='*?[]~&;!#$%^(){}<>'
