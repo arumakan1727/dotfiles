@@ -1,5 +1,5 @@
 import { SYMLINK_STATE_FILE } from "../CONFIG.ts";
-import { Command, colors } from "../deps.ts";
+import { colors, Command } from "../deps.ts";
 import { loadSymlinkState, runApply } from "../lib/dotfile_manager.ts";
 import { path } from "../util/mod.ts";
 
