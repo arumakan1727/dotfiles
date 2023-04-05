@@ -1,0 +1,5 @@
+#!/bin/bash
+set -eu
+
+scriptDir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+echo "$scriptDir"
