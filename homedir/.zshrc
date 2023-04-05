@@ -60,8 +60,8 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
 command -v starship &>/dev/null && eval "$(starship init zsh)"
 command -v direnv   &>/dev/null && eval "$(direnv hook zsh)"
 
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'
-export FZF_CTRL_T_COMMAND='rg --files --hidden --follow'
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow -g '!.git/' -g '!node_modules/' -g '!.venv'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--height 60% --reverse --border'
 export FZF_ALT_C_COMMAND='fd --type=d --follow --hidden --follow --exclude=.git'
 safe_source "$HOME/.fzf.zsh"
