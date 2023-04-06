@@ -1,0 +1,29 @@
+{
+  "title": "Shift+0 to tilde",
+  "rules": [
+    {
+      "description": "Change Shift+0 to tilde",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "0",
+            "modifiers": {
+              "mandatory": [
+                "shift"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "equal_sign",
+              "modifiers": [
+                "shift"
+              ]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
