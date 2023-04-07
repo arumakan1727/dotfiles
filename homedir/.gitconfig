@@ -45,8 +45,6 @@
   autosquash = true
 [diff]
   colorMoved = zebra
-[log]
-  showSignature = true
 [pull]
   ff = only
 [delta]
