@@ -6,6 +6,11 @@ if wezterm.config_builder then
 end
 
 config.color_scheme = 'Tokyo Night (Gogh)'
+config.colors = {
+	cursor_bg = '#f0f0f0',
+	cursor_fg = '#000000',
+	cursor_border = '#ff0000',
+}
 
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = true
