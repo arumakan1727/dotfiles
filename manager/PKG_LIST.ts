@@ -28,6 +28,7 @@ export const cli: {
 
     // modern alternatives of gnu linux command
     { id: "bat" },
+    { id: "fd", apt: "fd-find" },
     { id: "git-delta", cmd: ["./installer/git-delta.sh"] },
     { id: "htop" },
     { id: "lsd", cmd: ["./installer/lsd.sh"] },
@@ -39,6 +40,7 @@ export const cli: {
     { id: "direnv" },
     { id: "fzf" },
     { id: "rg", apt: "ripgrep" },
+    { id: "tree" },
   ],
   extras: [
     { id: "broot" },
@@ -56,6 +58,9 @@ export const cli: {
     { id: "rustup", shUrl: "https://sh.rustup.rs" },
     { id: "sdkman", shUrl: "https://get.sdkman.io", sh: "bash" },
     { id: "volta", shUrl: "https://get.volta.sh", sh: "bash" },
+
+    // linter
+    { id: "shellcheck" },
 
     // misc
     { id: "docker", cmd: ["./installer/docker.sh"] },
