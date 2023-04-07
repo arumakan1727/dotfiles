@@ -54,4 +54,4 @@ alt - e : yabai -m window --toggle split
 alt - space : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
 
 # emulate dropdown terminal
-f12 : yabai_iterm2
+f12 : yabai_term

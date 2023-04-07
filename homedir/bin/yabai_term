@@ -2,4 +2,4 @@
 set -eu
 
 scriptDir=$(cd "$(dirname "$(readlink "${BASH_SOURCE[0]}")")" &>/dev/null && pwd -P)
-deno run --allow-run "$scriptDir/../../manager/cmd/yabai_iterm2.ts"
+deno run --allow-run "$scriptDir/../../manager/cmd/yabai_term.ts"

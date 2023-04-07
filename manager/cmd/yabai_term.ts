@@ -1,5 +1,5 @@
 /*
- * yabai コマンドを用いて、 id の最も小さい iTerm2 ウィンドウの表示・非表示をトグルする。
+ * yabai コマンドを用いて、 id の最も小さい WezTerm ウィンドウの表示・非表示をトグルする。
  * また、is-float, is-topmost, is-sticky を全て true にする。
  *    is-float=true   ->  タイル配置を無効化
  *    is-topmost=true ->  他のウィンドウと被る時に常に最上位に表示
@@ -25,14 +25,14 @@ const jqCmd = [
   "jq",
   "-r",
   [
-    '[.[] | select(.app | contains("iTerm2"))]',
+    '[.[] | select(.app | contains("WezTerm"))]',
     "sort_by(.id)",
     ".[0]",
     `{ ${windowInfoProps.map((s) => `"${s}"`).join(", ")} }`,
   ].join(" | "),
 ] as const;
 
-async function fetchMinimumIDItermWinInfo(): Promise<WindowInfo> {
+async function fetchMinimumIDWezTermWinInfo(): Promise<WindowInfo> {
   const yabai = Deno.run({
     cmd: yabaiCmd,
     stdout: "piped",
@@ -64,7 +64,7 @@ async function fetchMinimumIDItermWinInfo(): Promise<WindowInfo> {
   return JSON.parse(res);
 }
 
-function generateYabaiItermCmd(w: WindowInfo) {
+function generateYabaiTermCmd(w: WindowInfo) {
   const id = w.id.toString();
   const cmd: string[] = ["yabai", "-m", "window", id];
   if (!w["is-floating"]) cmd.push("--toggle", "float");
@@ -79,8 +79,8 @@ function generateYabaiItermCmd(w: WindowInfo) {
 }
 
 async function main() {
-  const w = await fetchMinimumIDItermWinInfo();
-  const cmd = generateYabaiItermCmd(w);
+  const w = await fetchMinimumIDWezTermWinInfo();
+  const cmd = generateYabaiTermCmd(w);
   console.log(cmd.join(" "));
   const p = Deno.run({ cmd });
 
