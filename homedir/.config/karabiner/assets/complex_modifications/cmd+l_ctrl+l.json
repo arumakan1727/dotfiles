@@ -1,0 +1,40 @@
+{
+  "title": "Cmd+l, Ctrl+l (See also .skhdrc)",
+  "rules": [
+    {
+      "description": "Cmd+l -> Cmd+SEMI, Ctrl+l -> Cml+l",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["command"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "semicolon",
+              "modifiers": ["command"]
+            }
+          ],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "l",
+            "modifiers": {
+              "mandatory": ["control"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "l",
+              "modifiers": ["command"]
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
