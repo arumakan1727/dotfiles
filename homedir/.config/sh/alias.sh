@@ -10,6 +10,7 @@ alias ln='ln -v'
 # ls
 if command -v lsd 2>/dev/null 1>&2 ; then
   alias ls='lsd'
+  alias lt='lsd -a --tree --depth 3 -I .git -I node_modules -I .venv'
 else
   alias ls='ls --color=auto'
 fi
