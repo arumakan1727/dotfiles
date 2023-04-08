@@ -1,5 +1,4 @@
 # Select tmux session interactively
-#====================================
 select_tmux_session() {
   local sessions="$(tmux list-sessions)"
   [[ -z "$sessions" ]] && exec tmux new-session
@@ -27,44 +26,12 @@ safe_source() {
 }
 
 # my config modules
-#====================================
 d="$HOME/.config/zsh"
 source "$d/base.zsh"
 source "$d/completion.zsh"
+source "$d/plugin.zsh"
 source "$d/bindkey.zsh"
 source "$d/alias.sh"
 unset d
-
-
-# plugins
-#====================================
-export ZSH_PLUGIN_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zsh-plugin"
-
-plugin() {
-  local repo="$1"
-  local dir="$ZSH_PLUGIN_HOME/$repo"
-  if [[ ! -d "$dir" ]]; then
-    echo >&2 -e "\x1b[36;1m[INFO] Installing zsh plugin $repo\x1b[m"
-    git clone --depth 1 https://github.com/$repo "$dir"
-  fi
-  source "$dir/$(basename $repo).plugin.zsh"
-}
-plugin zdharma-continuum/fast-syntax-highlighting
-plugin zsh-users/zsh-autosuggestions
-plugin zsh-users/zsh-completions
-plugin zsh-users/zsh-history-substring-search
-unset -f plugin
-
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=240'
-
-command -v starship &>/dev/null && eval "$(starship init zsh)"
-command -v direnv   &>/dev/null && eval "$(direnv hook zsh)"
-
-export FZF_DEFAULT_COMMAND="rg --files --hidden --follow -g '!.git/' -g '!node_modules/' -g '!.venv'"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='--height 60% --reverse --border'
-export FZF_ALT_C_COMMAND='fd --type=d --follow --hidden --follow --exclude=.git'
-safe_source "$HOME/.fzf.zsh"
-
 
 safe_source "$HOME/.zshrc.local"
