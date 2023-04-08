@@ -29,9 +29,9 @@ safe_source() {
 d="$HOME/.config/zsh"
 source "$d/base.zsh"
 source "$d/completion.zsh"
-source "$d/plugin.zsh"
 source "$d/bindkey.zsh"
 source "$d/alias.sh"
+source "$d/plugin.zsh"
 unset d
 
 safe_source "$HOME/.zshrc.local"

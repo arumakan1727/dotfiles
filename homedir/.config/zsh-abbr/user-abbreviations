@@ -1,0 +1,3 @@
+abbr -g ":h"="--help"
+abbr -g ":s"="~/.local/share/"
+abbr -g ":v"="--version"
