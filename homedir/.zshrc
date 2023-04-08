@@ -32,7 +32,7 @@ d="$HOME/.config/zsh"
 source "$d/base.zsh"
 source "$d/completion.zsh"
 source "$d/bindkey.zsh"
-source "$HOME/.config/sh/alias.sh"
+source "$d/alias.sh"
 unset d
 
 

@@ -73,8 +73,4 @@ export LESS_TERMCAP_me=$'\e[0m'        # reset bold/blink
 export LESS_TERMCAP_se=$'\e[0m'        # reset reverse video
 export LESS_TERMCAP_ue=$'\e[0m'        # reset underline
 
-safe_source() {
-  if [[ -s "$1" ]]; then source "$1"; fi
-}
-
-safe_source "$HOME/.config/sh/env.sh"
+source "$HOME/.config/zsh/env.sh"
