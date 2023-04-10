@@ -7,12 +7,13 @@ CYAN    := \033[36m
 MAGENTA := \033[35m
 RESET   := \033[0m
 
+export DENO_INSTALL
 
 .PHONY:    deno
 deno:	$(DENO_INSTALL)/bin/deno
 
 $(DENO_INSTALL)/bin/deno:
-    DENO_INSTALL=$(DENO_INSTALL) curl -fsSL https://deno.land/x/install/install.sh | sh
+	curl -fsSL https://deno.land/x/install/install.sh | sh
 
 
 .PHONY:	lint/Makefile	## Lint makefiles
