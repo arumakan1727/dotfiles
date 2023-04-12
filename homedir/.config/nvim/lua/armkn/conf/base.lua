@@ -111,7 +111,7 @@ o.backspace = "indent,eol,start"
 o.synmaxcol = 300
 o.background = "dark"
 g.colorterm = os.getenv("COLORTERM")
-o.termguicolors = vim.fn.exists("+termguicolors") ~= nil
+o.termguicolors = true
 
 -- UI, Visual, Display
 o.cursorline = true
@@ -130,8 +130,7 @@ o.sidescrolloff = 5
 o.pumblend = 0
 o.pumheight = 10
 o.mouse = "a"
-o.conceallevel = 0  -- JSONなどでダブルクォートが隠されるのを抑制
-o.showtabline = 2  -- tablineを常に表示
+o.showtabline = 2 -- tablineを常に表示
 o.signcolumn = "yes"
 
 -- Fold
@@ -141,7 +140,7 @@ o.foldlevel = 1
 vim.w.foldcolumn = "0:"
 
 -- Window
-o.laststatus = 3  -- ウィンドウ分割してもステータスラインは画面全体の下部(last)にのみ表示
+o.laststatus = 3 -- ウィンドウ分割してもステータスラインは画面全体の下部(last)にのみ表示
 opt.fillchars = {
 	horiz = "━",
 	horizup = "┻",
