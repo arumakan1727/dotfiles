@@ -13,6 +13,9 @@ keymap.set("n", "Y", "y$", opts)
 keymap.set("n", "<Leader>y", "<Cmd>%yank<CR>", opts)
 keymap.set("n", "x", '"_x', opts)
 
+-- Buffer
+keymap.set("n", "<Leader>bd", "<Cmd>bdelete!<CR>", opts)
+
 -- Window
 keymap.set("n", "<Leader>w", "<C-w>", opts)
 
