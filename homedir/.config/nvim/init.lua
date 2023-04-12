@@ -1,6 +1,6 @@
-require("armkn.conf.base")
-require("armkn.conf.keymaps")
-require("armkn.conf.autocmd")
+require("armkn.rc.base")
+require("armkn.rc.keymaps")
+require("armkn.rc.autocmd")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -15,4 +15,4 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("armkn.conf.plugins")
+require("lazy").setup("armkn.plugins")
