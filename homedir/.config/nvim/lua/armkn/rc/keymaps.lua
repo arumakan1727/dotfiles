@@ -1,5 +1,5 @@
 local keymap = vim.keymap
-local opts = { noremap=true, silent=true }
+local opts = { noremap = true, silent = true }
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
@@ -12,6 +12,9 @@ keymap.set({ "n", "v" }, "k", "gk", opts)
 keymap.set("n", "Y", "y$", opts)
 keymap.set("n", "<Leader>y", "<Cmd>%yank<CR>", opts)
 keymap.set("n", "x", '"_x', opts)
+
+-- Buffer
+keymap.set("n", "<Leader>bd", "<Cmd>bdelete!<CR>", opts)
 
 -- Window
 keymap.set("n", "<Leader>w", "<C-w>", opts)
@@ -26,12 +29,12 @@ keymap.set("i", "<C-u>", "<C-g>u<C-u>", opts)
 
 -- Emacs style (command mode)
 -- Note: silent=false にしないとうまく動かない (2022.04.29時点)
-keymap.set("c", "<C-a>", "<Home>", {noremap=true, silent=false})
-keymap.set("c", "<C-e>", "<End>", {noremap=true, silent=false})
-keymap.set("c", "<C-f>", "<Right>", {noremap=true, silent=false})
-keymap.set("c", "<C-b>", "<Left>", {noremap=true, silent=false})
-keymap.set("c", "<C-h>", "<BS>", {noremap=true, silent=false})
-keymap.set("c", "<C-d>", "<Del>", {noremap=true, silent=false})
+keymap.set("c", "<C-a>", "<Home>", { noremap = true, silent = false })
+keymap.set("c", "<C-e>", "<End>", { noremap = true, silent = false })
+keymap.set("c", "<C-f>", "<Right>", { noremap = true, silent = false })
+keymap.set("c", "<C-b>", "<Left>", { noremap = true, silent = false })
+keymap.set("c", "<C-h>", "<BS>", { noremap = true, silent = false })
+keymap.set("c", "<C-d>", "<Del>", { noremap = true, silent = false })
 
 -- Emacs style (insert mode)
 keymap.set("i", "<C-a>", "<Home>", opts)

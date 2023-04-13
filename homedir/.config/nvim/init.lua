@@ -1,9 +1,18 @@
-vim.o.encoding = "utf-8"
-vim.o.fileencodings = "ucs-bom,utf-8,euc-jp,iso-2022-jp,cp932,sjis,latin1"
-vim.o.fileformats = "unix,dos,mac"
+require("armkn.rc.base")
+require("armkn.rc.keymaps")
+require("armkn.rc.autocmd")
 
-require "rc/base"
-require "rc/keymaps"
-require "rc/autocmd"
-require "rc/pluginlist"
-require "rc/pluginconfig"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("armkn.plugins")
