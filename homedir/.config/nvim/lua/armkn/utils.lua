@@ -1,6 +1,6 @@
 local M = {}
 
-M.root_patterns = { ".git" }
+M.root_patterns = { ".git", "Makefile" }
 
 -- From https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/init.lua#
 -- returns the root directory based on:
@@ -45,7 +45,7 @@ function M.get_root()
 end
 
 ---@param on_attach fun(client, buffer)
-function M.on_lsp_attach(on_attach)
+function M.autocmd_lsp_attach(on_attach)
 	vim.api.nvim_create_autocmd("LspAttach", {
 		callback = function(args)
 			local buffer = args.buf

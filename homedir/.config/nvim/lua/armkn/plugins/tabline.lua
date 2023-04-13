@@ -21,7 +21,7 @@ return {
 				diagnostics = "nvim_lsp",
 				diagnostics_update_in_insert = false,
 				diagnostics_indicator = function(count, _, _, _)
-					return "("..count..")"
+					return "(" .. count .. ")"
 				end,
 				-- NOTE: this will be called a lot so don't do any heavy processing here
 				custom_filter = function(buf_number, _)

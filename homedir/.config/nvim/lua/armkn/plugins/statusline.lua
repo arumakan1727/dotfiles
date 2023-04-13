@@ -1,5 +1,5 @@
 local function get_active_lsp_names()
-	local FALLBACK_MSG = 'No Active LSP'
+	local FALLBACK_MSG = "No Active LSP"
 	local clients = vim.lsp.get_active_clients()
 	if #clients == 0 then
 		return FALLBACK_MSG
@@ -9,7 +9,7 @@ local function get_active_lsp_names()
 	local res = nil
 	for _, c in ipairs(clients) do
 		if c.attached_buffers[bufnr] then
-			res = res and (res .. ',' .. c.name) or c.name
+			res = res and (res .. "," .. c.name) or c.name
 		end
 	end
 	return res or FALLBACK_MSG
@@ -20,7 +20,7 @@ return {
 		"SmiteshP/nvim-navic",
 		lazy = true,
 		init = function()
-			require("armkn.utils").on_lsp_attach(function(client, buffer)
+			require("armkn.utils").autocmd_lsp_attach(function(client, buffer)
 				if client.server_capabilities.documentSymbolProvider then
 					require("nvim-navic").attach(client, buffer)
 				end
@@ -30,7 +30,7 @@ return {
 			separator = " > ",
 			highlight = true,
 			depth_limit = 5,
-		}
+		},
 	},
 	{
 		"nvim-lualine/lualine.nvim",
@@ -55,27 +55,29 @@ return {
 				sections = {
 					lualine_a = { "mode" },
 					lualine_b = {
-						{ 'filename', path = 1 }
+						{ "filename", path = 1 },
 					},
 					lualine_c = {
-						'branch',
-						'diff',
-						{ 'diagnostics', sources = { 'nvim_lsp' } },
+						"branch",
+						"diff",
+						{ "diagnostics", sources = { "nvim_lsp" } },
 						{
-							function() return require("nvim-navic").get_location() end,
+							function()
+								return require("nvim-navic").get_location()
+							end,
 							cond = function()
 								return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
 							end,
 						},
 					},
 					lualine_x = {
-						'encoding',
-						'fileformat',
-						'filetype',
+						"encoding",
+						"fileformat",
+						"filetype",
 						{
-							'active_lsp_name',
+							"active_lsp_name",
 							fmt = get_active_lsp_names,
-							color = {fg = '#60c3c0'}
+							color = { fg = "#60c3c0" },
 						},
 					},
 				},
