@@ -1,6 +1,0 @@
--std=c++17
--Wall
--Wextra
--Wno-char-subscripts
--Wno-unused-const-variable
--DLOCAL_DEBUG
