@@ -7,6 +7,7 @@ return {
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"JoosepAlviste/nvim-ts-context-commentstring",
+			"m-demare/hlargs.nvim",
 			{
 				"andymass/vim-matchup",
 				init = function()
