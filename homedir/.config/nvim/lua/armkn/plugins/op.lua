@@ -9,6 +9,20 @@ return {
 		},
 	},
 	{
+		"echasnovski/mini.comment",
+		event = "VeryLazy",
+		opts = {
+			hooks = {
+				pre = function()
+					require("ts_context_commentstring.internal").update_commentstring({})
+				end,
+			},
+		},
+		config = function(_, opts)
+			require("mini.comment").setup(opts)
+		end,
+	},
+	{
 		"echasnovski/mini.surround",
 		keys = function(_, keys)
 			-- Populate the keys based on the user's options
