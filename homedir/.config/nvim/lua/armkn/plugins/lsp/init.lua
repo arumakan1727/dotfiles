@@ -25,6 +25,10 @@ return {
 			require("armkn.utils").autocmd_lsp_attach(function(client, buffer)
 				require("armkn.plugins.lsp.keymaps").on_attach(client, buffer)
 			end)
+			for name, icon in pairs(require("armkn.icons").diagnostics) do
+				name = "DiagnosticSign" .. name
+				vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
+			end
 			vim.diagnostic.config(opts.diagnostics)
 
 			local lspconfig = require("lspconfig")
