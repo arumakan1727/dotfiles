@@ -12,6 +12,7 @@ function M.on_attach(client, bufnr)
 
 	buf_keymap("n", "<LocalLeader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 	buf_keymap("n", "<LocalLeader>ci", "<cmd>LspInfo<cr>", { desc = "Lsp Info" })
+	buf_keymap("n", "<LocalLeader>cr", vim.lsp.buf.rename, { desc = "Rename symbol" })
 	buf_keymap("n", "<LocalLeader>cf", M.format, { desc = "Format Document" })
 	buf_keymap("v", "<LocalLeader>cf", M.format, { desc = "Format Range" })
 	buf_keymap("n", "<LocalLeader>ca", vim.lsp.buf.code_action, { desc = "Code Action" })
