@@ -1,9 +1,10 @@
 local lspconfig = require("lspconfig")
 
+-- mason = false, -- set to false if you don't want this server to be installed with mason
 ---@type lspconfig.options
 return {
 	bashls = {},
-	clangd = {},
+	clangd = { mason = false },
 	cmake = {},
 	cssls = {},
 	dartls = {},
@@ -18,7 +19,7 @@ return {
 	nimls = {},
 	ocamllsp = {},
 	phpactor = {},
-	pyright = {},
+	pyright = { mason = false },
 	rust_analyzer = {},
 	solargraph = {},
 	vimls = {},
