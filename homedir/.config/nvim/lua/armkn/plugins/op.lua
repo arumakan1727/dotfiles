@@ -23,6 +23,13 @@ return {
 		end,
 	},
 	{
+		"echasnovski/mini.ai",
+		event = "ModeChanged",
+		config = function(_, opts)
+			require("mini.ai").setup(opts)
+		end,
+	},
+	{
 		"echasnovski/mini.surround",
 		keys = function(_, keys)
 			-- Populate the keys based on the user's options
