@@ -1,4 +1,5 @@
 require("armkn.rc.base")
+require("armkn.rc.commands")
 require("armkn.rc.keymaps")
 require("armkn.rc.autocmd")
 require("armkn.rc.highlight")
