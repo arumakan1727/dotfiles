@@ -1,6 +1,7 @@
 require("armkn.rc.base")
 require("armkn.rc.keymaps")
 require("armkn.rc.autocmd")
+require("armkn.rc.highlight")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
