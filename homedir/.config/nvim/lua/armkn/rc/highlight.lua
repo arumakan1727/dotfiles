@@ -7,6 +7,6 @@ vim.fn.matchadd("ArmknTrailSpace", [[\s\+$]])
 vim.api.nvim_create_autocmd("ColorScheme", {
 	group = MY_GROUP,
 	callback = function()
-		vim.cmd([[hi ArmknTrailSpace guifg=red ctermfg=red]])
+		vim.cmd([[hi ArmknTrailSpace guibg=red ctermbg=red]])
 	end,
 })
