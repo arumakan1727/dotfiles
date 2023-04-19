@@ -17,9 +17,11 @@ return {
 			"saadparwaiz1/cmp_luasnip",
 			"onsails/lspkind.nvim",
 		},
+		---@return cmp.Setup
 		opts = function()
 			local cmp = require("cmp")
 			return {
+				preselect = cmp.PreselectMode.None,
 				completion = {
 					completeopt = "menu,menuone,noselect,noinsert",
 				},
