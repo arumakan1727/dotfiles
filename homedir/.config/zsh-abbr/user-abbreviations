@@ -1,3 +1,8 @@
 abbr -g ":h"="--help"
 abbr -g ":s"="~/.local/share/"
 abbr -g ":v"="--version"
+
+abbr -g "dcu"="docker compose up -d"
+abbr -g "dcd"="docker compose down"
+abbr -g "dce"="docker compose exec"
+abbr -g "dcl"="docker compose logs -f"
