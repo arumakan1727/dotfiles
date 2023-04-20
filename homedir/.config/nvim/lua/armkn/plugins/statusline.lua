@@ -17,35 +17,12 @@ end
 
 return {
 	{
-		"SmiteshP/nvim-navic",
-		lazy = true,
-		init = function()
-			require("armkn.utils").autocmd_lsp_attach(function(client, buffer)
-				if client.server_capabilities.documentSymbolProvider then
-					require("nvim-navic").attach(client, buffer)
-				end
-			end)
-		end,
-		opts = {
-			separator = " > ",
-			highlight = true,
-			depth_limit = 5,
-		},
-	},
-	{
 		"nvim-lualine/lualine.nvim",
+		dependencies = {
+			"SmiteshP/nvim-navic",
+		},
 		event = "VeryLazy",
 		opts = function()
-			local icons = require("armkn.icons")
-
-			local function fg(name)
-				return function()
-					---@type {foreground?:number}?
-					local hl = vim.api.nvim_get_hl_by_name(name, true)
-					return hl and hl.foreground and { fg = string.format("#%06x", hl.foreground) }
-				end
-			end
-
 			return {
 				options = {
 					theme = "auto",
@@ -54,13 +31,8 @@ return {
 				},
 				sections = {
 					lualine_a = { "mode" },
-					lualine_b = {
-						{ "filename", path = 1 },
-					},
+					lualine_b = { "branch" },
 					lualine_c = {
-						"branch",
-						"diff",
-						{ "diagnostics", sources = { "nvim_lsp" } },
 						{
 							function()
 								return require("nvim-navic").get_location()
@@ -80,6 +52,19 @@ return {
 							color = { fg = "#60c3c0" },
 						},
 					},
+				},
+				winbar = {
+					lualine_a = {},
+					lualine_b = { { "filename", path = 1 } },
+					lualine_c = {
+						"diff",
+						{ "diagnostics", sources = { "nvim_lsp" } },
+					},
+				},
+				inactive_winbar = {
+					lualine_a = {},
+					lualine_b = { { "filename", path = 1 } },
+					lualine_c = {},
 				},
 				extensions = { "neo-tree", "lazy" },
 			}
