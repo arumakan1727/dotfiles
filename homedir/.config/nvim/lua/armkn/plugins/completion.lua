@@ -1,9 +1,16 @@
 return {
 	{
-		"echasnovski/mini.pairs",
+		"windwp/nvim-autopairs",
 		event = "InsertEnter",
 		config = function(_, opts)
-			require("mini.pairs").setup(opts)
+			local autopairs = require("nvim-autopairs")
+			autopairs.setup(opts)
+
+			local Rule = require("nvim-autopairs.rule")
+			local cond = require("nvim-autopairs.conds")
+			autopairs.add_rules({
+				Rule("<", ">"):with_pair(cond.before_regex("[%a%)]")):with_move(),
+			})
 		end,
 	},
 	{
