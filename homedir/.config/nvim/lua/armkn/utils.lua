@@ -44,7 +44,7 @@ function M.get_root()
 	return root
 end
 
----@param on_attach fun(client, buffer)
+---@param on_attach fun(client: integer, buffer: integer)
 function M.autocmd_lsp_attach(on_attach)
 	vim.api.nvim_create_autocmd("LspAttach", {
 		callback = function(args)
@@ -52,6 +52,15 @@ function M.autocmd_lsp_attach(on_attach)
 			local client = vim.lsp.get_client_by_id(args.data.client_id)
 			on_attach(client, buffer)
 		end,
+	})
+end
+
+---@param ft string|table<string>
+---@param callback function
+function M.autocmd_filetype(ft, callback)
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = ft,
+		callback = callback,
 	})
 end
 
