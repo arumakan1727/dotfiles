@@ -14,7 +14,6 @@ return {
 	jdtls = {},
 	jsonls = {},
 	lua_ls = {},
-	nimls = {},
 	pyright = { mason = false },
 	rust_analyzer = {},
 	solargraph = {},
@@ -23,6 +22,7 @@ return {
 	yamlls = {},
 
 	denols = {
+		mason = false,
 		root_dir = lspconfig.util.root_pattern("deno.json"),
 		single_file_support = false,
 		init_options = {
@@ -31,6 +31,7 @@ return {
 		},
 	},
 	tsserver = {
+		mason = false,
 		root_dir = lspconfig.util.root_pattern("package.json"),
 		single_file_support = false,
 	},
