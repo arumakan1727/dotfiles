@@ -27,7 +27,7 @@ return {
 		version = false, -- telescope did only one release, so use HEAD for now
 		keys = {
 			{ "z,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
-			{ "z/", telescope_builtin("live_grep"), desc = "Find in Files (Grep)" },
+			{ "z/", telescope_builtin("live_grep", { additional_args = { "--hidden" } }), desc = "Find in Files (Grep)" },
 			{ "z:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
 			{ "z<space>", telescope_builtin("files"), desc = "Find Files (root dir)" },
 			-- find
