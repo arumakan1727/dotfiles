@@ -56,7 +56,7 @@ return {
 						mode = "symbol",
 						maxwidth = 50,
 						ellipsis_char = "...",
-						before = function(entry, vim_item)
+						before = function(_, vim_item)
 							return vim_item
 						end,
 					}),
