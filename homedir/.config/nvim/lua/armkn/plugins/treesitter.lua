@@ -56,6 +56,46 @@ return {
 					node_decremental = "<bs>",
 				},
 			},
+			textobjects = {
+				select = {
+					enable = true,
+
+					-- Automatically jump forward to textobj, similar to targets.vim
+					lookahead = true,
+
+					keymaps = {
+						-- You can use the capture groups defined in textobjects.scm
+						["af"] = { query = "@function.outer", desc = "function (outer)" },
+						["if"] = { query = "@function.inner", desc = "function (inner)" },
+						["ac"] = { query = "@class.outer", desc = "class (outer)" },
+						["ic"] = { query = "@class.inner", desc = "class (inner)" },
+						["as"] = { query = "@scope", query_group = "locals", desc = "scope" },
+					},
+					-- You can choose the select mode (default is charwise 'v')
+					selection_modes = {
+						["@parameter.outer"] = "v", -- charwise
+						["@function.outer"] = "V", -- linewise
+						["@class.outer"] = "<c-v>", -- blockwise
+					},
+				},
+				swap = {
+					enable = true,
+					swap_next = { [",al"] = "@parameter.inner" },
+					swap_previous = { [",ah"] = "@parameter.inner" },
+				},
+				move = {
+					enable = true,
+					set_jumps = true, -- whether to set jumps in the jumplist
+					goto_next_start = {
+						["]f"] = { query = "@function.outer", desc = "Next function start" },
+						["]c"] = { query = "@class.outer", desc = "Next class start" },
+					},
+					goto_previous_start = {
+						["[f"] = { query = "@function.outer", desc = "Prev function start" },
+						["[c"] = { query = "@class.outer", desc = "Prev class start" },
+					},
+				},
+			},
 		},
 		---@param opts TSConfig
 		config = function(_, opts)
