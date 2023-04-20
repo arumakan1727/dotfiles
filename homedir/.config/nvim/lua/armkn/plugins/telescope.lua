@@ -60,7 +60,11 @@ return {
 			{ "<leader>sw", telescope_builtin("grep_string"), desc = "Word (root dir)" },
 			{ "<leader>sW", telescope_builtin("grep_string", { cwd = false }), desc = "Word (cwd)" },
 			-- ui
-			{ "<leader>uC", telescope_builtin("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+			{
+				"<leader>uC",
+				telescope_builtin("colorscheme", { enable_preview = true }),
+				desc = "Colorscheme with preview",
+			},
 			{
 				"<leader>ss",
 				telescope_builtin("lsp_document_symbols", {
