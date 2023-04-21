@@ -2,6 +2,7 @@ return {
 	{ "tpope/vim-repeat", event = "VeryLazy" },
 	{
 		"echasnovski/mini.bufremove",
+		version = false,
 		-- stylua: ignore
 		keys = {
 			{ "<LocalLeader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
@@ -10,6 +11,7 @@ return {
 	},
 	{
 		"echasnovski/mini.comment",
+		version = false,
 		event = "VeryLazy",
 		opts = {
 			hooks = {
@@ -24,6 +26,7 @@ return {
 	},
 	{
 		"echasnovski/mini.ai",
+		version = false,
 		event = "ModeChanged",
 		opts = {
 			custom_textobjects = {
@@ -35,7 +38,18 @@ return {
 		end,
 	},
 	{
+		"echasnovski/mini.splitjoin",
+		version = false,
+		keys = {
+			{ "gS", desc = "Toggle split/join" },
+		},
+		config = function(_, opts)
+			require("mini.splitjoin").setup(opts)
+		end,
+	},
+	{
 		"echasnovski/mini.surround",
+		version = false,
 		keys = function(_, keys)
 			-- Populate the keys based on the user's options
 			local plugin = require("lazy.core.config").spec.plugins["mini.surround"]
