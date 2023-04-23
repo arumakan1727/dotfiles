@@ -62,5 +62,5 @@ gui/install:	deno
 .PHONY:	help	## Show Makefile tasks
 help:
 	@grep -E '^.PHONY:\s*\S+\s+#' Makefile | \
-		sed -E 's/.PHONY:\s*//' | \
-		awk 'BEGIN {FS = "(\\s*##\\s*)?"}; {printf "$(CYAN)%-22s$(RESET) %s\n", $$1, $$2}'
+		sed -E 's/.PHONY:\t*//' | \
+		awk 'BEGIN {FS = "(\\t*##\\s*)?"}; {printf "$(CYAN)%-22s$(RESET) %s\n", $$1, $$2}'
