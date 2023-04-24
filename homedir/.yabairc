@@ -35,7 +35,7 @@ yabai -m config normal_window_border_color   0xff555555
 yabai -m config insert_feedback_color        0xffd75f5f
 
 
-while [[ $(yabai -m query --displays | jq '.[] | .spaces | length') -lt 10 ]]; do
+while [[ $(yabai -m query --displays | jq '.[] | .spaces | length') -lt 5 ]]; do
   yabai -m space --create
   echo "created new workspace"
 done
