@@ -37,6 +37,8 @@
   rstr = restore --staged
   rmc = rm --cached
   gone = "!git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
+  sync-main = "!git fetch origin main:main"
+  sync-develop = "!git fetch origin develop:develop"
 [merge]
   ff = false
 [fetch]
