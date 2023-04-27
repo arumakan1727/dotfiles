@@ -8,6 +8,7 @@ return {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			"JoosepAlviste/nvim-ts-context-commentstring",
 			"m-demare/hlargs.nvim",
+			"windwp/nvim-ts-autotag",
 			{
 				"andymass/vim-matchup",
 				init = function()
@@ -21,6 +22,7 @@ return {
 		},
 		---@type TSConfig
 		opts = {
+			autotag = { enable = true },
 			highlight = { enable = true },
 			indent = { enable = true },
 			matchup = { enable = true },

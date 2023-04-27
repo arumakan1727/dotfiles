@@ -9,7 +9,7 @@ return {
 			local Rule = require("nvim-autopairs.rule")
 			local cond = require("nvim-autopairs.conds")
 			autopairs.add_rules({
-				Rule("<", ">"):with_pair(cond.before_regex("[%a%)]")):with_move(),
+				--Rule("<", ">"):with_pair(cond.before_regex("[%a%)]")):with_move(),
 			})
 		end,
 	},
