@@ -21,6 +21,7 @@ export const cli: {
     // other essentials (needed by other install script)
     { id: "go", cmd: ["./installer/go.sh"] },
     { id: "jq" },
+    { id: "pipx" },
 
     // terminal apps
     { id: "neovim", cmd: ["./installer/neovim-nightly.sh"] },
@@ -37,16 +38,23 @@ export const cli: {
 
     // utils
     { id: "ag", apt: "silver-searcher-ag" },
+    { id: "ascii" },
     { id: "direnv" },
     { id: "fzf" },
+    { id: "netcat" },
+    { id: "nkf" },
+    { id: "nmap" },
     { id: "rg", apt: "ripgrep" },
     { id: "tree" },
   ],
   extras: [
     { id: "broot" },
     { id: "dust" },
+    { id: "exiftool" },
     { id: "ffmpeg" },
     { id: "imagemagick" },
+    { id: "libqalculate" }, // `qalc` command
+    { id: "neofetch" },
     { id: "starship", shUrl: "https://starship.rs/install.sh" },
     { id: "tealdeer" },
     { id: "translate-shell" },
@@ -59,8 +67,27 @@ export const cli: {
     { id: "sdkman", shUrl: "https://get.sdkman.io", sh: "bash" },
     { id: "volta", shUrl: "https://get.volta.sh", sh: "bash" },
 
+    // compiler / runtime
+    { id: "lua" },
+
+    // lib
+    { id: "libyaml" },
+
     // linter
     { id: "shellcheck" },
+    { id: "markdownlint-cli" },
+    { id: "cppcheck" },
+    {
+      id: "golangci-lint",
+      cmd: [
+        "go",
+        "install",
+        "github.com/golangci/golangci-lint/cmd/golangci-lint@latest",
+      ],
+    },
+
+    // formatter
+    { id: "stylua" },
 
     // misc
     { id: "docker", cmd: ["./installer/docker.sh"] },
