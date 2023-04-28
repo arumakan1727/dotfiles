@@ -27,6 +27,10 @@ DOTFILE_ARGS := -A manager/cmd/dotfile.ts
 dotfiles/apply/symlink:	deno
 	deno run $(DOTFILE_ARGS) apply
 
+.PHONY:	dotfiles/apply/symlink/dryrun	## Dry-run apply symlink
+dotfiles/apply/symlink/dryrun:	deno
+	deno run $(DOTFILE_ARGS) apply --dry-run
+
 .PHONY:	dotfiles/apply/copy	## Apply dotfiles using copy, and remove deadlinks
 dotfiles/apply/copy:	deno
 	deno run $(DOTFILE_ARGS) apply --copy
@@ -58,6 +62,10 @@ cli/install/devs:	deno
 .PHONY:	gui/install	## Install GUI applications
 gui/install:	deno
 	deno run $(PKGMAN_ARGS) gui.all
+
+.PHONY:	mac/install	## Install softwares for macOS
+mac/install:
+	brew bundle --file ./mac.Brewfile
 
 .PHONY:	help	## Show Makefile tasks
 help:
