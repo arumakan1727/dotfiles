@@ -67,8 +67,9 @@ export const cli: {
     { id: "sdkman", shUrl: "https://get.sdkman.io", sh: "bash" },
     { id: "volta", shUrl: "https://get.volta.sh", sh: "bash" },
 
-    // compiler / runtime
+    // compiler / runtime / repl
     { id: "lua" },
+    { id: "ipython", cmd: ["pipx", "install", "ipython"] },
 
     // lib
     { id: "libyaml" },
