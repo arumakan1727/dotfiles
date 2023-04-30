@@ -23,7 +23,6 @@ path+="$HOME/.deno/bin:"
 path+="$HOME/.go/bin:"
 path+="$HOME/.volta/bin:"
 path+="$HOME/.pyenv/bin:"
-path+="$HOME/.pnpm:"
 path+="$HOME/.nimble/bin:"
 path+="$HOME/.rbenv/shims:"
 path+=/usr/local/go/bin:

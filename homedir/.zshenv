@@ -45,7 +45,6 @@ path=(
   "$HOME/.go/bin"
   "$HOME/.volta/bin"
   "$HOME/.pyenv/bin"
-  "$HOME/.pnpm"(N-/)
   "$HOME/.nimble/bin"(N-/)
   "$HOME/.rbenv/shims"(N-/)
   $path
