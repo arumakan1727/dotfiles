@@ -1,4 +1,7 @@
 import { InstallWay } from "./INSTALL_CMD.ts";
+import { path } from "./deps.ts";
+
+const HOME = Deno.env.get("HOME")!;
 
 export const cli: {
   essentials: readonly InstallWay[];
@@ -66,6 +69,21 @@ export const cli: {
     { id: "rustup", shUrl: "https://sh.rustup.rs" },
     { id: "sdkman", shUrl: "https://get.sdkman.io", sh: "bash" },
     { id: "volta", shUrl: "https://get.volta.sh", sh: "bash" },
+
+    // setup corepack
+    { id: "corepack", cmd: ["volta", "install", "corepack"] },
+    {
+      id: "#corepack-enable",
+      cmd: [
+        "corepack",
+        "enable",
+        "--install-directory",
+        path.join(HOME, ".volta"),
+        "npm",
+        "yarn",
+        "pnpm",
+      ],
+    },
 
     // compiler / runtime / repl
     { id: "lua" },
