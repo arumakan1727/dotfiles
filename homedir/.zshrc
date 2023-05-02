@@ -1,3 +1,11 @@
+if [[ -n "$ARMKN_ZSHRC_PROFILE" ]]; then
+  zmodload zsh/zprof && zprof > /dev/null
+fi
+
+function zsh-profile() {
+  ARMKN_ZSHRC_PROFILE=1 zsh -i -c zprof
+}
+
 # Select tmux session interactively
 select_tmux_session() {
   local sessions="$(tmux list-sessions)"
