@@ -24,6 +24,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 export SDKMAN_DIR="$HOME/.sdkman"
 export VOLTA_HOME="$HOME/.volta"
 
-command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init -)"
+## Use `rye` instead of `pyenv`
+# command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init -)"
+
 command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init -)"
 safe_source "$HOME/.sdkman/bin/sdkman-init.sh"

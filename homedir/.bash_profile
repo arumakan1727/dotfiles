@@ -19,6 +19,7 @@ fi
 
 path+="$HOME/bin:"
 path+="$HOME/.cargo/bin:"
+path+="$HOME/.rye/shims:"
 path+="$HOME/.deno/bin:"
 path+="$HOME/.go/bin:"
 path+="$HOME/.volta/bin:"
