@@ -12,6 +12,15 @@ config.colors = {
 	cursor_border = "#ff0000",
 }
 
+config.font_size = 13.0
+config.font = wezterm.font_with_fallback({
+	{
+		family = 'JetBrainsMonoNL NF',
+		weight = 'Regular',
+	},
+	'monospace',
+})
+
 config.send_composed_key_when_left_alt_is_pressed = false
 config.send_composed_key_when_right_alt_is_pressed = true
 config.keys = {
