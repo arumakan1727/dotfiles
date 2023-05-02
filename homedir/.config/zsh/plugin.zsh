@@ -20,7 +20,6 @@ plugin() {
 plugin zdharma-continuum/fast-syntax-highlighting
 plugin zsh-users/zsh-autosuggestions
 plugin zsh-users/zsh-completions
-plugin olets/zsh-abbr  # see: ~/.config/zsh-abbr/user-abbreviations
 unset -f plugin
 
 # autosuggestions
