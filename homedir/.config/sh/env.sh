@@ -18,6 +18,9 @@ if command -v dircolors >/dev/null 2>&1 ; then
     [ -r "$HOME/.dircolors" ] && source "$HOME/.dircolors" || eval "$(dircolors -b)"
 fi
 
+export ZIPINFOOPT="-OCP932"
+export UNZIPOPT="-OCP932"
+
 export GOPATH="$HOME/.go"
 export PNPM_HOME="$HOME/.pnpm"
 export PYENV_ROOT="$HOME/.pyenv"

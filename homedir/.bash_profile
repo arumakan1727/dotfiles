@@ -9,6 +9,7 @@ if [[ -d $d ]]; then
   path+=$d/gnu-sed/libexec/gnubin:
   path+=$d/gnu-tar/libexec/gnubin:
   path+=$d/grep/libexec/gnubin:
+  path+=$d/unzip/bin:
 
   manpath+=$d/coreutils/libexec/gnuman:
   manpath+=$d/findutils/libexec/gnuman:

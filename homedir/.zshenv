@@ -18,6 +18,7 @@ if [[ -d /opt/homebrew ]]; then
     /opt/homebrew/opt/gnu-sed/libexec/gnubin
     /opt/homebrew/opt/gnu-tar/libexec/gnubin
     /opt/homebrew/opt/grep/libexec/gnubin
+    /opt/homebrew/opt/unzip/bin
     /opt/homebrew/bin
     /opt/homebrew/sbin
     $path

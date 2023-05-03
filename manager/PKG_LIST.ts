@@ -20,6 +20,7 @@ export const cli: {
     { id: "moreutils" },
     { id: "sed", brew: "gnu-sed" },
     { id: "tar", brew: "gnu-tar" },
+    { id: "unzip" },
 
     // other essentials (needed by other install script)
     { id: "go", cmd: ["./installer/go.sh"] },
