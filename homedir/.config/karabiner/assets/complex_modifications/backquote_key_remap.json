@@ -2,7 +2,7 @@
   "title": "Remap [GraveAccent & Tilde] key",
   "rules": [
     {
-      "description": "Change GraveAccent to Bang",
+      "description": "GraveAccent to Bang",
       "manipulators": [
         {
           "from": {
@@ -21,7 +21,7 @@
       ]
     },
     {
-      "description": "Change Tilde to Equal",
+      "description": "Shift+GraveAccent to Equal",
       "manipulators": [
         {
           "from": {
@@ -41,6 +41,71 @@
             }
           ],
           "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "GraveAccent to RShift",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "grave_accent_and_tilde"
+          },
+          "to": [
+            {
+              "key_code": "right_shift"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    },
+    {
+      "description": "GraveAccent to toggel IME",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "grave_accent_and_tilde"
+          },
+          "to": [
+            {
+              "select_input_source": {
+                "language": "ja"
+              }
+            }
+          ],
+          "conditions": [
+            {
+              "type": "input_source_if",
+              "input_sources": [
+                {
+                  "language": "en"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "grave_accent_and_tilde"
+          },
+          "to": {
+            "select_input_source": {
+              "language": "en"
+            }
+          },
+          "conditions": [
+            {
+              "type": "input_source_if",
+              "input_sources": [
+                {
+                  "language": "ja"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

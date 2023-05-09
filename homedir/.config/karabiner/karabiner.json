@@ -82,44 +82,50 @@
                         ]
                     },
                     {
-                        "description": "Change GraveAccent to Bang",
+                        "description": "GraveAccent to toggel IME",
                         "manipulators": [
                             {
+                                "conditions": [
+                                    {
+                                        "input_sources": [
+                                            {
+                                                "language": "en"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
+                                    }
+                                ],
                                 "from": {
                                     "key_code": "grave_accent_and_tilde"
                                 },
                                 "to": [
                                     {
-                                        "key_code": "1",
-                                        "modifiers": [
-                                            "shift"
-                                        ]
+                                        "select_input_source": {
+                                            "language": "ja"
+                                        }
                                     }
                                 ],
                                 "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "description": "Change Tilde to Equal",
-                        "manipulators": [
+                            },
                             {
-                                "from": {
-                                    "key_code": "grave_accent_and_tilde",
-                                    "modifiers": {
-                                        "mandatory": [
-                                            "shift"
-                                        ]
-                                    }
-                                },
-                                "to": [
+                                "conditions": [
                                     {
-                                        "key_code": "hyphen",
-                                        "modifiers": [
-                                            "shift"
-                                        ]
+                                        "input_sources": [
+                                            {
+                                                "language": "ja"
+                                            }
+                                        ],
+                                        "type": "input_source_if"
                                     }
                                 ],
+                                "from": {
+                                    "key_code": "grave_accent_and_tilde"
+                                },
+                                "to": {
+                                    "select_input_source": {
+                                        "language": "en"
+                                    }
+                                },
                                 "type": "basic"
                             }
                         ]
