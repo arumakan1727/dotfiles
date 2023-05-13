@@ -1,37 +1,54 @@
 # shellcheck shell=bash
 
-d=/opt/homebrew/opt
-path=""
-manpath=""
-if [[ -d $d ]]; then
-  path+=$d/coreutils/libexec/gnubin:
-  path+=$d/findutils/libexec/gnubin:
-  path+=$d/gnu-sed/libexec/gnubin:
-  path+=$d/gnu-tar/libexec/gnubin:
-  path+=$d/grep/libexec/gnubin:
-  path+=$d/unzip/bin:
+if [[ -d /opt/homebrew ]]; then
+  export HOMEBREW_PREFIX=/opt/homebrew
+  export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+  export HOMEBREW_REPOSITORY=/opt/homebrew
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
-  manpath+=$d/coreutils/libexec/gnuman:
-  manpath+=$d/findutils/libexec/gnuman:
-  manpath+=$d/gnu-sed/libexec/gnuman:
-  manpath+=$d/gnu-tar/libexec/gnuman:
-  manpath+=$d/grep/libexec/gnuman:
+  path=(
+    /opt/homebrew/opt/coreutils/libexec/gnubin
+    /opt/homebrew/opt/findutils/libexec/gnubin
+    /opt/homebrew/opt/gnu-sed/libexec/gnubin
+    /opt/homebrew/opt/gnu-tar/libexec/gnubin
+    /opt/homebrew/opt/grep/libexec/gnubin
+    /opt/homebrew/opt/unzip/bin
+    /opt/homebrew/bin
+    /opt/homebrew/sbin
+  )
+  manpath=(
+    /opt/homebrew/opt/coreutils/libexec/gnuman
+    /opt/homebrew/opt/findutils/libexec/gnuman
+    /opt/homebrew/opt/gnu-sed/libexec/gnuman
+    /opt/homebrew/opt/gnu-tar/libexec/gnuman
+    /opt/homebrew/opt/grep/libexec/gnuman
+    /opt/homebrew/share/man
+  )
 fi
 
-path+="$HOME/bin:"
-path+="$HOME/.cargo/bin:"
-path+="$HOME/.rye/shims:"
-path+="$HOME/.deno/bin:"
-path+="$HOME/.go/bin:"
-path+="$HOME/.volta/bin:"
-path+="$HOME/.pyenv/bin:"
-path+="$HOME/.nimble/bin:"
-path+="$HOME/.rbenv/shims:"
-path+=/usr/local/go/bin:
-
-export PATH="$path$PATH"
-export MANPATH="$manpath$MANPATH"
-unset d path manpath
+path=(
+  "$HOME/bin"
+  "$HOME/.local/bin"
+  "$HOME/.cargo/bin"
+  "$HOME/.rye/shims"
+  "$HOME/.deno/bin"
+  "$HOME/.go/bin"
+  "$HOME/.volta/bin"
+  "$HOME/.pyenv/bin"
+  "$HOME/.nimble/bin"
+  "$HOME/.rbenv/shims"
+  "${path[@]}"
+  /usr/local/go/bin
+  /usr/local/bin
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
+)
+PATH="$(echo "${path[@]}" | tr ' ' :)"
+MANPATH="$(echo "${manpath[@]}" | tr ' ' :)"
+export PATH MANPATH
+unset  path manpath
 
 export LESS_TERMCAP_mb=$'\e[1;31m'     # begin bold
 export LESS_TERMCAP_md=$'\e[1;33m'     # begin blink
