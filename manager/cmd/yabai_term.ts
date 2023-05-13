@@ -19,52 +19,43 @@ const windowInfoMock = {
 const windowInfoProps: readonly string[] = Object.keys(windowInfoMock);
 type WindowInfo = typeof windowInfoMock;
 
-const yabaiCmd = ["yabai", "-m", "query", "--windows"] as const;
-
-const jqCmd = [
-  "jq",
-  "-r",
-  [
-    '[.[] | select(.app | contains("WezTerm"))]',
-    "sort_by(.id)",
-    ".[0]",
-    `{ ${windowInfoProps.map((s) => `"${s}"`).join(", ")} }`,
-  ].join(" | "),
-] as const;
-
-async function fetchMinimumIDWezTermWinInfo(): Promise<WindowInfo> {
-  const yabai = Deno.run({
-    cmd: yabaiCmd,
+async function fetchMinimumIDWinInfo(targetAppName: string): Promise<WindowInfo> {
+  const yabai = new Deno.Command("yabai", {
+    args: ["-m", "query", "--windows"],
+    stdin: "inherit",
     stdout: "piped",
-  });
-  const jq = Deno.run({
-    cmd: jqCmd,
+    stderr: "inherit",
+  }).spawn();
+
+  const jq = new Deno.Command("jq", {
+    args: [
+      "-r",
+      [
+        `[.[] | select(.app | contains("${targetAppName}"))]`,
+        "sort_by(.id)",
+        ".[0]",
+        `{ ${windowInfoProps.map((s) => `"${s}"`).join(", ")} }`,
+      ].join(" | "),
+    ],
     stdin: "piped",
     stdout: "piped",
-  });
+    stderr: "inherit",
+  }).spawn();
 
-  let res: string;
-  try {
-    await streams.copy(yabai.stdout, jq.stdin);
-    {
-      const { success } = await yabai.status();
-      if (!success) throw new Error(`failed to run: '${yabaiCmd.join()}'`);
-    }
-
-    jq.stdin.close();
-    res = new TextDecoder().decode(await jq.output());
-    {
-      const { success } = await jq.status();
-      if (!success) throw new Error(`failed to run: '${jqCmd.join()}'`);
-    }
-  } finally {
-    yabai.close();
-    jq.close();
+  yabai.stdout.pipeTo(jq.stdin);
+  {
+    const { success, code } = await yabai.status;
+    if (!success) throw new Error(`failed to run: \`yabai\` returned ${code}`);
   }
-  return JSON.parse(res);
+  {
+    const { success, code, stdout } = await jq.output();
+    if (!success) throw new Error(`failed to run: \`jq\` returned ${code}`);
+    const res = new TextDecoder().decode(stdout);
+    return JSON.parse(res);
+  }
 }
 
-function generateYabaiTermCmd(w: WindowInfo) {
+function generateYabaiTermCmd(w: WindowInfo): string[] {
   const id = w.id.toString();
   const cmd: string[] = ["yabai", "-m", "window", id];
   if (!w["is-floating"]) cmd.push("--toggle", "float");
@@ -79,12 +70,12 @@ function generateYabaiTermCmd(w: WindowInfo) {
 }
 
 async function main() {
-  const w = await fetchMinimumIDWezTermWinInfo();
+  const w = await fetchMinimumIDWinInfo("WezTerm");
   const cmd = generateYabaiTermCmd(w);
   console.log(cmd.join(" "));
-  const p = Deno.run({ cmd });
 
-  const { code } = await p.status();
+  const p = new Deno.Command(cmd[0], { args: cmd.slice(1), stderr: "inherit" });
+  const { code } = await p.output();
   Deno.exit(code);
 }
 
