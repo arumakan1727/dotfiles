@@ -14,12 +14,18 @@ return {
 	jdtls = {},
 	jsonls = {},
 	lua_ls = {},
-	pyright = { mason = false },
+	pyright = {},
 	rust_analyzer = {},
 	solargraph = {},
 	vimls = {},
 	volar = {},
-	yamlls = {},
+	yamlls = {
+		settings = {
+			yaml = {
+				keyOrdering = false,
+			},
+		},
+	},
 
 	denols = {
 		mason = false,
