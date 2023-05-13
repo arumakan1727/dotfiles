@@ -32,3 +32,60 @@ matches:
         type: date
         params:
           format: "%H:%M:%S"
+
+  - trigger: ":blush "
+    replace: "😊"
+
+  - trigger: ":bow "
+    replace: "🙇"
+
+  - trigger: ":cry "
+    replace: "😢"
+
+  - trigger: ":exploding "
+    replace: "🤯"
+
+  - trigger: ":innocent "
+    replace: "😇"
+
+  - trigger: ":man_bow "
+    replace: "🙇‍♂️"
+
+  - trigger: ":man_bowing "
+    replace: "🙇‍♂️"
+
+  - trigger: ":melting "
+    replace: "🫠"
+
+  - trigger: ":muscle "
+    replace: "💪"
+
+  - trigger: ":partying "
+    replace: "🥳"
+
+  - trigger: ":play "
+    replace: "🙏"
+
+  - trigger: ":poo "
+    replace: "💩"
+
+  - trigger: ":rage "
+    replace: "😡"
+
+  - trigger: ":sob "
+    replace: "😭"
+
+  - trigger: ":sparkles "
+    replace: "✨"
+
+  - trigger: ":sweat "
+    replace: "💦"
+
+  - trigger: ":tada "
+    replace: "🎉"
+
+  - trigger: ":thinking "
+    replace: "🤔"
+
+  - trigger: ":thumbsup "
+    replace: "👍"
