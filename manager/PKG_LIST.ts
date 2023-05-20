@@ -79,7 +79,7 @@ export const cli: {
         "corepack",
         "enable",
         "--install-directory",
-        path.join(HOME, ".volta"),
+        path.join(HOME, ".volta", "bin"),
         "npm",
         "yarn",
         "pnpm",
