@@ -1,15 +1,15 @@
 # focus window
-cmd - g : yabai -m window --focus recent
-cmd - h : yabai -m window --focus west
-cmd - j : yabai -m window --focus south
-cmd - k : yabai -m window --focus north
-cmd - 0x29: yabai -m window --focus east  # Use <cmd-;> beccase <cmd-l> is used in WebBrowser to focus URL bar. (See also: ~/.config/karabiner/assets/complex_modifications/)
+alt - g : yabai -m window --focus recent
+alt - h : yabai -m window --focus west  || yabai -m display --focus west
+alt - j : yabai -m window --focus south || yabai -m display --focus south
+alt - k : yabai -m window --focus north || yabai -m display --focus north
+alt - l : yabai -m window --focus east  || yabai -m display --focus east
 
 # swap window
-shift + cmd - h : yabai -m window --swap west
-shift + cmd - j : yabai -m window --swap south
-shift + cmd - k : yabai -m window --swap north
-shift + cmd - l : yabai -m window --swap east
+shift + alt - h : yabai -m window --swap west
+shift + alt - j : yabai -m window --swap south
+shift + alt - k : yabai -m window --swap north
+shift + alt - l : yabai -m window --swap east
 
 # focus workspace
 alt - 1 : yabai -m space --focus 1
