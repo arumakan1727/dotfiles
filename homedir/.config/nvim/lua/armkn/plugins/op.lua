@@ -29,6 +29,7 @@ return {
 		version = false,
 		event = "ModeChanged",
 		opts = {
+			search_method = "cover",
 			custom_textobjects = {
 				["s"] = { "%f[%w]%w+", "^().*()$" }, -- like `w`, except underbar
 			},
