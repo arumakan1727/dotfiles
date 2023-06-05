@@ -29,6 +29,7 @@
   ds = diff --staged
   l = log -3
   pf = push --force-with-lease --force-if-includes
+  pu = push -u origin HEAD
   s = status
   sa = status --untracked-files=all
   x = stash --include-untracked
@@ -37,6 +38,7 @@
   rstr = restore --staged
   rmc = rm --cached
   gone = "!git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
+  sync-dev = "!git fetch origin dev:dev"
   sync-main = "!git fetch origin main:main"
   sync-develop = "!git fetch origin develop:develop"
 [merge]
