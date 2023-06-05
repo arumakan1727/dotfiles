@@ -39,11 +39,17 @@ matches:
   - trigger: ":bow "
     replace: "🙇"
 
-  - trigger: ":cry "
-    replace: "😢"
+  - trigger: ":cold "
+    replace: "🥶"
 
   - trigger: ":exploding "
     replace: "🤯"
+
+  - trigger: ":grin "
+    replace: "😁"
+
+  - trigger: ":hamster "
+    replace: "🐹"
 
   - trigger: ":innocent "
     replace: "😇"
