@@ -259,7 +259,7 @@
                     },
                     "to": [
                         {
-                            "apple_vendor_keyboard_key_code": "mission_control"
+                            "key_code": "f3"
                         }
                     ]
                 },
@@ -269,7 +269,7 @@
                     },
                     "to": [
                         {
-                            "apple_vendor_keyboard_key_code": "spotlight"
+                            "key_code": "f4"
                         }
                     ]
                 },
@@ -309,7 +309,7 @@
                     },
                     "to": [
                         {
-                            "consumer_key_code": "play_or_pause"
+                            "consumer_key_code": "fast_forward"
                         }
                     ]
                 },
@@ -319,7 +319,7 @@
                     },
                     "to": [
                         {
-                            "consumer_key_code": "fast_forward"
+                            "consumer_key_code": "play_or_pause"
                         }
                     ]
                 },
