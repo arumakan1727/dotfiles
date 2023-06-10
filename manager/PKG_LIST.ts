@@ -86,16 +86,17 @@ export const cli: {
     },
 
     // compiler / runtime / repl
+    { id: "evcxr_repl", cmd: ["cargo", "install", "evcxr_repl"] },
     { id: "lua" },
-    { id: "ipython", cmd: ["pipx", "install", "ipython"] },
 
     // lib
     { id: "libyaml" },
 
     // linter
-    { id: "shellcheck" },
-    { id: "markdownlint-cli" },
     { id: "cppcheck" },
+    { id: "markdownlint-cli" },
+    { id: "ruff", cmd: ["pipx", "install", "ruff"] },
+    { id: "shellcheck" },
     {
       id: "golangci-lint",
       cmd: [
@@ -106,6 +107,8 @@ export const cli: {
     },
 
     // formatter
+    { id: "black", cmd: ["pipx", "install", "black"] },
+    { id: "prettier", cmd: ["volta", "install", "prettier"] },
     { id: "stylua" },
 
     // misc
