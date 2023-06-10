@@ -65,8 +65,7 @@ export const cli: {
   ],
   devs: [
     // version-multiplexer
-    { id: "pyenv", shUrl: "https://pyenv.run", sh: "bash" },
-    { id: "rbenv" },
+    { id: "rtx", shUrl: "https://rtx.pub/install.sh" },
     { id: "rustup", shUrl: "https://sh.rustup.rs" },
     { id: "sdkman", shUrl: "https://get.sdkman.io", sh: "bash" },
     { id: "volta", shUrl: "https://get.volta.sh", sh: "bash" },

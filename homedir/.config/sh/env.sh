@@ -23,12 +23,11 @@ export UNZIPOPT="-OCP932"
 
 export GOPATH="$HOME/.go"
 export PNPM_HOME="$HOME/.pnpm"
-export PYENV_ROOT="$HOME/.pyenv"
 export SDKMAN_DIR="$HOME/.sdkman"
 export VOLTA_HOME="$HOME/.volta"
+export RTX_DATA_DIR="$HOME/.local/share/rtx"
 
-## Use `rye` instead of `pyenv`
-# command -v pyenv >/dev/null 2>&1 && eval "$(pyenv init -)"
-
-command -v rbenv >/dev/null 2>&1 && eval "$(rbenv init -)"
+if [[ -x "$RTX_DATA_DIR/bin/rtx" ]]; then
+  eval "$("$RTX_DATA_DIR/bin/rtx" activate -s $(basename $SHELL))"
+fi
 safe_source "$HOME/.sdkman/bin/sdkman-init.sh"

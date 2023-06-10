@@ -30,13 +30,10 @@ path=(
   "$HOME/bin"
   "$HOME/.local/bin"
   "$HOME/.cargo/bin"
-  "$HOME/.rye/shims"
   "$HOME/.deno/bin"
   "$HOME/.go/bin"
   "$HOME/.volta/bin"
-  "$HOME/.pyenv/bin"
   "$HOME/.nimble/bin"
-  "$HOME/.rbenv/shims"
   "${path[@]}"
   /usr/local/go/bin
   /usr/local/bin
