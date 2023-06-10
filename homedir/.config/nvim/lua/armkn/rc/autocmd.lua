@@ -22,7 +22,7 @@ autocmd("BufWritePost", {
 		end
 
 		local abspath = vim.fn.expand("<afile>:p")
-		if vim.startswith(abspath, vim.env.HOME) and vim.fn.executable(abspath) ~= 1 then
+		if not vim.startswith(abspath, "/tmp/") and vim.fn.executable(abspath) ~= 1 then
 			local res = vim.loop.fs_chmod(abspath, tonumber("755", 8))
 			if res ~= true then
 				error(res)
