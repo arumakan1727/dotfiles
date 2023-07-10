@@ -3,7 +3,19 @@ local lspconfig = require("lspconfig")
 -- mason = false, -- set to false if you don't want this server to be installed with mason
 return {
 	bashls = {},
-	clangd = { mason = false },
+	clangd = {
+		mason = false,
+		cmd = {
+			"clangd",
+			"--print-options",
+			"--background-index",
+			"--all-scopes-completion",
+			"--header-insertion-decorators",
+			"--header-insertion=iwyu",
+			"--completion-style=detailed",
+			"-j=4",
+		},
+	},
 	cmake = {},
 	cssls = {},
 	dartls = {},
