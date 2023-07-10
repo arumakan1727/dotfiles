@@ -14,6 +14,7 @@ if [[ -d /opt/homebrew ]]; then
     /opt/homebrew/opt/grep/libexec/gnubin
     /opt/homebrew/opt/unzip/bin
     /opt/homebrew/opt/bash/bin
+    /opt/homebrew/opt/llvm/bin
     /opt/homebrew/bin
     /opt/homebrew/sbin
   )
