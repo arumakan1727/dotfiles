@@ -20,6 +20,79 @@ local function telescope_builtin(builtin, opts)
 	end
 end
 
+local function c_cpp_header_files(opts)
+	opts = opts or {}
+
+	local ft = vim.api.nvim_buf_get_option(0, "filetype")
+	if not (ft == "c" or ft == "cpp") then
+		vim.api.nvim_err_writeln("Current buffer is not C/C++ file.")
+		return
+	end
+
+	local cwd = vim.loop.cwd()
+	assert(cwd, "Cannot get cwd")
+
+	local utils = require("armkn.utils")
+
+	local headers_dir = utils.find_dir_in_ancestors(cwd, "include")
+	if headers_dir == nil then
+		vim.api.nvim_err_writeln("Cannot find `include/` in ancestors.")
+		return
+	end
+
+	local cmd = {
+		"find",
+		headers_dir,
+		"-follow",
+		"-type",
+		"f",
+		"-printf",
+		"%P\n",
+		"-name",
+		"*.hpp",
+		"-o",
+		"-name",
+		"*.h",
+	}
+
+	--- @param lines table<string>
+	--- @return integer
+	local function index_of_last_include_directive(lines)
+		for i, line in ipairs(lines) do
+			if line:sub(1, #"#include") ~= "#include" then
+				return i
+			end
+		end
+		return 1
+	end
+
+	local conf = require("telescope.config").values
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+
+	require("telescope.pickers")
+		.new(opts, {
+			prompt_title = "C/C++ header files",
+			finder = require("telescope.finders").new_oneshot_job(cmd, opts),
+			previewer = conf.file_previewer(opts),
+			sorter = conf.file_sorter(opts),
+			attach_mappings = function(prompt_bufnr, _)
+				actions.select_default:replace(function()
+					actions.close(prompt_bufnr)
+					local selection = action_state.get_selected_entry()
+					local lines = vim.api.nvim_buf_get_lines(0, 0, 20, false)
+					local linenr = index_of_last_include_directive(lines)
+					local cursor = vim.api.nvim_win_get_cursor(0)
+					vim.api.nvim_win_set_cursor(0, { linenr, 0 })
+					vim.api.nvim_put({ "#include <" .. selection[1] .. ">" }, "l", false, false)
+					vim.api.nvim_win_set_cursor(0, { cursor[1] + 1, cursor[2] })
+				end)
+				return true
+			end,
+		})
+		:find()
+end
+
 return {
 	{
 		"nvim-telescope/telescope.nvim",
@@ -39,6 +112,7 @@ return {
 			{ "<leader>ff", telescope_builtin("files"), desc = "Find Files (root dir)" },
 			{ "<leader>fF", telescope_builtin("files", { cwd = false }), desc = "Find Files (cwd)" },
 			{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+			{ "<leader>fh", c_cpp_header_files, desc = "Find C/C++ headers & insert #include <...>" },
 			-- git
 			{ "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
 			{ "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
