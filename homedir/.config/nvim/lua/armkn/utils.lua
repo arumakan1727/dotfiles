@@ -2,6 +2,21 @@ local M = {}
 
 M.root_patterns = { ".git", "Makefile" }
 
+--- @param cwd string
+--- @param dirname string
+--- @return string | nil
+function M.find_dir_in_ancestors(cwd, dirname)
+	local homedir = vim.loop.os_homedir()
+	while cwd and cwd ~= homedir do
+		local d = cwd .. "/" .. dirname
+		if vim.fn.isdirectory(d) ~= 0 then
+			return d
+		end
+		cwd = vim.fn.fnamemodify(cwd, ":h")
+	end
+	return nil
+end
+
 -- From https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util/init.lua#
 -- returns the root directory based on:
 -- * lsp workspace folders
