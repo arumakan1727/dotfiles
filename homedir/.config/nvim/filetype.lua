@@ -3,6 +3,7 @@ vim.filetype.add({
 		bnf = "ebnf",
 		ebnf = "ebnf",
 		envrc = "sh",
+		snippets = "snippets",
 
 		---@param path string
 		---@param bufnr integer

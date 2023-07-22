@@ -1,0 +1,71 @@
+snippet i
+	cin >> $1;
+snippet ii
+	cin >> $1 >> $2;
+snippet iii
+	cin >> $1 >> $2 >> $3;
+snippet iiii
+	cin >> $1 >> $2 >> $3 >> $4;
+snippet iiiii
+	cin >> $1 >> $2 >> $3 >> $4 >> $5;
+
+snippet o
+	cout << $1 << '\n';
+snippet oo
+	cout << $1 << ' ' << $2 << '\n';
+snippet ooo
+	cout << $1 << ' ' << $2 << ' ' << $3 << '\n';
+
+snippet iv
+	vector<$1> $2($3);
+	for (auto& x : $2) cin >> x;
+	$0
+
+snippet is
+	for (auto& x : $1) cin >> x;
+	$0
+
+snippet os
+	for (const auto& x : $1) {
+		cout << x << " \n"[&x == &$1.back()];
+	}
+	$0
+
+snippet vi
+	vector<int>
+snippet vu
+	vector<uint>
+snippet vl
+	vector<ll>
+snippet vul
+	vector<ull>
+
+snippet yes
+	cout << ($1 ? "yes" : "no") << '\n';
+snippet YES
+	cout << ($1 ? "YES" : "NO") << '\n';
+snippet Yes
+	cout << ($1 ? "Yes" : "No") << '\n';
+
+snippet ugraph
+	vector<vector<uint>> G(N);
+	REP(i, 0, M) {
+		uint a, b;
+		cin >> a >> b;
+		--a, --b;
+		G[a].push_back(b);
+		G[b].push_back(a);
+	}
+	$0
+snippet wgraph
+	using Edge = Edge<$1>;
+	vector<vector<Edge>> G(N);
+	REP(i, 0, M) {
+		uint a, b;
+		$1 c;
+		cin >> a >> b >> c;
+		--a, --b;
+		G[a].emplace_back(b, c);
+		G[b].emplace_back(a, c);
+	}
+	$0

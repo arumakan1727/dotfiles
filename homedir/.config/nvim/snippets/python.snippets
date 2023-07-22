@@ -1,28 +1,31 @@
 snippet ints
-    [int(s) for s in input().split()]
+	[int(s) for s in input().split()]
 
 snippet ii
-    int(input())
+	int(input())
+
+snippets s
+	input().strip()
 
 snippet mi
-    map(int, input().split())
+	map(int, input().split())
 
 snippet ls
-    [input().strip() for _ in range(_)]
+	[input().strip() for _ in range(_)]
 
 snippet ils
-    [int(input()) for _ in range(_)]
+	[int(input()) for _ in range(_)]
 
 snippet graph
-    G: List[List[int]] = [[] for _ in range(N)]
-    for _ in range(M):
-        a, b = map(int, input().split())
-        a -= 1
-        b -= 1
-        G[a].append(b)
-        G[b].append(a)
+	G: List[List[int]] = [[] for _ in range(N)]
+	for _ in range(M):
+		a, b = map(int, input().split())
+		a -= 1
+		b -= 1
+		G[a].append(b)
+		G[b].append(a)
 
 snippet Yes
-    def Yes(f) -> str:
-        return "Yes" if f else "No"
-    ${0}
+	def Yes(f) -> str:
+		return "Yes" if f else "No"
+	${0}
