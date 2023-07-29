@@ -4,7 +4,7 @@ snippet ints
 snippet ii
 	int(input())
 
-snippets s
+snippet s
 	input().strip()
 
 snippet mi
@@ -25,7 +25,5 @@ snippet graph
 		G[a].append(b)
 		G[b].append(a)
 
-snippet Yes
-	def Yes(f) -> str:
-		return "Yes" if f else "No"
-	${0}
+snippet yes
+	print("Yes" if $1 else "No")
