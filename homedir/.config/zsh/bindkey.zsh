@@ -19,6 +19,12 @@ function ghq-fzf-tmux() {
   # strip first path component + replace . to _ (because `.` cannot be used in session name)
   # ex) "github.com/arumakan1727/dotfiles" -> "arumakan1727/dotfiles"
   target_session="${${repo#*/}//./_}"
+
+  # if name starts with 'arumakan1727/', strip it
+  if [[ $target_session = arumakan1727/* ]]; then
+    target_session="${target_session#*/}"
+  fi
+
   current_session="$(tmux display-message -pF '#{session_name}')"
 
   if [[ "$current_session" = "$target_session" ]]; then
