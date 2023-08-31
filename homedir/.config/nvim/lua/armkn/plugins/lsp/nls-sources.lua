@@ -11,6 +11,7 @@ end
 return {
 	-- formatter
 	formatter.black,
+	formatter.buf,
 	formatter.isort,
 	formatter.markdownlint,
 	formatter.prettier.with({ condition = root_has_file({ "package.json" }) }),
@@ -19,6 +20,7 @@ return {
 	formatter.stylua,
 
 	-- linter
+	linter.buf,
 	linter.cppcheck,
 	linter.erb_lint,
 	linter.eslint_d.with({
