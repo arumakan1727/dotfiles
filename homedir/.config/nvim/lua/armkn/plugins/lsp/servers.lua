@@ -5,7 +5,7 @@ return {
 	bashls = {},
 	clangd = {
 		mason = false,
-		filetypes = { "c", "cpp", "cc", "cxx", "objc", "objcpp", "cuda"  },
+		filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
 		cmd = {
 			"clangd",
 			"--print-options",
