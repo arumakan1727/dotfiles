@@ -8,7 +8,7 @@ show() {
 
 for c in {30..37} {40..47} {90..97}; do
   show $c
-  for k in {1..9}; do
+  for k in 20 21 {1..9}; do
     show $c $k
   done
   printf "\n"
