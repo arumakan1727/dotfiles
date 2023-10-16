@@ -27,7 +27,5 @@ export SDKMAN_DIR="$HOME/.sdkman"
 export VOLTA_HOME="$HOME/.volta"
 export RTX_DATA_DIR="$HOME/.local/share/rtx"
 
-if [[ -x "$RTX_DATA_DIR/bin/rtx" ]]; then
-  eval "$("$RTX_DATA_DIR/bin/rtx" activate -s $(basename $SHELL))"
-fi
+command -v rtx >/dev/null 2>&1 && eval "$(rtx activate -s $(basename $SHELL))"
 safe_source "$HOME/.sdkman/bin/sdkman-init.sh"
