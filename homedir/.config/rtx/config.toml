@@ -1,3 +1,6 @@
 [tools]
 python = "3.11"
 ruby = "3"
+
+[settings]
+experimental = true
