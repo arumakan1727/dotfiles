@@ -4,3 +4,4 @@ ruby = "3"
 
 [settings]
 experimental = true
+disable_tools = ["node", "yarn"]
