@@ -18,7 +18,11 @@ config.font = wezterm.font_with_fallback({
 		family = 'JetBrainsMonoNL NF',
 		weight = 'Regular',
 	},
-	'monospace',
+	{
+		family = "UDEV Gothic NF",
+		weight = "Regular",
+	},
+	"monospace",
 })
 
 config.audible_bell = "Disabled"
