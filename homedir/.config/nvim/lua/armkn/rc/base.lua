@@ -47,7 +47,7 @@ opt.wildoptions:append("pum")
 -- IO Behavior
 o.autoread = true
 o.hidden = true
-o.modeline = false
+o.modeline = true
 o.confirm = true
 
 -- Timeout
