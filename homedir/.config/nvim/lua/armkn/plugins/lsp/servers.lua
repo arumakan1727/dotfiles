@@ -28,6 +28,7 @@ return {
 	jdtls = {},
 	jsonls = {},
 	lua_ls = {},
+	prismals = {},
 	pyright = {},
 	rust_analyzer = {},
 	solargraph = {},
