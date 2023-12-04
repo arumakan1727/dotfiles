@@ -47,6 +47,7 @@ path=(
   "$HOME/.deno/bin"
   "$HOME/.go/bin"
   "$HOME/.volta/bin"
+  "$HOME/.local/share/aquaproj-aqua/bin"
   "$HOME/.nimble/bin"(N-/)
   $path
   /usr/local/go/bin
