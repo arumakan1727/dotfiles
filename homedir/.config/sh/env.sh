@@ -21,6 +21,8 @@ fi
 export ZIPINFOOPT="-OCP932"
 export UNZIPOPT="-OCP932"
 
+export AQUA_GLOBAL_CONFIG="$HOME/.config/aquaproj-aqua/aqua.yaml"
+
 export GOPATH="$HOME/.go"
 export PNPM_HOME="$HOME/.pnpm"
 export SDKMAN_DIR="$HOME/.sdkman"
