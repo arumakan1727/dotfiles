@@ -1,0 +1,44 @@
+{
+  "title": "AquaSKK",
+  "rules": [
+    {
+      "description": "Ctrl+j to Ctrl+Shift+j on some terminal Apps",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "mandatory": [
+                "control"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "j",
+              "modifiers": [
+                "left_control",
+                "left_shift"
+              ]
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\.googlecode\\.iterm2$",
+                "^com\\.apple\\.Terminal$",
+                "^com\\.github\\.wez\\.wezterm$"
+              ],
+              "file_paths": [
+                "/wezterm$",
+                "/wezterm-gui$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
