@@ -106,7 +106,6 @@ async function generateYabaiTermCmd(termWin: WindowInfo): Promise<string[]> {
   const cmd: string[] = ["yabai", "-m", "window", id];
   if (!termWin["is-floating"]) cmd.push("--toggle", "float");
   if (!termWin["is-sticky"]) cmd.push("--toggle", "sticky");
-  if (!termWin["is-topmost"]) cmd.push("--toggle", "topmost");
 
   if (!termWin["is-visible"]) {
     cmd.push("--deminimize", id, "--focus", id);
