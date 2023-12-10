@@ -6,10 +6,8 @@ safe_source() {
   fi
 }
 
-command -v nvim >/dev/null 2>&1 \
-  && export EDITOR=nvim \
-  || export EDITOR=vim
-
+export EDITOR=nvim
+export MANPAGER='nvim +Man!'
 export PAGER=less
 export LESS='--no-init --quit-if-one-screen -R --LONG-PROMPT -i --shift 4 --jump-target=3'
 export GROFF_NO_SGR=1  # for konsole and gnome-terminal
