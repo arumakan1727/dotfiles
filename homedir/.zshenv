@@ -44,13 +44,11 @@ path=(
   "$HOME/bin"
   "$HOME/.local/bin"
   "$HOME/.cargo/bin"
-  "$HOME/.deno/bin"
   "$HOME/.go/bin"
   "$HOME/.volta/bin"
+  "$HOME/.rye/shims"
   "$HOME/.local/share/aquaproj-aqua/bin"
-  "$HOME/.nimble/bin"(N-/)
   $path
-  /usr/local/go/bin
   /usr/local/bin
   /usr/bin
   /bin
