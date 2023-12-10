@@ -45,3 +45,6 @@ packages:
   - name: x-motemen/ghq@v1.4.2
   - name: zellij-org/zellij@v0.39.2
   - name: PaddiM8/kalker@v2.0.4
+  - name: jesseduffield/lazygit@v0.40.2
+  - name: fullstorydev/grpcurl@v1.8.9
+  - name: bufbuild/buf@v1.28.1
