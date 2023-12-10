@@ -25,9 +25,7 @@ export AQUA_GLOBAL_CONFIG="$HOME/.config/aquaproj-aqua/aqua.yaml"
 
 export GOPATH="$HOME/.go"
 export PNPM_HOME="$HOME/.pnpm"
-export SDKMAN_DIR="$HOME/.sdkman"
 export VOLTA_HOME="$HOME/.volta"
 export RTX_DATA_DIR="$HOME/.local/share/rtx"
 
 command -v rtx >/dev/null 2>&1 && eval "$(rtx activate -s $(basename $SHELL))"
-safe_source "$HOME/.sdkman/bin/sdkman-init.sh"
