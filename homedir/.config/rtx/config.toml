@@ -1,6 +1,15 @@
 [tools]
-python = "3.11.6"
+# The following tools are used globally, not for a specific project.
+# So I use the latest version rather than fixing the version.
+deno = "latest"
+go = "latest"
+python = "latest"
 
 [settings]
+# node, yarn, and pnpm are managed by volta.
+disable_tools = [
+  "node",
+  "yarn",
+  "pnpm",
+]
 experimental = true
-disable_tools = ["node", "yarn"]
