@@ -57,3 +57,7 @@ zstyle ':completion:*:*:*make:*:targets' command awk \''/^[a-zA-Z0-9][^\t=]+:/ {
 #zstyle ':completion:*:*:make:*:targets' ignored-patterns '*.o'
 #zstyle ':completion:*:*:*make:*:*' tag-order '!targets !functions !file-patterns'
 #zstyle ':completion:*:*:*make:*:*' avoid-completer '_files'
+
+# Enable short-option stacking
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
