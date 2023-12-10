@@ -39,6 +39,7 @@ alias en='trans :en'
 # Change directory to Parent Dir
 alias ..='cd ..'
 alias ...='cd ../..'
+alias ....='cd ../../..'
 
 # Imitate macOS
 if [ "$(uname -s)" = Linux ]; then
