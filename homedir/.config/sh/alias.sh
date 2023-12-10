@@ -41,6 +41,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
+alias cdgitroot='cd "$(git rev-parse --show-toplevel)"'
+
 # Imitate macOS
 if [ "$(uname -s)" = Linux ]; then
   alias pbcopy='xsel --input --clipboard'
