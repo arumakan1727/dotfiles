@@ -1,9 +1,11 @@
 ###
-### punct-double-width.rule -- 全角記号の入力
+### armkn-punct-double-width.rule -- 全角記号の入力
 ###
 ### see: http://aquaskk.osdn.jp/kana_rule.html
 
-!,！,！,!
+!,!,!,!
 ?,？,？,?
 ^,・,・,^
 ~,〜,〜,~
+x[,【,【,【
+x],】,】,】
