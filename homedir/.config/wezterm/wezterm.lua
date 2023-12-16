@@ -5,6 +5,8 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
+config.window_background_opacity = 0.85
+
 config.color_scheme = "Tokyo Night (Gogh)"
 config.colors = {
 	cursor_bg = "#f0f0f0",
