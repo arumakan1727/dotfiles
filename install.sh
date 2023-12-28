@@ -121,6 +121,10 @@ link_each_child() {
   local glob="$2"
   local src dst
 
+  # strip last slash if exists
+  src_dir="${src_dir%/}"
+  dst_dir="${dst_dir%/}"
+
   run mkdir -p "$dst_dir"
 
   find "$src_dir" -mindepth 1 -maxdepth 1 -name "$glob" -print0 | while read -rd $'\0' src; do
