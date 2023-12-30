@@ -3,6 +3,7 @@ set -Eeuo pipefail
 # ref: https://betterdev.blog/minimal-safe-bash-script-template/
 
 repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+readonly repo_root
 
 usage() {
   cat <<EOF # remove the space between << and EOF, this is due to web plugin issue
@@ -21,7 +22,7 @@ EOF
   exit
 }
 
-# options
+# options default value
 verbose=0
 dryrun=0
 
@@ -42,6 +43,8 @@ parse_params() {
 
   local args=("$@")
   [[ ${#args[@]} -eq 0 ]] || die "This script does NOT receive any arguments"
+
+  readonly verbose dryrun
 }
 
 run() {
@@ -58,10 +61,10 @@ verbose_msg() {
 
 setup_colors() {
   if [[ -t 2 ]] && [[ -z "${NO_COLOR-}" ]] && [[ "${TERM-}" != "dumb" ]]; then
-    NOFORMAT='\033[0m' RED='\033[0;31m' GREEN='\033[0;32m' ORANGE='\033[0;33m' BLUE='\033[0;34m' PURPLE='\033[0;35m' CYAN='\033[0;36m' YELLOW='\033[1;33m'
+    readonly NOFORMAT='\033[0m' RED='\033[0;31m' GREEN='\033[0;32m' ORANGE='\033[0;33m' BLUE='\033[0;34m' PURPLE='\033[0;35m' CYAN='\033[0;36m' YELLOW='\033[1;33m'
   else
     # shellcheck disable=SC2034
-    NOFORMAT='' RED='' GREEN='' ORANGE='' BLUE='' PURPLE='' CYAN='' YELLOW=''
+    readonly NOFORMAT='' RED='' GREEN='' ORANGE='' BLUE='' PURPLE='' CYAN='' YELLOW=''
   fi
 }
 
@@ -75,7 +78,7 @@ assert_dir() {
   [[ -d "$dir" ]] || die "No such directory: $dir"
 }
 
-link() {
+symlink() {
   # NOTE: $src and $dst must be absolute path.
   local src="$1"
   local dst="$2"
@@ -115,7 +118,7 @@ link() {
   run ln -snf "$src" "$dst"
 }
 
-link_each_child() {
+symlink_each_child() {
   local src_dir="$repo_root/homedir/$1"
   local dst_dir="$HOME/$1"
   local glob="$2"
@@ -130,17 +133,21 @@ link_each_child() {
   find "$src_dir" -mindepth 1 -maxdepth 1 -name "$glob" -print0 | while read -rd $'\0' src; do
     # replace prefix of $src: $src_dir -> $dst_dir
     dst="$dst_dir${src#"${src_dir}"}"
-    link "$src" "$dst"
+    symlink "$src" "$dst"
   done
+}
+
+symlink_same_name() {
+  local name="$1"
+  symlink "$repo_root/homedir/$name" "$HOME/$name"
 }
 
 install() {
   assert_dir "$repo_root/homedir"
-  link_each_child '' '.*' # only dot file
-  link_each_child 'bin' '*'
 
-  local d='Library/Application Support/AquaSKK'
-  link "$repo_root/homedir/$d" "$HOME/$d"
+  symlink_each_child '' '.*' # only dot file
+  symlink_each_child 'bin' '*'
+  symlink_same_name 'Library/Application Support/AquaSKK'
 }
 
 setup_colors
