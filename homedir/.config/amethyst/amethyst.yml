@@ -192,33 +192,33 @@ throw-space-5:
 
 # Select tall layout
 select-tall-layout:
-  # mod: mod1
-  # key: a
+  mod: <NONE>
+  key: <NONE>
 
 # Select wide layout
 select-wide-layout:
-  # mod: mod1
-  # key: s
+  mod: <NONE>
+  key: <NONE>
 
 # Select fullscreen layout
 select-fullscreen-layout:
-  # mod: mod1
-  # key: d
+  mod: <NONE>
+  key: <NONE>
 
 # Select column layout
 select-column-layout:
-  # mod: mod1
-  # key: f
+  mod: <NONE>
+  key: <NONE>
 
 # Move the currently focused window to the space to the left.
 throw-space-left:
-  # mod: mod2
-  # key: left
+  mod: <NONE>
+  key: <NONE>
 
 # Move currently the focused window to the space to the right.
 throw-space-right:
-  # mod: mod2
-  # key: right
+  mod: <NONE>
+  key: <NONE>
 
 # Toggle the floating state of the currently focused window; i.e., if it was floating make it tiled and if it was tiled make it floating.
 toggle-float:
@@ -227,23 +227,23 @@ toggle-float:
 
 # Display the layout HUD with the current layout on each screen.
 display-current-layout:
-  # mod: mod1
-  # key: i
+  mod: <NONE>
+  key: <NONE>
 
 # Turn on or off tiling entirely.
 toggle-tiling:
-  # mod: mod1
-  # key: t
+  mod: <NONE>
+  key: <NONE>
 
 # Rerun the current layout's algorithm.
 reevaluate-windows:
-  # mod: mod1
-  # key: z
+  mod: <NONE>
+  key: <NONE>
 
 # Turn on or off focus-follows-mouse.
 toggle-focus-follows-mouse:
-  # mod: mod2
-  # key: x
+  mod: <NONE>
+  key: <NONE>
 
 # Automatically quit and reopen Amethyst.
 relaunch-amethyst:
