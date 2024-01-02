@@ -2,8 +2,10 @@
 # The following tools are used globally, not for a specific project.
 # So I use the latest version rather than fixing the version.
 deno = "latest"
+bun = "latest"
 go = "latest"
-python = "latest"
+# python = "latest"  # global python is managed by rye
+ruby = "3.3.0"
 
 [settings]
 # node, yarn, and pnpm are managed by volta.
