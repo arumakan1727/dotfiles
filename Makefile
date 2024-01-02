@@ -1,74 +1,42 @@
 .DEFAULT_GOAL := help
-DENO_INSTALL ?= $(HOME)/.deno
-PATH         := $(DENO_INSTALL)/bin:$(PATH)
-SHELL        := env PATH=$(PATH) /bin/bash
+MAKEFLAGS += --always-make
+
 RED     := \033[31m
 CYAN    := \033[36m
 MAGENTA := \033[35m
 RESET   := \033[0m
 
-export DENO_INSTALL
+help:	## Print the description of each task in this Makefile
+	@grep -E '^[a-zA-Z0-9_/-]+:' Makefile | \
+		awk 'BEGIN {FS = ":(.*## )?"}; {printf "$(CYAN)%-16s$(RESET) %s\n", $$1, $$2}'
 
-.PHONY:    deno
-deno:	$(DENO_INSTALL)/bin/deno
+i/symlink:	## Create/Update symlinks to this dotfiles
+	./installer/symlink_dotfiles.sh
 
-$(DENO_INSTALL)/bin/deno:
-	curl -fsSL https://deno.land/x/install/install.sh | sh
+i/cli:	## Install CLI
+	./installer/symlink_dotfiles.sh
+	./installer/neovim.sh
+	./installer/rtx.sh
+	./installer/aqua.sh
+	./installer/volta+corepack.sh
+	./installer/rye.sh
 
+i/fonts:	## Install fonts
+	./installer/fonts.sh
 
-.PHONY:	lint/Makefile	## Lint makefiles
-lint/Makefile:	deno
-	deno run --allow-read=Makefile --allow-env ./manager/cmd/lint_makefile.ts Makefile
+# NOTE: Brewfile.lock.json is only for recording the version which can be
+# 		  useful in debugging brew bundle failures and replicating a "last known good build" state.
+#       Brewfile.lock.json does not fix the version on installation. (Homebrew cannot install specific version)
 
+brew/dump:	## Update Brewfile and Brewfile.lock.json
+	rm -f Brewfile
+	brew bundle dump
+	rm -f Brewfile.lock.json
+	brew bundle --no-upgrade
 
-DOTFILE_ARGS := -A manager/cmd/dotfile.ts
+brew/install:	## Install and upgrade packages from Brewfile
+	# To support multiple user system, run brew as the dedicated user
+	sudo -Hu $(shell stat -f '%Su' $$(which brew)) brew bundle install --no-lock
 
-.PHONY:	dotfiles/apply/symlink	## Apply dotfiles using symlink, and remove deadlinks
-dotfiles/apply/symlink:	deno
-	deno run $(DOTFILE_ARGS) apply
-
-.PHONY:	dotfiles/apply/symlink/dryrun	## Dry-run apply symlink
-dotfiles/apply/symlink/dryrun:	deno
-	deno run $(DOTFILE_ARGS) apply --dry-run
-
-.PHONY:	dotfiles/apply/copy	## Apply dotfiles using copy, and remove deadlinks
-dotfiles/apply/copy:	deno
-	deno run $(DOTFILE_ARGS) apply --copy
-
-.PHONY:	dotfiles/list-symlinks	## List applied symlinks
-dotfiles/list-symlinks:	deno
-	deno run $(DOTFILE_ARGS) symlinks
-
-
-
-XDG_CACHE_HOME ?= $(HOME)/.cache
-DOTFILES_CACHE_HOME := $(XDG_CACHE_HOME)/armkn-dotfiles
-LAST_INSTALL_DATE_JSON := $(DOTFILES_CACHE_HOME)/last-install-date.json
-
-PKGMAN_ARGS := -A manager/cmd/pkgman.ts
-
-.PHONY:	cli/install/essentials	## Install essential CLI
-cli/install/essentials:	deno
-	deno run $(PKGMAN_ARGS)  cli.essentials
-
-.PHONY:	cli/install/extras	## Install additional CLI
-cli/install/extras:	deno
-	deno run $(PKGMAN_ARGS) cli.extras
-
-.PHONY:	cli/install/devs	## Install development tools CLI
-cli/install/devs:	deno
-	deno run $(PKGMAN_ARGS) cli.devs
-
-.PHONY:	gui/install	## Install GUI applications
-gui/install:	deno
-	deno run $(PKGMAN_ARGS) gui.all
-
-.PHONY:	mac/install	## Install softwares for macOS
-mac/install:
-	brew bundle --file ./mac.Brewfile
-
-.PHONY:	help	## Show Makefile tasks
-help:
-	@grep -E '^.PHONY:\s*\S+\s+#' Makefile | \
-		sed -E 's/.PHONY:\t*//' | \
-		awk 'BEGIN {FS = "(\\t*##\\s*)?"}; {printf "$(CYAN)%-22s$(RESET) %s\n", $$1, $$2}'
+lint:
+	shellcheck ./installer/*
