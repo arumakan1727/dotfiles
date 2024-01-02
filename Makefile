@@ -25,6 +25,9 @@ i/cli:	## Install CLI
 i/fonts:	## Install fonts
 	./installer/fonts.sh
 
+i/macos:	## Setup macos config
+	./installer/macos_defaults.sh
+
 # NOTE: Brewfile.lock.json is only for recording the version which can be
 # 		  useful in debugging brew bundle failures and replicating a "last known good build" state.
 #       Brewfile.lock.json does not fix the version on installation. (Homebrew cannot install specific version)
