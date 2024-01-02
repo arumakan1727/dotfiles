@@ -15,6 +15,7 @@ i/symlink:	## Create/Update symlinks to this dotfiles
 
 i/cli:	## Install CLI
 	./installer/symlink_dotfiles.sh
+	./installer/homebrew.sh
 	./installer/neovim.sh
 	./installer/rtx.sh
 	./installer/aqua.sh
