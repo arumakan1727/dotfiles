@@ -4,9 +4,9 @@ set -Eeuo pipefail
 AQUA_BIN="${AQUA_BIN:-$HOME/.local/bin/aqua}"
 
 cleanup() {
-    trap - SIGINT SIGTERM ERR EXIT
-    echo >&2 "Cleanup tempdir: $tempdir"
-    rm -rf "$tempdir"
+  trap - SIGINT SIGTERM ERR EXIT
+  echo >&2 "Cleanup tempdir: $tempdir"
+  rm -rf "$tempdir"
 }
 
 log_run() {
@@ -15,6 +15,7 @@ log_run() {
 }
 
 download_and_install() {
+  local os arch url tgz
   os="$(uname -s | tr '[:upper:]' '[:lower:]')"
   arch="$(uname -m)"
   url="https://github.com/aquaproj/aqua/releases/latest/download/aqua_${os}_${arch}.tar.gz"
