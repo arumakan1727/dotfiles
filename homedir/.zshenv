@@ -4,6 +4,10 @@ typeset -xT MANPATH manpath
 typeset -xT INFOPATH infopath
 typeset -xT SUDO_PATH sudo_path
 
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 
 if [[ -d /opt/homebrew ]]; then
   export HOMEBREW_PREFIX=/opt/homebrew
