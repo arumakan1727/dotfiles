@@ -24,6 +24,6 @@ export AQUA_GLOBAL_CONFIG="$HOME/.config/aquaproj-aqua/aqua.yaml"
 export GOPATH="$HOME/.go"
 export PNPM_HOME="$HOME/.pnpm"
 export VOLTA_HOME="$HOME/.volta"
-export RTX_DATA_DIR="$HOME/.local/share/rtx"
+export MISE_DATA_DIR="$HOME/.local/share/mise"
 
-command -v rtx >/dev/null 2>&1 && eval "$(rtx activate -s $(basename $SHELL))"
+command -v mise >/dev/null 2>&1 && eval "$(mise activate -s $(basename $SHELL))"

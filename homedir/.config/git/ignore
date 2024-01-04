@@ -2,8 +2,9 @@
 .envrc
 .direnv/
 
-# rtx
+# mise
 .rtx.local.toml
+.mise.local.toml
 
 # vim
 .vimrc.local
