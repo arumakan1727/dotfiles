@@ -21,6 +21,7 @@ i/cli:	## Install CLI
 	./installer/aqua.sh
 	./installer/volta+corepack.sh
 	./installer/rye.sh
+	./installer/rustup.sh
 
 i/fonts:	## Install fonts
 	./installer/fonts.sh
