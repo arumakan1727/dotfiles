@@ -45,5 +45,10 @@ brew/install:	## Install and upgrade packages from Brewfile
 upgrade/aqua:	## Upgrade registry and packages managed by aqua
 	aqua -c homedir/.config/aquaproj-aqua/aqua.yaml update
 
+upgrade/brew:
+	brew update
+	brew upgrade --cask --greedy
+	make brew/dump
+
 lint:
 	shellcheck ./installer/*
