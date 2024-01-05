@@ -1,13 +1,13 @@
-if [[ -n "$ARMKN_ZSHRC_PROFILE" ]]; then
+if [[ -n "$ZSHRC_PROFILE" ]]; then
   zmodload zsh/zprof && zprof > /dev/null
 fi
 
 function zsh-profile() {
-  ARMKN_ZSHRC_PROFILE=1 zsh -i -c zprof
+  ZSHRC_PROFILE=1 zsh -i -c zprof
 }
 
 # Select tmux session interactively
-select_tmux_session() {
+function select_tmux_session() {
   local sessions="$(tmux list-sessions)"
   [[ -z "$sessions" ]] && exec tmux new-session
 
@@ -25,21 +25,41 @@ select_tmux_session() {
   esac
 }
 
-if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux &>/dev/null } && { command -v fzf &>/dev/null }; then
+if [[ -z "$TMUX" && -o interactive ]] && (( $+commands[tmux] )) && (( $+commands[fzf] )); then
   select_tmux_session
 fi
 
-safe_source() {
+# https://zenn.dev/fuzmare/articles/zsh-plugin-manager-cache
+function ensure_zcompiled {
+  local compiled="$1.zwc"
+  if [[ ! -r "$compiled" || "$1" -nt "$compiled" ]]; then
+    echo "Compiling $1"
+    zcompile "$1"
+  fi
+}
+
+function source {
+  ensure_zcompiled "$1"
+  builtin source "$1"
+}
+
+function source_if_exists {
   if [[ -s "$1" ]]; then source "$1"; fi
 }
 
-# my config modules
-d="$HOME/.config/zsh"
-source "$d/base.zsh"
-source "$d/completion.zsh"
-source "$d/bindkey.zsh"
-source "$d/alias.sh"
-source "$d/plugin.zsh"
-unset d
+ensure_zcompiled "$HOME/.zshenv"
+ensure_zcompiled "$HOME/.zshrc"
 
-safe_source "$HOME/.zshrc.local"
+source "$HOME/.config/zsh/nonlazy/base.zsh"
+source "$HOME/.config/zsh/nonlazy/hooks.zsh"
+source "$HOME/.config/zsh/nonlazy/sheldon.zsh"
+
+zsh-defer source "$HOME/.config/zsh/lazy/aliases.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/colors.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/completion.zsh"
+
+if [[ -s ~/.zshrc.local ]]; then
+  zsh-defer source "$HOME/.zshrc.local"
+fi
+
+zsh-defer unfunction source

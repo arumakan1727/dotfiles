@@ -1,0 +1,42 @@
+# See: https://github.com/rossmacarthur/sheldon#readme
+
+shell = "zsh"
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+apply = ["source"]
+
+[templates]
+defer = '''
+{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source "{{ file }}"
+{% endfor %}{{ hooks?.post | nl }}
+'''
+
+[plugins.powerlevel10k]
+github = "romkatv/powerlevel10k"
+apply = ["source"]
+
+#[plugins.autoload]
+#inline = '''
+#autoload -Uz compinit && zsh-defer compinit -u
+#autoload -Uz colors && zsh-defer colors
+#autoload -Uz edit-command-line && zle -N edit-command-line
+#'''
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+use = ['{{ name }}.zsh']
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = 'zsh-users/zsh-completions'
+apply = ["defer"]
+
+[plugins.zsh-syntax-highlighting]
+github = 'zdharma-continuum/fast-syntax-highlighting'
+apply = ['defer']
+
+[plugins.zeno]
+github = 'yuki-yano/zeno.zsh'
+use = ['{{ name }}.zsh']
+apply = ['defer']
