@@ -47,9 +47,6 @@ function source_if_exists {
   if [[ -s "$1" ]]; then source "$1"; fi
 }
 
-ensure_zcompiled "$HOME/.zshenv"
-ensure_zcompiled "$HOME/.zshrc"
-
 source "$HOME/.config/zsh/nonlazy/base.zsh"
 source "$HOME/.config/zsh/nonlazy/hooks.zsh"
 source "$HOME/.config/zsh/nonlazy/sheldon.zsh"
