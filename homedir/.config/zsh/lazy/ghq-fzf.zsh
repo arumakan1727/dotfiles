@@ -1,12 +1,9 @@
-# Emacs 風のキーバインドを使用 (他に Vim 風もある)
-bindkey -e
-
 ## ghq 配下のリポジトリを fzf で選択 -> 自動で tmux セッションの作成/リネーム
 function ghq-fzf-tmux() {
   local repo dir target_session current_session
 
   repo="$(ghq list | fzf)"
-  [[ -z "$repo" ]] && return 1
+  [[ -z "$repo" ]] && zle reset-prompt && return 1
 
   dir="$(ghq root)/$repo"
 
@@ -42,6 +39,3 @@ function ghq-fzf-tmux() {
 
 zle -N ghq-fzf-tmux
 bindkey '^]' ghq-fzf-tmux
-
-# Shift+Tab で前の選択肢へ移動
-bindkey '^[[Z' reverse-menu-complete

@@ -29,6 +29,13 @@ if [[ -z "$TMUX" && -o interactive ]] && (( $+commands[tmux] )) && (( $+commands
   select_tmux_session
 fi
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # https://zenn.dev/fuzmare/articles/zsh-plugin-manager-cache
 function ensure_zcompiled {
   local compiled="$1.zwc"
@@ -52,11 +59,14 @@ source "$HOME/.config/zsh/nonlazy/hooks.zsh"
 source "$HOME/.config/zsh/nonlazy/sheldon.zsh"
 
 zsh-defer source "$HOME/.config/zsh/lazy/aliases.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/cli-opts.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/colors.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/completion.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/ghq-fzf.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/zeno.zsh"
 
-if [[ -s ~/.zshrc.local ]]; then
-  zsh-defer source "$HOME/.zshrc.local"
-fi
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+[[ -s ~/.zshrc.local ]] && zsh-defer source "$HOME/.zshrc.local"
 
 zsh-defer unfunction source
