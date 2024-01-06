@@ -59,6 +59,7 @@ source "$HOME/.config/zsh/nonlazy/hooks.zsh"
 source "$HOME/.config/zsh/nonlazy/sheldon.zsh"
 
 zsh-defer source "$HOME/.config/zsh/lazy/aliases.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/bindkey.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/cli-opts.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/colors.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/completion.zsh"
