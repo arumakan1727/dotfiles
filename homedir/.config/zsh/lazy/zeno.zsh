@@ -9,8 +9,8 @@ export ZENO_GIT_CAT="bat --color=always"
 export ZENO_GIT_TREE="lsd -a --tree --depth 4 -I .git -I node_modules -I .venv -I __pycache__"
 
 if [[ -n $ZENO_LOADED ]]; then
-  bindkey ' '  zeno-auto-snippet
-  bindkey '^x^i' zeno-completion
+  bindkey ' '    zeno-auto-snippet
+  bindkey '^n'   zeno-completion
   bindkey '^x^s' zeno-insert-snippet
   bindkey '^r'   zeno-history-selection
 fi
