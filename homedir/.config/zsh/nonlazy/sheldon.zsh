@@ -6,13 +6,14 @@ if ! (( $+commands[sheldon] )); then
 fi
 
 export SHELDON_CONFIG_FILE="$HOME/.config/zsh/sheldon.toml"
-sheldon_cache="$XDG_CACHE_HOME/zsh/sheldon.zsh"
 
-if [[ ! -s "$sheldon_cache" || "$SHELDON_CONFIG_FILE" -nt "$sheldon_cache" ]]; then
-  mkdir -p "$XDG_CACHE_HOME/zsh"
-  sheldon source > "$sheldon_cache"
-fi
+() {
+  local sheldon_cache="$XDG_CACHE_HOME/zsh/sheldon.zsh"
 
-source "$sheldon_cache"
+  if [[ ! -s "$sheldon_cache" || "$SHELDON_CONFIG_FILE" -nt "$sheldon_cache" ]]; then
+    mkdir -p "$XDG_CACHE_HOME/zsh"
+    sheldon source > "$sheldon_cache"
+  fi
 
-unset sheldon_cache
+  source "$sheldon_cache"
+}
