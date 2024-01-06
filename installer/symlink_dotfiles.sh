@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 # ref: https://betterdev.blog/minimal-safe-bash-script-template/
 
-repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+repo_root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." &>/dev/null && pwd -P)
 readonly repo_root
 
 usage() {
