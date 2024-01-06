@@ -14,7 +14,7 @@ defer = '''
 
 [plugins.powerlevel10k]
 github = "romkatv/powerlevel10k"
-apply = ["source"]
+apply = ["defer"]
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
