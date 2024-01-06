@@ -53,12 +53,18 @@ HISTORY_IGNORE='(ls|ll|la|lla|pwd|cd ..|cd|popd|ja *|en *|task *|jrnl *|git s|gi
 # https://superuser.com/questions/902241/how-to-make-zsh-not-store-failed-command
 function zshaddhistory() {
   # skip variable assignments
-  local args="${(z)1}"
+  local args=(${(z)1})
   local j=1
-  while [[ ${args[$j]} == *=* ]] {
+
+  while [[ ${args[$j]} == *=* ]]; do
     ((j++))
-  }
-  [[ $j -le ${#args} ]] && whence ${args[$j]} >| /dev/null || return 1
+  done
+
+  # NOTE: last element of args is ';'
+  # So, if a command line is `echo "a b"`, the args=('echo' '"a b"' ';')
+  if [[ $j -lt ${#args} ]] && ! whence ${args[$j]} >| /dev/null; then
+    return 1
+  fi
 
   # https://qiita.com/sho-t/items/d44bfbc783db7ca278c0
   emulate -L zsh
