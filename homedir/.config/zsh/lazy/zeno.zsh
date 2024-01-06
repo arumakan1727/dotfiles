@@ -1,5 +1,6 @@
-# Zeno
-# https://github.com/yuki-yano/zeno.zsh
+# Zeno https://github.com/yuki-yano/zeno.zsh
+
+export ZENO_HOME="$HOME/.config/zsh/zeno"
 
 export ZENO_ENABLE_SOCK=1
 
