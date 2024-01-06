@@ -50,14 +50,14 @@
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
-    asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
+    # asdf                    # asdf version manager (https://github.com/asdf-vm/asdf)
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     anaconda                # conda environment (https://conda.io/)
-    pyenv                   # python environment (https://github.com/pyenv/pyenv)
-    goenv                   # go environment (https://github.com/syndbg/goenv)
-    nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
-    nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
-    nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
+    # pyenv                   # python environment (https://github.com/pyenv/pyenv)
+    # goenv                   # go environment (https://github.com/syndbg/goenv)
+    # nodenv                  # node.js version from nodenv (https://github.com/nodenv/nodenv)
+    # nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
+    # nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
     # node_version          # node.js version
     # go_version            # go version (https://golang.org)
     # rust_version          # rustc version (https://www.rust-lang.org)
@@ -66,15 +66,15 @@
     # laravel_version       # laravel php framework version (https://laravel.com/)
     # java_version          # java version (https://www.java.com/)
     # package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
-    rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
-    rvm                     # ruby version from rvm (https://rvm.io)
-    fvm                     # flutter version management (https://github.com/leoafarias/fvm)
-    luaenv                  # lua version from luaenv (https://github.com/cehoffman/luaenv)
-    jenv                    # java version from jenv (https://github.com/jenv/jenv)
-    plenv                   # perl version from plenv (https://github.com/tokuhirom/plenv)
-    perlbrew                # perl version from perlbrew (https://github.com/gugod/App-perlbrew)
-    phpenv                  # php version from phpenv (https://github.com/phpenv/phpenv)
-    scalaenv                # scala version from scalaenv (https://github.com/scalaenv/scalaenv)
+    # rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
+    # rvm                     # ruby version from rvm (https://rvm.io)
+    # fvm                     # flutter version management (https://github.com/leoafarias/fvm)
+    # luaenv                  # lua version from luaenv (https://github.com/cehoffman/luaenv)
+    # jenv                    # java version from jenv (https://github.com/jenv/jenv)
+    # plenv                   # perl version from plenv (https://github.com/tokuhirom/plenv)
+    # perlbrew                # perl version from perlbrew (https://github.com/gugod/App-perlbrew)
+    # phpenv                  # php version from phpenv (https://github.com/phpenv/phpenv)
+    # scalaenv                # scala version from scalaenv (https://github.com/scalaenv/scalaenv)
     haskell_stack           # haskell version from stack (https://haskellstack.org/)
     kubecontext             # current kubernetes context (https://kubernetes.io/)
     terraform               # terraform workspace (https://www.terraform.io)
@@ -137,7 +137,7 @@
   typeset -g POWERLEVEL9K_ICON_BEFORE_CONTENT=
 
   # Add an empty line before each prompt.
-  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=false
+  typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
   # Connect left prompt lines with these symbols. You'll probably want to use the same color
   # as POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND below.
@@ -191,7 +191,7 @@
   #################################[ os_icon: os identifier ]##################################
   # OS identifier color.
   typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=232
-  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=7
+  typeset -g POWERLEVEL9K_OS_ICON_BACKGROUND=249
   # Custom icon.
   # typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='⭐'
 
@@ -220,7 +220,7 @@
 
   ##################################[ dir: current directory ]##################################
   # Current directory background color.
-  typeset -g POWERLEVEL9K_DIR_BACKGROUND=4
+  typeset -g POWERLEVEL9K_DIR_BACKGROUND=32
   # Default current directory foreground color.
   typeset -g POWERLEVEL9K_DIR_FOREGROUND=254
   # If directory is too long, shorten some of its segments to the shortest possible unique
@@ -246,14 +246,10 @@
     .go-version
     .ruby-version
     .lua-version
-    .java-version
-    .perl-version
-    .php-version
     .tool-versions
     .shorten_folder_marker
     .svn
     .terraform
-    CVS
     Cargo.toml
     composer.json
     go.mod
@@ -359,10 +355,10 @@
 
   #####################################[ vcs: git status ]######################################
   # Version control background colors.
-  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=2
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=3
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=2
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=3
+  typeset -g POWERLEVEL9K_VCS_CLEAN_BACKGROUND=112
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_BACKGROUND=219
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND=112
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_BACKGROUND=221
   typeset -g POWERLEVEL9K_VCS_LOADING_BACKGROUND=8
 
   # Branch icon. Set this parameter to '\UE0A0 ' for the popular Powerline branch icon.
@@ -370,7 +366,7 @@
 
   # Untracked files icon. It's really a question mark, your font isn't broken.
   # Change the value of this parameter to show a different icon.
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON=' '
 
   # Formatter for Git status.
   #
@@ -438,10 +434,10 @@
 
     if (( VCS_STATUS_COMMITS_AHEAD || VCS_STATUS_COMMITS_BEHIND )); then
       # ⇣42 if behind the remote.
-      (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${clean}⇣${VCS_STATUS_COMMITS_BEHIND}"
+      (( VCS_STATUS_COMMITS_BEHIND )) && res+=" ${clean} ${VCS_STATUS_COMMITS_BEHIND}"
       # ⇡42 if ahead of the remote; no leading space if also behind the remote: ⇣42⇡42.
       (( VCS_STATUS_COMMITS_AHEAD && !VCS_STATUS_COMMITS_BEHIND )) && res+=" "
-      (( VCS_STATUS_COMMITS_AHEAD  )) && res+="${clean}⇡${VCS_STATUS_COMMITS_AHEAD}"
+      (( VCS_STATUS_COMMITS_AHEAD  )) && res+="${clean} ${VCS_STATUS_COMMITS_AHEAD}"
     elif [[ -n $VCS_STATUS_REMOTE_BRANCH ]]; then
       # Tip: Uncomment the next line to display '=' if up to date with the remote.
       # res+=" ${clean}="
@@ -453,15 +449,15 @@
     # ⇢42 if ahead of the push remote; no leading space if also behind: ⇠42⇢42.
     (( VCS_STATUS_PUSH_COMMITS_AHEAD  )) && res+="${clean}⇢${VCS_STATUS_PUSH_COMMITS_AHEAD}"
     # *42 if have stashes.
-    (( VCS_STATUS_STASHES        )) && res+=" ${clean}*${VCS_STATUS_STASHES}"
+    (( VCS_STATUS_STASHES        )) && res+=" ${clean}󰽘 ${VCS_STATUS_STASHES}"
     # 'merge' if the repo is in an unusual state.
     [[ -n $VCS_STATUS_ACTION     ]] && res+=" ${conflicted}${VCS_STATUS_ACTION}"
     # ~42 if have merge conflicts.
     (( VCS_STATUS_NUM_CONFLICTED )) && res+=" ${conflicted}~${VCS_STATUS_NUM_CONFLICTED}"
     # +42 if have staged changes.
-    (( VCS_STATUS_NUM_STAGED     )) && res+=" ${modified}+${VCS_STATUS_NUM_STAGED}"
+    (( VCS_STATUS_NUM_STAGED     )) && res+=" ${modified} ${VCS_STATUS_NUM_STAGED}"
     # !42 if have unstaged changes.
-    (( VCS_STATUS_NUM_UNSTAGED   )) && res+=" ${modified}!${VCS_STATUS_NUM_UNSTAGED}"
+    (( VCS_STATUS_NUM_UNSTAGED   )) && res+=" ${modified} ${VCS_STATUS_NUM_UNSTAGED}"
     # ?42 if have untracked files. It's really a question mark, your font isn't broken.
     # See POWERLEVEL9K_VCS_UNTRACKED_ICON above if you want to use a different icon.
     # Remove the next line if you don't want to see untracked files at all.
@@ -517,44 +513,44 @@
   # it will signify success by turning green.
   typeset -g POWERLEVEL9K_STATUS_OK=true
   typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=2
-  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=0
+  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=46
+  typeset -g POWERLEVEL9K_STATUS_OK_BACKGROUND=24
 
   # Status when some part of a pipe command fails but the overall exit status is zero. It may look
   # like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=2
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=0
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔ (pipe ✘)'
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=$POWERLEVEL9K_STATUS_OK_FOREGROUND
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_BACKGROUND=$POWERLEVEL9K_STATUS_OK_BACKGROUND
 
   # Status when it's just an error code (e.g., '1'). No need to show it if prompt_char is enabled as
   # it will signify error by turning red.
   typeset -g POWERLEVEL9K_STATUS_ERROR=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=3
-  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=1
+  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=254
+  typeset -g POWERLEVEL9K_STATUS_ERROR_BACKGROUND=160
 
   # Status when the last command was terminated by a signal.
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
   # Use terse signal names: "INT" instead of "SIGINT(2)".
   typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=3
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=1
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=$POWERLEVEL9K_STATUS_ERROR_FOREGROUND
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_BACKGROUND=$POWERLEVEL9K_STATUS_ERROR_BACKGROUND
 
   # Status when some part of a pipe command fails and the overall exit status is also non-zero.
   # It may look like this: 1|0.
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE=true
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='✘'
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=3
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=1
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=$POWERLEVEL9K_STATUS_ERROR_FOREGROUND
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_BACKGROUND=$POWERLEVEL9K_STATUS_ERROR_BACKGROUND
 
   ###################[ command_execution_time: duration of the last command ]###################
   # Execution time color.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=0
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=3
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=24
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=220
   # Show duration of the last command if takes at least this many seconds.
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=2
   # Show this many fractional digits. Zero means round to seconds.
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
   # Duration format: 1d 2h 3m 4s.
@@ -566,8 +562,8 @@
 
   #######################[ background_jobs: presence of background jobs ]#######################
   # Background jobs color.
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=6
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=0
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=123
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_BACKGROUND=17
   # Don't show the number of background jobs.
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=false
   # Custom icon.
@@ -988,10 +984,10 @@
 
   ###[ virtualenv: python virtual environment (https://docs.python.org/3/library/venv.html) ]###
   # Python virtual environment color.
-  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=0
-  typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND=4
+  typeset -g POWERLEVEL9K_VIRTUALENV_FOREGROUND=222
+  typeset -g POWERLEVEL9K_VIRTUALENV_BACKGROUND=31
   # Don't show Python version next to the virtual environment name.
-  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=false
+  typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_PYTHON_VERSION=true
   # If set to "false", won't show virtualenv if pyenv is already shown.
   # If set to "if-different", won't show virtualenv if it's the same as pyenv.
   typeset -g POWERLEVEL9K_VIRTUALENV_SHOW_WITH_PYENV=false
@@ -1746,8 +1742,8 @@
 
   ####################################[ time: current time ]####################################
   # Current time color.
-  typeset -g POWERLEVEL9K_TIME_FOREGROUND=0
-  typeset -g POWERLEVEL9K_TIME_BACKGROUND=7
+  typeset -g POWERLEVEL9K_TIME_FOREGROUND=24
+  typeset -g POWERLEVEL9K_TIME_BACKGROUND=251
   # Format for the current time: 09:51:02. See `man 3 strftime`.
   typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M:%S}'
   # If set to true, time will update when you hit enter. This way prompts for the past
