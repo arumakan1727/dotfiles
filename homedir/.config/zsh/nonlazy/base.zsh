@@ -1,7 +1,7 @@
 # See: `man zshoptions`
 
 # A list of non-alphanumeric characters considered part of a word by the line editor.
-WORDCHARS='~&;!#$%'
+WORDCHARS='~&;:!#$%'
 
 # Remove write permission from `group` and `other`
 umask 022
