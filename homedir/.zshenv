@@ -70,6 +70,7 @@ path=(
   $path
   /System/Cryptexes/App/usr/bin(N-/)
   /Applications/Wireshark.app/Contents/MacOS(N-/)
+  /Applications/Keybase.app/Contents/SharedSupport/bin(N-/)
   /usr/bin
   /bin
   /usr/sbin
