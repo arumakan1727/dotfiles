@@ -1,0 +1,125 @@
+contexts:
+  git: &git
+    lbuffer: 'git\s+'
+  git-commit: &git-commit
+    lbuffer: 'git commit\s+'
+  git-push: &git-push
+    context: 'git push\s+'
+
+snippets:
+  ##### Git abbrev #####
+  - name: HEAD @ git
+    keyword: '@h'
+    snippet: HEAD
+    context: *git
+
+  - name: remote main branch @ git
+    keyword: '@r'
+    snippet: basename $(git symbolic-ref --short refs/remotes/origin/HEAD)
+    evaluate: true
+    context: *git
+
+  - name: git status
+    keyword: gs
+    snippet: git status --short --branch
+
+  - name: git status (also show untracked files)
+    keyword: gsu
+    snippet: git status --short --branch -u
+
+  - name: git add
+    keyword: ga
+    snippet: git add
+
+  - name: git add -u
+    keyword: gau
+    snippet: git add -u
+
+  - name: git add --all
+    keyword: gaA
+    snippet: git add --all
+
+  - name: git add -p
+    keyword: gap
+    snippet: git add -p
+
+  - name: git commit
+    keyword: gc
+    snippet: git commit
+
+  - name: git commit -m
+    keyword: gcm
+    snippet: git commit -m $'{{commit_message}}'
+
+  - name: --amend @ git commit
+    keyword: ';a'
+    snippet: --amend
+    context: *git-commit
+
+  - name: --amend --no-edit @ git commit
+    keyword: ';an'
+    snippet: --amend --no-edit
+    context: *git-commit
+
+  - name: --fixup @ git commit
+    keyword: ';f'
+    snippet: --fixup
+    context: *git-commit
+
+  - name: git switch
+    keyword: gsw
+    snippet: git switch
+
+  - name: git switch -c
+    keyword: gswc
+    snippet: git switch -c
+
+  - name: git diff
+    keyword: gd
+    snippet: git diff {{branch}}
+
+  - name: git diff --staged
+    keyword: gds
+    snippet: git diff --staged
+
+  - name: git checkout
+    keyword: gck
+    snippet: git checkout
+
+  - name: git restore --staged
+    keyword: grs
+    snippet: git restore --staged
+
+  - name: git stash --include-untracked
+    keyword: gsh
+    snippet: git stash --include-untracked
+
+  - name: git log --oneline -7
+    keyword: glog
+    snippet: git log --oneline -7
+
+  - name: --set-upstream origin HEAD @ git push
+    keyword: ';u'
+    snippet: --set-upstream origin HEAD
+    context: *git-push
+
+  - name: -f --force-with-lease --force-if-includes @ git push
+    keyword: ';f'
+    snippet: -f --force-with-lease --force-if-includes
+    context: *git-push
+
+  - name: git pull
+    keyword: gpl
+    snippet: git pull
+
+  - name: git push
+    keyword: gpu
+    snippet: git push
+
+  - name: "null"
+    keyword: "null"
+    snippet: ">/dev/null 2>&1"
+    context:
+      lbuffer: '.+\s'
+
+completions:
