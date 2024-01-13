@@ -13,6 +13,9 @@ help:	## Print the description of each task in this Makefile
 i/symlink:	## Create/Update symlinks to this dotfiles
 	./installer/symlink_dotfiles.sh
 
+i/symlink/dryrun:	## Just show what will happen when creating/updating symlinks
+	./installer/symlink_dotfiles.sh --dryrun
+
 i/cli:	## Install CLI
 	./installer/symlink_dotfiles.sh
 	./installer/homebrew.sh
