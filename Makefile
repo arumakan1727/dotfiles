@@ -39,7 +39,7 @@ find/dead-symlink/del:	## Delete dead symlinks
 	find ~ ~/.local -maxdepth 2 -xtype l -delete
 
 # NOTE: Brewfile.lock.json is only for recording the version which can be
-# 		  useful in debugging brew bundle failures and replicating a "last known good build" state.
+#       useful in debugging brew bundle failures and replicating a "last known good build" state.
 #       Brewfile.lock.json does not fix the version on installation. (Homebrew cannot install specific version)
 
 brew/dump:	## Update Brewfile and Brewfile.lock.json
