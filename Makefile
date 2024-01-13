@@ -13,6 +13,9 @@ help:	## Print the description of each task in this Makefile
 i/symlink:	## Create/Update symlinks to this dotfiles
 	./installer/symlink_dotfiles.sh
 
+i/symlink/dryrun:	## Just show what will happen when creating/updating symlinks
+	./installer/symlink_dotfiles.sh --dryrun
+
 i/cli:	## Install CLI
 	./installer/symlink_dotfiles.sh
 	./installer/homebrew.sh
@@ -28,6 +31,12 @@ i/fonts:	## Install fonts
 
 i/macos:	## Setup macos config
 	./installer/macos_defaults.sh
+
+find/dead-symlink:	## Show dead symlinks
+	find ~ ~/.local -maxdepth 2 -xtype l
+
+find/dead-symlink/del:	## Delete dead symlinks
+	find ~ ~/.local -maxdepth 2 -xtype l -delete
 
 # NOTE: Brewfile.lock.json is only for recording the version which can be
 # 		  useful in debugging brew bundle failures and replicating a "last known good build" state.

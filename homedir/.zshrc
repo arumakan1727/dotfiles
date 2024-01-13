@@ -1,13 +1,13 @@
-if [[ -n "$ARMKN_ZSHRC_PROFILE" ]]; then
+if [[ -n "$ZSHRC_PROFILE" ]]; then
   zmodload zsh/zprof && zprof > /dev/null
 fi
 
 function zsh-profile() {
-  ARMKN_ZSHRC_PROFILE=1 zsh -i -c zprof
+  ZSHRC_PROFILE=1 zsh -i -c zprof
 }
 
 # Select tmux session interactively
-select_tmux_session() {
+function select_tmux_session() {
   local sessions="$(tmux list-sessions)"
   [[ -z "$sessions" ]] && exec tmux new-session
 
@@ -25,21 +25,49 @@ select_tmux_session() {
   esac
 }
 
-if [[ -z "$TMUX" && -o interactive ]] && { command -v tmux &>/dev/null } && { command -v fzf &>/dev/null }; then
+if [[ -z "$TMUX" && -o interactive ]] && (( $+commands[tmux] )) && (( $+commands[fzf] )); then
   select_tmux_session
 fi
 
-safe_source() {
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
+
+# https://zenn.dev/fuzmare/articles/zsh-plugin-manager-cache
+function ensure_zcompiled {
+  local compiled="$1.zwc"
+  if [[ ! -r "$compiled" || "$1" -nt "$compiled" ]]; then
+    echo "Compiling $1"
+    zcompile "$1"
+  fi
+}
+
+function source {
+  ensure_zcompiled "$1"
+  builtin source "$1"
+}
+
+function source_if_exists {
   if [[ -s "$1" ]]; then source "$1"; fi
 }
 
-# my config modules
-d="$HOME/.config/zsh"
-source "$d/base.zsh"
-source "$d/completion.zsh"
-source "$d/bindkey.zsh"
-source "$d/alias.sh"
-source "$d/plugin.zsh"
-unset d
+source "$HOME/.config/zsh/nonlazy/base.zsh"
+source "$HOME/.config/zsh/nonlazy/hooks.zsh"
+source "$HOME/.config/zsh/nonlazy/sheldon.zsh"
 
-safe_source "$HOME/.zshrc.local"
+zsh-defer source "$HOME/.config/zsh/lazy/aliases.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/bindkey.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/cli-opts.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/colors.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/completion.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/ghq-fzf.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/zeno.zsh"
+
+source "$HOME/.p10k.zsh"
+
+[[ -s ~/.zshrc.local ]] && zsh-defer source "$HOME/.zshrc.local"
+
+zsh-defer unfunction source

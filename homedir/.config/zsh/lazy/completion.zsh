@@ -1,4 +1,7 @@
-# :completion:function:completer:command:argument:tag
+autoload -Uz compinit && zsh-defer compinit -u
+
+# 書式:
+# :completion:<function>:<completer>:<command>:<argument>:<tag>
 
 # オプション補完で解説部分を表示
 zstyle ':completion:*' verbose true
@@ -12,12 +15,13 @@ zstyle ':completion:*' verbose true
 ## _expand: グロブや変数の展開を行う。もともとあった展開と比べて、細かい制御が可能
 ## _history: 履歴から補完を行う。_history_complete_wordから使われる
 ## _correct: ミススペルを訂正した上で補完を行う。
-zstyle ':completion:*' completer _oldlist _complete _ignored
-zstyle ':completion:*:messages' format '%F{yellow}%d'
+zstyle ':completion:*' completer _oldlist _expand _complete _ignored
+zstyle ':completion:*:messages' format '%F{cyan}%d'
 zstyle ':completion:*:warnings' format '%B%F{red}No matches for:''%F{white}%d%b'
 zstyle ':completion:*:descriptions' format '%B%F{white}--- %d ---%f%b'
-zstyle ':completion::corrections' format ' %F{green}%d (errors: %e) %f'
+zstyle ':completion::corrections' format ' %F{yellow}%d (errors: %e) %f'
 zstyle ':completion:*:options' description 'yes'
+
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' keep-prefix
 zstyle ':completion:*' recent-dirs-insert both
@@ -50,7 +54,6 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 
 zstyle ':completion:*' use-compctl true
 
-# make completion is slow
 zstyle ':completion:*:make:*:targets' call-command true
 zstyle ':completion:*:make::' tag-order targets
 zstyle ':completion:*:*:*make:*:targets' command awk \''/^[a-zA-Z0-9][^\t=]+:/ {print $1}'\' \$file

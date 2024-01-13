@@ -1,4 +1,3 @@
-# shellcheck shell=sh
 alias quit='exit'
 alias rezsh='exec zsh'
 
@@ -7,8 +6,7 @@ alias mv='mv -iv'
 alias cp='cp -iv'
 alias ln='ln -v'
 
-# ls
-if command -v lsd 2>/dev/null 1>&2 ; then
+if (( $+commands[lsd] )); then
   alias ls='lsd'
   alias lt='lsd -a --tree --depth 3 -I .git -I node_modules -I .venv'
 else
@@ -20,7 +18,6 @@ alias la='ls -a'
 alias lla='ll -a'
 alias ltr='ll -tr'
 
-# human readable
 alias df='df -h'
 alias free='free -h'
 alias grep='grep --color=auto'
@@ -28,6 +25,9 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias diff='diff --color=auto'
 alias ip='ip --color=auto'
+
+
+alias history-import='fc -RI'
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
@@ -44,11 +44,10 @@ alias ....='cd ../../..'
 alias cdgitroot='cd "$(git rev-parse --show-toplevel)"'
 
 # Imitate macOS
-if [ "$(uname -s)" = Linux ]; then
+if [[ $OSTYPE = linux* ]]; then
   alias pbcopy='xsel --input --clipboard'
   alias pbpaste='xsel --output --clipboard'
   alias open='xdg-open'
 fi
 
-# g++
-alias g+='g++ -std=c++17 -g -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -fsanitize=address,undefined -fno-omit-frame-pointer'
+alias g+='g++ -std=c++20 -g -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -fsanitize=address,undefined -fno-omit-frame-pointer'

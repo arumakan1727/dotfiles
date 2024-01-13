@@ -16,32 +16,20 @@
 [color]
   ui = auto
 [alias]
-  a = add
-  au = add -u
-  aa = add --all
-  ap = add --patch
+  # NOTE: I use snippets more than this git alias.
+  # See also: ~/.config/zsh/zeno/config.yml
   b = branch -a
   br = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
-  c = commit
-  cv = commit -v
-  cm = commit --message
-  d = diff
-  ds = diff --staged
   l = log -3
-  pf = push --force-with-lease --force-if-includes
-  pu = push -u origin HEAD
-  s = status
-  sa = status --untracked-files=all
-  x = stash --include-untracked
   graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   root = rev-parse --show-toplevel
-  sw = switch
-  rstr = restore --staged
   rmc = rm --cached
   gone = "!git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
   sync-dev = "!git fetch origin dev:dev"
   sync-main = "!git fetch origin main:main"
   sync-develop = "!git fetch origin develop:develop"
+[commit]
+  verbose = true
 [merge]
   ff = false
 [fetch]
