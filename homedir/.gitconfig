@@ -28,6 +28,8 @@
   sync-dev = "!git fetch origin dev:dev"
   sync-main = "!git fetch origin main:main"
   sync-develop = "!git fetch origin develop:develop"
+[commit]
+  verbose = true
 [merge]
   ff = false
 [fetch]
