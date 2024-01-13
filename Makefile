@@ -49,8 +49,7 @@ brew/dump:	## Update Brewfile and Brewfile.lock.json
 	brew bundle --no-upgrade
 
 brew/install:	## Install and upgrade packages from Brewfile
-	# To support multiple user system, run brew as the dedicated user
-	sudo -Hu $(shell stat -f '%Su' $$(which brew)) brew bundle install --no-lock
+	brew bundle install --no-lock
 
 upgrade/aqua:	## Upgrade registry and packages managed by aqua
 	aqua -c homedir/.config/aquaproj-aqua/aqua.yaml update
