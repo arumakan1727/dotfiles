@@ -33,10 +33,10 @@ i/macos:	## Setup macos config
 	./installer/macos_defaults.sh
 
 find/dead-symlink:	## Show dead symlinks
-	find ~ ~/.local -maxdepth 2 -xtype l
+	find ~ ~/.local ~/Library -maxdepth 2 -xtype l
 
 find/dead-symlink/del:	## Delete dead symlinks
-	find ~ ~/.local -maxdepth 2 -xtype l -delete
+	find ~ ~/.local ~/Library -maxdepth 2 -xtype l -delete
 
 # NOTE: Brewfile.lock.json is only for recording the version which can be
 #       useful in debugging brew bundle failures and replicating a "last known good build" state.
