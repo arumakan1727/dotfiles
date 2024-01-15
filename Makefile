@@ -20,7 +20,7 @@ i/cli:	## Install CLI
 	./installer/symlink_dotfiles.sh
 	./installer/homebrew.sh
 	./installer/neovim.sh
-	./installer/rtx.sh
+	./installer/mise.sh
 	./installer/aqua.sh
 	./installer/volta+corepack.sh
 	./installer/rye.sh
