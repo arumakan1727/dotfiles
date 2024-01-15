@@ -5,6 +5,7 @@
 
   if [[ -n $mise_bin ]]; then
     if [[ ! -s $mise_cache || $mise_bin -nt $mise_cache ]]; then
+      mkdir -p "$(dirname "$mise_cache")"
       mise activate -s zsh > $mise_cache
     fi
     source $mise_cache
