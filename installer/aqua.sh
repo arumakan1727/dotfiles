@@ -17,7 +17,12 @@ log_run() {
 download_and_install() {
   local os arch url tgz
   os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+
   arch="$(uname -m)"
+  if [[ "$arch" = x86_64 ]]; then
+    arch=amd64
+  fi
+
   url="https://github.com/aquaproj/aqua/releases/latest/download/aqua_${os}_${arch}.tar.gz"
   tgz="aqua.tar.gz"
 
