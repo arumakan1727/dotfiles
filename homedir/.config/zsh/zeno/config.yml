@@ -36,7 +36,7 @@ snippets:
     snippet: git add -u
 
   - name: git add --all
-    keyword: gaA
+    keyword: gaa
     snippet: git add --all
 
   - name: git add -p
@@ -95,7 +95,7 @@ snippets:
     snippet: git stash --include-untracked
 
   - name: git log --oneline -7
-    keyword: glog
+    keyword: gl
     snippet: git log --oneline -7
 
   - name: --set-upstream origin HEAD @ git push
