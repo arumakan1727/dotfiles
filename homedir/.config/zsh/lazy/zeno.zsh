@@ -17,5 +17,5 @@ fi
 
 # kill all zeno process to spawn new zeno with loading latest config.toml
 function kill_all_zeno {
-  ps -o 'pid=,command=' | sed -nE 's/^([0-9]+)\s+deno run .*zeno\.zsh.*/\1/p' | xargs kill
+  ps -o 'pid=,command=' | sed -nE 's/^\s*([0-9]+)\s+deno run .*zeno\.zsh.*/\1/p' | xargs kill
 }
