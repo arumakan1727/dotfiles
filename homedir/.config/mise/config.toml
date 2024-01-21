@@ -4,7 +4,7 @@
 deno = "latest"
 bun = "latest"
 go = "latest"
-# python = "latest"  # global python is managed by rye
+python = "latest"
 ruby = "3.3.0"
 
 [settings]
