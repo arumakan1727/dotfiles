@@ -13,7 +13,7 @@ check_gpg_command_installed() {
 }
 
 ensure_gpg_key_installed() {
-  readonly key_id="0x29DDE9E0"
+  readonly key_id="0x7413A06D"
 
   check_gpg_command_installed
 
