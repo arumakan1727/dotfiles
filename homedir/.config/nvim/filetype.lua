@@ -15,6 +15,9 @@ vim.filetype.add({
 		[".envrc"] = "sh",
 		[".flake8"] = "cfg",
 	},
+	pattern = {
+		['.env.*'] = 'sh',
+	},
 })
 
 local util = require("armkn.utils")
