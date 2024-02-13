@@ -14,4 +14,6 @@ disable_tools = [
   "yarn",
   "pnpm",
 ]
+always_keep_download = true  # deleted after install by default
+always_keep_install = true   # deleted on failure by default
 experimental = true
