@@ -11,9 +11,9 @@ else
 fi
 
 # corepack requires node
-[[ -e "$VOLTA_HOME/bin/node" ]] || "$volta" install node
+"$volta" install node
 
-[[ -e "$VOLTA_HOME/bin/corepack" ]] || "$volta" install corepack
+"$volta" install corepack
 
 "$VOLTA_HOME/bin/corepack" enable --install-directory "$VOLTA_HOME/bin" \
   npm yarn pnpm
