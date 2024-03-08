@@ -4,7 +4,7 @@
 deno = "latest"
 bun = "latest"
 go = "latest"
-python = "latest"
+python = ["3.12.2", "3.11"]
 ruby = "3.3.0"
 
 [settings]
