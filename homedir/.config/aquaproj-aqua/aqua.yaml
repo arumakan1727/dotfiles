@@ -45,3 +45,4 @@ packages:
   - name: koki-develop/clive@v0.12.8
   - name: noborus/ov@v0.33.0
   - name: sayanarijit/xplr@v0.21.5
+  - name: aws/aws-cli@2.15.36
