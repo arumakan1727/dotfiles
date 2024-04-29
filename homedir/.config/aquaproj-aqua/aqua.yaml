@@ -47,3 +47,4 @@ packages:
   - name: sayanarijit/xplr@v0.21.5
   - name: aws/aws-cli@2.15.36
   - name: hashicorp/terraform@v1.8.0
+  - name: aquasecurity/tfsec@v1.28.5
