@@ -17,3 +17,4 @@ disable_tools = [
 always_keep_download = true  # deleted after install by default
 always_keep_install = true   # deleted on failure by default
 experimental = true
+python_venv_auto_create = true
