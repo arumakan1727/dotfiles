@@ -42,9 +42,6 @@
   ff = only
 [delta]
   line-numbers = true
-[user]
-  email = 33191176+arumakan1727@users.noreply.github.com
-  name = arumakan1727
 [include]
   path = ~/.gitconfig.d/private.gitconfig
 [filter "lfs"]
