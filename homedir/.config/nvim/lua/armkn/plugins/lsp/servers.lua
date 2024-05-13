@@ -32,6 +32,7 @@ return {
 	pyright = {},
 	rust_analyzer = {},
 	solargraph = {},
+	terraformls = {},
 	vimls = {},
 	volar = {},
 	yamlls = {
