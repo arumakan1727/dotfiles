@@ -42,6 +42,13 @@ config.keys = {
 		}),
 	},
 	{
+		-- On mac with JIS keyboard
+		key = "¥",
+		action = wezterm.action.SendKey({
+			key = "\\",
+		}),
+	},
+	{
 		key = "r",
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.ReloadConfiguration,
