@@ -43,6 +43,10 @@ if (( $+HOMEBREW_PREFIX )); then
     $HOMEBREW_PREFIX/sbin
     $path
   )
+  fpath=(
+    $HOMEBREW_PREFIX/share/zsh/site-functions
+    $fpath
+  )
   manpath=(
     $HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman
     $HOMEBREW_PREFIX/opt/findutils/libexec/gnuman
