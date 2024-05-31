@@ -121,6 +121,11 @@ snippets:
     keyword: dc
     snippet: docker compose
 
+  ##### npm #####
+  - name: npm run
+    keyword: nr
+    snippet: npm run
+
   ##### Misc #####
   - name: "null"
     keyword: "null"
