@@ -23,10 +23,6 @@ return {
 	linter.buf,
 	linter.cppcheck,
 	linter.erb_lint,
-	linter.eslint_d.with({
-		method = nls.methods.DIAGNOSTICS_ON_SAVE,
-		condition = root_has_file({ "package.json" }),
-	}),
 	linter.hadolint,
 	linter.misspell,
 	linter.rubocop,
