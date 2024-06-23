@@ -139,6 +139,7 @@ symlink_each_child() {
 
 symlink_same_name() {
   local name="$1"
+  run mkdir -p "$(dirname "$HOME/$name")"
   symlink "$repo_root/homedir/$name" "$HOME/$name"
 }
 
