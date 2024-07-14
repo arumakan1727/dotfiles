@@ -18,6 +18,28 @@ export AQUA_ROOT_DIR="$HOME/.aqua"
 typeset -U path manpath infopath sudo_path
 typeset -xT SUDO_PATH sudo_path
 
+# load locale.conf in XDG paths.
+# /etc/locale.conf loads and overrides by kernel command line is done by systemd
+# But we override it here, see FS#56688
+if [[ -z "$LANG" ]]; then
+  if [[ -r "$XDG_CONFIG_HOME/locale.conf" ]]; then
+    . "$XDG_CONFIG_HOME/locale.conf"
+  elif [[ -r "$HOME/.config/locale.conf" ]]; then
+    . "$HOME/.config/locale.conf"
+  elif [[ -r /etc/locale.conf ]]; then
+    . /etc/locale.conf
+  fi
+fi
+
+# define default LANG to C if not already defined
+LANG=${LANG:-C}
+
+# export all locale (7) variables when they exist
+export LANG LANGUAGE LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY \
+       LC_MESSAGES LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT \
+       LC_IDENTIFICATION
+
+
 if [[ $OSTYPE = darwin* ]]; then
   if [[ -d /opt/homebrew ]]; then
     export HOMEBREW_PREFIX=/opt/homebrew
