@@ -125,6 +125,8 @@ export LESS='--no-init --quit-if-one-screen -R --LONG-PROMPT -i --shift 4 --jump
 if [[ -o interactive ]]; then
   setopt no_global_rcs # Don't read /etc/zprofile, etc.
 
+  export GPG_TTY="$TTY"
+
   if [[ ! -s ~/.zshrc.zwc || ~/.zshrc -nt ~/.zshrc.zwc ]]; then
     zcompile ~/.zshrc
   fi
