@@ -15,6 +15,10 @@ export MISE_CACHE_DIR="$XDG_CACHE_HOME/mise"
 export AQUA_GLOBAL_CONFIG="$XDG_CONFIG_HOME/aquaproj-aqua/aqua.yaml"
 export AQUA_ROOT_DIR="$HOME/.aqua"
 
+if [[ -r "/run/user/$UID/docker.sock" ]]; then
+  export DOCKER_HOST="unix:///run/user/$UID/docker.sock"
+fi
+
 typeset -U path manpath infopath sudo_path
 typeset -xT SUDO_PATH sudo_path
 
