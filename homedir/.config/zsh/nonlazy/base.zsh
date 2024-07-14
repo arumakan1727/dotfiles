@@ -47,7 +47,7 @@ setopt no_hist_beep       # Don't beep when ZLE attempts to access a non-existen
 HISTFILE=~/.zsh_history
 HISTSIZE=10000  # Number of histories in memory
 SAVEHIST=100000 # Number of histories to be saved in HISTFILE
-HISTORY_IGNORE='(ls|ll|la|lla|pwd|cd ..|cd|popd|ja *|en *|task *|jrnl *|git s|git sa|git ds|git aa|git au|git ap|git pull|git push)'
+HISTORY_IGNORE='(ls|ll|la|lla|pwd|cd ..|cd|popd|ja *|en *|jrnl *|git s|git sa|git ds|git aa|git au|git ap|git pull|git push)'
 
 # Don't save failed command
 # https://superuser.com/questions/902241/how-to-make-zsh-not-store-failed-command
