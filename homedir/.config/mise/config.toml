@@ -7,6 +7,7 @@ python = ["3.12", "3.11"]
 ruby = "3.3.0"
 
 # npm
+## pnpm や yarn は corepack のものを使う (下記設定だけで corepack 管理下の pnpm や yarn が使えるようになる)
 "npm:corepack" = "latest"
 
 # pipx
@@ -17,9 +18,6 @@ ruby = "3.3.0"
 
 [settings]
 asdf = false
-
-# corepack で管理する。mise では管理しない。
-disable_tools = ["yarn", "pnpm"]
 
 always_keep_download = true
 always_keep_install = true
