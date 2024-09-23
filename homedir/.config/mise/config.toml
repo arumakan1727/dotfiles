@@ -1,11 +1,18 @@
 [tools]
-# The following tools are used globally, not for a specific project.
-# So I use the latest version rather than fixing the version.
-deno = "latest"
 bun = "latest"
+deno = "latest"
 go = "latest"
-python = ["3.12.2", "3.11"]
+node = ["22", "20"]
+python = ["3.12", "3.11"]
 ruby = "3.3.0"
+
+# npm
+"npm:corepack" = "latest"
+
+# pipx
+"pipx:awsume" = "latest"
+"pipx:poetry" = "latest"
+
 
 [settings]
 # node, yarn, and pnpm are managed by volta.
