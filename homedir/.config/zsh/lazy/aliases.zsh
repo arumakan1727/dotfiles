@@ -8,7 +8,7 @@ alias ln='ln -v'
 
 if (( $+commands[lsd] )); then
   alias ls='lsd'
-  alias lt='lsd -a --tree --depth 3 -I .git -I node_modules -I .venv -I __pycache__'
+  alias lt='lsd -a --tree --depth 4 -I .git -I node_modules -I .venv -I __pycache__ -I .ruff_cache'
 else
   alias ls='ls --color=auto'
 fi
