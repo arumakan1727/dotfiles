@@ -1,4 +1,7 @@
 # Zeno https://github.com/yuki-yano/zeno.zsh
+if (( ! $+commands[deno] )); then
+  return
+fi
 
 export ZENO_HOME="$HOME/.config/zsh/zeno"
 
