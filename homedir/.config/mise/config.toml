@@ -11,6 +11,7 @@ ruby = "3.3.0"
 
 # pipx
 "pipx:awsume" = "latest"
+"pipx:hatch" = "latest"
 "pipx:poetry" = "latest"
 
 
