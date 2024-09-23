@@ -20,17 +20,13 @@ i/cli:	## Install CLI
 	./installer/symlink_dotfiles.sh
 	./installer/homebrew.sh
 	./installer/neovim.sh
+	./installer/rustup.sh
 	./installer/mise.sh
 	./installer/aqua.sh
-	./installer/volta+corepack.sh
-	./installer/rye.sh
-	./installer/rustup.sh
+	./installer/macos_defaults.sh
 
 i/fonts:	## Install fonts
 	./installer/fonts.sh
-
-i/macos:	## Setup macos config
-	./installer/macos_defaults.sh
 
 find/dead-symlink:	## Show dead symlinks
 	find ~ ~/.local ~/Library -maxdepth 2 -xtype l
