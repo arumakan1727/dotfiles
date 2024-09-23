@@ -1,20 +1,32 @@
 [tools]
-# The following tools are used globally, not for a specific project.
-# So I use the latest version rather than fixing the version.
-deno = "latest"
 bun = "latest"
+deno = "latest"
 go = "latest"
-python = ["3.12.2", "3.11"]
+node = ["22", "20"]
+python = ["3.12", "3.11"]
 ruby = "3.3.0"
 
+# npm
+"npm:corepack" = "latest"
+
+# pipx
+"pipx:awsume" = "latest"
+"pipx:poetry" = "latest"
+
+
 [settings]
-# node, yarn, and pnpm are managed by volta.
-disable_tools = [
-  "node",
-  "yarn",
-  "pnpm",
-]
-always_keep_download = true  # deleted after install by default
-always_keep_install = true   # deleted on failure by default
+asdf = false
+
+# corepack で管理する。mise では管理しない。
+disable_tools = ["yarn", "pnpm"]
+
+always_keep_download = true
+always_keep_install = true
 experimental = true
+
 python_venv_auto_create = true
+python_compile = false
+
+[settings.status]
+missing_tools = "always"
+show_env = true

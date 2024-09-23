@@ -93,8 +93,6 @@ path=(
   "$HOME/.local/bin"
   "$CARGO_HOME/bin"
   "$GOPATH/bin"
-  "$VOLTA_HOME/bin"
-  "$RYE_HOME/shims"
   "$AQUA_ROOT_DIR/bin"
   /usr/local/bin
   $path
