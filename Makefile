@@ -23,6 +23,7 @@ i/cli:	## Install CLI
 	./installer/rustup.sh
 	./installer/mise.sh
 	./installer/aqua.sh
+	./installer/gpg-agent.sh
 	./installer/macos_defaults.sh
 
 i/fonts:	## Install fonts
