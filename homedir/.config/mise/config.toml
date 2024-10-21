@@ -23,6 +23,8 @@ always_keep_download = true
 always_keep_install = true
 experimental = true
 
+cargo.binstall = true
+
 python_venv_auto_create = true
 python_compile = false
 
