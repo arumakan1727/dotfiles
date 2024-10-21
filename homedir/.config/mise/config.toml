@@ -14,7 +14,7 @@ ruby = "3.3.0"
 "pipx:awsume" = "latest"
 "pipx:hatch" = "latest"
 "pipx:poetry" = "latest"
-
+"pipx:uv" = "latest"
 
 [settings]
 asdf = false
