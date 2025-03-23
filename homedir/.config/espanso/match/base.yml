@@ -11,27 +11,84 @@ matches:
   - trigger: ";espanso"
     replace: "Hi there!"
 
+  - trigger: ";a "
+    replace: "ありがとうございます！"
+
   - trigger: ";v "
     replace: "--version "
+
+  - trigger: ";vv "
+    replace: "--verbose "
 
   - trigger: ";h "
     replace: "--help "
 
-  - trigger: ";date "
-    replace: "{{mydate}}"
+  - trigger: ";year "
+    replace: "{{year}}"
     vars:
-      - name: mydate
+      - name: year
+        type: date
+        params:
+          format: "%Y"
+
+  - trigger: ";now "
+    replace: "{{now}}"
+    vars:
+      - name: now
+        type: date
+        params:
+          format: "%H:%M:%S"
+
+  - trigger: ";m "
+    replace: "{{month}}"
+    vars:
+      - name: month
+        type: date
+        params:
+          format: "%Y-%m"
+
+  - trigger: ";date "
+    replace: "{{date}}"
+    vars:
+      - name: date
         type: date
         params:
           format: "%Y-%m-%d"
 
-  - trigger: ";now "
-    replace: "{{mytime}}"
+  - trigger: ";day "
+    replace: "{{day}}"
     vars:
-      - name: mytime
+      - name: day
         type: date
         params:
-          format: "%H:%M:%S"
+          format: "(%a)"
+
+  - trigger: ";sun "
+    replace: "(日)"
+
+  - trigger: ";mon "
+    replace: "(月)"
+
+  - trigger: ";tue "
+    replace: "(火)"
+
+  - trigger: ";wed "
+    replace: "(水)"
+
+  - trigger: ";thu "
+    replace: "(木)"
+
+  - trigger: ";fri "
+    replace: "(金)"
+
+  - trigger: ";sat "
+    replace: "(土)"
+
+  - trigger: ";weeks "
+    replace: "月\n火\n水\n木\n金"
+
+  - trigger: ";weeksl "
+    replace: "- 月：\n- 火：\n- 水：\n- 木：\n- 金："
 
   - trigger: ":blush "
     replace: "😊"
