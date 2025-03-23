@@ -1,0 +1,220 @@
+{
+  // 外観設定
+  "editor.fontFamily": "'UDEV Gothic NF', monospace",
+  "editor.fontSize": 12,
+  "editor.renderWhitespace": "boundary",
+  "editor.cursorSmoothCaretAnimation": "explicit",
+  "editor.cursorSurroundingLines": 5,
+  "editor.accessibilitySupport": "off", // スクリーンリーダーに最適化されたモードで実行しない
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Cursor Dark",
+  "workbench.colorCustomizations": {
+    "[Cursor Dark]": {
+      "tab.activeBorder": "#1a9a9a", // フォーカス中のタブの下枠線に色をつける
+      "tab.inactiveForeground": "#999999" // フォーカスが外れているタブの文字色が薄くて見づらいので濃いめに
+    },
+  },
+
+  // 挙動設定
+  "editor.tabSize": 2,
+  "editor.indentSize": "tabSize",
+  "files.insertFinalNewline": true,
+  "editor.copyWithSyntaxHighlighting": false, // テキストコピー時に書式設定を含めない
+  "workbench.editor.closeOnFileDelete": true, // 外部プロセスにファイルが削除されたら VSCode 上で開いている該当ファイルのエディタ（≒ タブ）を閉じる
+  "workbench.editor.doubleClickTabToToggleEditorGroupSizes": "off", // タブをダブルクリックしてもエディタサイズを広くしない
+  "workbench.settings.openDefaultKeybindings": true, // キーバインド設定を開いたときにデフォルト値の JSON を分割ビューで一緒に表示
+
+  // 拡張機能の設定
+  "extensions.verifySignature": true,
+
+  // タブ
+  "workbench.editor.labelFormat": "default",
+  "workbench.editor.customLabels.patterns": {
+    // repoRoot 直下のファイルに対して ${dirname(1)} を使ったり、拡張子のないファイルに対して ${extname} を使ったりすると、
+    // 変数展開されずに "${dirname(1)}" や "${extname}" がそのまま表示されてしまうので頑張って場合分けする。なんだこれ。
+
+    "*/*": "#/${filename}", // repoRoot 直下のファイルにマッチする場合。${dirname} を使わない。 '#' は repoRoot を表す記号
+    "*/?*.*": "#/${filename}.${extname} ",
+    "*/*/*": "${dirname}/${filename}", // repoRoot 下の1階層下のファイルにマッチする場合。
+    "*/*/?*.*": "${dirname}/${filename}.${extname}",
+    "**/*/*/*/*": "${dirname(1)}/${dirname}/${filename}", // repoRoot 下の2階層以上したのファイルにマッチする場合。
+    "**/*/*/*/?*.*": "${dirname(1)}/${dirname}/${filename}.${extname}",
+  },
+
+  // ファイルエクスプローラー
+  "workbench.tree.renderIndentGuides": "always",
+  "workbench.tree.indent": 16,
+  "explorer.sortOrder": "filesFirst",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "files.exclude": {
+    "**/cdk.out": true,
+    "**/.cache": true,
+    "**/.pytest_cache": true,
+    "**/.ruff_cache": true,
+    "**/__pycache__": true,
+    "**/.venv": true,
+    "**/node_modules": true
+  },
+
+  // ファイル監視の設定
+  "files.watcherExclude": {
+    "**/cdk.out/**": true,
+    "**/.cache/**": true,
+    "**/.pytest_cache/**": true,
+    "**/.ruff_cache/**": true,
+    "**/__pycache__/**": true,
+    "**/.venv/**": true,
+    "**/node_modules/**": true,
+    "**/data/**": true
+  },
+
+  // ターミナル設定
+  "terminal.integrated.fontSize": 12,
+  "terminal.integrated.minimumContrastRatio": 1, // 文字色をコントラスト比に関わらず変更しない (デフォルト値は 4.5 で、この場合特定の背景色付きの領域の文字色を勝手に黒くしやがってかえってブチ切れ)
+  "terminal.integrated.shellIntegration.enabled": true,
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.osx": "zsh", // Cursor Agent が使うシェルもこれが使われるっぽい (2025-03-20 現在)
+  "terminal.integrated.copyOnSelection": true,
+
+  // extension固有のcodeAction ("[typescript]": {...} などファイルタイプ固有のセクションに書くとうまく動かなかった 2025-03-21)
+  "editor.codeActionsOnSave": {
+    // biome
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll.biome": "explicit",
+    // ruff
+    "source.organizeImports.ruff": "explicit",
+    "source.fixAll.ruff": "explicit",
+  },
+
+  // JSON 関連
+  "json.format.keepLines": true,
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+
+  // Python 関連
+  "python.analysis.typeCheckingMode": "standard", // 型チェックレベルは off < basic < standard < strict の順
+  "python.analysis.autoFormatStrings": true, // 文字列リテラル内で { を入力すると先頭に自動で f を挿入する
+  "python.analysis.inlayHints.functionReturnTypes": true, // 戻り値の型アノテーションがない場合に inlay hint で表示
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.autoImportCompletions": true,
+  "[python]": { // linter, formatter には ruff を使う。プロジェクト固有の設定はワークスベース側の settings.json で設定する想定
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
+  },
+  // JS/TS 関連
+  "editor.linkedEditing": true, // HTML 等の開始タグを編集すると閉じタグも自動で編集される（これがあるので Extension「Auto Rename Tag」は入れてない）
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnPaste.enabled": true,
+  "typescript.preferences.preferTypeOnlyAutoImports": true,
+  "[javascript]": { // "[javascript][typescript]": { ... } のように複数ファイルタイプを同時に指定すると biome が動いてくれなかったので個別で指定
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome",
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome",
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  // Tailwind CSS 設定
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    ".*Styles?"
+  ],
+  "tailwindCSS.experimental.classRegex": [
+    // Tailwind CSS のクラス名のインテリセンスや色のプレビューを有効化する場所の正規表現を追加する。
+    // 参考：[Get Tailwind Intellisense Anywhere - Paolo Tiu](https://www.paolotiu.com/blog/get-tailwind-intellisense-anywhere) 
+    // 
+    // アスキーアート図解：
+    // 
+    //        Class Lists (この例では2つある)
+    //       vvvvv  vvvvvvvvvvvvv
+    //  clsx('p-4', 'text-center');
+    //  ^^^^^                    ^
+    //   |                       |
+    //   |_______________________|
+    //           Container
+    //
+    // ・配列の第0要素に Container の正規表現、第1要素に ClassLists の正規表現を指定する。
+    // ・Container の正規表現だけで十分な場合は、第一要素は省略できる。
+    //
+    // 注意：各配列要素ごとに、キャプチャグループは **ちょうど1つ** でなければならない。キャプチャグループ内にて補完がトリガーされる。
+    //       そのため非キャプチャグループ `(?:)` を適宜使うとよい。
+    [
+      "(?:cva|cx|tw|cn|tailwind)\\(([^)]*)\\)", // cva(...) や tw(...) などの丸括弧内の
+      "[\"'`]([^\"'`]*).*?[\"'`]" // 文字列リテラル内
+    ],
+    [
+      "\\w*(?:[sS]tyle|[cC]lassName)s?:\\s*{([\\s\\S]*?)}", // style: {...} や xxStyles: {...}, className: {...}, classNames: {...} などの波括弧内の
+      "[\"'`]([^\"'`]*).*?[\"'`]" // 文字列リテラル内
+    ],
+    [
+      "\\w*(?:[sS]tyle|[cC]lassName)s?:\\s*[\"'`]([^\"'`]*).*?[\"'`]", // style: "..." や xxStyles: '...' や className: "...",  classNames: `...` などの文字列リテラル内
+    ]
+  ],
+  // Vim 関連
+  // 公式ドキュメント: https://github.com/VSCodeVim/Vim
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.leader": "<space>",
+  "vim.surround": true,
+  "vim.camelCaseMotion.enable": true,
+  "vim.easymotion": true,
+  "vim.easymotionMarkerBackgroundColor": "#444",
+  "vim.easymotionMarkerForegroundColorOneChar": "red",
+  "vim.easymotionMarkerForegroundColorTwoCharFirst": "red",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // マウスホバーで出てくる定義情報を shift-k で表示できるように
+    { "before": [ "K" ], "commands": [ "editor.action.showDefinitionPreviewHover" ] },
+
+    // 複数行に折り返されている行内での上下の移動を直感的に
+    { "before": [ "j" ], "after": [ "g", "j" ] },
+    { "before": [ "k" ], "after": [ "g", "k" ] },
+
+    // Ctrl+w を <leader>w で楽に打てるように（エディタグループ関連（Vim でいうウィンドウ関連）の操作）
+    { "before": [ "<leader>", "w" ], "after": [ "<C-w>" ] },
+
+    // <leader>w の後に大文字の {H,J,K,L} でエディターを上下左右へ移動
+    { "before": [ "<leader>", "w", "H" ], "commands": [ "workbench.action.moveEditorToLeftGroup" ] },
+    { "before": [ "<leader>", "w", "J" ], "commands": [ "workbench.action.moveEditorToBelowGroup" ] },
+    { "before": [ "<leader>", "w", "K" ], "commands": [ "workbench.action.moveEditorToAboveGroup" ] },
+    { "before": [ "<leader>", "w", "L" ], "commands": [ "workbench.action.moveEditorToRightGroup" ] },
+
+    // 前後のタブへ切り替え
+    { "before": [ "[", "t" ], "commands": [ ":tabprev" ], },
+    { "before": [ "]", "t" ], "commands": [ ":tabnext" ], },
+
+    // 前後の診断エラー (diagnostics) 間のジャンプ
+    { "before": [ "[", "d" ], "commands": [ "editor.action.marker.prev" ] },
+    { "before": [ "]", "d" ], "commands": [ "editor.action.marker.next" ] },
+
+    // 前後の Git 変更箇所 (hunk) 間のジャンプ
+    { "before": [ "[", "h" ], "commands": [ "workbench.action.editor.previousChange" ] },
+    { "before": [ "]", "h" ], "commands": [ "workbench.action.editor.nextChange" ] },
+
+    // LSP による Peek / GoTo ほげほげ
+    { "before": [ "g", "r" ], "commands": [ "editor.action.goToReferences" ] },
+    { "before": [ "g", "i" ], "commands": [ "editor.action.peekImplementation" ] },
+    { "before": [ "g", "I" ], "commands": [ "editor.action.goToImplementation" ] },
+    { "before": [ "g", "d" ], "commands": [ "editor.action.peekDefinition" ] },
+    { "before": [ "g", "D" ], "commands": [ "editor.action.goToDefinition" ] },
+
+    // ファイル内・ワークスペース内のシンボル検索
+    { "before": [ "<leader>", "s" ], "commands": [ "workbench.action.gotoSymbol" ] },
+    { "before": [ "<leader>", "S" ], "commands": [ "workbench.action.showAllSymbols" ] }
+  ],
+  // Cursor関連設定
+  "cursor.cpp.enablePartialAccepts": true,
+  // スペルチェック
+  "cSpell.userWords": [],
+}

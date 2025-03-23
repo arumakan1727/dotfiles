@@ -1,0 +1,28 @@
+[
+  // Untitiled ではなく新規ファイルを作成する
+  { "key": "cmd+n", "command": "-workbench.action.files.newUntitledFile" },
+  { "key": "cmd+n", "command": "explorer.newFile", "when": "!composerFocused" },
+
+  // hover が表示されている場合は h, j, k, l でスクロールする
+  // editor.action.showDefinitionPreviewHover の呼び出しキーバインドは settings.json の  editor.action.showDefinitionPreviewHover にて定義している
+  // hover からの離脱には ESC を使う想定
+  { "key": "h", "command": "editor.action.scrollLeftHover", "when": "editorHoverFocused" },
+  { "key": "j", "command": "editor.action.scrollDownHover", "when": "editorHoverFocused" },
+  { "key": "k", "command": "editor.action.scrollUpHover", "when": "editorHoverFocused" },
+  { "key": "l", "command": "editor.action.scrollRightHover", "when": "editorHoverFocused" },
+
+  // ----- 下部の各種パネルの表示トグル -----
+  // パネルの内容にかかわらず表示をトグルしたい場合はデフォルトのキーバインド cmd+j を使う
+  // 問題パネル
+  { "key": "ctrl+shift+m", "command": "-editor.action.toggleTabFocusMode" },
+  { "key": "ctrl+shift+m", "command": "workbench.actions.view.problems", "when": "workbench.panel.markers.view.active" },
+  // 出力パネル
+  { "key": "ctrl+shift+o", "command": "workbench.action.output.toggleOutput", "when": "workbench.panel.output.active" },
+  // ターミナルパネル
+  //  ▶ デフォルトの ctrl+shift+@ のまま（ぶっちゃけ VSCode のターミナルは使わなくて、iTerm などの Hot Key Window （a.k.a. ドロップダウンターミナル）を使っている）
+
+  // ファイルエクスプローラーへのフォーカスをトグル
+  // 左サイドバーの表示のトグル自体はデフォルトのキーバインド cmd+b を使う
+  { "key": "cmd+e", "command": "-actions.findWithSelection" },
+  { "key": "cmd+e", "command": "workbench.view.explorer" }
+]
