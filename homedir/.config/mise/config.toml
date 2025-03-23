@@ -1,23 +1,20 @@
 [tools]
-bun = "latest"
-deno = "latest"
-go = "latest"
-node = ["22", "20"]
-python = ["3.12", "3.11"]
-ruby = "3.3.0"
+bun = 'latest'
+deno = 'latest'
+go = 'latest'
+node = { version = '22', postinstall = 'corepack enable' }
+python = ['3.13', '3.12', '3.11']
+ruby = '3.4.1'
 
-# npm
-## pnpm や yarn は corepack のものを使う (下記設定だけで corepack 管理下の pnpm や yarn が使えるようになる)
-"npm:corepack" = "latest"
-
-# pipx
-"pipx:awsume" = "latest"
-"pipx:hatch" = "latest"
-"pipx:poetry" = "latest"
-"pipx:uv" = "latest"
+uv = 'latest'
+'pipx:awsume' = { version = 'latest', uvx_args = '--with awsume-console-plugin' }
+'pipx:hatch' = 'latest'
+'pipx:poetry' = '1'
+cargo-binstall = 'latest'
+yazi = "latest"
 
 [settings]
-asdf = false
+asdf = true
 
 always_keep_download = true
 always_keep_install = true
@@ -25,8 +22,10 @@ experimental = true
 
 cargo.binstall = true
 
-python_venv_auto_create = true
-python_compile = false
+# python_venv_auto_create = true  # deprecated
+python.compile = false  # always download precompiled binaries
+
+pipx.uvx = true
 
 [settings.status]
 missing_tools = "always"
