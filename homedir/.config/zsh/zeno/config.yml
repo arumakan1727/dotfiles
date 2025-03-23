@@ -94,9 +94,9 @@ snippets:
     keyword: gsh
     snippet: git stash --include-untracked
 
-  - name: git log --oneline -7
+  - name: git log --oneline -15
     keyword: gl
-    snippet: git log --oneline -7
+    snippet: git log --oneline -15
 
   - name: --set-upstream origin HEAD @ git push
     keyword: ';u'
@@ -116,12 +116,19 @@ snippets:
     keyword: gpu
     snippet: git push
 
-  ##### Docker #####
+  ##### Other commands shortcut #####
+  - name: task
+    keyword: t
+    snippet: task
+
+  - name: lazygit
+    keyword: lg
+    snippet: lazygit
+
   - name: docker compose
     keyword: dc
     snippet: docker compose
 
-  ##### npm #####
   - name: npm run
     keyword: nr
     snippet: npm run
