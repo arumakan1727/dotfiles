@@ -37,7 +37,11 @@
 [rebase]
   autosquash = true
 [diff]
-  colorMoved = zebra
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
+  ; colorMoved = zebra
 [pull]
   ff = only
 [delta]
