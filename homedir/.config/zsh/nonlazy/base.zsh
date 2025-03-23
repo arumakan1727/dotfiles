@@ -44,10 +44,10 @@ setopt hist_verify        # Whenever the user enters a line with history expansi
 setopt share_history      # See man page! (man zshoptions)
 setopt no_hist_beep       # Don't beep when ZLE attempts to access a non-existent history entry
 
-HISTFILE=~/.zsh_history
-HISTSIZE=10000  # Number of histories in memory
-SAVEHIST=100000 # Number of histories to be saved in HISTFILE
-HISTORY_IGNORE='(ls|ll|la|lla|pwd|cd ..|cd|popd|ja *|en *|jrnl *|git s|git sa|git ds|git aa|git au|git ap|git pull|git push)'
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000  # Number of histories in memory
+export SAVEHIST=100000 # Number of histories to be saved in HISTFILE
+export HISTORY_IGNORE='(ls|ll|la|lla|pwd|cd ..|cd|popd|ja *|en *|jrnl *|git s|git sa|git ds|git aa|git au|git ap|git pull|git push)'
 
 # Don't save failed command
 # https://superuser.com/questions/902241/how-to-make-zsh-not-store-failed-command
