@@ -11,7 +11,7 @@ matches:
   - trigger: ";espanso"
     replace: "Hi there!"
 
-  - trigger: ";a "
+  - trigger: ";ari "
     replace: "ありがとうございます！"
 
   - trigger: ";v "
