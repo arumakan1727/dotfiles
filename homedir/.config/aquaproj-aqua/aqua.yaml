@@ -49,3 +49,4 @@ packages:
   - name: aquasecurity/tfsec@v1.28.5
   - name: go-task/task@v3.37.2
   - name: twistedpair/google-cloud-sdk@493.0.0
+  - name: abhimanyu003/sttr@v0.2.24
