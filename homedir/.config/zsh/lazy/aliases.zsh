@@ -53,3 +53,5 @@ fi
 alias g+='g++ -std=c++20 -g -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -fsanitize=address,undefined -fno-omit-frame-pointer'
 
 alias awsume='. awsume'
+
+alias npm='corepack npm'
