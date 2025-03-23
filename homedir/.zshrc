@@ -25,7 +25,8 @@ function select_tmux_session() {
   esac
 }
 
-if [[ -z "$TMUX" && -o interactive ]] && (( $+commands[tmux] )) && (( $+commands[fzf] )); then
+# VSCode または Cursor から呼び出された場合は tmux セッションの選択をしない
+if [[ -z "$TMUX" && -o interactive && "$TERM_PROGRAM" != "vscode" ]] && (( $+commands[tmux] )) && (( $+commands[fzf] )); then
   select_tmux_session
 fi
 
