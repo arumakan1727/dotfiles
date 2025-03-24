@@ -7,8 +7,12 @@
   "editor.cursorSurroundingLines": 5,
   "editor.accessibilitySupport": "off", // スクリーンリーダーに最適化されたモードで実行しない
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Cursor Dark",
+  "workbench.colorTheme": "Cursor Dark High Contrast",
   "workbench.colorCustomizations": {
+    "[Cursor Dark High Contrast]": {
+      "tab.activeBorder": "#1a9a9a", // フォーカス中のタブの下枠線に色をつける
+      "tab.inactiveForeground": "#999999" // フォーカスが外れているタブの文字色が薄くて見づらいので濃いめに
+    },
     "[Cursor Dark]": {
       "tab.activeBorder": "#1a9a9a", // フォーカス中のタブの下枠線に色をつける
       "tab.inactiveForeground": "#999999" // フォーカスが外れているタブの文字色が薄くて見づらいので濃いめに
