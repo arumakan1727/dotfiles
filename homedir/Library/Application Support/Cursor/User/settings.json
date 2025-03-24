@@ -207,7 +207,7 @@
     { "before": [ "g", "i" ], "commands": [ "editor.action.peekImplementation" ] },
     { "before": [ "g", "I" ], "commands": [ "editor.action.goToImplementation" ] },
     { "before": [ "g", "d" ], "commands": [ "editor.action.peekDefinition" ] },
-    { "before": [ "g", "D" ], "commands": [ "editor.action.goToDefinition" ] },
+    { "before": [ "g", "D" ], "commands": [ "editor.action.goToDeclaration" ] },
 
     // ファイル内・ワークスペース内のシンボル検索
     { "before": [ "<leader>", "s" ], "commands": [ "workbench.action.gotoSymbol" ] },
