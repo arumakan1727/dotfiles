@@ -1,0 +1,6 @@
+---
+# [Getting Started with CSpell | CSpell](https://cspell.org/docs/getting-started)
+$schema: https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json
+version: '0.2'
+ignorePaths:
+  - 'homedir/.config/mise/config.toml'
