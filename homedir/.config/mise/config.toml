@@ -1,32 +1,90 @@
-[tools]
-bun = 'latest'
-deno = 'latest'
-go = 'latest'
-node = { version = '22', postinstall = 'corepack enable' }
-python = ['3.13', '3.12', '3.11']
-ruby = '3.4.1'
-
-uv = 'latest'
-'pipx:awsume' = { version = 'latest', uvx_args = '--with awsume-console-plugin' }
-'pipx:hatch' = 'latest'
-'pipx:poetry' = '1'
-cargo-binstall = 'latest'
-yazi = "latest"
-
 [settings]
-asdf = true
-
 always_keep_download = true
 always_keep_install = true
 experimental = true
-
-cargo.binstall = true
-
-# python_venv_auto_create = true  # deprecated
 python.compile = false  # always download precompiled binaries
-
+cargo.binstall = true
 pipx.uvx = true
 
 [settings.status]
 missing_tools = "always"
 show_env = true
+
+[tools]
+# Languages
+bun = 'latest'
+deno = 'latest'
+go = 'latest'
+java = "corretto-24"
+node = { version = '22', postinstall = 'corepack enable' }
+python = ['3.13', '3.12', '3.11']
+ruby = '3.4.1'
+zig = 'latest'
+
+# Installer / Package Manager
+aqua = 'latest'  # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
+uv = 'latest'
+poetry = ['1', '2']
+cargo-binstall = 'latest'
+
+# Text Search
+'aqua:BurntSushi/ripgrep' = 'latest'
+'aqua:phiresky/ripgrep-all' = 'latest'
+'aqua:junegunn/fzf' = 'latest'
+
+# Data Manipulation
+'aqua:BurntSushi/xsv' = 'latest'
+'aqua:TomWright/dasel' = 'latest'
+'aqua:dandavison/delta' = 'latest'
+'aqua:jqlang/jq' = 'latest'
+'aqua:mike-engel/jwt-cli' = 'latest'
+'aqua:mikefarah/yq' = 'latest'
+'go:github.com/abhimanyu003/sttr' = 'latest'
+
+# Explorer / Viewer
+'aqua:lsd-rs/lsd' = 'latest'
+'aqua:sharkdp/bat' = 'latest'
+'aqua:sharkdp/fd' = 'latest'
+'aqua:sxyazi/yazi' = 'latest'
+'aqua:noborus/ov' = 'latest'
+
+# Git / GitHub
+'aqua:cli/cli' = 'latest'  # github cli
+'aqua:jesseduffield/lazygit' = 'latest'
+'aqua:nektos/act' = 'latest'
+'aqua:x-motemen/ghq' = 'latest'
+'aqua:go-task/task' = 'latest'
+'aqua:simonwhitaker/gibo' = 'latest'
+
+# System analysis
+'aqua:Byron/dua-cli' = 'latest'
+'aqua:bootandy/dust' = 'latest'
+'aqua:dylanaraps/neofetch' = 'latest'
+
+# Network
+'aqua:ducaale/xh' = 'latest'
+
+# Benchmarking
+'aqua:sharkdp/hyperfine' = 'latest'
+
+# Utilities
+'aqua:sharkdp/pastel' = 'latest'
+'aqua:starship/starship' = 'latest'
+'aqua:koki-develop/clive' = 'latest'
+
+# Cloud/Infra
+'aqua:aquasecurity/tfsec' = 'latest'
+'aqua:aws/aws-cli' = 'latest'
+'aqua:hashicorp/terraform' = 'latest'
+'aqua:twistedpair/google-cloud-sdk' = 'latest'
+'pipx:awsume' = { version = 'latest', uvx_args = '--with awsume-console-plugin' }
+
+# GRPC / Protobuf
+'aqua:fullstorydev/grpcurl' = 'latest'
+'aqua:bufbuild/buf' = 'latest'
+
+# Code Formater / Linter
+'aqua:JohnnyMorganz/StyLua' = 'latest'
+'aqua:hadolint/hadolint' = 'latest'
+'aqua:koalaman/shellcheck' = 'latest'
+'aqua:mvdan/sh' = 'latest'  # shfmt
