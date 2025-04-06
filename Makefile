@@ -22,7 +22,6 @@ i/cli:	## Install CLI
 	./installer/neovim.sh
 	./installer/rustup.sh
 	./installer/mise.sh
-	./installer/aqua.sh
 	./installer/gpg-agent.sh
 	./installer/macos_defaults.sh
 
@@ -47,9 +46,6 @@ brew/dump:	## Update Brewfile and Brewfile.lock.json
 
 brew/install:	## Install and upgrade packages from Brewfile
 	brew bundle install --no-lock
-
-upgrade/aqua:	## Upgrade registry and packages managed by aqua
-	aqua -c homedir/.config/aquaproj-aqua/aqua.yaml update
 
 upgrade/brew:
 	brew update
