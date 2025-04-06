@@ -1,32 +1,73 @@
-[tools]
-bun = 'latest'
-deno = 'latest'
-go = 'latest'
-node = { version = '22', postinstall = 'corepack enable' }
-python = ['3.13', '3.12', '3.11']
-ruby = '3.4.1'
-
-uv = 'latest'
-'pipx:awsume' = { version = 'latest', uvx_args = '--with awsume-console-plugin' }
-'pipx:hatch' = 'latest'
-'pipx:poetry' = '1'
-cargo-binstall = 'latest'
-yazi = "latest"
-
 [settings]
-asdf = true
-
 always_keep_download = true
 always_keep_install = true
 experimental = true
-
-cargo.binstall = true
-
-# python_venv_auto_create = true  # deprecated
 python.compile = false  # always download precompiled binaries
-
+cargo.binstall = true
 pipx.uvx = true
 
 [settings.status]
 missing_tools = "always"
 show_env = true
+
+[tools]
+# Languages
+bun = 'latest'
+deno = 'latest'
+go = 'latest'
+java = "corretto-24"
+node = { version = '22', postinstall = 'corepack enable' }
+python = ['3.13', '3.12', '3.11']
+ruby = '3.4.1'
+zig = 'latest'
+
+# Installer
+aqua = 'latest'
+uv = 'latest'
+cargo-binstall = 'latest'
+
+'pipx:awsume' = { version = 'latest', uvx_args = '--with awsume-console-plugin' }
+poetry = ['1', '2']
+
+# CLI
+'aqua:BurntSushi/ripgrep' = 'latest'
+'aqua:BurntSushi/xsv' = 'latest'
+'aqua:Byron/dua-cli' = 'latest'
+'aqua:JohnnyMorganz/StyLua' = 'latest'
+'aqua:TomWright/dasel' = 'latest'
+'aqua:aquasecurity/tfsec' = 'latest'
+'aqua:aws/aws-cli' = 'latest'
+'aqua:bootandy/dust' = 'latest'
+'aqua:bufbuild/buf' = 'latest'
+'aqua:cli/cli' = 'latest'  # github cli
+'aqua:dandavison/delta' = 'latest'
+'aqua:direnv/direnv' = 'latest'
+'aqua:ducaale/xh' = 'latest'
+'aqua:dylanaraps/neofetch' = 'latest'
+'aqua:fullstorydev/grpcurl' = 'latest'
+'aqua:go-task/task' = 'latest'
+'aqua:hadolint/hadolint' = 'latest'
+'aqua:hashicorp/terraform' = 'latest'
+'aqua:jesseduffield/lazygit' = 'latest'
+'aqua:jqlang/jq' = 'latest'
+'aqua:junegunn/fzf' = 'latest'
+'aqua:koalaman/shellcheck' = 'latest'
+'aqua:koki-develop/clive' = 'latest'
+'aqua:lsd-rs/lsd' = 'latest'
+'aqua:mike-engel/jwt-cli' = 'latest'
+'aqua:mikefarah/yq' = 'latest'
+'aqua:mvdan/sh' = 'latest'  # shfmt
+'aqua:nektos/act' = 'latest'
+'aqua:noborus/ov' = 'latest'
+'aqua:phiresky/ripgrep-all' = 'latest'
+'aqua:sharkdp/bat' = 'latest'
+'aqua:sharkdp/fd' = 'latest'
+'aqua:sharkdp/hyperfine' = 'latest'
+'aqua:sharkdp/pastel' = 'latest'
+'aqua:simonwhitaker/gibo' = 'latest'
+'aqua:starship/starship' = 'latest'
+'aqua:sxyazi/yazi' = 'latest'
+'aqua:twistedpair/google-cloud-sdk' = 'latest'
+'aqua:x-motemen/ghq' = 'latest'
+'aqua:zellij-org/zellij' = 'latest'
+'go:github.com/abhimanyu003/sttr' = 'latest'
