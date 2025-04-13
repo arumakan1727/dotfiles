@@ -42,11 +42,12 @@ cargo-binstall = 'latest'
 'go:github.com/abhimanyu003/sttr' = 'latest'
 
 # Explorer / Viewer
+"aqua:fioncat/otree" = "latest"
 'aqua:lsd-rs/lsd' = 'latest'
+'aqua:noborus/ov' = 'latest'
 'aqua:sharkdp/bat' = 'latest'
 'aqua:sharkdp/fd' = 'latest'
 'aqua:sxyazi/yazi' = 'latest'
-'aqua:noborus/ov' = 'latest'
 
 # Git / GitHub
 'aqua:cli/cli' = 'latest'  # github cli
