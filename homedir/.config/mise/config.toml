@@ -80,10 +80,6 @@ cargo-binstall = 'latest'
 'aqua:twistedpair/google-cloud-sdk' = 'latest'
 'pipx:awsume' = { version = 'latest', uvx_args = '--with awsume-console-plugin' }
 
-# GRPC / Protobuf
-'aqua:fullstorydev/grpcurl' = 'latest'
-'aqua:bufbuild/buf' = 'latest'
-
 # Code Formater / Linter
 'aqua:JohnnyMorganz/StyLua' = 'latest'
 'aqua:hadolint/hadolint' = 'latest'
