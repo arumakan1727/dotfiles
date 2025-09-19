@@ -54,4 +54,4 @@ alias g+='g++ -std=c++20 -g -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -f
 
 alias awsume='. awsume'
 
-alias npm='corepack npm'
+alias yolo=$'jq -e < .claude/settings.json \'.permissions | has("deny")\' >/dev/null && claude --dangerously-skip-permissions'

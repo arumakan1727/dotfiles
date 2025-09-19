@@ -5,6 +5,7 @@ experimental = true
 python.compile = false  # always download precompiled binaries
 cargo.binstall = true
 pipx.uvx = true
+lockfile = true
 
 [settings.status]
 missing_tools = "always"
@@ -16,9 +17,9 @@ bun = 'latest'
 deno = 'latest'
 go = 'latest'
 java = "corretto-24"
-node = { version = '22', postinstall = 'corepack enable' }
+# node = [{ version = '24.4', postinstall = 'corepack enable'}, { version = '22', postinstall = 'corepack enable' }]
+node = ['24.4']
 python = ['3.13', '3.12', '3.11']
-ruby = '3.4.1'
 zig = 'latest'
 
 # Installer / Package Manager
@@ -78,10 +79,14 @@ cargo-binstall = 'latest'
 'aqua:aws/aws-cli' = 'latest'
 'aqua:hashicorp/terraform' = 'latest'
 'aqua:twistedpair/google-cloud-sdk' = 'latest'
-'pipx:awsume' = { version = 'latest', uvx_args = '--with awsume-console-plugin' }
+"pipx:awsume" = { version = "4.5.5rc0", uvx_args = "--with awsume-console-plugin" }
 
 # Code Formater / Linter
 'aqua:JohnnyMorganz/StyLua' = 'latest'
 'aqua:hadolint/hadolint' = 'latest'
 'aqua:koalaman/shellcheck' = 'latest'
 'aqua:mvdan/sh' = 'latest'  # shfmt
+duckdb = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
+"npm:ccusage" = "latest"
+usage = "latest"

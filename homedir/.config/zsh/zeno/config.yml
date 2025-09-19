@@ -5,6 +5,8 @@ contexts:
     lbuffer: 'git commit\s+'
   git-push: &git-push
     context: 'git push\s+'
+  npm-like-run: &npm-like-run
+    context: '(npm|pnpm|yarn) run\s+'
 
 snippets:
   ##### Git #####
@@ -26,6 +28,10 @@ snippets:
   - name: git status (also show untracked files)
     keyword: gsu
     snippet: git status --short --branch -u
+
+  - name: git branch -m
+    keyword: gbm
+    snippet: git branch -m
 
   - name: git add
     keyword: ga
@@ -116,6 +122,14 @@ snippets:
     keyword: gpu
     snippet: git push
 
+  - name: git worktree
+    keyword: gw
+    snippet: git worktree
+
+  - name: git worktree add
+    keyword: gwa
+    snippet: git worktree add
+
   ##### Other commands shortcut #####
   - name: task
     keyword: t
@@ -132,6 +146,15 @@ snippets:
   - name: npm run
     keyword: nr
     snippet: npm run
+
+  - name: pnpm run
+    keyword: pr
+    snippet: pnpm run
+
+  - name: typecheck
+    keyword: ;t
+    snippet: typecheck
+    context: *npm-like-run
 
   ##### Misc #####
   - name: "null"

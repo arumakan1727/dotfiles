@@ -4,6 +4,7 @@ vim.filetype.add({
 		ebnf = "ebnf",
 		envrc = "sh",
 		snippets = "snippets",
+		dig = "yaml",
 
 		---@param path string
 		---@param bufnr integer

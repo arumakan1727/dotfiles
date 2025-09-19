@@ -24,5 +24,20 @@
   // ファイルエクスプローラーへのフォーカスをトグル
   // 左サイドバーの表示のトグル自体はデフォルトのキーバインド cmd+b を使う
   { "key": "cmd+e", "command": "-actions.findWithSelection" },
-  { "key": "cmd+e", "command": "workbench.view.explorer" }
+  {
+    "key": "cmd+e",
+    "command": "workbench.view.explorer"
+  },
+  {
+    "key": "cmd+i",
+    "command": "composerMode.agent"
+  },
+  {
+    "key": "cmd+l",
+    "command": "-aichat.newchataction"
+  },
+  {
+    "key": "cmd+l",
+    "command": "composerMode.chat"
+  }
 ]

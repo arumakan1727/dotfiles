@@ -26,8 +26,8 @@ function select_tmux_session() {
 }
 
 # VSCode または Cursor から呼び出された場合は tmux セッションの選択をしない
-if [[ -z "$TMUX" && -o interactive && "$TERM_PROGRAM" != "vscode" ]] && (( $+commands[tmux] )) && (( $+commands[fzf] )); then
-  select_tmux_session
+if [[ -z "$TMUX" && -o interactive && "$TERM_PROGRAM" != "vscode" && $TERM_PROGRAM != "WarpTerminal" ]] && (( $+commands[tmux] )) && (( $+commands[fzf] )); then
+  # select_tmux_session
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.

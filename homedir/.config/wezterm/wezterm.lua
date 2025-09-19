@@ -17,6 +17,10 @@ config.colors = {
 config.font_size = 13.0
 config.font = wezterm.font_with_fallback({
 	{
+		family = 'Moralerspace Radon HWNF',
+		weight = 'Regular',
+	},
+	{
 		family = 'JetBrainsMonoNL NF',
 		weight = 'Regular',
 	},
