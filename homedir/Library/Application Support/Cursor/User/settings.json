@@ -238,6 +238,7 @@
     "cognitiveservices",
     "compl",
     "conv",
+    "Cooldown",
     "crosstab",
     "customerservice",
     "Devision",
@@ -265,9 +266,11 @@
     "httpx",
     "initdb",
     "japaneast",
+    "japanwest",
     "kbitrate",
     "kbps",
     "keepalive",
+    "koreacentral",
     "labelsize",
     "levelname",
     "linestyle",
@@ -362,4 +365,17 @@
   "markdown.marp.themes": [
     "https://classmethod.github.io/classmethod-marp-theme/classmethod-theme.css"
   ],
+  "cursorpyright.analysis.diagnosticMode": "workspace",
+  "cursorpyright.analysis.typeCheckingMode": "recommended",
+  "cursorpyright.analysis.autoImportCompletions": true,
+  "cursorpyright.analysis.inlayHints.functionReturnTypes": true,
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
 }
