@@ -55,7 +55,7 @@ alias g+='g++ -std=c++20 -g -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -f
 alias awsume='. awsume'
 
 if [[ $OSTYPE = darwin* ]]; then
-  alias sdbox='sandbox-exec -f "$HOME/ghq/github.com/arumakan1727/dotfiles/etc/sandbox-exec.config.sb" -D HOME="$HOME" -D TARGET_DIR="$(git rev-parse --show-toplevel || pwd)"'
+  alias sdbox='sandbox-exec -f "$HOME/ghq/github.com/arumakan1727/dotfiles/etc/sandbox-exec.config.sb" -D HOME="$HOME" -D TARGET_DIR="$(git rev-parse --show-toplevel || pwd)" -D DOT_GIT_DIR="$(git rev-parse --git-common-dir)"'
 
   alias yolo='sdbox claude --dangerously-skip-permissions'
 fi
