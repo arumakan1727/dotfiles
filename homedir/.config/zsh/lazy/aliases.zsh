@@ -54,4 +54,8 @@ alias g+='g++ -std=c++20 -g -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -f
 
 alias awsume='. awsume'
 
-alias yolo=$'jq -e < .claude/settings.json \'.permissions | has("deny")\' >/dev/null && claude --dangerously-skip-permissions'
+if [[ $OSTYPE = darwin* ]]; then
+  alias sdbox='sandbox-exec -f "$HOME/ghq/github.com/arumakan1727/dotfiles/etc/sandbox-exec.config.sb" -D HOME="$HOME" -D TARGET_DIR="$(git rev-parse --show-toplevel || pwd)"'
+
+  alias yolo='sdbox claude --dangerously-skip-permissions'
+fi
