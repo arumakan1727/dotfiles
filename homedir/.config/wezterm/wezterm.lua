@@ -16,10 +16,10 @@ config.colors = {
 
 config.font_size = 13.0
 config.font = wezterm.font_with_fallback({
-	{
-		family = 'Moralerspace Radon HWNF',
-		weight = 'Regular',
-	},
+	-- {
+	-- 	family = 'Moralerspace Radon HWNF',
+	-- 	weight = 'Regular',
+	-- },
 	{
 		family = 'JetBrainsMonoNL NF',
 		weight = 'Regular',
@@ -34,7 +34,7 @@ config.font = wezterm.font_with_fallback({
 config.audible_bell = "Disabled"
 
 config.send_composed_key_when_left_alt_is_pressed = false
-config.send_composed_key_when_right_alt_is_pressed = true
+config.send_composed_key_when_right_alt_is_pressed = false
 config.keys = {
 	{
 		-- On mac with JIS keyboard
@@ -57,6 +57,11 @@ config.keys = {
 		mods = "CTRL|SHIFT",
 		action = wezterm.action.ReloadConfiguration,
 	},
+	{
+		key = 'Enter',
+		mods = 'ALT',
+		action = wezterm.action.DisableDefaultAssignment,
+	}
 }
 
 return config
