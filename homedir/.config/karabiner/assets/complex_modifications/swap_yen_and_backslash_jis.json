@@ -12,7 +12,7 @@
             {
               "key_code": "international3",
               "modifiers": [
-                "right_option"
+                "left_option"
               ]
             }
           ],
@@ -22,7 +22,8 @@
               "type": "frontmost_application_unless",
               "bundle_identifiers": [
                 "^com\\.googlecode\\.iterm2$",
-                "^com\\.apple\\.Terminal$"
+                "^com\\.apple\\.Terminal$",
+                "^com\\.github\\.wez\\.wezterm$"
               ]
             }
           ]
