@@ -18,7 +18,7 @@ deno = 'latest'
 go = 'latest'
 java = "corretto-24"
 # node = [{ version = '24.4', postinstall = 'corepack enable'}, { version = '22', postinstall = 'corepack enable' }]
-node = ['24.4']
+node = "24"
 python = ['3.13', '3.12', '3.11']
 zig = 'latest'
 
@@ -26,69 +26,74 @@ zig = 'latest'
 aqua = 'latest'  # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
 uv = 'latest'
 poetry = ['1', '2']
-cargo-binstall = 'latest'
+cargo-binstall = "latest"
+pnpm = "latest"
+usage = "latest"  # mise の補完/spec 用
+"npm:@aikidosec/safe-chain" = "latest"  # npm のサプライチェーン保護ラッパ
 
 # Text Search
-'aqua:BurntSushi/ripgrep' = 'latest'
-'aqua:phiresky/ripgrep-all' = 'latest'
-'aqua:junegunn/fzf' = 'latest'
+ripgrep = 'latest'
+ripgrep-all = 'latest'
+fzf = 'latest'
 
 # Data Manipulation
-'aqua:BurntSushi/xsv' = 'latest'
-'aqua:TomWright/dasel' = 'latest'
-'aqua:dandavison/delta' = 'latest'
-'aqua:jqlang/jq' = 'latest'
-'aqua:mike-engel/jwt-cli' = 'latest'
-'aqua:mikefarah/yq' = 'latest'
-'go:github.com/abhimanyu003/sttr' = 'latest'
+'aqua:BurntSushi/xsv' = 'latest'  # registry に短縮名なし
+dasel = 'latest'
+delta = 'latest'
+duckdb = "latest"
+jq = 'latest'
+jwt = 'latest'  # mike-engel/jwt-cli
+yq = 'latest'
+'go:github.com/abhimanyu003/sttr' = 'latest'  # aqua になし
 
 # Explorer / Viewer
-"aqua:fioncat/otree" = "latest"
-'aqua:lsd-rs/lsd' = 'latest'
-'aqua:noborus/ov' = 'latest'
-'aqua:sharkdp/bat' = 'latest'
-'aqua:sharkdp/fd' = 'latest'
-'aqua:sxyazi/yazi' = 'latest'
+lsd = 'latest'
+'aqua:noborus/ov' = 'latest'  # registry に短縮名なし
+bat = 'latest'
+fd = 'latest'
+yazi = 'latest'
 
 # Git / GitHub
-'aqua:cli/cli' = 'latest'  # github cli
-'aqua:jesseduffield/lazygit' = 'latest'
-'aqua:nektos/act' = 'latest'
-'aqua:x-motemen/ghq' = 'latest'
-'aqua:go-task/task' = 'latest'
-'aqua:simonwhitaker/gibo' = 'latest'
+gh = 'latest'
+lazygit = 'latest'
+ghq = 'latest'
+task = 'latest'
+'aqua:simonwhitaker/gibo' = 'latest'  # registry に短縮名なし
 
 # System analysis
-'aqua:Byron/dua-cli' = 'latest'
-'aqua:bootandy/dust' = 'latest'
-'aqua:dylanaraps/neofetch' = 'latest'
+dua = 'latest'
+dust = 'latest'
+'aqua:dylanaraps/neofetch' = 'latest'  # registry に短縮名なし
 
 # Network
-'aqua:ducaale/xh' = 'latest'
+xh = 'latest'
 
 # Benchmarking
-'aqua:sharkdp/hyperfine' = 'latest'
+hyperfine = 'latest'
 
 # Utilities
-'aqua:sharkdp/pastel' = 'latest'
-'aqua:starship/starship' = 'latest'
-'aqua:koki-develop/clive' = 'latest'
+'aqua:sharkdp/pastel' = 'latest'  # registry に短縮名なし
+'aqua:koki-develop/clive' = 'latest'  # registry に短縮名なし
+age = "latest"  # 暗号化
+zoxide = "latest"
 
 # Cloud/Infra
-'aqua:aquasecurity/tfsec' = 'latest'
-'aqua:aws/aws-cli' = 'latest'
-'aqua:hashicorp/terraform' = 'latest'
-'aqua:twistedpair/google-cloud-sdk' = 'latest'
-"pipx:awsume" = { version = "4.5.5rc0", uvx_args = "--with awsume-console-plugin" }
+tfsec = 'latest'
+# 'aqua:aws/aws-cli' = 'latest'  # PKG版は起動が遅いのでHomebrew版を使用
+terraform = 'latest'
+'aqua:twistedpair/google-cloud-sdk' = 'latest'  # gcloud の既定は vfox なので明示
+"pipx:awsume" = { version = "4.5.4", uvx_args = "--with awsume-console-plugin" }
+"npm:@googleworkspace/cli" = "latest"
 
 # Code Formater / Linter
-'aqua:JohnnyMorganz/StyLua' = 'latest'
-'aqua:hadolint/hadolint' = 'latest'
-'aqua:koalaman/shellcheck' = 'latest'
-'aqua:mvdan/sh' = 'latest'  # shfmt
-duckdb = "latest"
-"npm:@anthropic-ai/claude-code" = "latest"
-"npm:ccusage" = "latest"
-usage = "latest"
-pnpm = "latest"
-"npm:@aikidosec/safe-chain" = "latest"
+stylua = 'latest'
+hadolint = 'latest'
+shellcheck = 'latest'
+shfmt = 'latest'
+
+# AI Agent
+"npm:@openai/codex" = "latest"
+"npm:agent-browser" = "latest"
+"npm:ccusage" = "latest"  # Claude Code 利用量トラッキング
+"cargo:worktrunk" = "latest"  # git worktree manager
+"cargo:raine/workmux" = "latest"  # git worktree and tmux manager
