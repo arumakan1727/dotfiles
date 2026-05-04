@@ -1,5 +1,8 @@
 {
   // 外観設定
+  // ワークスペース名（.code-workspace の名前） + アクティブなルートフォルダのパス + 開いてるファイル名
+  "window.title": "${rootName}${separator}${folderPath}${separator}${activeEditorShort}${dirty}",
+  "window.commandCenter": false,
   "editor.fontFamily": "'UDEV Gothic NF', monospace",
   "editor.fontSize": 12,
   "editor.renderWhitespace": "boundary",
@@ -46,7 +49,7 @@
 
   // ファイルエクスプローラー
   "workbench.tree.renderIndentGuides": "always",
-  "workbench.tree.indent": 16,
+  "workbench.tree.indent": 12,
   "explorer.sortOrder": "filesFirst",
   "files.associations": {
     "*.css": "tailwindcss"
@@ -220,6 +223,7 @@
   "cursor.cpp.enablePartialAccepts": true,
   // スペルチェック
   "cSpell.userWords": [
+    "Aggs",
     "aiobotocore",
     "alaw",
     "AOAI",
@@ -237,18 +241,24 @@
     "cmap",
     "cognitiveservices",
     "compl",
+    "Concatenator",
+    "Containerfile",
     "conv",
+    "convs",
     "Cooldown",
     "crosstab",
     "customerservice",
     "Devision",
     "digdag",
+    "DMARC",
     "downsample",
     "downsampling",
+    "dsvs",
     "Dtos",
     "durs",
     "eastasia",
     "eastus",
+    "eipalloc",
     "errorbar",
     "fabbrica",
     "facecolor",
@@ -258,13 +268,16 @@
     "fontsize",
     "fontweight",
     "gendur",
+    "getpid",
     "getrlimit",
+    "gids",
     "gitops",
     "Hiragino",
     "histplot",
     "Hono",
     "httpx",
     "initdb",
+    "intdigest",
     "japaneast",
     "japanwest",
     "kbitrate",
@@ -306,6 +319,7 @@
     "PGUSER",
     "pkgs",
     "PKSHA",
+    "Preproc",
     "presigner",
     "procs",
     "Pydantic",
@@ -327,8 +341,10 @@
     "Tanstack",
     "Taskfile",
     "textcoords",
+    "Tfidf",
     "timespec",
     "Timestamptz",
+    "toarray",
     "Toastify",
     "tsgo",
     "ttflist",
@@ -339,11 +355,13 @@
     "usecases",
     "uuidgen",
     "vcpus",
+    "Vectorizer",
     "venv",
     "whis",
     "xaxis",
     "xlabel",
     "xticks",
+    "Xtone",
     "xytext",
     "yaxis",
     "yerr",
@@ -368,6 +386,8 @@
   "cursorpyright.analysis.diagnosticMode": "workspace",
   "cursorpyright.analysis.typeCheckingMode": "recommended",
   "cursorpyright.analysis.autoImportCompletions": true,
+  "cursorpyright.analysis.inlayHints.variableTypes": false,
+  "cursorpyright.analysis.inlayHints.callArgumentNames": false,
   "cursorpyright.analysis.inlayHints.functionReturnTypes": true,
   "[dockercompose]": {
     "editor.insertSpaces": true,
@@ -378,4 +398,5 @@
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
+  "workbench.activityBar.orientation": "vertical",
 }
