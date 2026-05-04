@@ -1,5 +1,5 @@
 autoload bashcompinit && zsh-defer bashcompinit # for aws cli: https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-configure-completion.html)
-autoload -Uz compinit && zsh-defer compinit -u
+# compinit is already called synchronously in .zshrc with -C flag
 zsh-defer complete -C aws_completer aws
 
 # 書式:

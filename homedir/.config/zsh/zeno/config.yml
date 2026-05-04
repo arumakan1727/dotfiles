@@ -100,9 +100,9 @@ snippets:
     keyword: gsh
     snippet: git stash --include-untracked
 
-  - name: git log --oneline -15
+  - name: git log --oneline -20
     keyword: gl
-    snippet: git log --oneline -15
+    snippet: git log --oneline -20
 
   - name: --set-upstream origin HEAD @ git push
     keyword: ';u'
@@ -150,6 +150,10 @@ snippets:
   - name: pnpm run
     keyword: pr
     snippet: pnpm run
+
+  - name: mise run
+    keyword: mr
+    snippet: mise run
 
   - name: typecheck
     keyword: ;t

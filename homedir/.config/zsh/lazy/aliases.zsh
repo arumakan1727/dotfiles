@@ -1,7 +1,7 @@
 alias quit='exit'
 alias rezsh='exec zsh'
 
-alias rm='rm -iv'
+alias rm='rm -Iv'
 alias mv='mv -iv'
 alias cp='cp -iv'
 alias ln='ln -v'
@@ -54,8 +54,12 @@ alias g+='g++ -std=c++20 -g -DLOCAL_DEBUG -Wall -Wextra -Wshadow -Wconversion -f
 
 alias awsume='. awsume'
 
+alias wm='workmux'
+
 if [[ $OSTYPE = darwin* ]]; then
   alias sdbox='sandbox-exec -f "$HOME/ghq/github.com/arumakan1727/dotfiles/etc/sandbox-exec.config.sb" -D HOME="$HOME" -D TARGET_DIR="$(git rev-parse --show-toplevel || pwd)" -D DOT_GIT_DIR="$(git rev-parse --git-common-dir)"'
 
   alias yolo='sdbox claude --dangerously-skip-permissions'
 fi
+
+alias sil='silicon --background "#fff0" --no-window-controls -f "UDEV Gothic NF" --code-pad-right 40 --to-clipboard'
