@@ -4,7 +4,7 @@
   local mise_cache="$XDG_CACHE_HOME/zsh/mise.zsh"
 
   if [[ -n $mise_bin ]]; then
-    if [[ ! -s $mise_cache || $mise_bin -nt $mise_cache ]]; then
+    if [[ ! -s $mise_cache || $mise_bin -nt $mise_cache || ~/.zshrc -nt $mise_cache || ~/.zshenv -nt $mise_cache ]]; then
       mkdir -p "$(dirname "$mise_cache")"
       mise activate -s zsh > $mise_cache
     fi

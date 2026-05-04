@@ -56,60 +56,7 @@ if [[ $OSTYPE = darwin* ]]; then
   fi
 fi
 
-if (( $+HOMEBREW_PREFIX )); then
-  path=(
-    $HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin
-    $HOMEBREW_PREFIX/opt/findutils/libexec/gnubin
-    $HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin
-    $HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnubin
-    $HOMEBREW_PREFIX/opt/grep/libexec/gnubin
-    $HOMEBREW_PREFIX/opt/unzip/bin
-    $HOMEBREW_PREFIX/opt/bash/bin
-    $HOMEBREW_PREFIX/bin
-    $HOMEBREW_PREFIX/sbin
-    $path
-  )
-  fpath=(
-    $HOMEBREW_PREFIX/share/zsh/site-functions
-    $fpath
-  )
-  manpath=(
-    $HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman
-    $HOMEBREW_PREFIX/opt/findutils/libexec/gnuman
-    $HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnuman
-    $HOMEBREW_PREFIX/opt/gnu-tar/libexec/gnuman
-    $HOMEBREW_PREFIX/opt/grep/libexec/gnuman
-    $HOMEBREW_PREFIX/share/man
-    $manpath
-  )
-  infopath=(
-    $HOMEBREW_PREFIX/share/info
-    $infopath
-  )
-fi
-
-path=(
-  "$HOME/bin"
-  "$HOME/.local/bin"
-  "$CARGO_HOME/bin"
-  "$GOPATH/bin"
-  "$AQUA_ROOT_DIR/bin"
-  /usr/local/bin
-  $path
-  /System/Cryptexes/App/usr/bin(N-/)
-  /Applications/Wireshark.app/Contents/MacOS(N-/)
-  /Applications/Keybase.app/Contents/SharedSupport/bin(N-/)
-  /usr/bin
-  /bin
-  /usr/sbin
-  /sbin
-)
-fpath=(
-  "$HOME/.config/zsh/completion"
-  /usr/local/share/zsh/site-functions
-  /usr/share/zsh/site-functions
-  $fpath
-)
+# PATH, fpath, manpath, infopath are set in ~/.zshrc (after path_helper)
 
 if (( $+commands[nvim] )); then
   export EDITOR=nvim
@@ -121,11 +68,11 @@ fi
 export LESS='--no-init --quit-if-one-screen -R --LONG-PROMPT -i --shift 4 --jump-target=3'
 
 if [[ -o interactive ]]; then
-  setopt no_global_rcs # Don't read /etc/zprofile, etc.
+  # setopt no_global_rcs # Don't read /etc/zprofile, etc.
 
   export GPG_TTY="$TTY"
 
   if [[ ! -s ~/.zshrc.zwc || ~/.zshrc -nt ~/.zshrc.zwc ]]; then
-    zcompile ~/.zshrc
+    zcompile ~/.zshrc 2>/dev/null
   fi
 fi

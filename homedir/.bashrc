@@ -76,6 +76,10 @@ else
   export EDITOR=vim
 fi
 
+# if command -v mise &> /dev/null; then
+#   eval "$(mise activate bash)"
+# fi
+
 export PAGER=less
 export LESS='--no-init --quit-if-one-screen -R --LONG-PROMPT -i --shift 4 --jump-target=3'
 
@@ -130,3 +134,5 @@ if [[ "$(uname -s)" = Linux ]]; then
   alias pbpaste='xsel --output --clipboard'
   alias open='xdg-open'
 fi
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init bash)"; fi
