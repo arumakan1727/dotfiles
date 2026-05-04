@@ -60,7 +60,8 @@ fi
 
 if (( $+commands[nvim] )); then
   export EDITOR=nvim
-  export MANPAGER='nvim +Man!'
+  # 親プロセスから注入された値を尊重 (Claude Code の settings.json 等)
+  export MANPAGER="${MANPAGER:-nvim +Man!}"
 else
   export EDITOR=vim
 fi
