@@ -190,7 +190,8 @@ zsh-defer source "$HOME/.config/zsh/lazy/cli-opts.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/colors.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/completion.zsh"
 zsh-defer source "$HOME/.config/zsh/lazy/ghq-fzf.zsh"
-zsh-defer source "$HOME/.config/zsh/lazy/zeno.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/snippets.zsh"
+zsh-defer source "$HOME/.config/zsh/lazy/fzf-widgets.zsh"
 
 source "$HOME/.p10k.zsh"
 
