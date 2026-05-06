@@ -53,6 +53,7 @@ snip -c 'git push[[:space:]]+' ';f' '-f --force-with-lease --force-if-includes'
 
 # (npm|pnpm|yarn) run context
 snip -c '(npm|pnpm|yarn) run[[:space:]]+' ';t' 'typecheck'
+snip -c 'turbo [[:space:]]+' ';t' 'typecheck'
 
 ##### misc #####
 snip t  'task'
@@ -63,6 +64,8 @@ snip dc 'docker compose'
 snip nr 'npm run'
 snip pr 'pnpm run'
 snip mr 'mise run'
+snip ,i '| pbcopy'
+snip ,o 'pbpaste'
 
 unfunction snip
 
