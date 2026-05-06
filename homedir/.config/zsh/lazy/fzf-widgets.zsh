@@ -3,8 +3,9 @@
 #
 #   Ctrl-X Ctrl-F   files under cwd          (fd, bat preview)
 #   Ctrl-X Ctrl-D   directories under cwd    (fd, lsd tree preview)
-#   Ctrl-X Ctrl-X   git-tracked files in the whole repo, as cwd-relative paths
-#                                            (git ls-files :/, bat preview)
+#   Ctrl-X Ctrl-X   git-tracked + untracked (non-ignored) files in the whole
+#                   repo, as cwd-relative paths
+#                                            (git ls-files, bat preview)
 #   Ctrl-R          history search           (fc, no preview, replaces buffer)
 
 # Hard exclusions for fd-based widgets (regardless of .gitignore).
@@ -69,7 +70,8 @@ function _fzf-insert-git-files() {
   fi
   local selected
   # `:/` pathspec scopes to the whole repo; output paths are relative to cwd.
-  selected="$(git ls-files :/ \
+  # `--others --exclude-standard` adds untracked files while honoring .gitignore.
+  selected="$(git ls-files --cached --others --exclude-standard :/ \
     | fzf --multi --preview='bat --color=always --line-range :200 -- {} 2>/dev/null')"
   if [[ -n $selected ]]; then
     local items=("${(@f)selected}")
