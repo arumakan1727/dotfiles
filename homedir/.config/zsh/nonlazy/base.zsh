@@ -12,6 +12,15 @@ bindkey -e
 # Shift-Tab to select prev entry
 bindkey "^[[Z" reverse-menu-complete
 
+# Ctrl-W: delete the previous whitespace-separated "shell word" so that e.g.
+# `echo hello --|` deletes only `--`, not `hello --`.
+backward-kill-shell-word() {
+  local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+  zle backward-kill-word
+}
+zle -N backward-kill-shell-word
+bindkey '^W' backward-kill-shell-word
+
 ## Change dir ##
 setopt auto_cd
 setopt auto_pushd
