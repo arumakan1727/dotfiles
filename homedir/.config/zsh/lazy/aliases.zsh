@@ -8,7 +8,7 @@ alias ln='ln -v'
 
 if (( $+commands[lsd] )); then
   alias ls='lsd'
-  alias lt='lsd -a --tree --depth 4 -I .git -I node_modules -I .venv -I __pycache__ -I .ruff_cache'
+  alias lt='lsd -a --tree --depth 3 -I .git -I node_modules -I .venv -I __pycache__ -I .ruff_cache -I .turbo -I .pytest_cache -I cdk.out'
 else
   alias ls='ls --color=auto'
 fi
@@ -41,7 +41,8 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
-alias cdgitroot='cd "$(git rev-parse --show-toplevel)"'
+# cd to repository root
+alias zz='z "$(git rev-parse --show-toplevel)"'
 
 # Imitate macOS
 if [[ $OSTYPE = linux* ]]; then
