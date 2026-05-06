@@ -14,14 +14,8 @@ matches:
   - trigger: ";ari "
     replace: "ありがとうございます！"
 
-  - trigger: ";v "
-    replace: "--version "
-
   - trigger: ";vv "
     replace: "--verbose "
-
-  - trigger: ";h "
-    replace: "--help "
 
   - trigger: ";year "
     replace: "{{year}}"

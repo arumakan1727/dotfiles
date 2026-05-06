@@ -66,6 +66,8 @@ snip pr 'pnpm run'
 snip mr 'mise run'
 snip ,i '| pbcopy'
 snip ,o 'pbpaste'
+snip ';h' '--help'
+snip ';v' '--version'
 
 unfunction snip
 
