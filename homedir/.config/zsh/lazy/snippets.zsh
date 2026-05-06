@@ -105,10 +105,17 @@ function _snip-expand-or-space() {
     LBUFFER="${before}${snippet} "
   fi
 
-  # fast-syntax-highlighting incrementally diffs against the prior buffer; a
-  # large LBUFFER mutation can leave stale highlights for the original prefix.
-  # Force a full re-highlight when FSH is loaded.
+  # This widget bypasses self-insert, so the wrappers that fast-syntax-
+  # highlighting and zsh-autosuggestions install on the standard widgets never
+  # see the buffer mutation. Re-run both manually:
+  #   - _zsh_highlight rebuilds region_highlight so e.g. `pnpm` is recoloured.
+  #   - _zsh_autosuggest_fetch refreshes POSTDISPLAY against the new BUFFER and
+  #     re-applies the dim `fg=8` style; without this the prior suggestion
+  #     lingers in POSTDISPLAY and is rendered in default (white) colour.
+  # Order matters: highlight first (clears region_highlight), then fetch
+  # (appends the autosuggestion entry).
   (( $+functions[_zsh_highlight] )) && _zsh_highlight
+  (( $+functions[_zsh_autosuggest_fetch] )) && _zsh_autosuggest_fetch
 }
 zle -N _snip-expand-or-space
 bindkey ' ' _snip-expand-or-space
