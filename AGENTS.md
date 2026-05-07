@@ -15,10 +15,7 @@ Personal dotfiles for macOS (primary) and Linux (i3wm). Layout under `homedir/` 
 
 ## Commits
 
-- `commit.gpgsign=true` (private gitconfig). **Always GPG-sign**. Never pass `--no-gpg-sign` or `--no-verify`.
-- Sandbox blocks `~/.gnupg`. Use `dangerouslyDisableSandbox: true` for every `git commit` invocation. Do **not** bypass for unrelated commands.
 - Subject style: lowercase scope + colon, e.g. `zsh: ...`, `mise: ...`, `cursor: ...`, `karabiner: ...`, `chore: ...`. Imperative, no period. Body optional, hard-wrap ~72.
-- Branch: `main`. Push only when explicitly requested (`git push` needs sandbox bypass — SSH not in HTTP allowlist).
 
 ## Line endings
 
@@ -30,7 +27,6 @@ Personal dotfiles for macOS (primary) and Linux (i3wm). Layout under `homedir/` 
 - `homedir/.config/pip/pip.conf` — gitignored. Holds Flatt Security `pypi.flatt.tech` index-url with embedded token. Never re-track. Physical file lives in repo dir.
 - `homedir/.config/mise/npmrc` — **not** a mise-official config file. Tracked. Loaded only via the `mise()` wrapper in `.zshrc` as `NPM_CONFIG_USERCONFIG` for `mise use|install npm:*`. Exists to bypass `~/.npmrc` `min-release-age` vs `MISE_INSTALL_BEFORE` conflict on npm 11. Registry points at Flatt Security Takumi Guard (external SaaS — OK to publish).
 - `homedir/.config/karabiner/karabiner.json` — Karabiner-Elements rewrites the file on save with its own indentation, producing massive whitespace-only diffs. Always inspect with `git diff -w` to find the substantive change, and call this out in commit messages.
-- Documentation rule (from user global CLAUDE.md): never write absolute home paths like `/Users/<name>/...` in tracked files. Use repo-relative or `~/...`.
 
 ## Shell init order (zsh)
 
