@@ -97,3 +97,4 @@ shfmt = 'latest'
 "npm:ccusage" = "latest"  # Claude Code 利用量トラッキング
 "cargo:worktrunk" = "latest"  # git worktree manager
 "cargo:raine/workmux" = "latest"  # git worktree and tmux manager
+"npm:difit" = "latest"
