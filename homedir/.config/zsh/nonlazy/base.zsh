@@ -12,10 +12,11 @@ bindkey -e
 # Shift-Tab to select prev entry
 bindkey "^[[Z" reverse-menu-complete
 
-# Ctrl-W: delete the previous whitespace-separated "shell word" so that e.g.
-# `echo hello --|` deletes only `--`, not `hello --`.
+# Ctrl-W: delete the previous "shell word" so that e.g. `echo hello --|`
+# deletes only `--`, not `hello --`. `/` is *not* in WORDCHARS, so on
+# `echo path/to/dir|` Ctrl-W peels off one path segment at a time.
 backward-kill-shell-word() {
-  local WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
+  local WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
   zle backward-kill-word
 }
 zle -N backward-kill-shell-word
