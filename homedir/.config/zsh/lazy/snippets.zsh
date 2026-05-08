@@ -2,21 +2,20 @@
 # Trigger: <Space>. Expands the word right before the cursor when it matches a
 # registered keyword. Use {{cursor}} in expansions to position the cursor.
 
-typeset -gA _SNIP
+typeset -gA _SNIP _SNIP_BOL
 typeset -ga _SNIP_CTX_RE _SNIP_CTX_KEY _SNIP_CTX_VAL
 
 # DSL:
-#   snip <keyword> <expansion>             -- global
+#   snip <keyword> <expansion>             -- command-start only (default)
+#   snip -g <keyword> <expansion>          -- global; match anywhere on the line
 #   snip -c <regex> <keyword> <expansion>  -- only when LBUFFER (left of keyword) matches <regex>
 function snip() {
   emulate -L zsh
-  if [[ $1 == -c ]]; then
-    _SNIP_CTX_RE+=("$2")
-    _SNIP_CTX_KEY+=("$3")
-    _SNIP_CTX_VAL+=("$4")
-  else
-    _SNIP[$1]="$2"
-  fi
+  case $1 in
+    -c) _SNIP_CTX_RE+=("$2"); _SNIP_CTX_KEY+=("$3"); _SNIP_CTX_VAL+=("$4") ;;
+    -g) _SNIP[$2]="$3" ;;
+    *)  _SNIP_BOL[$1]="$2" ;;
+  esac
 }
 
 ##### git #####
@@ -64,10 +63,11 @@ snip dc 'docker compose'
 snip nr 'npm run'
 snip pr 'pnpm run'
 snip mr 'mise run'
-snip ,i '| pbcopy'
-snip ,o 'pbpaste'
-snip ';h' '--help'
-snip ';v' '--version'
+# Global: can appear anywhere in the line.
+snip -g ,i '| pbcopy'
+snip -g ,o 'pbpaste'
+snip -g ';h' '--help'
+snip -g ';v' '--version'
 
 unfunction snip
 
@@ -88,6 +88,9 @@ function _snip-expand-or-space() {
       break
     fi
   done
+  if [[ -z $snippet && $before =~ '^[[:space:]]*$' && -n ${_SNIP_BOL[$word]+x} ]]; then
+    snippet="${_SNIP_BOL[$word]}"
+  fi
   if [[ -z $snippet && -n ${_SNIP[$word]+x} ]]; then
     snippet="${_SNIP[$word]}"
   fi
