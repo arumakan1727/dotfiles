@@ -3,7 +3,6 @@ local lspconfig = require("lspconfig")
 -- mason = false, -- set to false if you don't want this server to be installed with mason
 return {
 	bashls = {},
-	bufls = {},
 	clangd = {
 		mason = false,
 		filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
