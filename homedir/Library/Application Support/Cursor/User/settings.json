@@ -399,4 +399,5 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "workbench.activityBar.orientation": "vertical",
+  "window.autoDetectColorScheme": false,
 }
