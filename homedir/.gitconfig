@@ -12,6 +12,7 @@
   defaultBranch = main
 [push]
   default = simple
+  autoSetupRemote = true
   useForceIfIncludes = true
 [color]
   ui = auto
