@@ -1,8 +1,0 @@
-# mise 公式の設定ファイルではない。.zshrc の mise ラッパー関数から
-# `NPM_CONFIG_USERCONFIG=$HOME/.config/mise/npmrc` で読み込まれる専用 npmrc。
-# 用途: ~/.npmrc の min-release-age と mise の install_before / MISE_INSTALL_BEFORE が
-#       npm 11 で衝突するため、`mise use|install npm:xxx` のときだけ
-#       min-release-age を持たないこの userconfig を使わせる。
-# registry は Flatt Security の Takumi Guard (npm パッケージ脆弱性検知サービス) を指定。
-
-registry=https://npm.flatt.tech
