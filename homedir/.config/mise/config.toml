@@ -29,6 +29,7 @@ poetry = ['1', '2']
 cargo-binstall = "latest"
 pnpm = "latest"
 usage = "latest"  # mise の補完/spec 用
+chezmoi = 'latest'  # dotfiles 管理 (source: aqua:twpayne/chezmoi)
 "npm:@aikidosec/safe-chain" = "latest"  # npm のサプライチェーン保護ラッパ
 
 # Text Search

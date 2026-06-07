@@ -2,7 +2,6 @@
 !/.gitignore
 !/alacritty
 !/amethyst
-!/aquaproj-aqua
 !/dunst
 !/espanso
 !/git
@@ -16,7 +15,6 @@
 !/pypoetry
 !/regolith
 !/rofi
-!/sh
 !/starship.toml
 !/wezterm
 !/zsh
