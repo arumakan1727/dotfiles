@@ -1,0 +1,4 @@
+#!/bin/bash
+set -Eeuo pipefail
+
+xkbcomp -w 2 -I"$HOME/.xkb" "$HOME/.xkb/keymap/mykbd" "$DISPLAY"

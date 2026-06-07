@@ -1,0 +1,55 @@
+{
+  "title": "Swap ¥ and \\ always on JIS Keyboards",
+  "rules": [
+    {
+      "description": "Change ¥ to Alt+¥",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "international3"
+          },
+          "to": [
+            {
+              "key_code": "international3",
+              "modifiers": [
+                "left_option"
+              ]
+            }
+          ],
+          "type": "basic",
+          "conditions": [
+            {
+              "type": "frontmost_application_unless",
+              "bundle_identifiers": [
+                "^com\\.googlecode\\.iterm2$",
+                "^com\\.apple\\.Terminal$",
+                "^com\\.github\\.wez\\.wezterm$"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "Change Alt+¥ to ¥",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "international3",
+            "modifiers": {
+              "mandatory": [
+                "option"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "international3"
+            }
+          ],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}
