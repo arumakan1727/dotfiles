@@ -1,11 +1,14 @@
-# === 秘密(端末ローカルに留める・絶対に source へ入れない / 計画フェーズ6) ===
+# === 秘密: 端末ローカルに留める。絶対に source へ入れない ===
 .config/pip/
+
+# === chezmoi 自身の設定/状態(machine-local・chezmoi init が再生成。tracked しない) ===
+.config/chezmoi/
 
 # === 揮発ファイル / 実行時 state / ビルド成果物 ===
 .config/mise/trusted-configs/
 .config/karabiner/automatic_backups/
 # zcompile 成果物。chezmoi の doublestar は gitignore と違い `*` が `/` を跨がないため
-# 直下用(*.zwc)とネスト用(**/*.zwc)の両方が必要(.config/zsh/{lazy,nonlazy}/*.zwc を弾く)。
+# 直下用(*.zwc)とネスト用(**/*.zwc)の両方が要る。
 *.zwc
 **/*.zwc
 
