@@ -1,0 +1,13 @@
+#!/bin/sh
+## This file will be loaded by lightdm
+
+# turn bell off
+xset b off
+
+# keyboard autorepeat (enable, delay[ms], frequency[ms])
+xset r on
+xset r rate 200 60
+
+# DPMS (standby (=black screen)[s], suspend[s], power off[s])
+xset +dpms
+xset dpms 300 400 500
