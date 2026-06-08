@@ -1,0 +1,28 @@
+# Pinned bootstrap binaries (supply-chain trust anchor).
+#
+# これは「mise を使わずに入れる」ブートストラップ用バイナリ (chezmoi / mise 本体) の
+# バージョンと sha256 を固定するファイル。人間がレビューして記録した値が信頼の起点。
+#
+#   - version: GitHub Releases のタグ (先頭 'v' は付けない)
+#   - sha256_<os>_<arch>: そのプラットフォーム向け .tar.gz の sha256 (lowercase hex 64桁)
+#
+# 値の出所 (実測・検証済み, 記録日 2026-06-07):
+#   chezmoi: https://github.com/twpayne/chezmoi/releases/download/v<ver>/chezmoi_<ver>_checksums.txt
+#   mise:    https://github.com/jdx/mise/releases/download/v<ver>/SHASUMS256.txt
+#
+# 更新は update-pins.sh で行う (release-age ポリシーを尊重)。手で書き換える場合も
+# 必ず上記 checksums ファイルと照合すること。
+
+[chezmoi]
+version             = "2.70.5"
+sha256_darwin_arm64 = "c3531896769175089b9b2e9cf99b15a2357427f776289b66583a2432d69cd3cc"
+sha256_darwin_amd64 = "6676e06f094e5b0860bd3642d203b71869b5cbeb8089155886bc54c1096b9d3c"
+sha256_linux_arm64  = "4f4f31d0a10ed3b955e814a5ae20075426e27c9d3a09f536bfa4a6c8718353f2"
+sha256_linux_amd64  = "6a76a0ac3718f0d45b34b4b57067f9556f8f6042e3da710a3c496838362aca14"
+
+[mise]
+version            = "2026.6.1"
+sha256_macos_arm64 = "ed4786b826de4319634dde2294e7d8b9d64e5ee52db69148045b9a199cc3ae43"
+sha256_macos_x64   = "e2173fab287219664e3cf8e31ba9d2e225059ecc18971e2fe34826af638b255d"
+sha256_linux_arm64 = "881f6b902403444ffb132c928e93a30a18aaae7c133267ece7e97d18cca9db88"
+sha256_linux_x64   = "61806febeb1d13d586b2b7501ddf315af3cef28629c19bb12c197d43a4a19710"
