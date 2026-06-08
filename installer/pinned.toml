@@ -1,7 +1,8 @@
 # Pinned bootstrap binaries (supply-chain trust anchor).
 #
-# これは「mise を使わずに入れる」ブートストラップ用バイナリ (chezmoi / mise 本体) の
-# バージョンと sha256 を固定するファイル。人間がレビューして記録した値が信頼の起点。
+# これは「mise を使わずに入れる」ブートストラップ用バイナリ (chezmoi / mise 本体) と
+# Homebrew 公式 install.sh のバージョン/commit と sha256 を固定するファイル。
+# 人間がレビューして記録した値が信頼の起点。
 #
 #   - version: GitHub Releases のタグ (先頭 'v' は付けない)
 #   - sha256_<os>_<arch>: そのプラットフォーム向け .tar.gz の sha256 (lowercase hex 64桁)
@@ -26,3 +27,12 @@ sha256_macos_arm64 = "ed4786b826de4319634dde2294e7d8b9d64e5ee52db69148045b9a199c
 sha256_macos_x64   = "e2173fab287219664e3cf8e31ba9d2e225059ecc18971e2fe34826af638b255d"
 sha256_linux_arm64 = "881f6b902403444ffb132c928e93a30a18aaae7c133267ece7e97d18cca9db88"
 sha256_linux_x64   = "61806febeb1d13d586b2b7501ddf315af3cef28629c19bb12c197d43a4a19710"
+
+[homebrew]
+# Homebrew 公式 install.sh を commit 固定 + sha256 検証してから実行する (installer/homebrew.sh)。
+# install.sh は実行時に最新の brew を git clone するため brew 本体の version までは固定され
+# ないが、取得スクリプトのバイト列は固定・改竄検知できる。release でなく commit ベースなので
+# update-pins.sh の自動更新対象外 — 手動でレビューして更新する(extract_section で保持はされる)。
+# 出所: https://github.com/Homebrew/install の install.sh を変更した age 準拠の最新 commit。
+install_commit = "a7b75bf0da9fbdd9e23e0e0940279807620bfd98"  # 2026-05-18
+install_sha256 = "f3e91784ffeda32bc397de7acc1154724cc47522a459c9ac656cca176eeba457"

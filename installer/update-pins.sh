@@ -240,16 +240,20 @@ main() {
 
   info "release-age policy: >= ${DAYS} days old"
 
-  local cz_block mise_block new_content tmp
+  local cz_block mise_block hb_block new_content tmp
   cz_block="$(resolve_section chezmoi fetch_chezmoi_sums)"
   mise_block="$(resolve_section mise fetch_mise_sums)"
+  # [homebrew] は GitHub release でなく commit ベースなので自動更新せず現状を保持する。
+  hb_block="$(extract_section homebrew)"
+  [ -n "$hb_block" ] || die "pinned.toml: [homebrew] セクションが見つからない(保持できない)"
 
   new_content="$(
     cat <<'EOF'
 # Pinned bootstrap binaries (supply-chain trust anchor).
 #
-# chezmoi / mise 本体のバージョンと sha256 を固定する。人間がレビューして記録した
-# 値が信頼の起点。00-install-bootstrap.sh が読み込む。
+# chezmoi / mise 本体のバージョンと sha256、および Homebrew 公式 install.sh の
+# commit/sha256 を固定する。人間がレビューして記録した値が信頼の起点。
+# 00-install-bootstrap.sh と installer/homebrew.sh が読み込む。
 #
 #   - version: GitHub Releases のタグ (先頭 'v' は付けない)
 #   - sha256_<os>_<arch>: そのプラットフォーム向け .tar.gz の sha256 (lowercase hex 64桁)
@@ -258,10 +262,11 @@ main() {
 #   chezmoi: https://github.com/twpayne/chezmoi/releases/download/v<ver>/chezmoi_<ver>_checksums.txt
 #   mise:    https://github.com/jdx/mise/releases/download/v<ver>/SHASUMS256.txt
 #
-# このファイルは update-pins.sh が release-age ポリシーを尊重して自動生成する。
-# 手で書き換える場合も必ず上記 checksums ファイルと照合すること。
+# chezmoi / mise セクションは update-pins.sh が release-age ポリシーを尊重して自動生成する
+# ([homebrew] は commit ベースのため自動更新せず保持される)。手で書き換える場合も必ず
+# 上記 checksums ファイル / レビュー済み commit と照合すること。
 EOF
-    printf '\n%s\n\n%s\n' "$cz_block" "$mise_block"
+    printf '\n%s\n\n%s\n\n%s\n' "$cz_block" "$mise_block" "$hb_block"
   )"
 
   # D4: refuse to write a malformed file. Both sections, both version lines,
