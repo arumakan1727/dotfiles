@@ -36,20 +36,19 @@ i/rust:	## Install rustup + cargo-binstall (optional; most tools come via mise)
 	./installer/rustup.sh
 
 # --- Homebrew bundle workflow (macOS) -----------------------------------------
-# NOTE: modern Homebrew dropped the `brew bundle` lockfile feature, so there is
-#       no Brewfile.lock.json to manage and no --no-lock flag.
-
-brew/dump:	## Regenerate Brewfile from the installed state
-	rm -f Brewfile
-	brew bundle dump
+# Brewfile は手動キュレーション。`brew bundle dump` は leaf + 依存ライブラリを
+# 全部書き戻して手で分類したカテゴリを破壊するので使わない(モダン Homebrew は
+# lockfile 機能も廃止済み)。追加・削除は Brewfile を直接編集する。
 
 brew/install:	## Install missing packages from Brewfile (no upgrades)
 	brew bundle install --no-upgrade
 
-upgrade/brew:	## Update + upgrade all Homebrew packages, then re-dump
+brew/check:	## Show Brewfile entries not yet installed (dry-run)
+	brew bundle check --verbose || true
+
+upgrade/brew:	## Update + upgrade all Homebrew packages (Brewfile はいじらない)
 	brew update
 	brew upgrade --cask --greedy
-	make brew/dump
 
 # --- maintenance --------------------------------------------------------------
 find/dead-symlink:	## Show dead symlinks (e.g. orphans left by the old installer)

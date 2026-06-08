@@ -24,6 +24,7 @@
 
 4. **Homebrew は最終手段(macOS)**
    - CLI は mise を最優先。brew は GUI cask / mas / `pinentry-mac` 等、mise でも検証取得でも賄えないものだけに絞る。
+   - `Brewfile` は手で分類・キュレーションする。`brew bundle dump` は使わない(leaf + 依存ライブラリを全部書き戻してカテゴリ分類を破壊する。モダン Homebrew は lockfile 機能も廃止済みで `Brewfile.lock.json` は無い)。純依存ライブラリ(glib/pango 等)は明示せず依存元に解決を任せる。反映は `make brew/install`(`make brew/check` で未導入を確認)。
 
 ## chezmoi
 

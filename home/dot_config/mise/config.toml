@@ -56,12 +56,14 @@ lsd = 'latest'
 bat = 'latest'
 fd = 'latest'
 yazi = 'latest'
+'cargo:eza' = 'latest'  # ls 代替(lsd と併用)。eza は macOS 公式/aqua バイナリ非配布のため cargo-binstall の quickinstall prebuilt(arm64・署名検証あり)で取得
 
 # Git / GitHub
 gh = 'latest'
 lazygit = 'latest'
 ghq = 'latest'
 task = 'latest'
+git-lfs = 'latest'  # brew から移行(aqua:git-lfs/git-lfs)
 'aqua:simonwhitaker/gibo' = 'latest'  # registry に短縮名なし
 
 # System analysis
@@ -78,6 +80,7 @@ hyperfine = 'latest'
 # Utilities
 'aqua:sharkdp/pastel' = 'latest'  # registry に短縮名なし
 'aqua:koki-develop/clive' = 'latest'  # registry に短縮名なし
+typst = 'latest'  # 組版(aqua:typst/typst)。brew から移行
 age = "latest"  # 暗号化
 zoxide = "latest"
 
@@ -94,6 +97,10 @@ stylua = 'latest'
 hadolint = 'latest'
 shellcheck = 'latest'
 shfmt = 'latest'
+
+# Build / Codegen (brew から移行)
+cmake = 'latest'  # aqua:Kitware/CMake
+protoc = 'latest'  # aqua:protocolbuffers/protobuf。旧 brew protobuf / protobuf@3 を集約
 
 # AI Agent
 "npm:@openai/codex" = "latest"
