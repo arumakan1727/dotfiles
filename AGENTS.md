@@ -55,6 +55,10 @@
 
 - ツール指定は registry の短縮名(`rg`, `fd`, `gh`, `neovim` …)を優先。短縮名が無いものだけ `aqua:owner/repo` にフォールバックし、理由をコメントで残す。
 - `aws-cli` は `aqua:aws/aws-cli`(aqua は .pkg でなく v2 バイナリを入れるので起動が速い)。
+- **lockfile**: `settings.locked = true`。`mise.lock`(source: `private_mise.lock`)が全ツールの version/checksum/URL を固定し、解決 API を叩かず検証取得する。macos-arm64 + linux-x64/arm64 を**1ファイル**に持つので OS 分岐は不要。registry backend(npm/cargo/go/poetry)は url を持たず version 固定のみだが `--locked` は通る。グローバル lockfile は `mise lock -g` でしか生成されない(`mise install` だけでは作られない)。
+  - 編集方向が config.toml と**逆**: mise が生成 → `chezmoi add`(手で編集しない)。
+  - 追加/更新フロー: `chezmoi edit` config → `apply` → `mise lock -g --platform linux-x64,linux-arm64,macos-arm64` → `mise install` → `chezmoi add ~/.config/mise/mise.lock` → commit。
+- **メジャーのみの version 指定(`node='26'`)は mise 2026.6.x のバグで exact 扱いされ 404/missing になる**(npm backend も連鎖で壊れる)。マイナーまで固定する(`'26.3'`)。マイナー指定(`python='3.14'`)は正常。
 
 ## Commits
 

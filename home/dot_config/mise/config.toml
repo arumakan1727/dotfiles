@@ -6,6 +6,7 @@ python.compile = false  # always download precompiled binaries
 cargo.binstall = true
 pipx.uvx = true
 lockfile = true
+locked = true  # lockfile に固定した version/checksum/URL で取得・検証する(解決 API を極力叩かない)
 
 [settings.status]
 missing_tools = "always"
@@ -17,18 +18,17 @@ bun = 'latest'
 deno = 'latest'
 go = 'latest'
 java = "corretto-24"
-# node = [{ version = '24.4', postinstall = 'corepack enable'}, { version = '22', postinstall = 'corepack enable' }]
-node = "24"
-python = ['3.13', '3.12', '3.11']
+node = '26.3'  # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
+python = '3.14'
 zig = 'latest'
 
 # Editor
-neovim = 'stable'  # 旧 installer/neovim.sh を廃止し mise(aqua:neovim/neovim)へ移行
+neovim = 'stable'
 
 # Installer / Package Manager
 aqua = 'latest'  # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
 uv = 'latest'
-poetry = ['1', '2']
+poetry = '2'
 cargo-binstall = "latest"
 pnpm = "latest"
 usage = "latest"  # mise の補完/spec 用
@@ -89,7 +89,6 @@ tfsec = 'latest'
 'aqua:aws/aws-cli' = 'latest'  # aqua は .pkg でなく v2 バイナリを入れるため起動遅延を回避(旧 Homebrew 版から移行)
 terraform = 'latest'
 'aqua:twistedpair/google-cloud-sdk' = 'latest'  # gcloud の既定は vfox なので明示
-"pipx:awsume" = { version = "4.5.4", uvx_args = "--with awsume-console-plugin" }
 "npm:@googleworkspace/cli" = "latest"
 
 # Code Formater / Linter
