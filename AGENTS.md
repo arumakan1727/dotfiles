@@ -18,7 +18,7 @@
    - 「先に作って原子的に差し替え」を基本にし、途中失敗で実環境が壊れない順序にする。
 
 3. **ポータビリティ (Linux と macOS。Windows 非対象)**
-   - OS 分岐は chezmoi テンプレート(`.chezmoi.os`)と `.chezmoiignore`(テンプレート)で行う。一方の OS 専用ツリーは他方で ignore する。
+   - 配置する/しないの OS 分岐は `.chezmoiignore`(テンプレート評価される)で行う。一方の OS 専用ツリーは他方で ignore する。run_once スクリプト内の OS 分岐は `.tmpl` を増やさず、chezmoi が注入する `$CHEZMOI_OS`(値は `darwin` 等)を使った素の shell `if`/early-exit で書く。
    - シェル設定は未導入ツールに耐えるよう `command -v` でガードする。
    - macOS / GNU の非互換に注意(例: `readlink -f` は macOS 非対応 → `realpath` を使う)。
 
@@ -31,7 +31,7 @@
 - 編集フロー: source を直接いじらず `chezmoi edit <target>` → `chezmoi apply`。実環境を直接編集したら `chezmoi add <path>` で source へ取り込み直す。
 - 追跡停止は `chezmoi forget <target>` + `.chezmoiignore` に**ターゲット相対**(`dot_` 等の属性接頭辞を付けない)パターンを追加。`git rm --cached` ではない。
 - `.chezmoiignore` 自体がテンプレートとして評価される。
-- `Brewfile` は repo ルート(= source ディレクトリの一つ上)にある。run_once から参照するときは `$(dirname {{ .chezmoi.sourceDir }})`。
+- `Brewfile` は repo ルート(= source ディレクトリの一つ上)にある。run_once から参照するときは `$(dirname "$CHEZMOI_SOURCE_DIR")`(chezmoi がスクリプト env に `CHEZMOI_SOURCE_DIR`/`CHEZMOI_OS` 等を注入する。`.tmpl` の `{{ .chezmoi.sourceDir }}` は不要)。
 - run_once の `mise install` は `DOTFILES_SKIP_MISE_INSTALL=1` でスキップできる(CI/テスト用の knob)。
 - **テスト目的でも実環境の home に `chezmoi apply` しない**。run_once(brew bundle / `mise install` / macOS defaults)が発火する。Linux 再現性検証は `make test/linux[/full]`(Docker)で行う。
 
