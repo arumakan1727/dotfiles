@@ -21,8 +21,11 @@ elif [ -x /usr/local/bin/brew ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-# 3. Apply the Brewfile. --no-lock keeps Brewfile.lock.json out of the
-#    (possibly read-only) source tree; the lock is curated via `make brew/dump`.
-echo "[homebrew] brew bundle --file=${repo_root}/Brewfile"
-brew bundle --file="${repo_root}/Brewfile" --no-lock
+# 3. Apply the Brewfile. --no-upgrade installs only what's missing and leaves
+#    already-installed formulae untouched (idempotent; no surprise mass upgrade
+#    on an existing machine). Upgrades are done deliberately via `make
+#    upgrade/brew`. (Modern Homebrew dropped the lockfile feature, so there is
+#    no --no-lock / Brewfile.lock.json to manage here.)
+echo "[homebrew] brew bundle --file=${repo_root}/Brewfile --no-upgrade"
+brew bundle --file="${repo_root}/Brewfile" --no-upgrade
 {{ end -}}

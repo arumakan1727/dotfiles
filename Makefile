@@ -36,18 +36,15 @@ i/rust:	## Install rustup + cargo-binstall (optional; most tools come via mise)
 	./installer/rustup.sh
 
 # --- Homebrew bundle workflow (macOS) -----------------------------------------
-# NOTE: Brewfile.lock.json only records versions for debugging / reproducing a
-#       "last known good" state. It does NOT pin versions on install (Homebrew
-#       cannot install a specific version).
+# NOTE: modern Homebrew dropped the `brew bundle` lockfile feature, so there is
+#       no Brewfile.lock.json to manage and no --no-lock flag.
 
-brew/dump:	## Update Brewfile and Brewfile.lock.json
+brew/dump:	## Regenerate Brewfile from the installed state
 	rm -f Brewfile
 	brew bundle dump
-	rm -f Brewfile.lock.json
-	brew bundle --no-upgrade
 
-brew/install:	## Install and upgrade packages from Brewfile
-	brew bundle install --no-lock
+brew/install:	## Install missing packages from Brewfile (no upgrades)
+	brew bundle install --no-upgrade
 
 upgrade/brew:	## Update + upgrade all Homebrew packages, then re-dump
 	brew update
