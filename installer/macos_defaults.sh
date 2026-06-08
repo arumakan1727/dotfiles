@@ -8,7 +8,9 @@ fi
 
 # Dock
 defaults write com.apple.dock orientation left # Show dock on left side
-defaults write com.apple.dock autohide -bool false # Don't autohide
+defaults write com.apple.dock autohide -bool true # Autohide the dock
+defaults write com.apple.dock autohide-delay -float 0 # No delay before showing
+defaults delete com.apple.dock autohide-time-modifier 2>/dev/null || true # Reset show/hide animation to default (undo a previously-written value)
 defaults write com.apple.dock show-recents -bool false # Don't show recently used aps
 defaults write com.apple.dock mru-spaces -bool false # Don't rearrange space order
 defaults write com.apple.dock magnification -bool true # Zoom up on cursor hover
