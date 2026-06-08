@@ -16,3 +16,13 @@
 Library/Application Support/AquaSKK/SKK-JISYO.*
 Library/Application Support/AquaSKK/skk-jisyo.utf8
 Library/Application Support/AquaSKK/*.plist
+
+# === OS 分岐: macOS 専用ツリーは Linux で展開しない(~/Library 等を作らない) ===
+# .chezmoiignore はテンプレートとして評価される。パターンは target 名(dot_ 無し)。
+{{ if ne .chezmoi.os "darwin" }}
+Library/
+.config/karabiner/
+.config/amethyst/
+.yabairc
+.skhdrc
+{{ end -}}

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# run_once (chezmoi): macOS system defaults (Dock/Finder) and gpg-agent pinentry
+# wiring. Delegates to the repo's installer scripts so the logic stays in one
+# place (and lintable via `make lint`). Renders to a no-op on Linux.
+#
+# Note: because this wrapper's content does not change when the referenced
+# installer scripts change, re-running after editing them needs a manual
+# `installer/macos_defaults.sh` (or reset chezmoi's script state).
+{{ if eq .chezmoi.os "darwin" -}}
+set -Eeuo pipefail
+
+repo_root="$(cd "$(dirname {{ .chezmoi.sourceDir | quote }})" && pwd -P)"
+
+"${repo_root}/installer/macos_defaults.sh"
+"${repo_root}/installer/gpg-agent.sh"
+{{ end -}}

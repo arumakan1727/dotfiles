@@ -25,6 +25,7 @@ if [[ -d "$homebrew_repository" ]]; then
   exit
 fi
 
+# NONINTERACTIVE so this is safe to call from chezmoi's run_once (no TTY).
 # shellcheck disable=SC2016
-echo "/bin/bash -c" '"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+echo "NONINTERACTIVE=1 /bin/bash -c" '"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
