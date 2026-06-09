@@ -16,6 +16,7 @@
 # Requires (maintenance-time tools, NOT bootstrap): curl, jq, awk, date, sort.
 # Uses GITHUB_TOKEN if set (avoids API rate limits).
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 readonly SCRIPT_DIR

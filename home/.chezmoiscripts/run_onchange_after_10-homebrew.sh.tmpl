@@ -11,8 +11,13 @@
 #
 # Brewfile-hash: {{ output "cat" (joinPath .chezmoi.sourceDir ".." "Brewfile") | sha256sum }}
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 [ "${CHEZMOI_OS:-}" = "darwin" ] || exit 0
+# DOTFILES_SKIP_BREW: skip the (slow, cask-heavy) Homebrew step. Used by the
+# weekly macOS CI E2E so it can exercise bootstrap + apply without installing
+# Homebrew / GUI casks on a throwaway runner. Mirrors DOTFILES_SKIP_MISE_INSTALL.
+[ -n "${DOTFILES_SKIP_BREW:-}" ] && { echo "[homebrew] DOTFILES_SKIP_BREW set — skipping"; exit 0; }
 
 repo_root="$(cd "$(dirname "$CHEZMOI_SOURCE_DIR")" && pwd -P)"
 "${repo_root}/installer/chezmoi-steps/homebrew.sh"

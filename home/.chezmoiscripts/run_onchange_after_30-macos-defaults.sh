@@ -4,6 +4,7 @@
 # (non-template) script: chezmoi re-applies it whenever these bytes change, so
 # editing the defaults below re-runs on the next `chezmoi apply`.
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 [ "${CHEZMOI_OS:-}" = "darwin" ] || exit 0
 

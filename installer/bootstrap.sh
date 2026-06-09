@@ -13,6 +13,7 @@
 # Reads versions and sha256 from ./pinned.toml (the human-reviewed trust
 # anchor). Idempotent: re-running with the same pins is a no-op.
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 readonly SCRIPT_DIR

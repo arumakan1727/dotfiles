@@ -12,8 +12,10 @@
 # Idempotent: skips the install when Homebrew is already present; `brew bundle
 # --no-upgrade` only installs what's missing and never mass-upgrades.
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 [ "$(uname -s)" = Darwin ] || { echo "[homebrew] not macOS — skipping"; exit 0; }
+[ -n "${DOTFILES_SKIP_BREW:-}" ] && { echo "[homebrew] DOTFILES_SKIP_BREW set — skipping"; exit 0; }
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 readonly SCRIPT_DIR

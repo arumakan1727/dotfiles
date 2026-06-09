@@ -3,6 +3,7 @@
 # via Brewfile). Inlined (no fetch). run_onchange + plain script: re-runs when
 # these bytes change. On non-macOS this is a no-op (Linux uses its own pinentry).
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 [ "${CHEZMOI_OS:-}" = "darwin" ] || exit 0
 

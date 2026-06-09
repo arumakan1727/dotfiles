@@ -13,6 +13,7 @@
 #
 # fonts-external-hash: {{ include ".chezmoiexternal.toml.tmpl" | sha256sum }}
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 [ "$CHEZMOI_OS" = linux ] || exit 0
 

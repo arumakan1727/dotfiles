@@ -12,6 +12,7 @@
 # mise-config-hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
 # mise-lock-hash:   {{ include "dot_config/mise/private_mise.lock" | sha256sum }}
 set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
 
 if [ -n "${DOTFILES_SKIP_MISE_INSTALL:-}" ]; then
   echo "[mise] DOTFILES_SKIP_MISE_INSTALL set — skipping 'mise install'"
