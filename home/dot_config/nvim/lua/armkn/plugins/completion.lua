@@ -1,125 +1,78 @@
 return {
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		config = function(_, opts)
-			local autopairs = require("nvim-autopairs")
-			autopairs.setup(opts)
-		end,
-	},
-	{
-		"hrsh7th/nvim-cmp",
-		version = false, -- last release is way too old
-		event = "InsertEnter",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-nvim-lsp-signature-help",
-			"saadparwaiz1/cmp_luasnip",
-			"onsails/lspkind.nvim",
-		},
-		---@return cmp.Setup
-		opts = function()
-			local cmp = require("cmp")
-			return {
-				preselect = cmp.PreselectMode.None,
-				completion = {
-					completeopt = "menu,menuone,noselect,noinsert",
-				},
-				snippet = {
-					expand = function(args)
-						require("luasnip").lsp_expand(args.body)
-					end,
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-					["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<C-e>"] = cmp.mapping.abort(),
-					["<CR>"] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-					["<S-CR>"] = cmp.mapping.confirm({
-						behavior = cmp.ConfirmBehavior.Replace,
-						select = true,
-					}), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp_signature_help" },
-					{ name = "luasnip" },
-					{ name = "nvim_lsp" },
-					{ name = "buffer" },
-					{ name = "path" },
-				}),
-				formatting = {
-					format = require("lspkind").cmp_format({
-						mode = "symbol",
-						maxwidth = 50,
-						ellipsis_char = "...",
-						before = function(_, vim_item)
-							return vim_item
-						end,
-					}),
-				},
-				experimental = {
-					ghost_text = {
-						hl_group = "LspCodeLens",
-					},
-				},
-				window = {
-					completion = cmp.config.window.bordered({
-						border = "single",
-					}),
-					documentation = cmp.config.window.bordered({
-						border = "single",
-					}),
-				},
-			}
-		end,
-	},
-	{
-		"L3MON4D3/LuaSnip",
-		build = (not jit.os:find("Windows"))
-				and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-			or nil,
-		dependencies = {
-			"rafamadriz/friendly-snippets",
-			config = function()
-				require("luasnip.loaders.from_vscode").lazy_load()
-			end,
-		},
-		opts = {
-			history = true,
-			delete_check_events = "TextChanged",
-		},
-		config = function()
-			require("luasnip.loaders.from_snipmate").lazy_load()
-		end,
-		keys = {
-			{
-				"<tab>",
-				function()
-					return require("luasnip").locally_jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-				end,
-				expr = true,
-				silent = true,
-				mode = "i",
-			},
-			{
-				"<tab>",
-				function()
-					require("luasnip").jump(1)
-				end,
-				mode = "s",
-			},
-			{
-				"<s-tab>",
-				function()
-					require("luasnip").jump(-1)
-				end,
-				mode = { "i", "s" },
-			},
-		},
-	},
+  -- snippet engine: 既存の snipmate 形式 (~/.config/nvim/snippets/*.snippets) を活かすため LuaSnip を継続
+  {
+    "L3MON4D3/LuaSnip",
+    version = "v2.*",
+    dependencies = { "rafamadriz/friendly-snippets" },
+    build = (not jit.os:find("Windows")) and "make install_jsregexp" or nil,
+    opts = {
+      history = true,
+      delete_check_events = "TextChanged",
+      update_events = "TextChanged,TextChangedI",
+    },
+    config = function(_, opts)
+      require("luasnip").setup(opts)
+      -- VSCode 形式 (friendly-snippets) と snipmate 形式 (自作 snippets/) の両方を読む
+      require("luasnip.loaders.from_vscode").lazy_load()
+      require("luasnip.loaders.from_snipmate").lazy_load()
+    end,
+  },
+
+  -- 補完エンジン: blink.cmp。
+  -- 供給網方針により Rust の prebuilt バイナリ DL(同梱 .sha256 のみで検証=信頼の起点にできない)も
+  -- cargo build(重い)も避け、純 Lua の fuzzy matcher を使う(fuzzy.implementation='lua')。
+  {
+    "saghen/blink.cmp",
+    version = "1.10.2", -- exact tag pin(floating な '1.*' は使わない)
+    event = "InsertEnter",
+    dependencies = { "L3MON4D3/LuaSnip", "folke/lazydev.nvim" },
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
+    opts = {
+      keymap = {
+        preset = "enter", -- <CR> で確定、<C-n>/<C-p> で選択、<C-Space> で起動、<C-e> で中断
+        ["<Tab>"] = { "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
+        ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+      },
+      appearance = { nerd_font_variant = "mono" },
+      snippets = { preset = "luasnip" },
+      completion = {
+        accept = { auto_brackets = { enabled = true } },
+        menu = { border = "rounded" },
+        documentation = {
+          auto_show = true,
+          auto_show_delay_ms = 200,
+          window = { border = "rounded" },
+        },
+        ghost_text = { enabled = true },
+      },
+      signature = { enabled = true, window = { border = "rounded" } },
+      sources = {
+        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        providers = {
+          -- lazydev: require() のパス補完を LSP より優先
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
+          },
+        },
+      },
+      -- 純 Lua matcher(native バイナリ不要・DL 不要)。巨大候補で僅かに遅いが供給網は最小。
+      fuzzy = { implementation = "lua" },
+    },
+    opts_extend = { "sources.default" },
+  },
+
+  -- 括弧の自動補完(markdown のコードフェンス等の edge case 処理が mini.pairs より堅い)
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {
+      check_ts = true, -- treesitter を見て文字列/コメント内では補完しない
+      ts_config = { lua = { "string" }, javascript = { "template_string" } },
+    },
+  },
 }

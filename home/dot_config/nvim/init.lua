@@ -1,20 +1,9 @@
-require("armkn.rc.base")
-require("armkn.rc.commands")
-require("armkn.rc.keymaps")
-require("armkn.rc.autocmd")
-require("armkn.rc.highlight")
+-- bytecode キャッシュを最優先で有効化する。あらゆる require より前に置くこと
+-- (後に置くとその module がキャッシュに乗らない)。
+vim.loader.enable()
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup("armkn.plugins")
+require("armkn.config.options")
+require("armkn.config.keymaps")
+require("armkn.config.commands")
+require("armkn.config.autocmds")
+require("armkn.config.lazy")
