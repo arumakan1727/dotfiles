@@ -1,0 +1,48 @@
+name: CI
+
+# push to main + すべての PR で速いゲート(lint / Linux smoke / macOS render)を回す。
+# Action は pinact で commit SHA に固定する(リポジトリ方針: floating tag 禁止)。
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: make lint
+        run: make lint # shellcheck は ubuntu runner にプリインストール済み
+
+  smoke-linux:
+    name: linux smoke (bootstrap -> apply -> verify)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: make test/linux
+        run: make test/linux # debian コンテナでクリーン環境を再現(token 不要)
+
+  render-macos:
+    name: macOS render (darwin pins fetch/verify + template render, no apply)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: bootstrap (fetch + sha256-verify pinned chezmoi & mise for darwin)
+        run: make bootstrap
+      - name: render-only (templates rendered, nothing mutated)
+        env:
+          DOTFILES_HEADLESS: "1" # フォント external を空にする(GUI 取得を回避)
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          chezmoi init --source="$PWD"
+          chezmoi doctor || true # 環境情報。fresh runner では optional tool 欠落の warning が出るが致命ではない
+          chezmoi apply --dry-run --verbose --source="$PWD"
