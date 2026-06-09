@@ -11,10 +11,14 @@ help:	## Print the description of each task in this Makefile
 		awk 'BEGIN {FS = ":(.*## )?"}; {printf "$(CYAN)%-18s$(RESET) %s\n", $$1, $$2}'
 
 # --- chezmoi workflow ---------------------------------------------------------
-# Fresh machine flow:
-#   git clone <repo> && cd dotfiles
+# Fresh machine, one command:
+#   git clone <repo> dotfiles && cd dotfiles && make install   # (= ./install.sh)
+# Or the two granular steps (same effect, more transparent):
 #   make bootstrap        # pinned + checksum-verified chezmoi & mise -> ~/.local/bin
-#   chezmoi init --apply --source="$$PWD"   # apply + run_once (brew/mise/macos)
+#   chezmoi init --apply --source="$$PWD"   # apply + run_onchange (brew/mise/macos)
+
+install:	## One-shot fresh setup: bootstrap then chezmoi init --apply (= ./install.sh)
+	./install.sh
 
 bootstrap:	## Install pinned, checksum-verified chezmoi & mise into ~/.local/bin
 	./installer/bootstrap.sh
@@ -50,6 +54,13 @@ test/linux:	## Smoke test on Linux in Docker: bootstrap -> chezmoi apply -> veri
 test/linux/full:	## Full test: smoke + representative mise install + zsh/bash load
 	./test/run.sh full
 
-lint:	## shellcheck installer scripts and plain run_onchange scripts
-	shellcheck -x installer/*.sh installer/chezmoi-steps/*.sh installer/lib/*.sh \
-		test/*.sh home/.chezmoiscripts/*.sh
+test/linux/shell:	## Drop into an interactive shell in the clean Linux test container (manual debugging)
+	./test/run.sh shell
+
+# run_onchange の *.sh.tmpl も対象にする。テンプレ式({{ }})は変更検知の hash コメント行
+# だけに置く規約(AGENTS.md)なので shellcheck からはコメントとして無視され通る。逆に
+# コード中へ {{ }} を書くと lint で落ちる = 規約破りの検知になる。
+lint:	## shellcheck installer / run_onchange(.sh & .sh.tmpl)/ helper scripts
+	shellcheck -x install.sh installer/*.sh installer/chezmoi-steps/*.sh installer/lib/*.sh \
+		test/*.sh home/.chezmoiscripts/*.sh home/.chezmoiscripts/*.sh.tmpl \
+		home/bin/executable_chezmoi-ls-scripts
