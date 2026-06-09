@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: bootstrap (fetch + sha256-verify pinned chezmoi & mise for darwin)
-        run: make bootstrap
+        run: ./installer/bootstrap.sh
       - name: render-only (templates rendered, nothing mutated)
         env:
           DOTFILES_HEADLESS: "1" # フォント external を空にする(GUI 取得を回避)

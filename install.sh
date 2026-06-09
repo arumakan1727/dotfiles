@@ -11,7 +11,7 @@
 #   2. chezmoi init --apply     — materialize the dotfiles and run the apply-time
 #                                steps (Homebrew/mise/macOS defaults, fonts, …).
 #
-# This adds NO new trust surface over `make bootstrap` + `chezmoi init --apply`;
+# This adds NO new trust surface over `installer/bootstrap.sh` + `chezmoi init --apply`;
 # it only removes the between-step PATH footgun by invoking the just-installed
 # chezmoi by absolute path. Override the install dir with BIN_DIR=/somewhere.
 set -Eeuo pipefail

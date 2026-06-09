@@ -24,7 +24,7 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 
 ## CI
 
-- `.github/workflows/ci.yml`(push/PR): `make lint`(shellcheck)+ Linux smoke(`make test/linux`)+ macOS render(`make bootstrap` で darwin ピンの取得/検証 → `chezmoi apply --dry-run`、実 apply はしない)。`weekly-smoke.yml`(週次 + 手動): Linux full E2E + macOS 実 apply。週次は「ピンが今も fetch でき checksum が一致するか」を継続検証する位置づけ。
+- `.github/workflows/ci.yml`(push/PR): `make lint`(shellcheck)+ Linux smoke(`make test/linux`)+ macOS render(`./installer/bootstrap.sh` で darwin ピンの取得/検証 → `chezmoi apply --dry-run`、実 apply はしない)。`weekly-smoke.yml`(週次 + 手動): Linux full E2E + macOS 実 apply。週次は「ピンが今も fetch でき checksum が一致するか」を継続検証する位置づけ。
 - Action は **commit SHA 固定**(floating tag 禁止の原則を CI でも貫く)。固定/更新は `pinact run .github/workflows/*.yml`。pinact は mise 管理(`aqua:suzuki-shunsuke/pinact`)。`uses: owner/repo@<tag>` を足したら pinact を流す。匿名 API はレート制限に当たるので `GITHUB_TOKEN`(`gh auth token`)を渡す。
 - macOS の実 apply(週次)は runner を汚さず速く保つため `DOTFILES_SKIP_BREW=1`(cask が重い)+ `DOTFILES_SKIP_MISE_INSTALL=1` + `DOTFILES_HEADLESS=1` で bounded にする。これらの env は run_onchange 側(10/20)と external で解釈される。`DOTFILES_DEBUG=1` で installer / run_onchange を `set -x` トレースできる。
 

@@ -14,14 +14,11 @@ help:	## Print the description of each task in this Makefile
 # Fresh machine, one command:
 #   git clone <repo> dotfiles && cd dotfiles && make install   # (= ./install.sh)
 # Or the two granular steps (same effect, more transparent):
-#   make bootstrap        # pinned + checksum-verified chezmoi & mise -> ~/.local/bin
+#   ./installer/bootstrap.sh                # pinned + checksum-verified chezmoi & mise -> ~/.local/bin
 #   chezmoi init --apply --source="$$PWD"   # apply + run_onchange (brew/mise/macos)
 
 install:	## One-shot fresh setup: bootstrap then chezmoi init --apply (= ./install.sh)
 	./install.sh
-
-bootstrap:	## Install pinned, checksum-verified chezmoi & mise into ~/.local/bin
-	./installer/bootstrap.sh
 
 apply:	## chezmoi apply (materialize dotfiles into $HOME)
 	chezmoi apply
