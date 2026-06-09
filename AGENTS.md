@@ -14,12 +14,19 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 
 ## chezmoi
 
-- テスト目的で実 home に `chezmoi apply` しない。brew / mise / macOS defaults / external が動く。Linux 検証は `make test/linux` または `make test/linux/full`。
+- テスト目的で実 home に `chezmoi apply` しない。brew / mise / macOS defaults / external が動く。Linux 検証は `make test/linux` / `make test/linux/full`、対話デバッグは `make test/linux/shell`。
 - 追跡停止は `chezmoi forget <target>` + `.chezmoiignore` に target 相対パターンを追加する。`git rm --cached` ではない。
 - `run_onchange` が監視するのは source ツリーだけ。`Brewfile` や `installer/` など source 外の変更で再実行したい場合は、既存テンプレートと同じ hash 行を入れる。macOS には `sha256sum` コマンドが無いので chezmoi のテンプレート関数として使う。
+- `run_onchange` の hash 行は **生ソース**を見る。`include "<file>"` は生ソースを返すので、監視対象が `*.tmpl` で `[chezmoidata]` 等を参照し「**展開結果**の変化」で再実行させたいときは `includeTemplate "<path>" . | sha256sum`(第2引数 `.` で現在のデータスコープを渡す)を使う。逆に「リテラル変更」で再実行したいだけなら `include` が正しい(例: `50-fontcache` は font ピンの URL/sha 変更で再実行したいだけなので `include ".chezmoiexternal.toml.tmpl"` のまま)。
 - `.tmpl` の `{{ .chezmoi.* }}` は原則、変更検知の hash 行だけに使う。実行時の OS / source dir は chezmoi が注入する `CHEZMOI_OS` / `CHEZMOI_SOURCE_DIR` を読む。
 - fetch logic は `installer/chezmoi-steps/` または chezmoi external に閉じ込める。fetch 不要の設定変更は plain `.sh` にインラインし、スクリプト本体の変更で再実行させる。
 - headless 機では `DOTFILES_HEADLESS=1` を shell rc などで恒久 export する。chezmoi external は `apply` / `diff` のたびに評価されるため、一時 env だと次回フォント取得が復活する。
+
+## CI
+
+- `.github/workflows/ci.yml`(push/PR): `make lint`(shellcheck)+ Linux smoke(`make test/linux`)+ macOS render(`make bootstrap` で darwin ピンの取得/検証 → `chezmoi apply --dry-run`、実 apply はしない)。`weekly-smoke.yml`(週次 + 手動): Linux full E2E + macOS 実 apply。週次は「ピンが今も fetch でき checksum が一致するか」を継続検証する位置づけ。
+- Action は **commit SHA 固定**(floating tag 禁止の原則を CI でも貫く)。固定/更新は `pinact run .github/workflows/*.yml`。pinact は mise 管理(`aqua:suzuki-shunsuke/pinact`)。`uses: owner/repo@<tag>` を足したら pinact を流す。匿名 API はレート制限に当たるので `GITHUB_TOKEN`(`gh auth token`)を渡す。
+- macOS の実 apply(週次)は runner を汚さず速く保つため `DOTFILES_SKIP_BREW=1`(cask が重い)+ `DOTFILES_SKIP_MISE_INSTALL=1` + `DOTFILES_HEADLESS=1` で bounded にする。これらの env は run_onchange 側(10/20)と external で解釈される。`DOTFILES_DEBUG=1` で installer / run_onchange を `set -x` トレースできる。
 
 ## Line endings
 
