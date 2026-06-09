@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# run_onchange (chezmoi, macOS only): install Homebrew if absent and apply the
+# repo Brewfile. Delegates to installer/chezmoi-steps/homebrew.sh.
+#
+# run_onchange (not run_once): the hash line below renders the Brewfile's
+# content hash into this script, so chezmoi re-runs it whenever the Brewfile
+# changes (brew bundle then installs the new entries). `output "cat" … |
+# sha256sum` hashes an out-of-source file portably (sha256sum is a chezmoi
+# template function; only `cat` is shelled out — macOS lacks the sha256sum
+# command). chezmoi injects CHEZMOI_OS / CHEZMOI_SOURCE_DIR into the env.
+#
+# Brewfile-hash: {{ output "cat" (joinPath .chezmoi.sourceDir ".." "Brewfile") | sha256sum }}
+set -Eeuo pipefail
+
+[ "${CHEZMOI_OS:-}" = "darwin" ] || exit 0
+
+repo_root="$(cd "$(dirname "$CHEZMOI_SOURCE_DIR")" && pwd -P)"
+"${repo_root}/installer/chezmoi-steps/homebrew.sh"

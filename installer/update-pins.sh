@@ -251,9 +251,10 @@ main() {
     cat <<'EOF'
 # Pinned bootstrap binaries (supply-chain trust anchor).
 #
-# chezmoi / mise 本体のバージョンと sha256、および Homebrew 公式 install.sh の
-# commit/sha256 を固定する。人間がレビューして記録した値が信頼の起点。
-# 00-install-bootstrap.sh と installer/homebrew.sh が読み込む。
+# chezmoi / mise 本体のバージョンと sha256、Homebrew 公式 install.sh の commit/sha256 を
+# 固定する。人間がレビューして記録した値が信頼の起点。bootstrap.sh /
+# installer/chezmoi-steps/homebrew.sh が読み込む。
+# (Nerd Fonts は home/.chezmoiexternal.toml.tmpl に移行済み。ここでは扱わない。)
 #
 #   - version: GitHub Releases のタグ (先頭 'v' は付けない)
 #   - sha256_<os>_<arch>: そのプラットフォーム向け .tar.gz の sha256 (lowercase hex 64桁)
@@ -263,7 +264,7 @@ main() {
 #   mise:    https://github.com/jdx/mise/releases/download/v<ver>/SHASUMS256.txt
 #
 # chezmoi / mise セクションは update-pins.sh が release-age ポリシーを尊重して自動生成する
-# ([homebrew] は commit ベースのため自動更新せず保持される)。手で書き換える場合も必ず
+# ([homebrew] は commit ベースなので自動更新せず保持される)。手で書き換える場合も必ず
 # 上記 checksums ファイル / レビュー済み commit と照合すること。
 EOF
     printf '\n%s\n\n%s\n\n%s\n' "$cz_block" "$mise_block" "$hb_block"

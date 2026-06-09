@@ -20,6 +20,7 @@ go = 'latest'
 java = "corretto-24"
 node = '26.3'  # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
 python = '3.14'
+rust = '1.96'  # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。メジャーのみ指定バグ回避で minor 固定
 zig = 'latest'
 
 # Editor

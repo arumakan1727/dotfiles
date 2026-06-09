@@ -17,7 +17,7 @@ help:	## Print the description of each task in this Makefile
 #   chezmoi init --apply --source="$$PWD"   # apply + run_once (brew/mise/macos)
 
 bootstrap:	## Install pinned, checksum-verified chezmoi & mise into ~/.local/bin
-	./installer/00-install-bootstrap.sh
+	./installer/bootstrap.sh
 
 apply:	## chezmoi apply (materialize dotfiles into $HOME)
 	chezmoi apply
@@ -27,13 +27,6 @@ diff:	## chezmoi diff (preview what apply would change)
 
 update-pins:	## Refresh installer/pinned.toml to latest age-compliant chezmoi/mise
 	./installer/update-pins.sh
-
-# --- optional installers ------------------------------------------------------
-i/fonts:	## Install Nerd Fonts
-	./installer/fonts.sh
-
-i/rust:	## Install rustup + cargo-binstall (optional; most tools come via mise)
-	./installer/rustup.sh
 
 # --- Homebrew bundle workflow (macOS) -----------------------------------------
 # Brewfile は手動キュレーション。`brew bundle dump` は leaf + 依存ライブラリを
@@ -50,13 +43,6 @@ upgrade/brew:	## Update + upgrade all Homebrew packages (Brewfile はいじら�
 	brew update
 	brew upgrade --cask --greedy
 
-# --- maintenance --------------------------------------------------------------
-find/dead-symlink:	## Show dead symlinks (e.g. orphans left by the old installer)
-	find ~ ~/.local ~/Library -maxdepth 2 -xtype l
-
-find/dead-symlink/del:	## Delete dead symlinks
-	find ~ ~/.local ~/Library -maxdepth 2 -xtype l -delete
-
 # --- tests --------------------------------------------------------------------
 test/linux:	## Smoke test on Linux in Docker: bootstrap -> chezmoi apply -> verify
 	./test/run.sh smoke
@@ -64,6 +50,6 @@ test/linux:	## Smoke test on Linux in Docker: bootstrap -> chezmoi apply -> veri
 test/linux/full:	## Full test: smoke + representative mise install + zsh/bash load
 	./test/run.sh full
 
-lint:	## shellcheck installer scripts and plain run_once scripts
-	shellcheck -x installer/*.sh installer/lib/*.sh test/*.sh \
-		home/.chezmoiscripts/*.sh
+lint:	## shellcheck installer scripts and plain run_onchange scripts
+	shellcheck -x installer/*.sh installer/chezmoi-steps/*.sh installer/lib/*.sh \
+		test/*.sh home/.chezmoiscripts/*.sh

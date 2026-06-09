@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-# run_once (chezmoi): install the global mise tool set declared in
+# run_onchange (chezmoi): install the global mise tool set declared in
 # ~/.config/mise/config.toml. mise itself is installed earlier by
-# installer/00-install-bootstrap.sh; here mise takes over checksum / release-age
-# policy for every other CLI (ripgrep, fd, gh, neovim, aws-cli, ...).
+# installer/bootstrap.sh; here mise takes over checksum / release-age policy for
+# every other CLI (ripgrep, fd, gh, neovim, aws-cli, rust, ...).
 #
-# This runs on both macOS and Linux. Skip it with DOTFILES_SKIP_MISE_INSTALL=1
-# (the fast CI smoke test sets this; the full test installs a representative
-# subset explicitly instead of the whole — heavy — tool list).
+# run_onchange (not run_once): the hash lines render the mise config + lockfile
+# content into this script, so chezmoi re-runs `mise install` whenever you add a
+# tool or the locked versions change. Runs on both macOS and Linux. Skip with
+# DOTFILES_SKIP_MISE_INSTALL=1 (the fast CI smoke test sets this).
+#
+# mise-config-hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+# mise-lock-hash:   {{ include "dot_config/mise/private_mise.lock" | sha256sum }}
 set -Eeuo pipefail
 
 if [ -n "${DOTFILES_SKIP_MISE_INSTALL:-}" ]; then
@@ -19,7 +23,7 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 if ! command -v mise >/dev/null 2>&1; then
-  echo "[mise] 'mise' not found on PATH — run installer/00-install-bootstrap.sh first" >&2
+  echo "[mise] 'mise' not found on PATH — run installer/bootstrap.sh first" >&2
   exit 1
 fi
 

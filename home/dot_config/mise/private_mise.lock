@@ -719,6 +719,10 @@ url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgre
 checksum = "sha256:9deeaa927779078568832b5b69ae57986ca917f24974bb4976c062f632846856"
 url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-apple-darwin.tar.gz"
 
+[[tools.rust]]
+version = "1.96.0"
+backend = "core:rust"
+
 [[tools.shellcheck]]
 version = "0.11.0"
 backend = "aqua:koalaman/shellcheck"

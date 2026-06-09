@@ -6,9 +6,9 @@
 # checksum/release-age policy for everything else).
 #
 # USAGE:
-#     ./00-install-bootstrap.sh
+#     ./bootstrap.sh
 #
-# Override install location with BIN_DIR=/somewhere ./00-install-bootstrap.sh
+# Override install location with BIN_DIR=/somewhere ./bootstrap.sh
 #
 # Reads versions and sha256 from ./pinned.toml (the human-reviewed trust
 # anchor). Idempotent: re-running with the same pins is a no-op.

@@ -20,6 +20,14 @@ readonly WORK="$HOME/dotfiles"
 readonly CHEZMOI="$HOME/.local/bin/chezmoi"
 readonly MISE="$HOME/.local/bin/mise"
 
+# This container models a headless machine. Nerd Fonts are now chezmoi externals,
+# so the DOTFILES_HEADLESS gate is evaluated on EVERY chezmoi invocation (apply
+# AND diff) — not once at install. It must therefore be set process-wide here,
+# exactly as a real headless host persistently exports DOTFILES_HEADLESS=1; if it
+# were set only for `apply`, `chezmoi diff` would re-evaluate the external, want
+# the fonts, and report a non-empty diff.
+export DOTFILES_HEADLESS=1
+
 PASS=0
 FAIL=0
 ok()      { printf '  \033[32m[PASS]\033[0m %s\n' "$1"; PASS=$((PASS + 1)); }
@@ -53,7 +61,7 @@ echo "  expected pins: chezmoi=$exp_chezmoi  mise=$exp_mise"
 
 # --- stage 1: bootstrap (pinned + checksum-verified chezmoi & mise) -----------
 section "stage 1: bootstrap"
-if ! "$WORK/installer/00-install-bootstrap.sh"; then
+if ! "$WORK/installer/bootstrap.sh"; then
   fatal "bootstrap script failed"
 fi
 export PATH="$HOME/.local/bin:$PATH"
@@ -67,13 +75,15 @@ ok_if "chezmoi version == pinned ($exp_chezmoi, got ${got_chezmoi:-none})" test 
 ok_if "mise version == pinned ($exp_mise, got ${got_mise:-none})" test "$got_mise" = "$exp_mise"
 
 # Idempotency: a second run must be a no-op (and not redownload/fail).
-if "$WORK/installer/00-install-bootstrap.sh" >/tmp/bootstrap2.log 2>&1; then
+if "$WORK/installer/bootstrap.sh" >/tmp/bootstrap2.log 2>&1; then
   ok_if "bootstrap is idempotent (reports 'already installed')" grep -q "already installed" /tmp/bootstrap2.log
 else
   bad "bootstrap second run failed"
 fi
 
 # --- stage 2: chezmoi init --apply (skip the heavy mise install in smoke) -----
+# DOTFILES_HEADLESS=1 is exported process-wide above, so the Nerd Fonts external
+# emits no entries (no ~hundreds-of-MB downloads; asserted below).
 section "stage 2: chezmoi init --apply"
 if ! DOTFILES_SKIP_MISE_INSTALL=1 "$CHEZMOI" init --apply --source="$WORK"; then
   fatal "chezmoi init --apply failed"
@@ -122,12 +132,20 @@ ok_if "no .chezmoiscripts" test ! -e "$HOME/.chezmoiscripts"
 ok_if "no .chezmoiignore" test ! -e "$HOME/.chezmoiignore"
 ok_if "no .chezmoiroot" test ! -e "$HOME/.chezmoiroot"
 
-# run_once OS-gating: on Linux, Homebrew/macOS work must be skipped
-ok_if "Homebrew NOT installed (run_once 10 is a no-op on Linux)" \
+# run_onchange OS-gating: on Linux, Homebrew/macOS work must be skipped
+ok_if "Homebrew NOT installed (run_onchange 10 is a no-op on Linux)" \
   bash -c '! command -v brew >/dev/null 2>&1'
 ok_if "no Library tree on Linux (.chezmoiignore gate)" test ! -e "$HOME/Library"
 ok_if "no .config/karabiner on Linux (.chezmoiignore gate)" test ! -e "$HOME/.config/karabiner"
 ok_if "no .yabairc on Linux (.chezmoiignore gate)" test ! -e "$HOME/.yabairc"
+
+# Nerd Fonts external must emit nothing on a headless machine (DOTFILES_HEADLESS=1)
+# — no font tree downloaded/created.
+ok_if "no fonts installed (chezmoi external skipped: headless)" test ! -e "$HOME/.local/share/fonts"
+
+# rust was migrated from installer/rustup.sh into the mise lockfile.
+ok_if "rust present in mise lockfile (migrated from rustup.sh)" \
+  grep -q 'tools.rust' "$HOME/.config/mise/mise.lock"
 
 # mise install was skipped in smoke -> tools must be absent (proves the gate)
 if [ "$LEVEL" = smoke ]; then

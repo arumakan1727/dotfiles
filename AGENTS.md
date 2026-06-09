@@ -1,66 +1,47 @@
 # AGENTS.md
 
 エージェント向けメモ。`CLAUDE.md` はこのファイルへの symlink。
-構成やコードを少し読めば分かることは書かない。非自明な原則・落とし穴・規約だけを記す。
+README / Makefile / 各スクリプトを読めば分かる手順や構成はそちらを優先し、ここには判断基準と落とし穴だけ残す。
 
-## Principle (最優先・すべての変更がこれに従う)
+## Principles
 
-1. **サプライチェーンに細心の注意**
-   - バージョン / コミットハッシュを固定し、チェックサムで検証してから取得する。`curl | sh` のような未検証パイプは禁止。
-   - 信頼の起点は「同一リリース同梱の checksums」ではなく**自リポジトリに人手でレビューして保管した sha256**(`installer/pinned.toml`)。後からリリースが改竄されてもバイト列の変化で検知できる。
-   - 外部スクリプトを取得して実行する場合も取得元を `main`/`HEAD` でなく commit / tag で固定する。
-   - **minimumReleaseAge 相当のリリース年齢ポリシーを必ず効かせる**(出来たてリリース経由の汚染回避): mise=`MISE_INSTALL_BEFORE=7d`、uv=`UV_EXCLUDE_NEWER=P7D`、pnpm=`minimumReleaseAge`、pip 等も同様。設定を勝手に外さない。
-   - 入れられるものは極力 mise に寄せる(aqua のチェックサム検証 + lockfile + 上記 age ポリシーを継承できる)。新規ツール追加時は lockfile をコミット。ピン更新は age ポリシーを尊重し、原則ダウングレードしない。
-   - 新規依存は正当性を確認してから追加(低人気・無名パッケージを避ける)。
-
-2. **冪等**
-   - installer / run_once / セットアップ系はすべて再実行安全に書く(存在チェックやバージョン一致で skip し、二重適用・破壊をしない)。
-   - 「先に作って原子的に差し替え」を基本にし、途中失敗で実環境が壊れない順序にする。
-
-3. **ポータビリティ (Linux と macOS。Windows 非対象)**
-   - 配置する/しないの OS 分岐は `.chezmoiignore`(テンプレート評価される)で行う。一方の OS 専用ツリーは他方で ignore する。run_once スクリプト内の OS 分岐は `.tmpl` を増やさず、chezmoi が注入する `$CHEZMOI_OS`(値は `darwin` 等)を使った素の shell `if`/early-exit で書く。
-   - シェル設定は未導入ツールに耐えるよう `command -v` でガードする。
-   - macOS / GNU の非互換に注意(例: `readlink -f` は macOS 非対応 → `realpath` を使う)。
-
-4. **Homebrew は最終手段(macOS)**
-   - CLI は mise を最優先。brew は GUI cask / mas / `pinentry-mac` 等、mise でも検証取得でも賄えないものだけに絞る。
-   - `Brewfile` は手で分類・キュレーションする。`brew bundle dump` は使わない(leaf + 依存ライブラリを全部書き戻してカテゴリ分類を破壊する。モダン Homebrew は lockfile 機能も廃止済みで `Brewfile.lock.json` は無い)。純依存ライブラリ(glib/pango 等)は明示せず依存元に解決を任せる。反映は `make brew/install`(`make brew/check` で未導入を確認)。
+- **サプライチェーン攻撃対策**: version / commit / tag を固定し、自リポジトリに人手レビュー済み sha256 を置いて検証する。同一リリースに同梱された checksum は信頼の起点にしない。`curl | sh` や `main` / `HEAD` 参照は禁止。
+- **リリース直後の取り込みを避ける**: `MISE_INSTALL_BEFORE=7d`、`UV_EXCLUDE_NEWER=P7D`、pnpm / npm / pip の minimumReleaseAge 相当を維持する。ピン更新はこの待機期間を尊重し、回避目的の downgrade はしない。
+- **CLI は原則 mise**: aqua + lockfile + age policy に寄せる。新規依存は正当性を確認し、低人気・無名パッケージを避ける。
+- **セットアップ系は冪等**: installer / run_onchange は再実行安全にし、存在・バージョン一致で skip する。実環境を触る変更は「先に作って原子的に差し替え」を基本にする。
+- **Linux / macOS 両対応、Windows 非対象**: 配置有無の OS 分岐は `.chezmoiignore`、実行時分岐は `CHEZMOI_OS`。shell init は未導入ツールに耐えるよう `command -v` でガードする。macOS/GNU 差には注意し、`readlink -f` ではなく `realpath` などを使う。
+- **Homebrew は macOS の最終手段**: CLI は mise 優先。`Brewfile` は手でキュレーションし、`brew bundle dump` は使わない。
 
 ## chezmoi
 
-- 編集フロー: source を直接いじらず `chezmoi edit <target>` → `chezmoi apply`。実環境を直接編集したら `chezmoi add <path>` で source へ取り込み直す。
-- 追跡停止は `chezmoi forget <target>` + `.chezmoiignore` に**ターゲット相対**(`dot_` 等の属性接頭辞を付けない)パターンを追加。`git rm --cached` ではない。
-- `.chezmoiignore` 自体がテンプレートとして評価される。
-- `Brewfile` は repo ルート(= source ディレクトリの一つ上)にある。run_once から参照するときは `$(dirname "$CHEZMOI_SOURCE_DIR")`(chezmoi がスクリプト env に `CHEZMOI_SOURCE_DIR`/`CHEZMOI_OS` 等を注入する。`.tmpl` の `{{ .chezmoi.sourceDir }}` は不要)。
-- run_once の `mise install` は `DOTFILES_SKIP_MISE_INSTALL=1` でスキップできる(CI/テスト用の knob)。
-- **テスト目的でも実環境の home に `chezmoi apply` しない**。run_once(brew bundle / `mise install` / macOS defaults)が発火する。Linux 再現性検証は `make test/linux[/full]`(Docker)で行う。
+- テスト目的で実 home に `chezmoi apply` しない。brew / mise / macOS defaults / external が動く。Linux 検証は `make test/linux` または `make test/linux/full`。
+- 追跡停止は `chezmoi forget <target>` + `.chezmoiignore` に target 相対パターンを追加する。`git rm --cached` ではない。
+- `run_onchange` が監視するのは source ツリーだけ。`Brewfile` や `installer/` など source 外の変更で再実行したい場合は、既存テンプレートと同じ hash 行を入れる。macOS には `sha256sum` コマンドが無いので chezmoi のテンプレート関数として使う。
+- `.tmpl` の `{{ .chezmoi.* }}` は原則、変更検知の hash 行だけに使う。実行時の OS / source dir は chezmoi が注入する `CHEZMOI_OS` / `CHEZMOI_SOURCE_DIR` を読む。
+- fetch logic は `installer/chezmoi-steps/` または chezmoi external に閉じ込める。fetch 不要の設定変更は plain `.sh` にインラインし、スクリプト本体の変更で再実行させる。
+- headless 機では `DOTFILES_HEADLESS=1` を shell rc などで恒久 export する。chezmoi external は `apply` / `diff` のたびに評価されるため、一時 env だと次回フォント取得が復活する。
 
 ## Line endings
 
-- `.gitattributes` 無し・`core.autocrlf=input` + `core.safecrlf=true`。`.gitignore` や `*.tmpl` など LF で index に入っているファイルに Edit が CRLF を混ぜると `git add` が "CRLF would be replaced by LF" で失敗する。`perl -i -pe 's/\r\n/\n/g' <file>` で直してからステージする。
+- `.gitattributes` 無し、`core.autocrlf=input` + `core.safecrlf=true`。LF tracked ファイルに CRLF が混ざって `git add` が失敗したら `perl -i -pe 's/\r\n/\n/g' <file>` で直す。
 
 ## Sensitive / gotchas
 
-- `~/.config/pip/pip.conf`: index-url にトークンが入る。リポジトリにも chezmoi source にも入れない(`.chezmoiignore` の `.config/pip/`)。**絶対に `chezmoi add` しない**。
-- `mise/npmrc`(mise 公式設定ではない): `.zshrc` の `mise()` ラッパが `mise use|install npm:*` のときだけ `NPM_CONFIG_USERCONFIG` として読み込む。`~/.npmrc` の `min-release-age` と `MISE_INSTALL_BEFORE` が npm 11 で衝突するのを回避するため。レジストリは Flatt Security Takumi Guard(外部 SaaS・公開可)。
-- `karabiner.json`: Karabiner-Elements が保存時に独自インデントで書き戻し、空白だけの巨大 diff を出す。`git diff -w` で実差分を確認し、コミットメッセージで明示する。
-
-## Shell init (zsh) — 非自明な点のみ
-
-- `.zshenv`: 環境変数のみ。`MANPAGER`/`EDITOR` は `${VAR:-default}` で親から注入された値を尊重する(Claude Code の `settings.json` `env.MANPAGER` がこれに依存)。
-- `.zshrc`: PATH/fpath/manpath は macOS `/etc/zprofile` の `path_helper` の**後**に組む(先頭で `path=()` リセット)。sheldon は未導入なら自己インストールし `zsh-defer` を供給する。mise/zoxide/workmux は出力をファイルキャッシュして `zsh-defer` で遅延ロード。`compinit -C` は同期実行(遅延断片で再実行しない)。`mise()` ラッパが `npm:` を含む `use|install|...` を傍受して npmrc を差し込む(上記 Sensitive 参照)。
-- `.bashrc` は zsh 相当を `command -v` ガードでミラーする。
+- 機密値を含む target は source に入れない。`chezmoi add` の secrets warning を無視せず、迷ったら `.chezmoiignore` / source path / diff を確認する。
+- `mise/npmrc` は `.zshrc` の `mise()` wrapper 専用。`~/.npmrc` へ統合したり wrapper を外したりする前に、npm 11 と release-age policy の衝突回避コメントを読む。
+- `.zshenv` は環境変数だけ。親から来る `MANPAGER` / `EDITOR` は上書きしない。
+- `.zshrc` の PATH は macOS `path_helper` 後に組む。`compinit -C` は同期実行のままにし、遅延ロード断片で再実行しない。
+- `karabiner.json` は保存だけで空白 diff が巨大化する。実差分は `git diff -w` で確認し、必要ならコミットメッセージに明記する。
 
 ## mise
 
-- ツール指定は registry の短縮名(`rg`, `fd`, `gh`, `neovim` …)を優先。短縮名が無いものだけ `aqua:owner/repo` にフォールバックし、理由をコメントで残す。
-- `aws-cli` は `aqua:aws/aws-cli`(aqua は .pkg でなく v2 バイナリを入れるので起動が速い)。
-- **lockfile**: `settings.locked = true`。`mise.lock`(source: `private_mise.lock`)が全ツールの version/checksum/URL を固定し、解決 API を叩かず検証取得する。macos-arm64 + linux-x64/arm64 を**1ファイル**に持つので OS 分岐は不要。registry backend(npm/cargo/go/poetry)は url を持たず version 固定のみだが `--locked` は通る。グローバル lockfile は `mise lock -g` でしか生成されない(`mise install` だけでは作られない)。
-  - 編集方向が config.toml と**逆**: mise が生成 → `chezmoi add`(手で編集しない)。
-  - 追加/更新フロー: `chezmoi edit` config → `apply` → `mise lock -g --platform linux-x64,linux-arm64,macos-arm64` → `mise install` → `chezmoi add ~/.config/mise/mise.lock` → commit。
-- **メジャーのみの version 指定(`node='26'`)は mise 2026.6.x のバグで exact 扱いされ 404/missing になる**(npm backend も連鎖で壊れる)。マイナーまで固定する(`'26.3'`)。マイナー指定(`python='3.14'`)は正常。
+- ツール指定は registry 短縮名を優先し、短縮名が無いものだけ `aqua:owner/repo` などにフォールバックする。フォールバック理由は config コメントに残す。
+- `mise use -g` は target 側の config を書く。先に `chezmoi apply` せず、`mise lock -g --platform linux-x64,linux-arm64,macos-arm64` 後に config と lock を `chezmoi add` で source に取り込む。
+- `private_mise.lock` は mise が生成する。手で編集せず、chezmoiscript から `chezmoi add` して source を自動変更しない。
+- `settings.locked = true` 下で新規 lock 生成が詰まる場合は、temp config root で `locked=false` にして生成し、必要な lock 行だけ source へ反映する。
+- runtime version の major-only 指定は避け、少なくとも minor まで固定する。現在の理由は `home/dot_config/mise/config.toml` のコメントを参照。
 
 ## Commits
 
-- 件名: lowercase scope + colon(`zsh:`, `mise:`, `chezmoi:`, `chore:` …)。命令形・末尾ピリオド無し。本文は任意・~72 折り返し。
-- ドキュメントには実ユーザ名入りの絶対パスを書かない(リポジトリ/ファイルからの相対パスで書く)。
+- 件名は lowercase scope + colon (`zsh:`, `mise:`, `chezmoi:`, `chore:` など)。命令形、末尾ピリオド無し。
+- ドキュメントには実ユーザ名入りの絶対パスを書かない。リポジトリ相対パスを使う。
