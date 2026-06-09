@@ -69,13 +69,13 @@ version = "7.1.0"
 backend = "aqua:dylanaraps/neofetch"
 
 [tools."aqua:dylanaraps/neofetch"."platforms.linux-arm64"]
-url = "https://github.com/dylanaraps/neofetch/archive/refs/tags/7.1.0.tar.gz"
+url = "https://raw.githubusercontent.com/dylanaraps/neofetch/7.1.0/neofetch"
 
 [tools."aqua:dylanaraps/neofetch"."platforms.linux-x64"]
-url = "https://github.com/dylanaraps/neofetch/archive/refs/tags/7.1.0.tar.gz"
+url = "https://raw.githubusercontent.com/dylanaraps/neofetch/7.1.0/neofetch"
 
 [tools."aqua:dylanaraps/neofetch"."platforms.macos-arm64"]
-url = "https://github.com/dylanaraps/neofetch/archive/refs/tags/7.1.0.tar.gz"
+url = "https://raw.githubusercontent.com/dylanaraps/neofetch/7.1.0/neofetch"
 
 [[tools."aqua:koki-develop/clive"]]
 version = "0.12.16"
@@ -461,6 +461,53 @@ url = "https://dl.google.com/go/go1.26.2.darwin-arm64.tar.gz"
 version = "0.2.30"
 backend = "go:github.com/abhimanyu003/sttr"
 
+[[tools."go:golang.org/x/tools/cmd/goimports"]]
+version = "0.45.0"
+backend = "go:golang.org/x/tools/cmd/goimports"
+
+[[tools."go:golang.org/x/tools/gopls"]]
+version = "0.22.0"
+backend = "go:golang.org/x/tools/gopls"
+
+[[tools.golangci-lint]]
+version = "2.12.2"
+backend = "aqua:golangci/golangci-lint"
+
+[tools.golangci-lint."platforms.linux-arm64"]
+checksum = "sha256:44cd40a8c76c86755375adfeea52cfd3533cb43d7bd647771e0ae065e166df3a"
+url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-arm64.tar.gz"
+provenance = "github-attestations"
+
+[tools.golangci-lint."platforms.linux-arm64-musl"]
+checksum = "sha256:44cd40a8c76c86755375adfeea52cfd3533cb43d7bd647771e0ae065e166df3a"
+url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-arm64.tar.gz"
+provenance = "github-attestations"
+
+[tools.golangci-lint."platforms.linux-x64"]
+checksum = "sha256:8df580d2670fed8fa984aac0507099af8df275e665215f5c7a2ae3943893a553"
+url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-amd64.tar.gz"
+provenance = "github-attestations"
+
+[tools.golangci-lint."platforms.linux-x64-baseline"]
+checksum = "sha256:8df580d2670fed8fa984aac0507099af8df275e665215f5c7a2ae3943893a553"
+url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-amd64.tar.gz"
+provenance = "github-attestations"
+
+[tools.golangci-lint."platforms.linux-x64-musl"]
+checksum = "sha256:8df580d2670fed8fa984aac0507099af8df275e665215f5c7a2ae3943893a553"
+url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-amd64.tar.gz"
+provenance = "github-attestations"
+
+[tools.golangci-lint."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:8df580d2670fed8fa984aac0507099af8df275e665215f5c7a2ae3943893a553"
+url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-linux-amd64.tar.gz"
+provenance = "github-attestations"
+
+[tools.golangci-lint."platforms.macos-arm64"]
+checksum = "sha256:a9c54498731b3128f79e090be6110f3e5fffccc617b08142ed244d4126c73f29"
+url = "https://github.com/golangci/golangci-lint/releases/download/v2.12.2/golangci-lint-2.12.2-darwin-arm64.tar.gz"
+provenance = "github-attestations"
+
 [[tools.hadolint]]
 version = "2.14.0"
 backend = "aqua:hadolint/hadolint"
@@ -496,6 +543,18 @@ url = "https://github.com/sharkdp/hyperfine/releases/download/v1.20.0/hyperfine-
 [[tools.java]]
 version = "corretto-24.0.2.12.1"
 backend = "core:java"
+
+[tools.java."platforms.linux-arm64"]
+checksum = "sha256:57a5cdd6ba25dcf765390b3c8fcb085667fe3ef9cf6ccbc8e21f43cb5b40f267"
+url = "https://corretto.aws/downloads/resources/24.0.2.12.1/amazon-corretto-24.0.2.12.1-linux-aarch64.tar.gz"
+
+[tools.java."platforms.linux-x64"]
+checksum = "sha256:d4cd1f03a8b9aad58d0fdac96d1ba5de6b7ac86f3069729535f2fc1e5a33f7c6"
+url = "https://corretto.aws/downloads/resources/24.0.2.12.1/amazon-corretto-24.0.2.12.1-linux-x64.tar.gz"
+
+[tools.java."platforms.macos-arm64"]
+checksum = "sha256:ac4e961dbb047740d1e2de141dd739da9fee4b6b2d62151e33b3bbbdb0b592dc"
+url = "https://corretto.aws/downloads/resources/24.0.2.12.1/amazon-corretto-24.0.2.12.1-macosx-aarch64.tar.gz"
 
 [[tools.jq]]
 version = "1.8.1"
@@ -560,6 +619,38 @@ url = "https://github.com/lsd-rs/lsd/releases/download/v1.2.0/lsd-v1.2.0-x86_64-
 checksum = "sha256:9e34a5d392ff913302098aad0543dafa1883c531eaf229b82f086c3fca675e3e"
 url = "https://github.com/lsd-rs/lsd/releases/download/v1.2.0/lsd-v1.2.0-aarch64-apple-darwin.tar.gz"
 
+[[tools.lua-language-server]]
+version = "3.18.2"
+backend = "aqua:LuaLS/lua-language-server"
+
+[tools.lua-language-server."platforms.linux-arm64"]
+checksum = "sha256:273af33f26f4a1143f27c96d9f9e1188aba619c71e0807042134f66b4bd27f24"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.18.2/lua-language-server-3.18.2-linux-arm64.tar.gz"
+
+[tools.lua-language-server."platforms.linux-arm64-musl"]
+checksum = "sha256:273af33f26f4a1143f27c96d9f9e1188aba619c71e0807042134f66b4bd27f24"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.18.2/lua-language-server-3.18.2-linux-arm64.tar.gz"
+
+[tools.lua-language-server."platforms.linux-x64"]
+checksum = "sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778d539c5"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.18.2/lua-language-server-3.18.2-linux-x64.tar.gz"
+
+[tools.lua-language-server."platforms.linux-x64-baseline"]
+checksum = "sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778d539c5"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.18.2/lua-language-server-3.18.2-linux-x64.tar.gz"
+
+[tools.lua-language-server."platforms.linux-x64-musl"]
+checksum = "sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778d539c5"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.18.2/lua-language-server-3.18.2-linux-x64.tar.gz"
+
+[tools.lua-language-server."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:ca71415dd19f19e30aaa35a4915aefca9fdb5fec31b98331cc3d77f778d539c5"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.18.2/lua-language-server-3.18.2-linux-x64.tar.gz"
+
+[tools.lua-language-server."platforms.macos-arm64"]
+checksum = "sha256:cec99d70b1f612acec4a10a79a03664e3aa0c229d4d8a586cb3f928ec37d509e"
+url = "https://github.com/LuaLS/lua-language-server/releases/download/3.18.2/lua-language-server-3.18.2-darwin-arm64.tar.gz"
+
 [[tools.neovim]]
 version = "stable"
 backend = "vfox:mise-plugins/vfox-neovim"
@@ -617,9 +708,21 @@ backend = "npm:@googleworkspace/cli"
 version = "0.135.0"
 backend = "npm:@openai/codex"
 
+[[tools."npm:@prisma/language-server"]]
+version = "31.11.0"
+backend = "npm:@prisma/language-server"
+
+[[tools."npm:@typescript/native-preview"]]
+version = "7.0.0-dev.20260527.2"
+backend = "npm:@typescript/native-preview"
+
 [[tools."npm:agent-browser"]]
 version = "0.26.0"
 backend = "npm:agent-browser"
+
+[[tools."npm:bash-language-server"]]
+version = "5.6.0"
+backend = "npm:bash-language-server"
 
 [[tools."npm:ccusage"]]
 version = "18.0.11"
@@ -628,6 +731,18 @@ backend = "npm:ccusage"
 [[tools."npm:difit"]]
 version = "4.0.4"
 backend = "npm:difit"
+
+[[tools."npm:markdownlint-cli"]]
+version = "0.48.0"
+backend = "npm:markdownlint-cli"
+
+[[tools."npm:vscode-langservers-extracted"]]
+version = "4.10.0"
+backend = "npm:vscode-langservers-extracted"
+
+[[tools."npm:yaml-language-server"]]
+version = "1.23.0"
+backend = "npm:yaml-language-server"
 
 [[tools.pinact]]
 version = "4.0.0"
@@ -647,6 +762,18 @@ provenance = "github-attestations"
 checksum = "sha256:3260e0d6fa7d89e4b9a7cc6c120345db9217c4e0571742e9a76db2ba3ff63650"
 url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.0.0/pinact_darwin_arm64.tar.gz"
 provenance = "github-attestations"
+
+[[tools."pipx:basedpyright"]]
+version = "1.39.6"
+backend = "pipx:basedpyright"
+
+[[tools."pipx:cmake-language-server"]]
+version = "0.1.11"
+backend = "pipx:cmake-language-server"
+
+[[tools."pipx:yamllint"]]
+version = "1.38.0"
+backend = "pipx:yamllint"
 
 [[tools.pnpm]]
 version = "11.1.2"
@@ -738,6 +865,45 @@ url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgre
 checksum = "sha256:9deeaa927779078568832b5b69ae57986ca917f24974bb4976c062f632846856"
 url = "https://github.com/phiresky/ripgrep-all/releases/download/v0.10.10/ripgrep_all-v0.10.10-aarch64-apple-darwin.tar.gz"
 
+[[tools.ruff]]
+version = "0.15.15"
+backend = "aqua:astral-sh/ruff"
+
+[tools.ruff."platforms.linux-arm64"]
+checksum = "sha256:46ea2750c0f21dab01f853d55a521a5f388f8573dab698735effdc6a94c9b293"
+url = "https://github.com/astral-sh/ruff/releases/download/0.15.15/ruff-aarch64-unknown-linux-musl.tar.gz"
+provenance = "github-attestations"
+
+[tools.ruff."platforms.linux-arm64-musl"]
+checksum = "sha256:46ea2750c0f21dab01f853d55a521a5f388f8573dab698735effdc6a94c9b293"
+url = "https://github.com/astral-sh/ruff/releases/download/0.15.15/ruff-aarch64-unknown-linux-musl.tar.gz"
+provenance = "github-attestations"
+
+[tools.ruff."platforms.linux-x64"]
+checksum = "sha256:c09b24fdec07d8ea73f7cbb32c38eb4f36f52298ac445dccf763171c898d8fc0"
+url = "https://github.com/astral-sh/ruff/releases/download/0.15.15/ruff-x86_64-unknown-linux-musl.tar.gz"
+provenance = "github-attestations"
+
+[tools.ruff."platforms.linux-x64-baseline"]
+checksum = "sha256:c09b24fdec07d8ea73f7cbb32c38eb4f36f52298ac445dccf763171c898d8fc0"
+url = "https://github.com/astral-sh/ruff/releases/download/0.15.15/ruff-x86_64-unknown-linux-musl.tar.gz"
+provenance = "github-attestations"
+
+[tools.ruff."platforms.linux-x64-musl"]
+checksum = "sha256:c09b24fdec07d8ea73f7cbb32c38eb4f36f52298ac445dccf763171c898d8fc0"
+url = "https://github.com/astral-sh/ruff/releases/download/0.15.15/ruff-x86_64-unknown-linux-musl.tar.gz"
+provenance = "github-attestations"
+
+[tools.ruff."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:c09b24fdec07d8ea73f7cbb32c38eb4f36f52298ac445dccf763171c898d8fc0"
+url = "https://github.com/astral-sh/ruff/releases/download/0.15.15/ruff-x86_64-unknown-linux-musl.tar.gz"
+provenance = "github-attestations"
+
+[tools.ruff."platforms.macos-arm64"]
+checksum = "sha256:2f7063e09d3c2af019b56f4fc6548199851e9387f359d696111af312adfe7619"
+url = "https://github.com/astral-sh/ruff/releases/download/0.15.15/ruff-aarch64-apple-darwin.tar.gz"
+provenance = "github-attestations"
+
 [[tools.rust]]
 version = "1.96.0"
 backend = "core:rust"
@@ -790,6 +956,32 @@ url = "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/stylua-l
 checksum = "sha256:c1680c337c8d799b4226a10e8ac6744606fd00b01eb3046120b5226e31306809"
 url = "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/stylua-macos-aarch64.zip"
 
+[[tools.taplo]]
+version = "0.10.0"
+backend = "aqua:tamasfe/taplo"
+
+[tools.taplo."platforms.linux-arm64"]
+url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-aarch64.gz"
+
+[tools.taplo."platforms.linux-arm64-musl"]
+url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-aarch64.gz"
+
+[tools.taplo."platforms.linux-x64"]
+url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
+
+[tools.taplo."platforms.linux-x64-baseline"]
+url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
+
+[tools.taplo."platforms.linux-x64-musl"]
+url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
+
+[tools.taplo."platforms.linux-x64-musl-baseline"]
+url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-linux-x86_64.gz"
+
+[tools.taplo."platforms.macos-arm64"]
+checksum = "blake3:353ecb1ed7d279dec5e2fd388d292ef97db08a651405fa664ffec1b2896c05f0"
+url = "https://github.com/tamasfe/taplo/releases/download/0.10.0/taplo-darwin-aarch64.gz"
+
 [[tools.task]]
 version = "3.50.0"
 backend = "aqua:go-task/task"
@@ -822,6 +1014,38 @@ url = "https://releases.hashicorp.com/terraform/1.13.4/terraform_1.13.4_linux_am
 checksum = "sha256:6b9e2ff8102c469added7be28cd5cfc2c5a8f7fc3be2df8fe9ee5458d84a1305"
 url = "https://releases.hashicorp.com/terraform/1.13.4/terraform_1.13.4_darwin_arm64.zip"
 
+[[tools.terraform-ls]]
+version = "0.38.7"
+backend = "aqua:hashicorp/terraform-ls"
+
+[tools.terraform-ls."platforms.linux-arm64"]
+checksum = "sha256:f14fb99c7977f084a39f5a45299d3d193d28ae4258e96b2e9f05b4d0cf3b2b57"
+url = "https://releases.hashicorp.com/terraform-ls/0.38.7/terraform-ls_0.38.7_linux_arm64.zip"
+
+[tools.terraform-ls."platforms.linux-arm64-musl"]
+checksum = "sha256:f14fb99c7977f084a39f5a45299d3d193d28ae4258e96b2e9f05b4d0cf3b2b57"
+url = "https://releases.hashicorp.com/terraform-ls/0.38.7/terraform-ls_0.38.7_linux_arm64.zip"
+
+[tools.terraform-ls."platforms.linux-x64"]
+checksum = "sha256:b05cdaec4db456f233c48499c838b3c5a0734fe2d3a5d972f673ac8198041c2b"
+url = "https://releases.hashicorp.com/terraform-ls/0.38.7/terraform-ls_0.38.7_linux_amd64.zip"
+
+[tools.terraform-ls."platforms.linux-x64-baseline"]
+checksum = "sha256:b05cdaec4db456f233c48499c838b3c5a0734fe2d3a5d972f673ac8198041c2b"
+url = "https://releases.hashicorp.com/terraform-ls/0.38.7/terraform-ls_0.38.7_linux_amd64.zip"
+
+[tools.terraform-ls."platforms.linux-x64-musl"]
+checksum = "sha256:b05cdaec4db456f233c48499c838b3c5a0734fe2d3a5d972f673ac8198041c2b"
+url = "https://releases.hashicorp.com/terraform-ls/0.38.7/terraform-ls_0.38.7_linux_amd64.zip"
+
+[tools.terraform-ls."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:b05cdaec4db456f233c48499c838b3c5a0734fe2d3a5d972f673ac8198041c2b"
+url = "https://releases.hashicorp.com/terraform-ls/0.38.7/terraform-ls_0.38.7_linux_amd64.zip"
+
+[tools.terraform-ls."platforms.macos-arm64"]
+checksum = "sha256:f20567880de1a8b915f61e071aab8224c67e5ce116cc5ea5d9afae23fab79d97"
+url = "https://releases.hashicorp.com/terraform-ls/0.38.7/terraform-ls_0.38.7_darwin_arm64.zip"
+
 [[tools.tfsec]]
 version = "1.28.14"
 backend = "aqua:aquasecurity/tfsec"
@@ -837,6 +1061,45 @@ url = "https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec_1.
 [tools.tfsec."platforms.macos-arm64"]
 checksum = "sha256:f39d59a3f9be4eeb3d965657653ad62243103a3d921ce52ca8f907cff45896f5"
 url = "https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec_1.28.14_darwin_arm64.tar.gz"
+
+[[tools.tree-sitter]]
+version = "0.26.9"
+backend = "aqua:tree-sitter/tree-sitter"
+
+[tools.tree-sitter."platforms.linux-arm64"]
+checksum = "sha256:c8feeb32115958cb44442ca4d68f6d66cf7605dbd65681e62342181ebdd6db3b"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-arm64.gz"
+provenance = "github-attestations"
+
+[tools.tree-sitter."platforms.linux-arm64-musl"]
+checksum = "sha256:c8feeb32115958cb44442ca4d68f6d66cf7605dbd65681e62342181ebdd6db3b"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-arm64.gz"
+provenance = "github-attestations"
+
+[tools.tree-sitter."platforms.linux-x64"]
+checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
+provenance = "github-attestations"
+
+[tools.tree-sitter."platforms.linux-x64-baseline"]
+checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
+provenance = "github-attestations"
+
+[tools.tree-sitter."platforms.linux-x64-musl"]
+checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
+provenance = "github-attestations"
+
+[tools.tree-sitter."platforms.linux-x64-musl-baseline"]
+checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
+provenance = "github-attestations"
+
+[tools.tree-sitter."platforms.macos-arm64"]
+checksum = "sha256:e46725b2417c085b0761948abc0cc240bff6a3ab5d2128e3ad0de467ded3388d"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-macos-arm64.gz"
+provenance = "github-attestations"
 
 [[tools.typst]]
 version = "0.14.2"

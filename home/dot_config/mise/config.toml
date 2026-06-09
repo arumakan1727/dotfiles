@@ -110,3 +110,27 @@ protoc = 'latest'  # aqua:protocolbuffers/protobuf。旧 brew protobuf / protobu
 "cargo:worktrunk" = "latest"  # git worktree manager
 "cargo:raine/workmux" = "latest"  # git worktree and tmux manager
 "npm:difit" = "latest"
+
+# Neovim: LSP servers
+# nvim は mason を使わず native vim.lsp.enable で PATH から発見する(供給網を mise に一本化)。
+lua-language-server = 'latest'  # lua_ls
+"go:golang.org/x/tools/gopls" = 'latest'  # gopls
+"pipx:basedpyright" = 'latest'  # basedpyright(Python 型チェック。lint/format は ruff に分担)
+ruff = 'latest'  # ruff: Python LSP + conform/nvim-lint の formatter/linter 兼用
+"npm:yaml-language-server" = 'latest'  # yamlls
+"npm:vscode-langservers-extracted" = 'latest'  # jsonls / cssls / html
+taplo = 'latest'  # toml LSP + formatter
+terraform-ls = 'latest'  # terraformls
+"npm:bash-language-server" = 'latest'  # bashls
+"npm:@prisma/language-server" = 'latest'  # prismals
+"pipx:cmake-language-server" = 'latest'  # cmake LSP
+# TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。prerelease のみ + MISE_INSTALL_BEFORE=7d の
+# ため dev 版を exact 固定。nvim-lspconfig の tsgo は project-local node_modules/.bin/tsgo を優先する。
+"npm:@typescript/native-preview" = '7.0.0-dev.20260527.2'  # tsgo
+
+# Neovim: treesitter / formatter / linter
+tree-sitter = 'latest'  # nvim-treesitter のパーサビルドに必須(無いとハイライトが出ない)
+"go:golang.org/x/tools/cmd/goimports" = 'latest'  # conform: goimports
+golangci-lint = 'latest'  # nvim-lint: go
+"npm:markdownlint-cli" = 'latest'  # nvim-lint: markdownlint
+"pipx:yamllint" = 'latest'  # nvim-lint: yamllint
