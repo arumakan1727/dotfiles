@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# run_onchange (chezmoi): refresh the fontconfig cache on Linux after the Nerd
+# Fonts have been (re)materialized.
+#
+# The fonts themselves are fetched + sha256-verified + extracted declaratively by
+# chezmoi externals (.chezmoiexternal.toml.tmpl) — there is no download logic
+# here. macOS auto-detects ~/Library/Fonts, so this step is Linux-only. On a
+# headless machine (DOTFILES_HEADLESS=1) the externals emit nothing, so the
+# fonts dir never appears and the guard below makes this a no-op.
+#
+# run_onchange: hashing the externals file re-runs fc-cache whenever a font pin
+# changes (a version/url/sha bump alters the hash below).
+#
+# fonts-external-hash: {{ include ".chezmoiexternal.toml.tmpl" | sha256sum }}
+set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
+
+[ "$CHEZMOI_OS" = linux ] || exit 0
+
+fonts_dir="$HOME/.local/share/fonts"
+[ -d "$fonts_dir" ] || exit 0
+command -v fc-cache >/dev/null 2>&1 || exit 0
+
+echo "[fonts] refreshing fontconfig cache ($fonts_dir)"
+fc-cache -f "$fonts_dir"

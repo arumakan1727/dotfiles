@@ -1,154 +1,109 @@
-tap "espanso/espanso"
-tap "homebrew/bundle"
-tap "homebrew/services"
-tap "localstack/tap"
-tap "xcodesorg/made"
-brew "python@3.12"
-brew "glib"
-brew "libtiff"
-brew "harfbuzz"
-brew "pango"
-brew "librsvg"
-brew "adwaita-icon-theme"
-brew "webp"
-brew "jpeg-xl"
-brew "aom"
-brew "aria2"
-brew "ascii"
-brew "at-spi2-core"
-brew "bash"
-brew "clang-format"
-brew "cmake"
+# Brewfile — macOS 専用。Homebrew は最終手段(AGENTS.md Principle 4)。
+# CLI は極力 mise(aqua のチェックサム検証 + mise.lock + age policy)へ寄せ、
+# ここには mise / aqua で検証取得できないものだけを残す。
+#
+# 手動キュレーション方針: `brew bundle dump` は leaf + 依存ライブラリを全部
+# 書き戻して下のカテゴリ分類を破壊するので使わない(Makefile からも廃止済み)。
+# 追加・削除は手で行い、`make brew/install`(--no-upgrade)で反映する。
+# 純粋な依存ライブラリ(glib/pango/poppler 等)は明示しない。依存元(下の
+# leaf や cask)を入れれば Homebrew が自動解決する。
+
+# --- taps ---------------------------------------------------------------------
+# homebrew/bundle・homebrew/services は modern Homebrew でコア統合され不要。
+tap "espanso/espanso"      # cask "espanso"
+tap "xcodesorg/made"       # xcodes
+
+# --- GNU 版コアツール(macOS の BSD 版との非互換回避。PATH 優先で使う)---------
+brew "bash"                # macOS 同梱は 3.2 と古い
 brew "coreutils"
-brew "cppcheck"
-brew "diffutils"
-brew "enchant"
-brew "envoy"
-brew "leptonica"
-brew "tesseract"
-brew "ghostscript"
-brew "unbound"
-brew "gnutls"
-brew "gnupg"
-brew "gpgme"
-brew "gsettings-desktop-schemas"
-brew "gspell"
-brew "libspectre"
-brew "poppler"
-brew "evince"
-brew "exiftool"
-brew "eza"
-brew "libass"
-brew "librist"
-brew "ffmpeg"
 brew "findutils"
-brew "fish"
+brew "diffutils"
 brew "gawk"
-brew "gd"
-brew "git-lfs"
 brew "gnu-sed"
 brew "gnu-tar"
-brew "lua"
-brew "qt"
-brew "gnuplot"
-brew "go-task"
 brew "grep"
-brew "groonga"
 brew "gzip"
-brew "htop"
-brew "libheif"
-brew "libraw"
-brew "imagemagick"
-brew "libqalculate"
-brew "libyaml"
-brew "llvm"
-brew "lolcat"
-brew "mactop"
-brew "mariadb"
-brew "mas"
-brew "moreutils"
-brew "netcat"
-brew "nkf"
-brew "nmap"
-brew "openssl@1.1"
-brew "p7zip"
+
+# --- シェル / ターミナル -------------------------------------------------------
+brew "fish"
+brew "tmux"
+brew "sheldon"             # zsh plugin manager(.zshrc も未導入なら自己インストール)
+
+# --- GPG / 認証(mise 不可。pinentry-mac は run_once_30 が gpg-agent に結線)----
+brew "gnupg"
 brew "pinentry-mac"
-brew "pipx"
+
+# --- DB サーバ(ビルド / サービス管理が必要。mise 不可)-----------------------
+brew "mariadb"
 brew "postgresql@14"
-brew "pqiv"
-brew "protobuf"
-brew "protobuf@3"
+
+# --- C/C++ 開発(mise/aqua に検証取得経路が無い or 巨大)-----------------------
+brew "llvm"
+brew "clang-format"        # aqua 経路が conda/asdf のみ。検証取得が弱いため brew
+brew "cppcheck"
+
+# --- メディア / 画像 / PDF(CLI として直接使う。依存ライブラリは自動解決)------
+brew "imagemagick"
+brew "ffmpeg"
+brew "ghostscript"
+brew "gnuplot"
+brew "tesseract"           # OCR
+
+# --- ネットワーク / システム CLI ----------------------------------------------
+brew "tailscale"
+brew "wget"
+brew "aria2"
+brew "netcat"
+brew "telnet"
+brew "nmap"
+brew "yt-dlp"              # aqua-registry に無く更新も頻繁なので brew 据え置き
+brew "htop"
+brew "mactop"
+brew "tree"
 brew "pstree"
+brew "moreutils"
+
+# --- ファイル / アーカイブ / 変換 ----------------------------------------------
+brew "p7zip"
+brew "sevenzip"
+brew "unzip"
+brew "nkf"
+brew "exiftool"
+brew "translate-shell"
+
+# --- 雑多なユーティリティ ------------------------------------------------------
+brew "libqalculate"        # qalc(電卓)
 brew "pwgen"
 brew "qrencode"
-brew "qt@5"
-brew "sevenzip"
-brew "sheldon"
-brew "silicon"
-brew "sl"
-brew "tailscale"
-brew "telnet"
-brew "tfenv"
-brew "the_silver_searcher"
-brew "tmux"
-brew "translate-shell"
-brew "tree"
-brew "ttyd"
-brew "typst"
-brew "unzip"
-brew "virtualenv"
-brew "wget"
-brew "yt-dlp"
-brew "zbar"
-brew "localstack/tap/localstack-cli"
+brew "zbar"                # QR / バーコード decode
+brew "lolcat"
+brew "ascii"
+
+# --- mise に寄せられない(brew でしか arm native / 最新を取れない)------------
+brew "ttyd"                # web terminal。Rust でなく cargo 不可、aqua も darwin 非対応
+brew "silicon"             # コードのスクショ。cargo だと Intel/Rosetta・旧版になるため brew(arm native)
+
+# --- tap 固有 ------------------------------------------------------------------
 brew "xcodesorg/made/xcodes"
+
+# === cask / vscode(formula 中心に棚卸し)====================================
 cask "alacritty"
-cask "amethyst"
 cask "aquaskk"
-cask "blackhole-2ch"
-cask "brave-browser"
+cask "arto"
 cask "discord"
 cask "espanso"
 cask "firefox"
+cask "ghostty"
 cask "inkscape"
 cask "iterm2"
 cask "keycastr"
-cask "microsoft-edge"
-cask "ngrok"
 cask "obs"
 cask "obsidian"
-cask "thunderbird"
+cask "swift-shift"
 cask "unnaturalscrollwheels"
 cask "visual-studio-code"
 cask "vlc"
-cask "vnc-viewer"
+cask "warp"
 cask "wezterm"
-cask "whichspace"
 cask "wireshark"
-mas "Amphetamine", id: 937984704
-mas "Bitwarden", id: 1352778147
-mas "GarageBand", id: 682658836
-mas "iMovie", id: 408981434
-mas "iScreen Shoter", id: 1596559494
-mas "Keynote", id: 409183694
-mas "Kindle", id: 302584613
-mas "LINE", id: 539883307
-mas "Magnet", id: 441258766
-mas "Numbers", id: 409203825
-mas "Pages", id: 409201541
-mas "RunCat", id: 1429033973
-mas "Tailscale", id: 1475387142
-mas "Xcode", id: 497799835
-vscode "editorconfig.editorconfig"
-vscode "github.copilot"
-vscode "github.copilot-chat"
-vscode "hashicorp.terraform"
-vscode "ms-ceintl.vscode-language-pack-ja"
-vscode "ms-python.debugpy"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-vscode-remote.remote-containers"
-vscode "ms-vsliveshare.vsliveshare"
-vscode "redhat.vscode-yaml"
-vscode "tamasfe.even-better-toml"
-vscode "vscodevim.vim"
+cask "wireshark-app"

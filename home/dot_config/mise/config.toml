@@ -1,0 +1,112 @@
+[settings]
+always_keep_download = true
+always_keep_install = true
+experimental = true
+python.compile = false  # always download precompiled binaries
+cargo.binstall = true
+pipx.uvx = true
+lockfile = true
+locked = true  # lockfile に固定した version/checksum/URL で取得・検証する(解決 API を極力叩かない)
+
+[settings.status]
+missing_tools = "always"
+show_env = true
+
+[tools]
+# Languages
+bun = 'latest'
+deno = 'latest'
+go = 'latest'
+java = "corretto-24"
+node = '26.3'  # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
+python = '3.14'
+rust = '1.96'  # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。メジャーのみ指定バグ回避で minor 固定
+zig = 'latest'
+
+# Editor
+neovim = 'stable'
+
+# Installer / Package Manager
+aqua = 'latest'  # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
+uv = 'latest'
+poetry = '2'
+cargo-binstall = "latest"
+pnpm = "latest"
+usage = "latest"  # mise の補完/spec 用
+chezmoi = 'latest'  # dotfiles 管理 (source: aqua:twpayne/chezmoi)
+"npm:@aikidosec/safe-chain" = "latest"  # npm のサプライチェーン保護ラッパ
+
+# Text Search
+ripgrep = 'latest'
+ripgrep-all = 'latest'
+fzf = 'latest'
+
+# Data Manipulation
+'aqua:BurntSushi/xsv' = 'latest'  # registry に短縮名なし
+dasel = 'latest'
+delta = 'latest'
+duckdb = "latest"
+jq = 'latest'
+jwt = 'latest'  # mike-engel/jwt-cli
+yq = 'latest'
+'go:github.com/abhimanyu003/sttr' = 'latest'  # aqua になし
+
+# Explorer / Viewer
+lsd = 'latest'
+'aqua:noborus/ov' = 'latest'  # registry に短縮名なし
+bat = 'latest'
+fd = 'latest'
+yazi = 'latest'
+'cargo:eza' = 'latest'  # ls 代替(lsd と併用)。eza は macOS 公式/aqua バイナリ非配布のため cargo-binstall の quickinstall prebuilt(arm64・署名検証あり)で取得
+
+# Git / GitHub
+gh = 'latest'
+lazygit = 'latest'
+ghq = 'latest'
+task = 'latest'
+git-lfs = 'latest'  # brew から移行(aqua:git-lfs/git-lfs)
+'aqua:simonwhitaker/gibo' = 'latest'  # registry に短縮名なし
+pinact = 'latest'  # GitHub Actions を commit SHA に固定 (aqua:suzuki-shunsuke/pinact)。.github/workflows の Action ピンに使う
+
+# System analysis
+dua = 'latest'
+dust = 'latest'
+'aqua:dylanaraps/neofetch' = 'latest'  # registry に短縮名なし
+
+# Network
+xh = 'latest'
+
+# Benchmarking
+hyperfine = 'latest'
+
+# Utilities
+'aqua:sharkdp/pastel' = 'latest'  # registry に短縮名なし
+'aqua:koki-develop/clive' = 'latest'  # registry に短縮名なし
+typst = 'latest'  # 組版(aqua:typst/typst)。brew から移行
+age = "latest"  # 暗号化
+zoxide = "latest"
+
+# Cloud/Infra
+tfsec = 'latest'
+'aqua:aws/aws-cli' = 'latest'  # aqua は .pkg でなく v2 バイナリを入れるため起動遅延を回避(旧 Homebrew 版から移行)
+terraform = 'latest'
+'aqua:twistedpair/google-cloud-sdk' = 'latest'  # gcloud の既定は vfox なので明示
+"npm:@googleworkspace/cli" = "latest"
+
+# Code Formater / Linter
+stylua = 'latest'
+hadolint = 'latest'
+shellcheck = 'latest'
+shfmt = 'latest'
+
+# Build / Codegen (brew から移行)
+cmake = 'latest'  # aqua:Kitware/CMake
+protoc = 'latest'  # aqua:protocolbuffers/protobuf。旧 brew protobuf / protobuf@3 を集約
+
+# AI Agent
+"npm:@openai/codex" = "latest"
+"npm:agent-browser" = "latest"
+"npm:ccusage" = "latest"  # Claude Code 利用量トラッキング
+"cargo:worktrunk" = "latest"  # git worktree manager
+"cargo:raine/workmux" = "latest"  # git worktree and tmux manager
+"npm:difit" = "latest"

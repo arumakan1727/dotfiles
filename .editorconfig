@@ -1,0 +1,25 @@
+root = true
+
+# 共通: AGENTS.md の改行ポリシー(LF / UTF-8 / 末尾改行)をツールレベルで固定する。
+# .gitattributes は置かず core.autocrlf=input + safecrlf=true を補完する位置づけ。
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Markdown は行末2スペースが hard break の意味を持つので trim しない。
+[*.md]
+trim_trailing_whitespace = false
+
+# Makefile はレシピ行が tab 必須。
+[Makefile]
+indent_style = tab
+
+[*.{sh,bash,zsh}]
+indent_style = space
+indent_size = 2
+
+[*.{yml,yaml,toml,json,lua}]
+indent_style = space
+indent_size = 2

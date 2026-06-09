@@ -1,0 +1,28 @@
+# === 秘密: 端末ローカルに留める。絶対に source へ入れない ===
+.config/pip/
+
+# === chezmoi 自身の設定/状態(machine-local・chezmoi init が再生成。tracked しない) ===
+.config/chezmoi/
+
+# === 揮発ファイル / 実行時 state / ビルド成果物 ===
+.config/mise/trusted-configs/
+.config/karabiner/automatic_backups/
+# zcompile 成果物。chezmoi の doublestar は gitignore と違い `*` が `/` を跨がないため
+# 直下用(*.zwc)とネスト用(**/*.zwc)の両方が要る。
+*.zwc
+**/*.zwc
+
+# === AquaSKK: 大容量辞書とアプリ管理 plist(AquaSKK 自身の .gitignore と一致) ===
+Library/Application Support/AquaSKK/SKK-JISYO.*
+Library/Application Support/AquaSKK/skk-jisyo.utf8
+Library/Application Support/AquaSKK/*.plist
+
+# === OS 分岐: macOS 専用ツリーは Linux で展開しない(~/Library 等を作らない) ===
+# .chezmoiignore はテンプレートとして評価される。パターンは target 名(dot_ 無し)。
+{{ if ne .chezmoi.os "darwin" }}
+Library/
+.config/karabiner/
+.config/amethyst/
+.yabairc
+.skhdrc
+{{ end -}}

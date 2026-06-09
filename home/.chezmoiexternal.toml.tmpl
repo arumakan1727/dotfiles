@@ -1,0 +1,55 @@
+{{- /*
+   Nerd Fonts (yuru7) を chezmoi external として宣言的に取得・sha256 検証・展開する。
+   旧 installer/chezmoi-steps/fonts.sh + pinned.toml [fonts] を置き換えたもの。
+
+   信頼の起点は下の手レビュー済み sha256(自リポジトリ保管)。URL は版固定で latest は
+   使わない(後からリリースが差し替わってもバイト変化で検知できる)。チェックサムが
+   一致しなければ chezmoi が展開を拒否する。
+
+   ヘッドレス機(DOTFILES_HEADLESS=1)では何も出力しない = フォント取得ごと skip。
+   配置先のみ OS で分岐(macOS=~/Library/Fonts, Linux=~/.local/share/fonts)。
+
+   再取得モデル: refreshPeriod 既定(=0)はキャッシュを使い続け、URL/sha を変えた
+   ピン更新時だけ再ダウンロードする(版を上げると URL が変わる=キャッシュミス)。
+   強制再取得は `chezmoi apply --refresh-externals`。
+
+   各 zip は .ttf のみ。stripComponents は zip 内の入れ子段数に合わせる:
+   PlemolJP だけ <top>/<sub>/*.ttf の2段なので 2、他は <top>/*.ttf の1段で 1。
+
+   Linux はインストール後に fontconfig キャッシュ更新が要る
+   → run_onchange_after_50-fontcache.sh.tmpl。macOS は ~/Library/Fonts を自動認識する。
+*/ -}}
+{{- if not (env "DOTFILES_HEADLESS") -}}
+{{- $dir := ".local/share/fonts" -}}
+{{- if eq .chezmoi.os "darwin" -}}{{ $dir = "Library/Fonts" }}{{- end -}}
+
+["{{ $dir }}/UDEVGothic"]
+    type            = "archive"
+    url             = "https://github.com/yuru7/udev-gothic/releases/download/v2.2.0/UDEVGothic_NF_v2.2.0.zip"
+    stripComponents = 1
+    checksum.sha256 = "45faeef7b5d8bc591bcc5887a2ca0c5fb9028066f18a5a52cd6f10b7d655ba37"
+
+["{{ $dir }}/Firge"]
+    type            = "archive"
+    url             = "https://github.com/yuru7/Firge/releases/download/v0.3.0/FirgeNerd_v0.3.0.zip"
+    stripComponents = 1
+    checksum.sha256 = "54cd76378fbc5025f42d441d95ca6ec1d3ecc4270e6107558840fed7c04cfe4f"
+
+["{{ $dir }}/HackGen"]
+    type            = "archive"
+    url             = "https://github.com/yuru7/HackGen/releases/download/v2.10.0/HackGen_NF_v2.10.0.zip"
+    stripComponents = 1
+    checksum.sha256 = "f8abd483d5edfad88a78ed511978f43c83b43c48e364aa29ebe4a68217474428"
+
+["{{ $dir }}/PlemolJP"]
+    type            = "archive"
+    url             = "https://github.com/yuru7/PlemolJP/releases/download/v3.0.0/PlemolJP_NF_v3.0.0.zip"
+    stripComponents = 2
+    checksum.sha256 = "887e2d0db714d41ac26ab924bdd3a172b922f57b2b480af01e0147180eac3d80"
+
+["{{ $dir }}/Moralerspace"]
+    type            = "archive"
+    url             = "https://github.com/yuru7/moralerspace/releases/download/v2.0.0/Moralerspace_v2.0.0.zip"
+    stripComponents = 1
+    checksum.sha256 = "56175ee16373ba1a3d2fd5ec46f3b0b6bf0412be7db1481ec7dee757f2e3d557"
+{{- end -}}

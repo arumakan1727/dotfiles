@@ -1,0 +1,42 @@
+name: weekly E2E
+
+# 週次で「ピンしたバイナリが今も fetch でき、checksum が一致し、実機相当で
+# bootstrap -> apply が通る」ことを継続検証する。リポジトリがピン運用 *だからこそ*
+# 価値が高い(上流のリリース差し替え・URL リネーム・404 を早期に検知できる)。
+on:
+  schedule:
+    - cron: "0 0 * * 5" # 毎週金曜 00:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    name: ${{ matrix.os }} fresh-machine E2E
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      # Linux: コンテナで full E2E(bootstrap -> apply -> 代表ツールの mise install ->
+      # zsh/bash 対話ロード)。GITHUB_TOKEN を渡して匿名 API のレート制限を避ける。
+      - name: linux full E2E
+        if: runner.os == 'Linux'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: make test/linux/full
+
+      # macOS: コンテナが無いので runner 上で実 apply。brew(cask 重い)と mise install は
+      # skip し、フォントは headless で空にする。bootstrap の darwin ピン取得/検証と
+      # 実 macOS FS への apply・macOS 用 run_onchange を実機で通すのが狙い。
+      - name: macOS E2E (bootstrap -> real apply; skip brew & mise, headless)
+        if: runner.os == 'macOS'
+        env:
+          DOTFILES_HEADLESS: "1"
+          DOTFILES_SKIP_BREW: "1"
+          DOTFILES_SKIP_MISE_INSTALL: "1"
+        run: ./install.sh

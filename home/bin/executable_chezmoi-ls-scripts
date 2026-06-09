@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Show which chezmoi run_* scripts would execute, in run order.
+#   chezmoi-ls-scripts [next|all]
+#     next (default): scripts pending on the NEXT apply (run_onchange whose
+#                     source hash changed + run_once not yet run)
+#     all           : every run_* script, regardless of current state
+# Thin wrapper around `chezmoi status --include=scripts`; handy before `apply`
+# to see what side effects (brew/mise/defaults/…) are about to fire.
+set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
+
+case "${1:-next}" in
+  next)
+    chezmoi status --include=scripts
+    ;;
+  all)
+    # A throwaway persistent-state makes chezmoi treat every run_onchange /
+    # run_once as pending, so all of them are listed regardless of what has
+    # already run. See https://github.com/twpayne/chezmoi/discussions/3491
+    chezmoi status --persistent-state="$(mktemp -d)/chezmoistate.boltdb" --include=scripts
+    ;;
+  -h | --help | help)
+    sed -n '2,8p' "$0"
+    ;;
+  *)
+    echo "usage: $(basename "$0") [next|all]" >&2
+    exit 2
+    ;;
+esac
