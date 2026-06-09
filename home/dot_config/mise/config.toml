@@ -66,6 +66,7 @@ ghq = 'latest'
 task = 'latest'
 git-lfs = 'latest'  # brew から移行(aqua:git-lfs/git-lfs)
 'aqua:simonwhitaker/gibo' = 'latest'  # registry に短縮名なし
+pinact = 'latest'  # GitHub Actions を commit SHA に固定 (aqua:suzuki-shunsuke/pinact)。.github/workflows の Action ピンに使う
 
 # System analysis
 dua = 'latest'

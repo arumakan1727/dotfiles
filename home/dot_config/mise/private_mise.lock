@@ -629,6 +629,25 @@ backend = "npm:ccusage"
 version = "4.0.4"
 backend = "npm:difit"
 
+[[tools.pinact]]
+version = "4.0.0"
+backend = "aqua:suzuki-shunsuke/pinact"
+
+[tools.pinact."platforms.linux-arm64"]
+checksum = "sha256:c5d8ef4b253a749b754ad04f484d93c78fade5470bb549d58df6a8aeca9b18bf"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.0.0/pinact_linux_arm64.tar.gz"
+provenance = "github-attestations"
+
+[tools.pinact."platforms.linux-x64"]
+checksum = "sha256:cc220902615325b10bd3bc52ed3de27488f79adaec52adcd12bd2194c2d2c592"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.0.0/pinact_linux_amd64.tar.gz"
+provenance = "github-attestations"
+
+[tools.pinact."platforms.macos-arm64"]
+checksum = "sha256:3260e0d6fa7d89e4b9a7cc6c120345db9217c4e0571742e9a76db2ba3ff63650"
+url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v4.0.0/pinact_darwin_arm64.tar.gz"
+provenance = "github-attestations"
+
 [[tools.pnpm]]
 version = "11.1.2"
 backend = "aqua:pnpm/pnpm"
