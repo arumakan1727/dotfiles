@@ -35,6 +35,8 @@ bad()     { printf '  \033[31m[FAIL]\033[0m %s\n' "$1"; FAIL=$((FAIL + 1)); }
 section() { printf '\n\033[36m== %s ==\033[0m\n' "$1"; }
 # ok_if "<desc>" <test-expression...>   e.g. ok_if "x exists" [ -f /x ]
 ok_if()   { local d="$1"; shift; if "$@"; then ok "$d"; else bad "$d"; fi; }
+# path_has "<PATH-value>" "<dir>"  -> 0 iff <dir> is a colon-segment of <PATH-value>
+path_has() { case ":$1:" in *":$2:"*) return 0 ;; *) return 1 ;; esac; }
 fatal()   { printf '\n\033[31mFATAL:\033[0m %s\n' "$1" >&2; summary; exit 1; }
 
 summary() {
@@ -153,6 +155,26 @@ if [ "$LEVEL" = smoke ]; then
     bash -c '! '"$MISE"' which rg >/dev/null 2>&1'
 fi
 
+# --- stage 3b: a fresh LOGIN shell must bootstrap PATH on its own --------------
+# Reproduces the reported breakage. On a fresh machine the login PATH does NOT
+# contain ~/.local/bin (where bootstrap installed mise+chezmoi) nor ~/bin (personal
+# scripts). The shell's *login* profile must prepend them itself — and BEFORE it
+# runs `mise activate`, because mise itself lives in ~/.local/bin. Get the order
+# wrong and a bash login shell hits "mise: command not found" and is left with
+# neither mise/chezmoi nor ~/.local/bin/~/bin on PATH (the symptom on the user's box).
+section "stage 3b: fresh login shell bootstraps PATH"
+# System dirs only — a realistic fresh-login PATH with no ~/.local/bin, no ~/bin.
+readonly BARE_LOGIN_PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# `bash -lc` sources ~/.bash_profile (login); -c keeps it non-interactive so there
+# is no prompt/plugin noise to filter.
+login_bash() { env -i HOME="$HOME" TERM=xterm SHELL=/bin/bash PATH="$BARE_LOGIN_PATH" bash -lc "$1" 2>/dev/null; }
+# shellcheck disable=SC2016  # $PATH must expand inside the login shell, not here
+login_path="$(login_bash 'printf %s "$PATH"')"
+ok_if "bash login: ~/.local/bin on PATH" path_has "$login_path" "$HOME/.local/bin"
+ok_if "bash login: ~/bin on PATH"        path_has "$login_path" "$HOME/bin"
+ok_if "bash login: mise resolves"    login_bash 'command -v mise >/dev/null'
+ok_if "bash login: chezmoi resolves" login_bash 'command -v chezmoi >/dev/null'
+
 # --- stage 4 (full only): representative mise install --------------------------
 if [ "$LEVEL" = full ]; then
   section "stage 4 (full): representative mise install"
@@ -180,6 +202,23 @@ if [ "$LEVEL" = full ]; then
   # zsh self-installs sheldon + plugins on first load (needs network).
   if zsh -ic 'exit 0' </dev/null; then ok "zsh -i loads cleanly"; else bad "zsh -i failed"; fi
 fi
+
+# --- stage 6: the one-shot ./install.sh entry point runs end-to-end ------------
+# The stages above drove bootstrap + chezmoi by hand; a real fresh machine runs
+# ./install.sh. Exercise it directly so the orchestration (bootstrap -> persist ->
+# chezmoi init --apply -> closing guidance) doesn't regress. Idempotent here: the
+# repo is already applied, so this is a no-op apply. No SSH / no TTY in the test,
+# so the headless prompt is skipped and the run is non-interactive.
+section "stage 6: ./install.sh end-to-end"
+install_log="$(cd "$WORK" && DOTFILES_SKIP_MISE_INSTALL=1 ./install.sh 2>&1)"; install_rc=$?
+ok_if "./install.sh exits 0" test "$install_rc" -eq 0
+# shellcheck disable=SC2016  # $1 is the bash -c positional, expanded by that shell
+ok_if "./install.sh prints closing guidance" \
+  bash -c 'printf %s "$1" | grep -q "exec .* -l"' _ "$install_log"
+# shellcheck disable=SC2016  # ditto: $1 belongs to the inner bash -c
+ok_if "chained bootstrap suppresses the standalone 'Next:' hint" \
+  bash -c '! printf %s "$1" | grep -q "^Next:"' _ "$install_log"
+[ "$install_rc" -eq 0 ] || printf '%s\n' "$install_log" | tail -20
 
 summary
 [ "$FAIL" -eq 0 ]

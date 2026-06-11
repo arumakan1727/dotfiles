@@ -1,3 +1,27 @@
 # shellcheck shell=bash
 
-eval "$(mise activate bash)"
+# --- PATH bootstrap (MUST precede `mise activate`) ------------------------------
+# mise and chezmoi live in ~/.local/bin (installer/bootstrap.sh puts them there);
+# personal scripts live in ~/bin. A fresh machine's login PATH usually has neither,
+# so prepend them HERE, before touching mise — otherwise `mise activate` below is
+# "command not found" and the login shell ends up with no mise, no chezmoi, and
+# none of these dirs on PATH. ~/.zshrc does the same prepend-then-activate dance.
+# Idempotent + dir-guarded so re-login / nested shells don't pile up duplicates.
+for _d in "$HOME/.local/bin" "$HOME/bin"; do
+  case ":$PATH:" in
+    *":$_d:"*) ;;
+    *) [ -d "$_d" ] && PATH="$_d:$PATH" ;;
+  esac
+done
+unset _d
+export PATH
+
+# mise then layers its tool shims on top (guarded so a mise-less box still logs in).
+command -v mise >/dev/null 2>&1 && eval "$(mise activate bash)"
+
+# Login shells don't auto-source ~/.bashrc, so an interactive SSH login would
+# otherwise miss the interactive config (aliases, EDITOR, pager, …). Pull it in —
+# the zsh side gets ~/.zshrc on an interactive login for the same reason.
+case $- in
+  *i*) [ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc" ;;
+esac

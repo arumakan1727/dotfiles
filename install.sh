@@ -100,8 +100,29 @@ persist_headless_to_mise() {
 headless_persist=0
 offer_headless
 
-"$here/installer/bootstrap.sh"
+# Tell bootstrap it's being chained: install.sh owns the "what's next" guidance, so
+# bootstrap should skip its standalone "Next: chezmoi init --apply / mise install"
+# hint (we run it right below) to avoid contradictory instructions.
+DOTFILES_BOOTSTRAP_CHAINED=1 "$here/installer/bootstrap.sh"
 
 [ "$headless_persist" = 1 ] && persist_headless_to_mise
 
-exec "$bin_dir/chezmoi" init --apply --source="$here"
+# Invoke the just-installed chezmoi by ABSOLUTE path so this still works when
+# ~/.local/bin isn't on PATH yet (the whole point of doing it here). Not `exec`:
+# we want to print the closing guidance afterwards. Preserve chezmoi's exit code.
+"$bin_dir/chezmoi" init --apply --source="$here"
+rc=$?
+
+if [ "$rc" -eq 0 ]; then
+  cat <<EOF
+
+[*] セットアップ完了。
+    dotfiles は新しいシェルで ~/.local/bin (mise, chezmoi) と ~/bin を PATH に
+    通します。今のシェルにはまだ反映されていないので、ログインし直すか:
+
+        exec "\$SHELL" -l
+
+    を実行してから mise / chezmoi を使ってください。
+EOF
+fi
+exit "$rc"

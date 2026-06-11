@@ -163,8 +163,12 @@ main() {
   info "bootstrap complete."
   case ":$PATH:" in
     *":$BIN_DIR:"*) : ;;
-    *) echo "[WARN] $BIN_DIR is not on PATH. Add it before continuing." >&2 ;;
+    *) echo "[WARN] $BIN_DIR is not on PATH yet (the shell config fixes this for new shells)." >&2 ;;
   esac
+  # When chained from install.sh, that script runs `chezmoi init --apply` itself and
+  # prints the closing guidance — so suppress this standalone hint to avoid telling
+  # the user to run a step install.sh already ran.
+  [ -n "${DOTFILES_BOOTSTRAP_CHAINED:-}" ] && return 0
   cat <<EOF
 Next:
   chezmoi init --apply --source="<dotfiles repo path>"
