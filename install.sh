@@ -97,6 +97,23 @@ persist_headless_to_mise() {
   fi
 }
 
+# Record THIS repo as chezmoi's source dir so later *bare* `chezmoi` commands
+# (chezmoi diff/apply, chezmoi doctor, the Makefile targets) target it. We clone
+# the repo wherever the user likes and apply via `--source=$here`, but that flag is
+# per-invocation: without a persisted sourceDir, a fresh login's bare `chezmoi`
+# falls back to the default ~/.local/share/chezmoi — which doesn't exist here — and
+# errors "no such file or directory". sourceDir is the repo ROOT (chezmoi reads
+# .chezmoiroot on top); the config path is read by every chezmoi binary, so this
+# covers both the bootstrap chezmoi and the mise-managed one. Only created when
+# absent, so a machine-local chezmoi config the user already has is left untouched.
+persist_chezmoi_source() {
+  local cfg="$HOME/.config/chezmoi/chezmoi.toml"
+  [ -e "$cfg" ] && return 0
+  mkdir -p "$(dirname "$cfg")"
+  printf 'sourceDir = "%s"\n' "$here" >"$cfg"
+  echo "[*] chezmoi の sourceDir を $cfg に記録しました ($here)。"
+}
+
 headless_persist=0
 offer_headless
 
@@ -114,6 +131,7 @@ DOTFILES_BOOTSTRAP_CHAINED=1 "$here/installer/bootstrap.sh"
 rc=$?
 
 if [ "$rc" -eq 0 ]; then
+  persist_chezmoi_source
   cat <<EOF
 
 [*] セットアップ完了。

@@ -220,5 +220,20 @@ ok_if "chained bootstrap suppresses the standalone 'Next:' hint" \
   bash -c '! printf %s "$1" | grep -q "^Next:"' _ "$install_log"
 [ "$install_rc" -eq 0 ] || printf '%s\n' "$install_log" | tail -20
 
+# install.sh must persist the source dir so *bare* chezmoi (chezmoi diff/apply,
+# chezmoi doctor, the Makefile targets) resolves THIS repo. Without it, a fresh
+# login falls back to the empty default ~/.local/share/chezmoi and every bare
+# chezmoi command errors with "no such file or directory" (the reported symptom).
+# .chezmoiroot=home means source-path is the repo's home/ subdir, not the root.
+ok_if "bare chezmoi source-path resolves to the repo (.chezmoiroot applied)" \
+  test "$("$CHEZMOI" source-path 2>/dev/null)" = "$WORK/home"
+bare_diff="$("$CHEZMOI" diff 2>&1)"
+if [ -z "$bare_diff" ]; then
+  ok "bare chezmoi diff succeeds and is empty (source dir persisted)"
+else
+  bad "bare chezmoi diff failed or non-empty"
+  printf '%s\n' "$bare_diff" | head -10
+fi
+
 summary
 [ "$FAIL" -eq 0 ]
