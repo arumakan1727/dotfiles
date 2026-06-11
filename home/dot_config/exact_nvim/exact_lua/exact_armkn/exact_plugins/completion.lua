@@ -1,23 +1,4 @@
 return {
-  -- snippet engine: 既存の snipmate 形式 (~/.config/nvim/snippets/*.snippets) を活かすため LuaSnip を継続
-  {
-    "L3MON4D3/LuaSnip",
-    version = "v2.*",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    build = (not jit.os:find("Windows")) and "make install_jsregexp" or nil,
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-      update_events = "TextChanged,TextChangedI",
-    },
-    config = function(_, opts)
-      require("luasnip").setup(opts)
-      -- VSCode 形式 (friendly-snippets) と snipmate 形式 (自作 snippets/) の両方を読む
-      require("luasnip.loaders.from_vscode").lazy_load()
-      require("luasnip.loaders.from_snipmate").lazy_load()
-    end,
-  },
-
   -- 補完エンジン: blink.cmp。
   -- 供給網方針により Rust の prebuilt バイナリ DL(同梱 .sha256 のみで検証=信頼の起点にできない)も
   -- cargo build(重い)も避け、純 Lua の fuzzy matcher を使う(fuzzy.implementation='lua')。
@@ -25,7 +6,7 @@ return {
     "saghen/blink.cmp",
     version = "1.10.2", -- exact tag pin(floating な '1.*' は使わない)
     event = "InsertEnter",
-    dependencies = { "L3MON4D3/LuaSnip", "folke/lazydev.nvim" },
+    dependencies = { "folke/lazydev.nvim" },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
@@ -37,7 +18,6 @@ return {
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
       },
       appearance = { nerd_font_variant = "mono" },
-      snippets = { preset = "luasnip" },
       completion = {
         accept = { auto_brackets = { enabled = true } },
         menu = { border = "rounded" },
@@ -50,7 +30,7 @@ return {
       },
       signature = { enabled = true, window = { border = "rounded" } },
       sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+        default = { "lazydev", "lsp", "path", "buffer" },
         providers = {
           -- lazydev: require() のパス補完を LSP より優先
           lazydev = {

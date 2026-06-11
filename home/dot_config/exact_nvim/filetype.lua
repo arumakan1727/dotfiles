@@ -3,7 +3,6 @@ vim.filetype.add({
     bnf = "ebnf",
     ebnf = "ebnf",
     envrc = "sh",
-    snippets = "snippets",
     dig = "yaml",
 
     ---@param path string

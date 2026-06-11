@@ -54,7 +54,6 @@ return {
       { "<Leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
       { "<Leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find config file" },
       { "<Leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
-      { "<Leader>fh", function() require("armkn.util").cpp_include_picker() end, desc = "Insert C/C++ #include <...>" },
 
       -- search / grep
       { "<Leader>sg", function() Snacks.picker.grep() end, desc = "Grep (cwd)" },
