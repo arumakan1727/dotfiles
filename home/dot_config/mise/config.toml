@@ -29,7 +29,7 @@ neovim = 'stable'
 # Installer / Package Manager
 aqua = 'latest'  # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
 uv = 'latest'
-poetry = '2'
+'pipx:poetry' = '2'  # registry 既定の asdf backend は locked=true 下で lockfile URL を要求して linux で失敗するため pipx に固定(pipx.uvx=true で uv 経由)
 cargo-binstall = "latest"
 pnpm = "latest"
 usage = "latest"  # mise の補完/spec 用

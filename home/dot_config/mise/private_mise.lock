@@ -771,6 +771,10 @@ backend = "pipx:basedpyright"
 version = "0.1.11"
 backend = "pipx:cmake-language-server"
 
+[[tools."pipx:poetry"]]
+version = "2.4.1"
+backend = "pipx:poetry"
+
 [[tools."pipx:yamllint"]]
 version = "1.38.0"
 backend = "pipx:yamllint"
@@ -793,10 +797,6 @@ provenance = "github-attestations"
 checksum = "sha256:2f46bcb7ac3c693af72e06e68467b3a9127cbf2a24b778382bc8beaff8463aee"
 url = "https://github.com/pnpm/pnpm/releases/download/v11.1.2/pnpm-darwin-arm64.tar.gz"
 provenance = "github-attestations"
-
-[[tools.poetry]]
-version = "2.3.4"
-backend = "asdf:poetry"
 
 [[tools.protoc]]
 version = "35.0"
