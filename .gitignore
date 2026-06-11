@@ -1,5 +1,10 @@
 # migration scratch / scratchpad (kept locally, not tracked)
-/tmp/
+/tmp
+
+# machine-local mise override (install.sh writes DOTFILES_HEADLESS here on SSH hosts)
+mise.local.toml
+mise.*.local.toml
+CLAUDE.local.md
 
 # compiled zsh (runtime artifacts; never committed)
 *.zwc
