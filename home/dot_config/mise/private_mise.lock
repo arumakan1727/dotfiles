@@ -230,22 +230,6 @@ backend = "cargo:raine/workmux"
 version = "0.44.0"
 backend = "cargo:worktrunk"
 
-[[tools.chezmoi]]
-version = "2.70.4"
-backend = "aqua:twpayne/chezmoi"
-
-[tools.chezmoi."platforms.linux-arm64"]
-checksum = "sha256:b2dc1e0ddf8beff09ee14f212271dd9e943d1d97d5f17a3d070ce35a6ada9e14"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_linux_arm64.tar.gz"
-
-[tools.chezmoi."platforms.linux-x64"]
-checksum = "sha256:7382f585d35647ebb492bd6345466e7f35564068b78285bb029cb2f35056ecf4"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_linux_amd64.tar.gz"
-
-[tools.chezmoi."platforms.macos-arm64"]
-checksum = "sha256:0093fa436e9ccccf423323315c0146f6dc77985294bd845cee1f3cf3f63eeb0f"
-url = "https://github.com/twpayne/chezmoi/releases/download/v2.70.4/chezmoi_2.70.4_darwin_arm64.tar.gz"
-
 [[tools.cmake]]
 version = "4.3.3"
 backend = "aqua:Kitware/CMake"

@@ -48,6 +48,20 @@ chezmoi apply           # $HOME へ反映  (make apply)
 chezmoi add <path>      # 実環境で直接編集したファイルを source へ取り込む
 ```
 
+## Update (chezmoi / mise の pin)
+
+`chezmoi` / `mise` は bootstrap が固定管理する trust anchor（`installer/pinned.toml`）で、mise 管理下の
+ツールではない。更新は「pin を更新 → bootstrap で取得し直す」:
+
+```shell
+GITHUB_TOKEN=$(gh auth token) make update-pins   # 7日以上経過した最新版へ pin + sha256 を再記録
+git diff installer/pinned.toml                   # version / sha256 を人手レビューしてコミット
+./installer/bootstrap.sh                          # 新 pin を DL→sha 照合→~/.local/bin へ置換（冪等）
+```
+
+`update-pins` は chezmoi と mise を**まとめて**解決する（片方だけ上げたいときは `pinned.toml` の該当
+セクションを手編集し upstream の checksums と照合）。`--dry-run` で差分のみ、`--days N` で age 窓変更。
+
 ## Debug
 
 ```shell

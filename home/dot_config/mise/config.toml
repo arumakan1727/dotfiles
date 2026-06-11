@@ -37,7 +37,10 @@ uv = 'latest'
 cargo-binstall = "latest"
 pnpm = "latest"
 usage = "latest"  # mise の補完/spec 用
-chezmoi = 'latest'  # dotfiles 管理 (source: aqua:twpayne/chezmoi)
+# chezmoi は mise tool にしない: bootstrap(installer/pinned.toml + update-pins.sh)が
+# 唯一の管理元。mise 自身と同じく「mise を立ち上げる前の trust anchor」なので、ここに置くと
+# bootstrap 版と二重管理になり PATH で shadow し合う(mise activate 後は mise 版が優先)。更新は
+# pinned.toml を update-pins.sh で。— 2026-06 に mise から除外(別マシンで version drift が判明)。
 "npm:@aikidosec/safe-chain" = "latest"  # npm のサプライチェーン保護ラッパ
 
 # Text Search

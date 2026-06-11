@@ -149,6 +149,16 @@ ok_if "no fonts installed (chezmoi external skipped: headless)" test ! -e "$HOME
 ok_if "rust present in mise lockfile (migrated from rustup.sh)" \
   grep -q 'tools.rust' "$HOME/.config/mise/mise.lock"
 
+# chezmoi is a bootstrap trust anchor (installer/pinned.toml), NOT a mise tool —
+# managing it in both places makes the mise copy shadow the bootstrap one on PATH
+# and drift in version. It must therefore be absent from the mise config + lock.
+# shellcheck disable=SC2016  # $1 is the inner bash -c positional, expanded there
+ok_if "chezmoi NOT a mise tool (lockfile has no tools.chezmoi)" \
+  bash -c '! grep -q "tools.chezmoi" "$1"' _ "$HOME/.config/mise/mise.lock"
+# shellcheck disable=SC2016  # ditto: $1 belongs to the inner bash -c
+ok_if "chezmoi NOT a mise tool (config has no chezmoi assignment)" \
+  bash -c '! grep -qE "^[[:space:]]*(chezmoi|.aqua:twpayne/chezmoi.)[[:space:]]*=" "$1"' _ "$HOME/.config/mise/config.toml"
+
 # mise install was skipped in smoke -> tools must be absent (proves the gate)
 if [ "$LEVEL" = smoke ]; then
   ok_if "smoke: ripgrep not installed (mise install skipped)" \
