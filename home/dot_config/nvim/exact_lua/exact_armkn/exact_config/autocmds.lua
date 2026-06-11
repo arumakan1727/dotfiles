@@ -20,7 +20,15 @@ autocmd("ColorScheme", {
 })
 autocmd({ "WinNew", "BufWinEnter" }, {
   group = augroup,
-  callback = function()
+  callback = function(ev)
+    -- フローティングウィンドウ(lazy.nvim / blink.cmp などの UI)はノイズになるのでスキップ
+    if vim.api.nvim_win_get_config(0).relative ~= "" then
+      return
+    end
+    -- 通常のファイルバッファ以外(プラグイン UI などの特殊 buftype)もスキップ
+    if vim.bo[ev.buf].buftype ~= "" then
+      return
+    end
     if vim.fn.exists("w:armkn_trail_match") == 0 then
       vim.w.armkn_trail_match = vim.fn.matchadd("ArmknTrailSpace", [[\s\+$]])
     end
