@@ -137,7 +137,7 @@ source "$HOME/.config/zsh/nonlazy/sheldon.zsh"
 # mise の GitHub アクセス用ラッパー
 #   1. install や update などのネットワーク系サブコマンドで、認証済のときだけ `gh auth token` を MISE_GITHUB_TOKEN に注入する。
 #      mise の子プロセスにだけ渡り、関数を抜けると破棄される(global env を汚さない)。
-#   2. npm バックエンド時は専用 npmrc も併用: ~/.npmrc の min-release-age=7 と MISE_INSTALL_BEFORE の --before が衝突するのを避ける。
+#   2. npm バックエンド時は専用 npmrc も併用: ~/.npmrc の min-release-age=7 を mise の npm backend に渡すと、npm 11.x が内部で min-release-age→--before を再生成して自己衝突するバグ(npm#9005, 修正は npm 12.0.0-pre)を踏むため、min-release-age を持たない専用 userconfig を使わせる(Flatt registry 固定も兼ねる)。
 if (( ${+functions[mise]} )); then
   functions -c mise _mise_orig
   mise() {
@@ -207,6 +207,6 @@ fpath+=~/.zfunc; autoload -Uz compinit; compinit -C
 zstyle ':completion:*' menu select
 
 export UV_EXCLUDE_NEWER=P7D
-export MISE_INSTALL_BEFORE=7d
+# mise の release-age は ~/.config/mise/config.toml の minimum_release_age へ移行済み(env だと非対話/CI で効かないため)。MISE_INSTALL_BEFORE は再追加しない。
 
 if command -v wt >/dev/null 2>&1; then zsh-defer eval 'eval "$(command wt config shell init zsh)"'; fi

@@ -1,12 +1,16 @@
 [settings]
 always_keep_download = true
 always_keep_install = true
-experimental = true
 python.compile = false  # always download precompiled binaries
 cargo.binstall = true
 pipx.uvx = true
+
+# サプライチェーン: lockfile に固定した version/checksum/URL のみで取得・検証する(解決 API を極力叩かない)。
 lockfile = true
-locked = true  # lockfile に固定した version/checksum/URL で取得・検証する(解決 API を極力叩かない)
+locked = true
+minimum_release_age = "7d"  # fuzzy 解決(latest/node@26 等)で「リリース後 7d 未満」を弾く。旧 MISE_INSTALL_BEFORE env の後継(deprecated: warn 2026.10/remove 2027.10)。config 化で非対話/CI でも効く。exact pin と lockfile 再現 install はバイパス
+locked_verify_provenance = true  # lockfile の provenance(github-attestations 等)を毎 install で再検証する。既定 false はキャッシュ信頼で検証スキップ。provenance_api_failures_fatal(既定 true) と相まって API 障害時は hard fail
+lockfile_platforms = ["linux-x64", "linux-arm64", "macos-arm64"]  # `mise lock` が常にこの3ターゲットを書く(手動 --platform 不要。明示時のみ上書き)。既定の全platform誤lockを防止
 
 [settings.status]
 missing_tools = "always"
@@ -124,7 +128,7 @@ terraform-ls = 'latest'  # terraformls
 "npm:bash-language-server" = 'latest'  # bashls
 "npm:@prisma/language-server" = 'latest'  # prismals
 "pipx:cmake-language-server" = 'latest'  # cmake LSP
-# TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。prerelease のみ + MISE_INSTALL_BEFORE=7d の
+# TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。prerelease のみ + minimum_release_age=7d の
 # ため dev 版を exact 固定。nvim-lspconfig の tsgo は project-local node_modules/.bin/tsgo を優先する。
 "npm:@typescript/native-preview" = '7.0.0-dev.20260527.2'  # tsgo
 

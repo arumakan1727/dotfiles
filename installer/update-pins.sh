@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Update pinned.toml to the latest chezmoi / mise releases that satisfy the
-# release-age policy (mirrors MISE_INSTALL_BEFORE / UV_EXCLUDE_NEWER: do not
+# release-age policy (mirrors mise minimum_release_age / UV_EXCLUDE_NEWER: do not
 # adopt a release younger than N days). Re-records the SHA-256 of each target
 # platform's tarball from the upstream checksum file.
 #

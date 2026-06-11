@@ -6,7 +6,7 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 ## Principles
 
 - **サプライチェーン攻撃対策**: version / commit / tag を固定し、自リポジトリに人手レビュー済み sha256 を置いて検証する。同一リリースに同梱された checksum は信頼の起点にしない。`curl | sh` や `main` / `HEAD` 参照は禁止。
-- **リリース直後の取り込みを避ける**: `MISE_INSTALL_BEFORE=7d`、`UV_EXCLUDE_NEWER=P7D`、pnpm / npm / pip の minimumReleaseAge 相当を維持する。ピン更新はこの待機期間を尊重し、回避目的の downgrade はしない。
+- **リリース直後の取り込みを避ける**: mise `minimum_release_age=7d`(config.toml)、`UV_EXCLUDE_NEWER=P7D`、pnpm / npm / pip の minimumReleaseAge 相当を維持する。ピン更新はこの待機期間を尊重し、回避目的の downgrade はしない。
 - **CLI は原則 mise**: aqua + lockfile + age policy に寄せる。新規依存は正当性を確認し、低人気・無名パッケージを避ける。
 - **セットアップ系は冪等**: installer / run_onchange は再実行安全にし、存在・バージョン一致で skip する。実環境を触る変更は「先に作って原子的に差し替え」を基本にする。
 - **Linux / macOS 両対応、Windows 非対象**: 配置有無の OS 分岐は `.chezmoiignore`、実行時分岐は `CHEZMOI_OS`。shell init は未導入ツールに耐えるよう `command -v` でガードする。macOS/GNU 差には注意し、`readlink -f` ではなく `realpath` などを使う。
@@ -43,7 +43,7 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 ## mise
 
 - ツール指定は registry 短縮名を優先し、短縮名が無いものだけ `aqua:owner/repo` などにフォールバックする。フォールバック理由は config コメントに残す。
-- `mise use -g` は target 側の config を書く。先に `chezmoi apply` せず、`mise lock -g --platform linux-x64,linux-arm64,macos-arm64` 後に config と lock を `chezmoi add` で source に取り込む。
+- `mise use -g` は target 側の config を書く。先に `chezmoi apply` せず、`mise lock -g` 後に config と lock を `chezmoi add` で source に取り込む(対象 platform は config.toml の `lockfile_platforms` で linux-x64/arm64・macos-arm64 を宣言済。別 platform が要るときだけ `--platform` を明示)。
 - `private_mise.lock` は mise が生成する。手で編集せず、chezmoiscript から `chezmoi add` して source を自動変更しない。
 - `settings.locked = true` 下で新規 lock 生成が詰まる場合は、temp config root で `locked=false` にして生成し、必要な lock 行だけ source へ反映する。
 - runtime version の major-only 指定は避け、少なくとも minor まで固定する。現在の理由は `home/dot_config/mise/config.toml` のコメントを参照。
