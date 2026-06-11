@@ -54,3 +54,12 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
+; HTTPS 認証を gh に委譲する(SSH 鍵不要)。`gh auth setup-git` 相当を source に固定し、
+; apply で消えない・再現可能にする。空 helper で既存をリセットしてから gh を登録。
+; gh はフルパスでなく PATH 解決にして、mise の gh バージョン更新でパスが切れないようにする。
+[credential "https://github.com"]
+  helper =
+  helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+  helper =
+  helper = !gh auth git-credential
