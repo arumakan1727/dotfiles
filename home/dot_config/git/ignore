@@ -1,10 +1,5 @@
-# direnv
-.envrc
-.direnv/
-
-# mise
-.rtx.local.toml
-.mise.local.toml
+# My rule: tmp dir for LLM Agent
+/_ai
 
 # vim
 .vimrc.local
