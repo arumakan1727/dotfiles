@@ -42,6 +42,28 @@ return {
       },
       -- 純 Lua matcher(native バイナリ不要・DL 不要)。巨大候補で僅かに遅いが供給網は最小。
       fuzzy = { implementation = "lua" },
+      -- コマンドライン補完(`:e <Tab>` 等)。
+      -- デフォルトの <Tab> は { 'show_and_insert_or_accept_single', 'select_next' } で
+      -- 1回目から最長一致を挿入してしまう。代わりに:
+      --   <Tab>        = メニュー非表示なら show / 表示中なら選択中候補を確定(accept)
+      --   <Up>/<Down>  = 候補のハイライト移動(menu 非表示時は history へ fallback)
+      -- これで `path/` を accept するとメニューが一旦閉じ、次の <Tab> で `path/` 配下を出せる
+      -- (select_next だと accept 後も選択モードが続き兄弟へ切り替わってしまう)。
+      cmdline = {
+        keymap = {
+          preset = "cmdline",
+          ["<Tab>"] = { "show", "select_and_accept" },
+          ["<Down>"] = { "select_next", "fallback" },
+          ["<Up>"] = { "select_prev", "fallback" },
+        },
+        completion = {
+          -- preselect=false: メニュー表示直後は何も選択しない(=挿入もしない)
+          -- auto_insert=false: <Up>/<Down> は menu 内のハイライト移動のみ。
+          --                    入力欄へ反映されるのは <Tab>(accept)を押したときだけ。
+          list = { selection = { preselect = false, auto_insert = false } },
+          menu = { auto_show = false }, -- Tab を押すまでメニューを出さない
+        },
+      },
     },
     opts_extend = { "sources.default" },
   },
