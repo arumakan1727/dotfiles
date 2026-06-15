@@ -52,3 +52,4 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 
 - 件名は lowercase scope + colon (`zsh:`, `mise:`, `chezmoi:`, `chore:` など)。命令形、末尾ピリオド無し。
 - ドキュメントには実ユーザ名入りの絶対パスを書かない。リポジトリ相対パスを使う。
+- solo の個人 dotfiles。`main` 直コミットでよい(feature branch / PR は不要)。論理単位ごとに細かく分けて commit する。
