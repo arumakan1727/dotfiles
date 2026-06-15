@@ -54,6 +54,14 @@ return {
     build = ":TSUpdate",
     lazy = false,
     config = function()
+      -- tree-sitter CLI(内部の cc crate)は aarch64 Linux で既定 C コンパイラを
+      -- Debian 流の `aarch64-linux-gnu-gcc` に決め打ちする。Fedora 系(Amazon Linux
+      -- 2023 等)や Arch にはその名前が無く parser ビルドが落ちるため、全 distro / mac
+      -- 共通の `cc` を使わせる(ユーザが CC を明示していれば尊重して上書きしない)。
+      if vim.env.CC == nil or vim.env.CC == "" then
+        vim.env.CC = "cc"
+      end
+
       require("nvim-treesitter").setup()
       -- パーサを非同期インストール(初回は cc / tree-sitter CLI でビルドされる)
       pcall(function()
