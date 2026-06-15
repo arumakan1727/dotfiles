@@ -1,0 +1,137 @@
+#!/usr/bin/env bun
+// jwt — decode/encode JSON Web Tokens.
+//
+// mike-engel/jwt-cli の linux-arm64 prebuilt が存在せず、arm64 バイナリを配る
+// CLI は無名 pkg しか無いため、bun(mise 管理・arch 非依存)で自前実装した代替。
+// 署名は HMAC(HS256/384/512)のみ対応。RS/ES 等の検証は未対応。
+
+const enc = new TextEncoder();
+const dec = new TextDecoder();
+
+const ALGS = { HS256: "SHA-256", HS384: "SHA-384", HS512: "SHA-512" };
+
+function b64urlToBytes(s) {
+  s = s.replace(/-/g, "+").replace(/_/g, "/");
+  const pad = s.length % 4;
+  if (pad) s += "=".repeat(4 - pad);
+  return Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+}
+
+function bytesToB64url(bytes) {
+  let bin = "";
+  for (const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function b64urlJson(s) {
+  return JSON.parse(dec.decode(b64urlToBytes(s)));
+}
+
+async function hmac(alg, secret, data) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    enc.encode(secret),
+    { name: "HMAC", hash: ALGS[alg] },
+    false,
+    ["sign"],
+  );
+  return new Uint8Array(await crypto.subtle.sign("HMAC", key, enc.encode(data)));
+}
+
+// 時刻系クレームは元値を残しつつ ISO8601 を併記する(表示用)。
+function humanizeClaims(payload) {
+  const out = { ...payload };
+  for (const k of ["exp", "iat", "nbf", "auth_time"]) {
+    if (typeof payload[k] === "number") {
+      out[k] = `${payload[k]} (${new Date(payload[k] * 1000).toISOString()})`;
+    }
+  }
+  return out;
+}
+
+async function decode(token, { secret } = {}) {
+  const parts = token.trim().split(".");
+  if (parts.length !== 3) throw new Error("not a JWT (expected 3 dot-separated parts)");
+  const [h, p, s] = parts;
+  const header = b64urlJson(h);
+  const payload = b64urlJson(p);
+  const out = { header, payload: humanizeClaims(payload) };
+  if (secret != null) {
+    if (!ALGS[header.alg]) throw new Error(`cannot verify alg=${header.alg} (only HS256/384/512)`);
+    out.verified = bytesToB64url(await hmac(header.alg, secret, `${h}.${p}`)) === s;
+  }
+  return out;
+}
+
+async function encode(payloadJson, { secret, alg = "HS256" } = {}) {
+  if (!ALGS[alg]) throw new Error(`unsupported alg=${alg} (HS256/384/512)`);
+  if (secret == null) throw new Error("encode requires --secret");
+  const header = { alg, typ: "JWT" };
+  const h = bytesToB64url(enc.encode(JSON.stringify(header)));
+  const p = bytesToB64url(enc.encode(JSON.stringify(JSON.parse(payloadJson))));
+  const sig = bytesToB64url(await hmac(alg, secret, `${h}.${p}`));
+  return `${h}.${p}.${sig}`;
+}
+
+function parseFlags(args) {
+  const flags = {};
+  const rest = [];
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a === "--secret" || a === "-S") flags.secret = args[++i];
+    else if (a === "--alg" || a === "-A") flags.alg = args[++i];
+    else if (a === "--help" || a === "-h") flags.help = true;
+    else rest.push(a);
+  }
+  return { flags, rest };
+}
+
+const HELP = `jwt — decode/encode JSON Web Tokens (bun)
+
+Usage:
+  jwt [decode] <token|->            Decode header & payload (- reads stdin)
+  jwt decode --secret S <token>     Decode and verify HS256/384/512 signature
+  jwt encode --secret S [--alg HS256] <json-payload>
+
+Flags:
+  -S, --secret S   HMAC secret (verify on decode / sign on encode)
+  -A, --alg ALG    HS256 (default) | HS384 | HS512
+  -h, --help
+
+Examples:
+  jwt eyJhbGciOi...
+  echo "$TOKEN" | jwt decode -
+  jwt encode -S s3cr3t '{"sub":"me","exp":1893456000}'
+`;
+
+async function readStdin() {
+  const chunks = [];
+  for await (const c of Bun.stdin.stream()) chunks.push(c);
+  return Buffer.concat(chunks).toString("utf8").trim();
+}
+
+async function main() {
+  const { flags, rest } = parseFlags(Bun.argv.slice(2));
+  if (flags.help) return void process.stdout.write(HELP);
+
+  let cmd = "decode";
+  if (rest[0] === "decode" || rest[0] === "encode") cmd = rest.shift();
+
+  let input = rest[0];
+  if (input === undefined && process.stdin.isTTY) return void process.stdout.write(HELP);
+  if (input === undefined || input === "-") input = await readStdin();
+  if (!input) throw new Error("no input");
+
+  if (cmd === "encode") {
+    process.stdout.write((await encode(input, flags)) + "\n");
+  } else {
+    const out = await decode(input, flags);
+    process.stdout.write(JSON.stringify(out, null, 2) + "\n");
+    if (out.verified === false) process.exit(1);
+  }
+}
+
+main().catch((e) => {
+  process.stderr.write(`jwt: ${e.message}\n`);
+  process.exit(1);
+});
