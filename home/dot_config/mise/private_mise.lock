@@ -41,16 +41,6 @@ url = "https://github.com/aquaproj/aqua/releases/download/v2.57.2/aqua_darwin_ar
 url_api = "https://api.github.com/repos/aquaproj/aqua/releases/assets/405294909"
 provenance = "github-attestations"
 
-[[tools."aqua:BurntSushi/xsv"]]
-version = "0.13.0"
-backend = "aqua:BurntSushi/xsv"
-
-[tools."aqua:BurntSushi/xsv"."platforms.linux-x64"]
-url = "https://github.com/BurntSushi/xsv/releases/download/0.13.0/xsv-0.13.0-x86_64-unknown-linux-musl.tar.gz"
-
-[tools."aqua:BurntSushi/xsv"."platforms.macos-arm64"]
-url = "https://github.com/BurntSushi/xsv/releases/download/0.13.0/xsv-0.13.0-x86_64-apple-darwin.tar.gz"
-
 [[tools."aqua:aws/aws-cli"]]
 version = "2.34.63"
 backend = "aqua:aws/aws-cli"
@@ -559,18 +549,6 @@ checksum = "sha256:a9fe3ea2f86dfc72f6728417521ec9067b343277152b114f4e98d8cb0e263
 url = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-macos-arm64"
 provenance = "github-attestations"
 
-[[tools.jwt]]
-version = "6.2.0"
-backend = "aqua:mike-engel/jwt-cli"
-
-[tools.jwt."platforms.linux-x64"]
-checksum = "sha256:bf5cb1f120842cbc4df003d6694e0951e93f47be78c03f8e747629bdfd0796df"
-url = "https://github.com/mike-engel/jwt-cli/releases/download/6.2.0/jwt-linux-musl.tar.gz"
-
-[tools.jwt."platforms.macos-arm64"]
-checksum = "sha256:c277a113e2fc89d44e70cf38786e7da8b0cbfe59e77e23b37033cc4e2bd8aad6"
-url = "https://github.com/mike-engel/jwt-cli/releases/download/6.2.0/jwt-macOS.tar.gz"
-
 [[tools.lazygit]]
 version = "0.61.1"
 backend = "aqua:jesseduffield/lazygit"
@@ -817,6 +795,22 @@ checksum = "sha256:5995f024e9c95ccbc87b9bb97152ad1ec9efcf9d76e0574cd37dd946afbea
 url = "https://github.com/astral-sh/python-build-standalone/releases/download/20251120/cpython-3.14.0+20251120-aarch64-apple-darwin-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
+[[tools.qsv]]
+version = "19.1.0"
+backend = "aqua:dathere/qsv"
+
+[tools.qsv."platforms.linux-arm64"]
+checksum = "sha256:791417c9d17c0040a6045fc20afb9d3f172700b450ef3874dc097a962a8ccf6b"
+url = "https://github.com/dathere/qsv/releases/download/19.1.0/qsv-19.1.0-aarch64-unknown-linux-gnu.zip"
+
+[tools.qsv."platforms.linux-x64"]
+checksum = "sha256:791341b543bfa85eed662da4a3dbffe18ce8b732b00107c27177716bd1d9fc5b"
+url = "https://github.com/dathere/qsv/releases/download/19.1.0/qsv-19.1.0-x86_64-unknown-linux-musl.zip"
+
+[tools.qsv."platforms.macos-arm64"]
+checksum = "sha256:1046c9bf06658e77cc4bbb9b3789ef6318c7176e5a678f8e0d1b2bea24047574"
+url = "https://github.com/dathere/qsv/releases/download/19.1.0/qsv-19.1.0-aarch64-apple-darwin.zip"
+
 [[tools.ripgrep]]
 version = "15.1.0"
 backend = "aqua:BurntSushi/ripgrep"
@@ -1047,43 +1041,20 @@ checksum = "sha256:f39d59a3f9be4eeb3d965657653ad62243103a3d921ce52ca8f907cff4589
 url = "https://github.com/aquasecurity/tfsec/releases/download/v1.28.14/tfsec_1.28.14_darwin_arm64.tar.gz"
 
 [[tools.tree-sitter]]
-version = "0.26.9"
+version = "0.25.10"
 backend = "aqua:tree-sitter/tree-sitter"
 
 [tools.tree-sitter."platforms.linux-arm64"]
-checksum = "sha256:c8feeb32115958cb44442ca4d68f6d66cf7605dbd65681e62342181ebdd6db3b"
-url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-arm64.gz"
-provenance = "github-attestations"
-
-[tools.tree-sitter."platforms.linux-arm64-musl"]
-checksum = "sha256:c8feeb32115958cb44442ca4d68f6d66cf7605dbd65681e62342181ebdd6db3b"
-url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-arm64.gz"
-provenance = "github-attestations"
+checksum = "sha256:07fbff8ae0eeb0d3e496e14fc1a30dcc730cc2c97d70e601e5357f2e51958af5"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.25.10/tree-sitter-linux-arm64.gz"
 
 [tools.tree-sitter."platforms.linux-x64"]
-checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
-url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
-provenance = "github-attestations"
-
-[tools.tree-sitter."platforms.linux-x64-baseline"]
-checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
-url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
-provenance = "github-attestations"
-
-[tools.tree-sitter."platforms.linux-x64-musl"]
-checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
-url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
-provenance = "github-attestations"
-
-[tools.tree-sitter."platforms.linux-x64-musl-baseline"]
-checksum = "sha256:9ce82137caa65864e7ca8b869fd391cef88c9bd2a01c4371b9c4dd26c2585efb"
-url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-linux-x64.gz"
-provenance = "github-attestations"
+checksum = "sha256:8283ddba69253c698f6e987ba0e2f9285e079c8db4d36ebe1394b5bb3a0ebdfd"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.25.10/tree-sitter-linux-x64.gz"
 
 [tools.tree-sitter."platforms.macos-arm64"]
-checksum = "sha256:e46725b2417c085b0761948abc0cc240bff6a3ab5d2128e3ad0de467ded3388d"
-url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.26.9/tree-sitter-macos-arm64.gz"
-provenance = "github-attestations"
+checksum = "sha256:a6295d469669f6e901b6029ae6c129bd094df582d278c237fada413505cb9c42"
+url = "https://github.com/tree-sitter/tree-sitter/releases/download/v0.25.10/tree-sitter-macos-arm64.gz"
 
 [[tools.typst]]
 version = "0.14.2"

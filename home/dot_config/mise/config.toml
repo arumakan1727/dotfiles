@@ -49,12 +49,13 @@ ripgrep-all = 'latest'
 fzf = 'latest'
 
 # Data Manipulation
-'aqua:BurntSushi/xsv' = 'latest'  # registry に短縮名なし
+qsv = 'latest'  # xsv 後継(aqua:dathere/qsv)。xsv 0.13.0 は開発停止で linux-arm64 バイナリ無し、qsv は arm64 prebuilt あり
 dasel = 'latest'
 delta = 'latest'
 duckdb = "latest"
 jq = 'latest'
-jwt = 'latest'  # mike-engel/jwt-cli
+# jwt は ~/bin/jwt(bun スクリプト)へ移行。mike-engel/jwt-cli は linux-arm64 prebuilt が無く、
+# arm64 prebuilt のある CLI は低 star の無名 pkg のみで供給網ポリシーに反するため、bun 自前デコーダで代替
 yq = 'latest'
 'go:github.com/abhimanyu003/sttr' = 'latest'  # aqua になし
 
@@ -136,7 +137,10 @@ terraform-ls = 'latest'  # terraformls
 "npm:@typescript/native-preview" = '7.0.0-dev.20260527.2'  # tsgo
 
 # Neovim: treesitter / formatter / linter
-tree-sitter = 'latest'  # nvim-treesitter のパーサビルドに必須(無いとハイライトが出ない)
+# nvim-treesitter(main/rewrite)のパーサビルドに必須(無いとハイライトが出ない)。
+# 0.25 系に固定: 0.26 系は CI を ubuntu-24.04 へ移行し prebuilt が GLIBC_2.39 を要求、
+# glibc 2.34 の Amazon Linux 2023 等で起動不可になる。0.25.x は GLIBC_2.29 要求で全 distro/mac 互換。
+tree-sitter = '0.25'
 "go:golang.org/x/tools/cmd/goimports" = 'latest'  # conform: goimports
 golangci-lint = 'latest'  # nvim-lint: go
 "npm:markdownlint-cli" = 'latest'  # nvim-lint: markdownlint
