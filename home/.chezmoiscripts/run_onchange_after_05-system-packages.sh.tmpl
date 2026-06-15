@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# run_onchange (chezmoi, Linux only): ensure system packages mise / the dotfiles
+# need but cannot provide themselves (libatomic for the prebuilt node, zsh, a C
+# compiler for nvim-treesitter parser builds). Delegates to
+# installer/chezmoi-steps/linux-packages.sh.
+#
+# Numbered 05 so it runs BEFORE 20-mise: mise's post-install `node -v` check
+# fails without libatomic.so.1 on minimal Amazon Linux 2023.
+#
+# run_onchange (not run_once): the hash line renders the step script's content
+# into this wrapper, so chezmoi re-runs it whenever the package logic changes.
+# `output "cat" …` hashes an out-of-source file (installer/ lives at the repo
+# root, outside the chezmoi source dir) the same way 10-homebrew hashes Brewfile.
+#
+# linux-packages-hash: {{ output "cat" (joinPath .chezmoi.sourceDir ".." "installer" "chezmoi-steps" "linux-packages.sh") | sha256sum }}
+set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
+
+[ "${CHEZMOI_OS:-}" = "linux" ] || exit 0
+
+repo_root="$(cd "$(dirname "$CHEZMOI_SOURCE_DIR")" && pwd -P)"
+"${repo_root}/installer/chezmoi-steps/linux-packages.sh"
