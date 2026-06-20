@@ -1,0 +1,7 @@
+{
+  // 箇条書きネストを4スペースで許可(MD007/ul-indent のデフォルトは indent=2)。
+  // markdownlint-cli はグローバル設定を自動探索しないので、nvim-lint から
+  // --config でこのファイルを明示的に渡している(lint.lua 参照)。
+  // プロジェクト直下の .markdownlint.* も併読され、キー衝突時はこちらが優先される。
+  "MD007": { "indent": 4 }
+}
