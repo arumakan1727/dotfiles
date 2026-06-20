@@ -4,6 +4,18 @@ return {
   event = { "BufReadPost", "BufNewFile", "BufWritePost" },
   config = function()
     local lint = require("lint")
+
+    -- markdownlint はグローバル設定を自動探索しないので明示的に --config を渡し、
+    -- プロジェクト非依存のデフォルト(例: MD007 を indent=4 許可)を効かせる。
+    -- プロジェクト直下の .markdownlint.* も併読され、キー衝突時はこの --config が優先。
+    do
+      local cfg = vim.fn.expand("~/.config/markdownlint/config.jsonc")
+      if vim.fn.filereadable(cfg) == 1 then
+        local md = lint.linters.markdownlint
+        md.args = vim.list_extend({ "--config", cfg }, md.args or {})
+      end
+    end
+
     lint.linters_by_ft = {
       sh = { "shellcheck" },
       bash = { "shellcheck" },
