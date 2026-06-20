@@ -667,7 +667,7 @@ version = "0.22.5"
 backend = "npm:@googleworkspace/cli"
 
 [[tools."npm:@openai/codex"]]
-version = "0.137.0"
+version = "0.139.0"
 backend = "npm:@openai/codex"
 
 [[tools."npm:@prisma/language-server"]]
