@@ -1,5 +1,5 @@
 [settings]
-python.compile = false  # always download precompiled binaries
+python.compile = false # always download precompiled binaries
 cargo.binstall = true
 pipx.uvx = true
 
@@ -8,9 +8,13 @@ lockfile = true
 # locked(= lockfile に現 platform の解決済み URL が無いと install を fail させ、解決 API を一切叩かない)は
 # ローカルでは外す: 新規ツール追加時に lock 未登録で install が毎回 fail する摩擦が大きいため。CI(週次
 # Linux full E2E)では test/run.sh が MISE_LOCKED=1 を注入し「ピンが今も fetch でき checksum 一致」を厳密検証する。
-minimum_release_age = "7d"  # fuzzy 解決(latest/node@26 等)で「リリース後 7d 未満」を弾く。旧 MISE_INSTALL_BEFORE env の後継(deprecated: warn 2026.10/remove 2027.10)。config 化で非対話/CI でも効く。exact pin と lockfile 再現 install はバイパス
-locked_verify_provenance = true  # lockfile の provenance(github-attestations 等)を毎 install で再検証する。既定 false はキャッシュ信頼で検証スキップ。provenance_api_failures_fatal(既定 true) と相まって API 障害時は hard fail
-lockfile_platforms = ["linux-x64", "linux-arm64", "macos-arm64"]  # `mise lock` が常にこの3ターゲットを書く(手動 --platform 不要。明示時のみ上書き)。既定の全platform誤lockを防止
+minimum_release_age = "7d" # fuzzy 解決(latest/node@26 等)で「リリース後 7d 未満」を弾く。旧 MISE_INSTALL_BEFORE env の後継(deprecated: warn 2026.10/remove 2027.10)。config 化で非対話/CI でも効く。exact pin と lockfile 再現 install はバイパス
+locked_verify_provenance = true # lockfile の provenance(github-attestations 等)を毎 install で再検証する。既定 false はキャッシュ信頼で検証スキップ。provenance_api_failures_fatal(既定 true) と相まって API 障害時は hard fail
+lockfile_platforms = [
+  "linux-x64",
+  "linux-arm64",
+  "macos-arm64",
+] # `mise lock` が常にこの3ターゲットを書く(手動 --platform 不要。明示時のみ上書き)。既定の全platform誤lockを防止
 
 [settings.status]
 missing_tools = "always"
@@ -22,26 +26,26 @@ bun = 'latest'
 deno = 'latest'
 go = 'latest'
 java = "corretto-24"
-node = "26.4"  # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
+node = "26.4"        # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
 python = '3.14'
-rust = '1.96'  # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。メジャーのみ指定バグ回避で minor 固定
+rust = '1.96'        # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。メジャーのみ指定バグ回避で minor 固定
 zig = 'latest'
 
 # Editor
 neovim = 'stable'
 
 # Installer / Package Manager
-aqua = 'latest'  # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
+aqua = 'latest'           # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
 uv = 'latest'
-'pipx:poetry' = '2'  # registry 既定の asdf backend は locked=true 下で lockfile URL を要求して linux で失敗するため pipx に固定(pipx.uvx=true で uv 経由)
+'pipx:poetry' = '2'       # registry 既定の asdf backend は locked=true 下で lockfile URL を要求して linux で失敗するため pipx に固定(pipx.uvx=true で uv 経由)
 cargo-binstall = "latest"
 pnpm = "latest"
-usage = "latest"  # mise の補完/spec 用
+usage = "latest"          # mise の補完/spec 用
 # chezmoi は mise tool にしない: bootstrap(installer/pinned.toml + update-pins.sh)が
 # 唯一の管理元。mise 自身と同じく「mise を立ち上げる前の trust anchor」なので、ここに置くと
 # bootstrap 版と二重管理になり PATH で shadow し合う(mise activate 後は mise 版が優先)。更新は
 # pinned.toml を update-pins.sh で。— 2026-06 に mise から除外(別マシンで version drift が判明)。
-"npm:@aikidosec/safe-chain" = "latest"  # npm のサプライチェーン保護ラッパ
+"npm:@aikidosec/safe-chain" = "latest" # npm のサプライチェーン保護ラッパ
 
 # Text Search
 ripgrep = 'latest'
@@ -49,7 +53,7 @@ ripgrep-all = 'latest'
 fzf = 'latest'
 
 # Data Manipulation
-qsv = 'latest'  # xsv 後継(aqua:dathere/qsv)。xsv 0.13.0 は開発停止で linux-arm64 バイナリ無し、qsv は arm64 prebuilt あり
+qsv = 'latest'    # xsv 後継(aqua:dathere/qsv)。xsv 0.13.0 は開発停止で linux-arm64 バイナリ無し、qsv は arm64 prebuilt あり
 dasel = 'latest'
 delta = 'latest'
 duckdb = "latest"
@@ -57,29 +61,29 @@ jq = 'latest'
 # jwt は ~/bin/jwt(bun スクリプト)へ移行。mike-engel/jwt-cli は linux-arm64 prebuilt が無く、
 # arm64 prebuilt のある CLI は低 star の無名 pkg のみで供給網ポリシーに反するため、bun 自前デコーダで代替
 yq = 'latest'
-'go:github.com/abhimanyu003/sttr' = 'latest'  # aqua になし
+'go:github.com/abhimanyu003/sttr' = 'latest' # aqua になし
 
 # Explorer / Viewer
 lsd = 'latest'
-'aqua:noborus/ov' = 'latest'  # registry に短縮名なし
+'aqua:noborus/ov' = 'latest' # registry に短縮名なし
 bat = 'latest'
 fd = 'latest'
 yazi = 'latest'
-'cargo:eza' = 'latest'  # ls 代替(lsd と併用)。eza は macOS 公式/aqua バイナリ非配布のため cargo-binstall の quickinstall prebuilt(arm64・署名検証あり)で取得
+'cargo:eza' = 'latest'       # ls 代替(lsd と併用)。eza は macOS 公式/aqua バイナリ非配布のため cargo-binstall の quickinstall prebuilt(arm64・署名検証あり)で取得
 
 # Git / GitHub
 gh = 'latest'
 lazygit = 'latest'
 ghq = 'latest'
 task = 'latest'
-git-lfs = 'latest'  # brew から移行(aqua:git-lfs/git-lfs)
-'aqua:simonwhitaker/gibo' = 'latest'  # registry に短縮名なし
-pinact = 'latest'  # GitHub Actions を commit SHA に固定 (aqua:suzuki-shunsuke/pinact)。.github/workflows の Action ピンに使う
+git-lfs = 'latest'                   # brew から移行(aqua:git-lfs/git-lfs)
+'aqua:simonwhitaker/gibo' = 'latest' # registry に短縮名なし
+pinact = 'latest'                    # GitHub Actions を commit SHA に固定 (aqua:suzuki-shunsuke/pinact)。.github/workflows の Action ピンに使う
 
 # System analysis
 dua = 'latest'
 dust = 'latest'
-'aqua:dylanaraps/neofetch' = 'latest'  # registry に短縮名なし
+'aqua:dylanaraps/neofetch' = 'latest' # registry に短縮名なし
 
 # Network
 xh = 'latest'
@@ -88,17 +92,17 @@ xh = 'latest'
 hyperfine = 'latest'
 
 # Utilities
-'aqua:sharkdp/pastel' = 'latest'  # registry に短縮名なし
-'aqua:koki-develop/clive' = 'latest'  # registry に短縮名なし
-typst = 'latest'  # 組版(aqua:typst/typst)。brew から移行
-age = "latest"  # 暗号化
+'aqua:sharkdp/pastel' = 'latest'     # registry に短縮名なし
+'aqua:koki-develop/clive' = 'latest' # registry に短縮名なし
+typst = 'latest'                     # 組版(aqua:typst/typst)。brew から移行
+age = "latest"                       # 暗号化
 zoxide = "latest"
 
 # Cloud/Infra
 tfsec = 'latest'
-'aqua:aws/aws-cli' = 'latest'  # aqua は .pkg でなく v2 バイナリを入れるため起動遅延を回避(旧 Homebrew 版から移行)
+'aqua:aws/aws-cli' = 'latest'                  # aqua は .pkg でなく v2 バイナリを入れるため起動遅延を回避(旧 Homebrew 版から移行)
 terraform = 'latest'
-'aqua:twistedpair/google-cloud-sdk' = 'latest'  # gcloud の既定は vfox なので明示
+'aqua:twistedpair/google-cloud-sdk' = 'latest' # gcloud の既定は vfox なので明示
 "npm:@googleworkspace/cli" = "latest"
 
 # Code Formater / Linter
@@ -109,38 +113,38 @@ shfmt = 'latest'
 
 # Build / Codegen (brew から移行)
 cmake = 'latest'  # aqua:Kitware/CMake
-protoc = 'latest'  # aqua:protocolbuffers/protobuf。旧 brew protobuf / protobuf@3 を集約
+protoc = 'latest' # aqua:protocolbuffers/protobuf。旧 brew protobuf / protobuf@3 を集約
 
 # AI Agent
 "npm:@openai/codex" = "latest"
 "npm:agent-browser" = "latest"
-"npm:ccusage" = "latest"  # Claude Code 利用量トラッキング
-"cargo:raine/workmux" = "latest"  # git worktree and tmux manager
+"npm:ccusage" = "latest"         # Claude Code 利用量トラッキング
+"cargo:raine/workmux" = "latest" # git worktree and tmux manager
 "npm:difit" = "latest"
 
 # Neovim: LSP servers
 # nvim は mason を使わず native vim.lsp.enable で PATH から発見する(供給網を mise に一本化)。
-lua-language-server = 'latest'  # lua_ls
-"go:golang.org/x/tools/gopls" = 'latest'  # gopls
-"pipx:basedpyright" = 'latest'  # basedpyright(Python 型チェック。lint/format は ruff に分担)
-ruff = 'latest'  # ruff: Python LSP + conform/nvim-lint の formatter/linter 兼用
-"npm:yaml-language-server" = 'latest'  # yamlls
-"npm:vscode-langservers-extracted" = 'latest'  # jsonls / cssls / html
-taplo = 'latest'  # toml LSP + formatter
-terraform-ls = 'latest'  # terraformls
-"npm:bash-language-server" = 'latest'  # bashls
-"npm:@prisma/language-server" = 'latest'  # prismals
-"pipx:cmake-language-server" = 'latest'  # cmake LSP
+lua-language-server = 'latest'                # lua_ls
+"go:golang.org/x/tools/gopls" = 'latest'      # gopls
+"pipx:basedpyright" = 'latest'                # basedpyright(Python 型チェック。lint/format は ruff に分担)
+ruff = 'latest'                               # ruff: Python LSP + conform/nvim-lint の formatter/linter 兼用
+"npm:yaml-language-server" = 'latest'         # yamlls
+"npm:vscode-langservers-extracted" = 'latest' # jsonls / cssls / html
+taplo = 'latest'                              # toml LSP + formatter
+terraform-ls = 'latest'                       # terraformls
+"npm:bash-language-server" = 'latest'         # bashls
+"npm:@prisma/language-server" = 'latest'      # prismals
+"pipx:cmake-language-server" = 'latest'       # cmake LSP
 # TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。prerelease のみ + minimum_release_age=7d の
 # ため dev 版を exact 固定。nvim-lspconfig の tsgo は project-local node_modules/.bin/tsgo を優先する。
-"npm:@typescript/native-preview" = '7.0.0-dev.20260626.1'  # tsgo
+"npm:@typescript/native-preview" = '7.0.0-dev.20260626.1' # tsgo
 
 # Neovim: treesitter / formatter / linter
 # nvim-treesitter(main/rewrite)のパーサビルドに必須(無いとハイライトが出ない)。
 # 0.25 系に固定: 0.26 系は CI を ubuntu-24.04 へ移行し prebuilt が GLIBC_2.39 を要求、
 # glibc 2.34 の Amazon Linux 2023 等で起動不可になる。0.25.x は GLIBC_2.29 要求で全 distro/mac 互換。
 tree-sitter = '0.25'
-"go:golang.org/x/tools/cmd/goimports" = 'latest'  # conform: goimports
-golangci-lint = 'latest'  # nvim-lint: go
-"npm:markdownlint-cli" = 'latest'  # nvim-lint: markdownlint
-"pipx:yamllint" = 'latest'  # nvim-lint: yamllint
+"go:golang.org/x/tools/cmd/goimports" = 'latest' # conform: goimports
+golangci-lint = 'latest'                         # nvim-lint: go
+"npm:markdownlint-cli" = 'latest'                # nvim-lint: markdownlint
+"pipx:yamllint" = 'latest'                       # nvim-lint: yamllint
