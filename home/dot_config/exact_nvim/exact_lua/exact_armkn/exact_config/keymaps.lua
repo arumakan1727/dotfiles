@@ -49,6 +49,30 @@ map("n", "]b", "<Cmd>bnext<CR>", opts)
 map("n", "[t", "<Cmd>tabprevious<CR>", opts)
 map("n", "]t", "<Cmd>tabnext<CR>", opts)
 
+-- 現在バッファのパスをクリップボード("+, unnamedplus)へコピー
+map("n", "<Leader>fy", function()
+  local name = vim.fn.expand("%:t")
+  if name == "" then
+    vim.notify("No file name", vim.log.levels.WARN)
+    return
+  end
+  vim.fn.setreg("+", name)
+  vim.notify("Copied: " .. name)
+end, { desc = "Copy file name" })
+
+map("n", "<Leader>fY", function()
+  local abs = vim.fn.expand("%:p")
+  if abs == "" then
+    vim.notify("No file path", vim.log.levels.WARN)
+    return
+  end
+  local root = vim.fs.root(abs, ".git")
+  -- root 配下なら repo 相対、外なら cwd/home 相対にフォールバック
+  local path = root and abs:sub(#root + 2) or vim.fn.fnamemodify(abs, ":~:.")
+  vim.fn.setreg("+", path)
+  vim.notify("Copied: " .. path)
+end, { desc = "Copy repo-relative path" })
+
 -- Window 操作(<Leader>w を <C-w> のエイリアスに)
 map("n", "<Leader>w", "<C-w>", { noremap = true })
 
