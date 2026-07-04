@@ -6,6 +6,44 @@ alias mv='mv -iv'
 alias cp='cp -iv'
 alias ln='ln -v'
 
+# del: 物理削除ではなくゴミ箱への移動 (rm はそのまま物理削除に残す)。
+#   macOS: /usr/bin/trash   Apple 純正・Finder のゴミ箱に統合 (macOS 15+ 標準同梱)
+#   Linux: trash-put (trash-cli) → gio trash フォールバック
+# rm 由来の -r / -f / -i 等は捨てて DWIM (`del -rf foo` も動く)。`--` 以降はパス扱い。
+del() {
+  emulate -L zsh
+  local -a files=()
+  local arg ddash=0
+  for arg in "$@"; do
+    if [[ $ddash -eq 1 ]]; then
+      files+=("$arg")
+    elif [[ $arg == -- ]]; then
+      ddash=1
+    elif [[ $arg == -?* ]]; then
+      :  # rm 由来のフラグ (-rf 等) は捨てる
+    else
+      files+=("$arg")  # '-' 単体や通常パスはそのまま渡す
+    fi
+  done
+
+  if (( ${#files} == 0 )); then
+    print -u2 'del: 削除対象がありません。使い方: del <path>...'
+    return 2
+  fi
+
+  # mise が出す trash-cli の shim と衝突しないようフルパスで Apple 純正を優先
+  if [[ $OSTYPE == darwin* && -x /usr/bin/trash ]]; then
+    /usr/bin/trash -v "${files[@]}"
+  elif (( $+commands[trash-put] )); then
+    trash-put -v -- "${files[@]}"
+  elif (( $+commands[gio] )); then
+    gio trash -- "${files[@]}"
+  else
+    print -u2 'del: ゴミ箱コマンドが見つかりません。物理削除は rm を使ってください。'
+    return 1
+  fi
+}
+
 if (( $+commands[lsd] )); then
   alias ls='lsd'
   alias lt='lsd -a --tree --depth 3 -I .git -I node_modules -I .venv -I __pycache__ -I .ruff_cache -I .turbo -I .pytest_cache -I cdk.out'
