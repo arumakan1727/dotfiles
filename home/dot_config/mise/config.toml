@@ -22,7 +22,7 @@ bun = 'latest'
 deno = 'latest'
 go = 'latest'
 java = "corretto-24"
-node = '26.3'  # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
+node = "26.4"  # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
 python = '3.14'
 rust = '1.96'  # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。メジャーのみ指定バグ回避で minor 固定
 zig = 'latest'
@@ -133,7 +133,7 @@ terraform-ls = 'latest'  # terraformls
 "pipx:cmake-language-server" = 'latest'  # cmake LSP
 # TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。prerelease のみ + minimum_release_age=7d の
 # ため dev 版を exact 固定。nvim-lspconfig の tsgo は project-local node_modules/.bin/tsgo を優先する。
-"npm:@typescript/native-preview" = '7.0.0-dev.20260527.2'  # tsgo
+"npm:@typescript/native-preview" = '7.0.0-dev.20260626.1'  # tsgo
 
 # Neovim: treesitter / formatter / linter
 # nvim-treesitter(main/rewrite)のパーサビルドに必須(無いとハイライトが出ない)。
