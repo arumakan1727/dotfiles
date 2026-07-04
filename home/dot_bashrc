@@ -135,5 +135,3 @@ if [[ "$(uname -s)" = Linux ]]; then
   alias pbpaste='xsel --output --clipboard'
   alias open='xdg-open'
 fi
-
-if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init bash)"; fi

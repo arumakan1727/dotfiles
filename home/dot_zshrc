@@ -208,5 +208,3 @@ zstyle ':completion:*' menu select
 
 export UV_EXCLUDE_NEWER=P7D
 # mise の release-age は ~/.config/mise/config.toml の minimum_release_age へ移行済み(env だと非対話/CI で効かないため)。MISE_INSTALL_BEFORE は再追加しない。
-
-if command -v wt >/dev/null 2>&1; then zsh-defer eval 'eval "$(command wt config shell init zsh)"'; fi
