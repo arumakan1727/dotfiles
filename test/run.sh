@@ -40,6 +40,15 @@ if [ -n "$token" ]; then
   echo "[test] forwarding a GitHub token to the container"
 fi
 
+# `locked` は global config から外して普段の開発摩擦を無くしている(新規ツール追加時に
+# lock 未登録で install が fail するのを避ける)。その代わり pin 検証は CI に寄せる: full は
+# 実 `mise install` を走らせるので MISE_LOCKED=1 を注入し、「ピンが今も fetch でき checksum が
+# 一致する」ことを厳密検証する(欠落/ドリフト時は install が fail)。smoke は mise install しない。
+if [ "$LEVEL" = full ]; then
+  docker_env+=(-e "MISE_LOCKED=1")
+  echo "[test] full: enforcing MISE_LOCKED=1 (strict lockfile pin verification)"
+fi
+
 echo "[test] building image '$IMAGE' (debian:bookworm-slim)…"
 docker build -t "$IMAGE" -f "$SCRIPT_DIR/Dockerfile" "$SCRIPT_DIR"
 

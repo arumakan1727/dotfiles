@@ -1,13 +1,13 @@
 [settings]
-always_keep_download = true
-always_keep_install = true
 python.compile = false  # always download precompiled binaries
 cargo.binstall = true
 pipx.uvx = true
 
-# サプライチェーン: lockfile に固定した version/checksum/URL のみで取得・検証する(解決 API を極力叩かない)。
+# サプライチェーン: lockfile に version/checksum/URL を固定し、install 時に checksum を検証する。
 lockfile = true
-locked = true
+# locked(= lockfile に現 platform の解決済み URL が無いと install を fail させ、解決 API を一切叩かない)は
+# ローカルでは外す: 新規ツール追加時に lock 未登録で install が毎回 fail する摩擦が大きいため。CI(週次
+# Linux full E2E)では test/run.sh が MISE_LOCKED=1 を注入し「ピンが今も fetch でき checksum 一致」を厳密検証する。
 minimum_release_age = "7d"  # fuzzy 解決(latest/node@26 等)で「リリース後 7d 未満」を弾く。旧 MISE_INSTALL_BEFORE env の後継(deprecated: warn 2026.10/remove 2027.10)。config 化で非対話/CI でも効く。exact pin と lockfile 再現 install はバイパス
 locked_verify_provenance = true  # lockfile の provenance(github-attestations 等)を毎 install で再検証する。既定 false はキャッシュ信頼で検証スキップ。provenance_api_failures_fatal(既定 true) と相まって API 障害時は hard fail
 lockfile_platforms = ["linux-x64", "linux-arm64", "macos-arm64"]  # `mise lock` が常にこの3ターゲットを書く(手動 --platform 不要。明示時のみ上書き)。既定の全platform誤lockを防止
