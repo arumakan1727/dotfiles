@@ -171,8 +171,11 @@ main() {
   [ -n "${DOTFILES_BOOTSTRAP_CHAINED:-}" ] && return 0
   cat <<EOF
 Next:
-  chezmoi init --apply --source="<dotfiles repo path>"
+  DOTFILES_WITH_FONTS=1 chezmoi init --apply --source="<dotfiles repo path>"
   mise install            # via chezmoi run_once, or run manually
+
+  # WITH_FONTS=1 は初回に Nerd Fonts を入れるとき用。以降の日常 diff/apply は
+  # フォント external をゲート off にして速く保つ。更新時は: make fonts
 EOF
 }
 

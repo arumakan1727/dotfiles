@@ -20,11 +20,17 @@ help:	## Print the description of each task in this Makefile
 install:	## One-shot fresh setup: bootstrap then chezmoi init --apply (= ./install.sh)
 	./install.sh
 
-apply:	## chezmoi apply (materialize dotfiles into $HOME)
+apply:	## chezmoi apply (materialize dotfiles into $HOME; fonts gated off — see `make fonts`)
 	chezmoi apply
 
-diff:	## chezmoi diff (preview what apply would change)
+diff:	## chezmoi diff (preview what apply would change; fonts gated off for speed)
 	chezmoi diff
+
+# フォント external は既定でゲート off(日常の diff/apply を速く保つため。chezmoi は
+# 毎回 ~340MB のフォントキャッシュを展開・比較する)。初回は install.sh が入れる。
+# ピンを更新した / 再取得したいときだけこのターゲットで明示的に materialize する。
+fonts:	## Fetch + verify + (re)install the Nerd Fonts external (DOTFILES_WITH_FONTS=1)
+	DOTFILES_WITH_FONTS=1 chezmoi apply --refresh-externals
 
 update-pins:	## Refresh installer/pinned.toml to latest age-compliant chezmoi/mise
 	./installer/update-pins.sh

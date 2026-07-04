@@ -127,7 +127,12 @@ DOTFILES_BOOTSTRAP_CHAINED=1 "$here/installer/bootstrap.sh"
 # Invoke the just-installed chezmoi by ABSOLUTE path so this still works when
 # ~/.local/bin isn't on PATH yet (the whole point of doing it here). Not `exec`:
 # we want to print the closing guidance afterwards. Preserve chezmoi's exit code.
-"$bin_dir/chezmoi" init --apply --source="$here"
+#
+# DOTFILES_WITH_FONTS=1: the Nerd Fonts external is gated off by default so daily
+# `chezmoi diff`/`apply` stay fast (chezmoi re-extracts the ~340MB font cache every
+# run). Initial setup is exactly when we DO want the fonts materialized, so opt in
+# here. Harmless under headless — DOTFILES_HEADLESS wins and the external stays empty.
+DOTFILES_WITH_FONTS=1 "$bin_dir/chezmoi" init --apply --source="$here"
 rc=$?
 
 if [ "$rc" -eq 0 ]; then

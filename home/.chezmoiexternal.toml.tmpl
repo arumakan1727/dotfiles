@@ -6,12 +6,20 @@
    使わない(後からリリースが差し替わってもバイト変化で検知できる)。チェックサムが
    一致しなければ chezmoi が展開を拒否する。
 
-   ヘッドレス機(DOTFILES_HEADLESS=1)では何も出力しない = フォント取得ごと skip。
+   評価ゲート(AND 2条件): chezmoi は diff/apply のたびに external archive を
+   キャッシュから展開・ハッシュ比較する(フォント計5個・展開後 ~340MB で実測
+   +3.5s/回)。フォントは初回導入とピン更新時しか変わらないので、既定では
+   出力せず日常の diff/apply を速く保つ:
+     - DOTFILES_HEADLESS 設定時は常に skip(画面の無いリモート/サーバ機)。
+     - DOTFILES_WITH_FONTS 未設定でも skip(通常機の日常運用)。
+   フォントを入れる/更新するときだけ WITH_FONTS=1 を渡す(初回は install.sh が
+   自動付与、更新は `make fonts`)。external を空にしても配置済みフォントは
+   削除されない(chezmoi は external を remove しない)。
    配置先のみ OS で分岐(macOS=~/Library/Fonts, Linux=~/.local/share/fonts)。
 
    再取得モデル: refreshPeriod 既定(=0)はキャッシュを使い続け、URL/sha を変えた
    ピン更新時だけ再ダウンロードする(版を上げると URL が変わる=キャッシュミス)。
-   強制再取得は `chezmoi apply --refresh-externals`。
+   強制再取得は WITH_FONTS=1 + `--refresh-externals`(= `make fonts`)。
 
    各 zip は .ttf のみ。stripComponents は zip 内の入れ子段数に合わせる:
    PlemolJP だけ <top>/<sub>/*.ttf の2段なので 2、他は <top>/*.ttf の1段で 1。
@@ -19,7 +27,7 @@
    Linux はインストール後に fontconfig キャッシュ更新が要る
    → run_onchange_after_50-fontcache.sh.tmpl。macOS は ~/Library/Fonts を自動認識する。
 */ -}}
-{{- if not (env "DOTFILES_HEADLESS") -}}
+{{- if and (not (env "DOTFILES_HEADLESS")) (env "DOTFILES_WITH_FONTS") -}}
 {{- $dir := ".local/share/fonts" -}}
 {{- if eq .chezmoi.os "darwin" -}}{{ $dir = "Library/Fonts" }}{{- end -}}
 
