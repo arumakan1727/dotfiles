@@ -63,3 +63,5 @@ $RECYCLE.BIN/
 
 .workmux.yaml
 .workmux.yml
+
+**/.claude/.cc-writes/
