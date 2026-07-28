@@ -1,5 +1,6 @@
 # === 秘密: 端末ローカルに留める。絶対に source へ入れない ===
 .config/pip/
+.config/mise/github_tokens.toml
 
 # === chezmoi 自身の設定/状態(machine-local・chezmoi init が再生成。tracked しない) ===
 .config/chezmoi/
