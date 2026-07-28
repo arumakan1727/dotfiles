@@ -134,26 +134,6 @@ source "$HOME/.config/zsh/nonlazy/sheldon.zsh"
   fi
 }
 
-# mise の GitHub アクセス用ラッパー
-#   1. install や update などのネットワーク系サブコマンドで、認証済のときだけ `gh auth token` を MISE_GITHUB_TOKEN に注入する。
-#      mise の子プロセスにだけ渡り、関数を抜けると破棄される(global env を汚さない)。
-#   2. npm バックエンド時は専用 npmrc も併用: ~/.npmrc の min-release-age=7 を mise の npm backend に渡すと、npm 11.x が内部で min-release-age→--before を再生成して自己衝突するバグ(npm#9005, 修正は npm 12.0.0-pre)を踏むため、min-release-age を持たない専用 userconfig を使わせる(Flatt registry 固定も兼ねる)。
-if (( ${+functions[mise]} )); then
-  functions -c mise _mise_orig
-  mise() {
-    case "${1:-}" in
-      use|install|i|upgrade|up|outdated|latest|ls-remote)
-        if [[ -z ${MISE_GITHUB_TOKEN:-} && -z ${GITHUB_TOKEN:-} ]] && (( ${+commands[gh]} )); then
-          local _tok; _tok="$(gh auth token 2>/dev/null)"
-          [[ -n $_tok ]] && local -x MISE_GITHUB_TOKEN="$_tok"
-        fi
-        [[ "$*" == *npm:* ]] && local -x NPM_CONFIG_USERCONFIG="$HOME/.config/mise/npmrc"
-        ;;
-    esac
-    _mise_orig "$@"
-  }
-fi
-
 # zoxide: cache init output to a file so it can be zcompiled, then source lazily.
 # Deferred via zsh-defer (after _mise_hook) because zoxide is installed by mise
 # and only appears on PATH once the hook has injected the active tool's bindir.

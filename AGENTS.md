@@ -35,7 +35,6 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 ## Sensitive / gotchas
 
 - 機密値を含む target は source に入れない。`chezmoi add` の secrets warning を無視せず、迷ったら `.chezmoiignore` / source path / diff を確認する。
-- `mise/npmrc` は `.zshrc` の `mise()` wrapper 専用。`~/.npmrc` へ統合したり wrapper を外したりする前に、npm 11 と release-age policy の衝突回避コメントを読む。
 - `.zshenv` は環境変数だけ。親から来る `MANPAGER` / `EDITOR` は上書きしない。
 - `.zshrc` の PATH は macOS `path_helper` 後に組む。`compinit -C` は同期実行のままにし、遅延ロード断片で再実行しない。
 - `karabiner.json` は保存だけで空白 diff が巨大化する。実差分は `git diff -w` で確認し、必要ならコミットメッセージに明記する。
