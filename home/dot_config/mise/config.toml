@@ -143,5 +143,4 @@ terraform-ls = 'latest'                       # terraformls
 tree-sitter = '0.25'
 "go:golang.org/x/tools/cmd/goimports" = 'latest' # conform: goimports
 golangci-lint = 'latest'                         # nvim-lint: go
-"npm:markdownlint-cli" = 'latest'                # nvim-lint: markdownlint
 "pipx:yamllint" = 'latest'                       # nvim-lint: yamllint
