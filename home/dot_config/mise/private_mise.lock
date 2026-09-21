@@ -694,6 +694,10 @@ url = "https://nodejs.org/dist/v26.4.0/node-v26.4.0-darwin-arm64.tar.gz"
 version = "1.5.20"
 backend = "npm:@aikidosec/safe-chain"
 
+[[tools."npm:@astrojs/language-server"]]
+version = "2.16.16"
+backend = "npm:@astrojs/language-server"
+
 [[tools."npm:@googleworkspace/cli"]]
 version = "0.22.5"
 backend = "npm:@googleworkspace/cli"
@@ -721,6 +725,10 @@ backend = "npm:ccusage"
 [[tools."npm:difit"]]
 version = "5.0.12"
 backend = "npm:difit"
+
+[[tools."npm:typescript"]]
+version = "6.0.3"
+backend = "npm:typescript"
 
 [[tools."npm:vscode-langservers-extracted"]]
 version = "4.10.0"

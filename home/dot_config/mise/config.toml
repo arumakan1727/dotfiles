@@ -135,6 +135,13 @@ terraform-ls = 'latest'                       # terraformls
 # TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。prerelease のみ + minimum_release_age=7d の
 # ため dev 版を exact 固定。nvim-lspconfig の tsgo は project-local node_modules/.bin/tsgo を優先する。
 "npm:@typescript/native-preview" = '7.0.0-dev.20260626.1' # tsgo
+# Astro は astro-ls(volar ベース)。frontmatter / <script> の TS 機能は init_options.typescript.tsdk に
+# JS 実装の typescript SDK(lib/typescript.js)を渡す必要があり、プロジェクトに typescript が無い場合の
+# フォールバックとして global にも置く(after/lsp/astro.lua が tsc の実体から lib を逆引きする)。
+# typescript 7.x は Go ネイティブ配布で lib/typescript.js を含まず volar から読めないため 6.0 系に固定
+# (astro-ls の devDependencies も typescript ^6.0)。
+"npm:@astrojs/language-server" = 'latest' # astro-ls
+"npm:typescript" = '6.0'                  # astro-ls の tsdk 用(TS ファイル自体の LSP は tsgo)
 
 # Neovim: treesitter / formatter / linter
 # nvim-treesitter(main/rewrite)のパーサビルドに必須(無いとハイライトが出ない)。
