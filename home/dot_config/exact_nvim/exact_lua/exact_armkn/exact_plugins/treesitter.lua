@@ -7,6 +7,7 @@
 -- ts-comments.nvim で補う。
 
 local PARSERS = {
+  "astro",
   "bash",
   "c",
   "cpp",
@@ -134,7 +135,7 @@ return {
   -- HTML/JSX/Vue 等のタグ自動閉じ・リネーム
   {
     "windwp/nvim-ts-autotag",
-    ft = { "html", "xml", "javascriptreact", "typescriptreact", "vue", "svelte", "markdown", "php" },
+    ft = { "html", "xml", "javascriptreact", "typescriptreact", "vue", "svelte", "astro", "markdown", "php" },
     opts = {
       opts = { enable_close = true, enable_rename = true, enable_close_on_slash = false },
     },

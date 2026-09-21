@@ -11,6 +11,7 @@ local SERVERS = {
   "rust_analyzer",
   "tsgo", -- TypeScript は tsgo(TS7 ネイティブ)。tsserver/ts_ls ではない
   "denols",
+  "astro", -- astro-ls。tsdk の解決は after/lsp/astro.lua
   "basedpyright",
   "ruff",
   "jsonls",
