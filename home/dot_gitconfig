@@ -25,7 +25,7 @@
   graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   root = rev-parse --show-toplevel
   rmc = rm --cached
-  gone = "!git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
+  gone = "!git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs -r git branch -D"
   sync-dev = "!git fetch origin dev:dev"
   sync-main = "!git fetch origin main:main"
   sync-develop = "!git fetch origin develop:develop"
