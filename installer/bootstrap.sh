@@ -21,49 +21,14 @@ readonly PINNED="$SCRIPT_DIR/pinned.toml"
 
 # shellcheck source-path=SCRIPTDIR source=lib/secure_fetch.sh
 . "$SCRIPT_DIR/lib/secure_fetch.sh"
+# shellcheck source-path=SCRIPTDIR source=lib/toml_get.sh
+. "$SCRIPT_DIR/lib/toml_get.sh"
 
 BIN_DIR="${BIN_DIR:-$HOME/.local/bin}"
 readonly BIN_DIR
 
 die() { echo "[ERR] $*" >&2; exit 1; }
 info() { echo "[*] $*"; }
-
-# Minimal TOML reader for the restricted grammar used by pinned.toml:
-# flat `key = "value"` lines grouped under `[section]` headers, '#' comments.
-# No nested tables, arrays, or multiline values.
-#   toml_get <file> <section> <key>  -> prints value (empty if not found)
-# Keys are matched LITERALLY (not as regex), so metacharacters in a key name
-# are safe.
-toml_get() {
-  local file="$1" section="$2" key="$3"
-  awk -v want_section="$section" -v want_key="$key" '
-    # skip blank lines and comments
-    /^[[:space:]]*#/ { next }
-    /^[[:space:]]*$/ { next }
-    # section header: [name]
-    /^[[:space:]]*\[/ {
-      line = $0
-      gsub(/[][[:space:]]/, "", line)   # strip [ ] and spaces -> bare name
-      cur = line
-      next
-    }
-    # key line within the wanted section: split on first "=", compare key literally
-    cur == want_section {
-      eq = index($0, "=")
-      if (eq > 0) {
-        k = substr($0, 1, eq - 1)
-        gsub(/[[:space:]]/, "", k)       # trim all spaces from key token
-        if (k == want_key) {
-          rest = substr($0, eq + 1)
-          if (match(rest, /"[^"]*"/)) {   # value is the first quoted string
-            print substr(rest, RSTART + 1, RLENGTH - 2)
-            exit
-          }
-        }
-      }
-    }
-  ' "$file"
-}
 
 # Map uname to per-tool os/arch tokens.
 detect_platform() {
