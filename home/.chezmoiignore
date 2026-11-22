@@ -12,6 +12,10 @@
 # 直下用(*.zwc)とネスト用(**/*.zwc)の両方が要る。
 *.zwc
 **/*.zwc
+# macOS Finder のメタデータ。exact_ ディレクトリ(nvim, mise の locks 等)に作られると apply が
+# 削除確認で止まるため管理外にする(ignore した entry は exact_ でも削除されない)。
+.DS_Store
+**/.DS_Store
 
 # === AquaSKK: 大容量辞書とアプリ管理 plist(AquaSKK 自身の .gitignore と一致) ===
 Library/Application Support/AquaSKK/SKK-JISYO.*
