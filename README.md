@@ -62,6 +62,10 @@ git diff installer/pinned.toml                   # version / sha256 を人手レ
 `update-pins` は chezmoi と mise を**まとめて**解決する（片方だけ上げたいときは `pinned.toml` の該当
 セクションを手編集し upstream の checksums と照合）。`--dry-run` で差分のみ、`--days N` で age 窓変更。
 
+他のマシンで pin 更新を取り込むときは、`git pull` の後に `./installer/bootstrap.sh` を **`chezmoi apply` より先に**
+実行する。新しい mise 設定や lockfile は古い mise で読めないことがある（例: `paranoid = ["provenance"]` は
+mise 2026.10.14 未満では読めない）。
+
 ## Debug
 
 ```shell
