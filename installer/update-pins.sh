@@ -30,7 +30,8 @@
 #
 # Maintenance tools: curl, gh, jq, openssl, gpg, awk, date, and sha256sum or
 # shasum. A changed [codex] pin also needs cosign, codesign and file, so run it on
-# macOS with cosign active (mise x aqua:sigstore/cosign@<ver> -- ./update-pins.sh).
+# macOS. cosign is a global mise tool; without mise activated, run it as
+# `mise x -- ./update-pins.sh`.
 # Authenticate gh with GH_TOKEN, GITHUB_TOKEN, or gh auth login.
 set -Eeuo pipefail
 [ -n "${DOTFILES_DEBUG:-}" ] && set -x
@@ -506,7 +507,7 @@ resolve_codex() {
   if ! codex_verifiers_available; then
     [ -n "$cur" ] || die "$section: needs cosign and codesign (macOS) to verify a first pin"
     warn "$section: cosign and codesign (macOS) are required to verify $target; keeping $cur." \
-      "Re-run on macOS with cosign, e.g. mise x aqua:sigstore/cosign@<ver> -- $0"
+      "Re-run on macOS with cosign active (a global mise tool), e.g. mise x -- $0"
     extract_section "$section"
     return
   fi

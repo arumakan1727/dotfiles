@@ -29,7 +29,7 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
     - Claude Code: `<binary> install <ver>` を使わない。`~/.claude.json` に `autoUpdates: false` が書かれ、ピン扱いになる。
     - Claude Code の versions は `XDG_DATA_HOME` 配下。一時 HOME で試すときは `XDG_*` も差し替える(HOME だけだと実ホームの versions を指す)。
     - Codex: `auto-update-version` が無いとピン扱いになり、定期更新が何もしない。
-- `update-pins.sh` の `[codex]` 更新は macOS + cosign が前提(Linux 版は Sigstore、macOS 版は全 Mach-O の codesign)。満たさない環境では検証を飛ばして書かず現ピンを保持する(ハッシュ不変の次回実行では検証が走らないため)。inactive な mise shim は `command -v` で見つかっても失敗するので `mise x aqua:sigstore/cosign@<ver> -- ...` で有効にする。
+- `update-pins.sh` の `[codex]` 更新は macOS + cosign が前提(Linux 版は Sigstore、macOS 版は全 Mach-O の codesign)。満たさない環境では検証を飛ばして書かず現ピンを保持する(ハッシュ不変の次回実行では検証が走らないため)。cosign は global mise tool(`home/dot_config/mise/config.toml`)。mise 未 activate のシェルでは inactive な shim が `command -v` で見つかっても失敗するので、その場合は `mise x -- ./installer/update-pins.sh` で実行する。
 - `DOTFILES_SKIP_AGENT_CLIS` は run_onchange 25 の描画結果に含まれる。apply と diff で値を揃える(テストでは process-wide に export する)。
 
 ## CI

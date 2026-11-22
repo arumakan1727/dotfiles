@@ -76,7 +76,7 @@ chezmoi add <path>      # 実環境で直接編集したファイルを source �
 - **Codex** は、`codex-package_SHA256SUMS` の値を、GitHub がアップロード時に計算した asset digest と、OpenAI の配信元 `releases.openai.com` の `release.json` の digest の両方と突き合わせる。そのうえで全 tarball を取得して照合する。
   - Linux 版: Sigstore bundle を cosign で検証し、`openai/codex/.github/workflows/rust-release.yml` の該当タグが署名したことを確認する。
   - macOS 版: 展開した全 Mach-O ファイルの Developer ID 署名（OpenAI のチーム ID `2DC432GLL2`）を codesign で検証する。
-  - `[codex]` の更新には cosign と codesign の両方が要る。どちらかが使えない環境（macOS 以外を含む）では `[codex]` を現行のまま保持する。macOS で `mise x aqua:sigstore/cosign@<ver> -- ./installer/update-pins.sh` のように cosign を有効にして実行する。
+  - `[codex]` の更新には cosign と codesign の両方が要る。どちらかが使えない環境（macOS 以外を含む）では `[codex]` を現行のまま保持する。cosign は global の mise tool として入る。mise を activate していないシェルでは `mise x -- make update-pins` で実行する。
 
 ```shell
 GITHUB_TOKEN=$(gh auth token) make update-pins
