@@ -28,11 +28,11 @@
 # 同じ検証を行い、Homebrew はレビュー済みの commit と照合すること。
 
 [chezmoi]
-version             = "2.70.5"
-sha256_darwin_arm64 = "c3531896769175089b9b2e9cf99b15a2357427f776289b66583a2432d69cd3cc"
-sha256_darwin_amd64 = "6676e06f094e5b0860bd3642d203b71869b5cbeb8089155886bc54c1096b9d3c"
-sha256_linux_arm64  = "4f4f31d0a10ed3b955e814a5ae20075426e27c9d3a09f536bfa4a6c8718353f2"
-sha256_linux_amd64  = "6a76a0ac3718f0d45b34b4b57067f9556f8f6042e3da710a3c496838362aca14"
+version             = "2.74.1"
+sha256_darwin_arm64 = "fbc7b86c7b36eb0448e2a99a616b6d32f022d1f3895076ad44f4c5d65a77fe60"
+sha256_darwin_amd64 = "b2229c6ff9eb7d1f10d098aac94241da652dd7df989c7ef35df6777dbe00d397"
+sha256_linux_arm64  = "8c62619c4303770342e7c7e75d168b6cc6efee4ad5e4b994980de7cf794d68e2"
+sha256_linux_amd64  = "ae01c66b1a6dbf563667c63fbbd9986b3cfa3c98dd266ddee732f63e8af2e9d1"
 
 [mise]
 version            = "2026.11.8"
