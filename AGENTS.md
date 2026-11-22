@@ -44,6 +44,9 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 - ツール指定は registry 短縮名を優先し、短縮名が無いものだけ `aqua:owner/repo` などにフォールバックする。フォールバック理由は config コメントに残す。
 - `mise use -g` は target 側の config を書く。先に `chezmoi apply` せず、`mise lock -g` 後に config と lock を `chezmoi add` で source に取り込む(対象 platform は config.toml の `lockfile_platforms` で linux-x64/arm64・macos-arm64 を宣言済。別 platform が要るときだけ `--platform` を明示)。
 - `private_mise.lock` は mise が生成する。手で編集せず、chezmoiscript から `chezmoi add` して source を自動変更しない。
+- lockfile は format 4。npm / pypi tool の推移的依存は `~/.config/mise/locks/` のサイドカー(aube-lock.yaml, uv.lock)に固定され、lock と一緒に source の `home/dot_config/mise/exact_locks/` へ取り込む。
+    - `chezmoi add --exact` は source に残った旧 version のディレクトリを消さない。`mise lock -g` 後は `rm -rf home/dot_config/mise/exact_locks && chezmoi add --exact ~/.config/mise/locks` で丸ごと取り直す。
+    - 一覧は `mise lock -g --sidecars`。`exact_` なので他マシンでは `chezmoi apply` が旧サイドカーを掃除する。
 - `settings.locked = true` 下で新規 lock 生成が詰まる場合は、temp config root で `locked=false` にして生成し、必要な lock 行だけ source へ反映する。
 - runtime version の major-only 指定は避け、少なくとも minor まで固定する。現在の理由は `home/dot_config/mise/config.toml` のコメントを参照。
 

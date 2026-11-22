@@ -1,0 +1,7 @@
+{
+  "name": "mise-npm-install",
+  "private": true,
+  "dependencies": {
+    "@aikidosec/safe-chain": "1.5.29"
+  }
+}
