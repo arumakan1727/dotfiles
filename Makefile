@@ -32,7 +32,7 @@ diff:	## chezmoi diff (preview what apply would change; fonts gated off for spee
 fonts:	## Fetch + verify + (re)install the Nerd Fonts external (DOTFILES_WITH_FONTS=1)
 	DOTFILES_WITH_FONTS=1 chezmoi apply --refresh-externals
 
-update-pins:	## Refresh installer/pinned.toml to latest age-compliant chezmoi/mise
+update-pins:	## Refresh installer/pinned.toml to latest age-compliant chezmoi/mise/claude-code/codex
 	./installer/update-pins.sh
 
 # --- Homebrew bundle workflow (macOS) -----------------------------------------

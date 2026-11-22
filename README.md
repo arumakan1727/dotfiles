@@ -62,14 +62,21 @@ chezmoi apply           # $HOME へ反映  (make apply)
 chezmoi add <path>      # 実環境で直接編集したファイルを source へ取り込む
 ```
 
-## Update (chezmoi / mise の pin)
+## Update (pinned.toml の pin)
 
-`installer/pinned.toml` に、bootstrap で使う chezmoi と mise のバージョンと SHA-256 を固定する。
-`make update-pins` は両方について、公開から7日以上経過した最新の安定版を選ぶ。
-バージョンか SHA-256 が1つでも変われば、そのツールの全対象プラットフォームの tarball を取得し、SHA-256 を照合する。
+`installer/pinned.toml` に、bootstrap で使う chezmoi と mise、初回導入用の Claude Code と Codex のバージョンと SHA-256 を固定する。
+`make update-pins` は各ツールについて、公開から7日以上経過した最新の安定版を選ぶ。
+バージョンか SHA-256 が1つでも変われば、そのツールの全対象プラットフォームの配布物を検証する。
 
 - **chezmoi** は、リポジトリに固定した cosign 公開鍵 `installer/keys/chezmoi_cosign.pub` でチェックサム一覧の署名を毎回検証する。照合には署名済みの値を使う。
 - **mise** は、各 tarball の GitHub artifact attestation で、ソースが対象のリリースタグであることと、そのタグの `jdx/mise/.github/workflows/release.yml` が署名したことを確認する。
+- **Claude Code** は、stable チャネルの版を候補にし、リポジトリに固定した GPG 公開鍵 `installer/keys/claude-code.asc` で `manifest.json` の署名を毎回検証する。
+  - 7日待機は `anthropics/claude-code` の GitHub release の公開日時で判定する（manifest の `buildDate` は公開より数時間早い）。
+  - 署名済み manifest が全バイナリの SHA-256 を保証するため、バイナリ自体は取得しない。
+- **Codex** は、`codex-package_SHA256SUMS` の値を、GitHub がアップロード時に計算した asset digest と、OpenAI の配信元 `releases.openai.com` の `release.json` の digest の両方と突き合わせる。そのうえで全 tarball を取得して照合する。
+  - Linux 版: Sigstore bundle を cosign で検証し、`openai/codex/.github/workflows/rust-release.yml` の該当タグが署名したことを確認する。
+  - macOS 版: 展開した全 Mach-O ファイルの Developer ID 署名（OpenAI のチーム ID `2DC432GLL2`）を codesign で検証する。
+  - `[codex]` の更新には cosign と codesign の両方が要る。どちらかが使えない環境（macOS 以外を含む）では `[codex]` を現行のまま保持する。macOS で `mise x aqua:sigstore/cosign@<ver> -- ./installer/update-pins.sh` のように cosign を有効にして実行する。
 
 ```shell
 GITHUB_TOKEN=$(gh auth token) make update-pins
@@ -77,7 +84,7 @@ git diff installer/pinned.toml  # バージョンと SHA-256 の差分をレビ�
 ./installer/bootstrap.sh        # レビュー済みの SHA-256 と照合し、~/.local/bin に配置
 ```
 
-`./installer/update-pins.sh --dry-run` でも同じ検証を行い、差分を表示する。片方だけ更新する場合は、
+`./installer/update-pins.sh --dry-run` でも同じ検証を行い、差分を表示する。一部のツールだけ更新する場合は、
 検証済みの差分から該当セクションを取り込む。待機日数は `--days N` で変更できる。
 
 他のマシンで pin 更新を取り込むときは、`git pull` の後に `./installer/bootstrap.sh` を **`chezmoi apply` より先に**
