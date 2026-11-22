@@ -1,7 +1,7 @@
 [settings]
 python.compile = false # always download precompiled binaries
 cargo.binstall = true
-pipx.uvx = true
+pypi.uvx = true # 旧名 pipx.uvx(mise 2026.9.7 で pipx backend が pypi に改名)
 
 # サプライチェーン: lockfile に version/checksum/URL を固定し、install 時に checksum を検証する。
 lockfile = true
@@ -26,9 +26,9 @@ bun = 'latest'
 deno = 'latest'
 go = 'latest'
 java = "corretto-24"
-node = "26.13"       # mise(2026.6.x)はメジャーのみ指定 '26' を exact 扱いして 404 にするバグがあるため minor まで固定
+node = "26.13"       # minor まで固定。発端は mise 2026.6.x のメジャーのみ指定 '26' を exact 扱いして 404 にするバグ(2026.11.12 では解消を確認)
 python = '3.14'
-rust = '1.100'       # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。メジャーのみ指定バグ回避で minor 固定
+rust = '1.100'       # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。node と同じ経緯で minor 固定
 zig = 'latest'
 
 # Editor
@@ -37,7 +37,7 @@ zig = 'latest'
 # Installer / Package Manager
 aqua = 'latest'           # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
 uv = 'latest'
-'pipx:poetry' = '2'       # registry 既定の asdf backend は locked=true 下で lockfile URL を要求して linux で失敗するため pipx に固定(pipx.uvx=true で uv 経由)
+'pypi:poetry' = '2'       # registry 既定の asdf backend は locked=true 下で lockfile URL を要求して linux で失敗するため pypi に固定(pypi.uvx=true で uv 経由)
 cargo-binstall = "latest"
 pnpm = "latest"
 usage = "latest"          # mise の補完/spec 用
@@ -69,7 +69,7 @@ lsd = 'latest'
 bat = 'latest'
 fd = 'latest'
 yazi = 'latest'
-'cargo:eza' = 'latest'       # ls 代替(lsd と併用)。eza は macOS 公式/aqua バイナリ非配布のため cargo-binstall の quickinstall prebuilt(arm64・署名検証あり)で取得
+'cargo:eza' = 'latest'       # ls 代替(lsd と併用)。eza は macOS 公式/aqua バイナリ非配布。mise 2026.7.6 で cargo.binstall_quickinstall が既定 false(第三者ビルドを避ける)になり、binstall メタデータも無いため macOS の新規 install は source build
 
 # Git / GitHub
 gh = 'latest'
@@ -123,7 +123,7 @@ workmux = "latest"             # GitHub release を使用(cargo:raine/workmux �
 # nvim は mason を使わず native vim.lsp.enable で PATH から発見する(供給網を mise に一本化)。
 lua-language-server = 'latest'                # lua_ls
 "go:golang.org/x/tools/gopls" = 'latest'      # gopls
-"pipx:basedpyright" = 'latest'                # basedpyright(Python 型チェック。lint/format は ruff に分担)
+"pypi:basedpyright" = 'latest'                # basedpyright(Python 型チェック。lint/format は ruff に分担)
 ruff = 'latest'                               # ruff: Python LSP + conform/nvim-lint の formatter/linter 兼用
 "npm:yaml-language-server" = 'latest'         # yamlls
 "npm:vscode-langservers-extracted" = 'latest' # jsonls / cssls / html
@@ -131,9 +131,10 @@ taplo = 'latest'                              # toml LSP + formatter
 terraform-ls = 'latest'                       # terraformls
 "npm:bash-language-server" = 'latest'         # bashls
 "npm:@prisma/language-server" = 'latest'      # prismals
-"pipx:cmake-language-server" = 'latest'       # cmake LSP
-# TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。prerelease のみ + minimum_release_age=7d の
-# ため dev 版を exact 固定。nvim-lspconfig の tsgo は project-local node_modules/.bin/tsgo を優先する。
+"pypi:cmake-language-server" = 'latest'       # cmake LSP
+# TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。native-preview は TypeScript 7.0 正式版(2026-07-08)
+# 以降は publish が止まっており、この最終 dev 版を exact 固定している。nvim-lspconfig の tsgo は
+# project-local node_modules/.bin/tsgo を優先する。
 "npm:@typescript/native-preview" = '7.0.0-dev.20260707.2' # tsgo
 # Astro は astro-ls(volar ベース)。frontmatter / <script> の TS 機能は init_options.typescript.tsdk に
 # JS 実装の typescript SDK(lib/typescript.js)を渡す必要があり、プロジェクトに typescript が無い場合の
@@ -150,4 +151,4 @@ terraform-ls = 'latest'                       # terraformls
 tree-sitter = '0.25'
 "go:golang.org/x/tools/cmd/goimports" = 'latest' # conform: goimports
 golangci-lint = 'latest'                         # nvim-lint: go
-"pipx:yamllint" = 'latest'                       # nvim-lint: yamllint
+"pypi:yamllint" = 'latest'                       # nvim-lint: yamllint

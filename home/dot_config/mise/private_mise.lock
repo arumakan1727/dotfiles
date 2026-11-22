@@ -830,22 +830,6 @@ url = "https://github.com/suzuki-shunsuke/pinact/releases/download/v5.0.2/pinact
 url_api = "https://api.github.com/repos/suzuki-shunsuke/pinact/releases/assets/675205643"
 provenance = "github-attestations"
 
-[[tools."pipx:basedpyright"]]
-version = "1.40.2"
-backend = "pipx:basedpyright"
-
-[[tools."pipx:cmake-language-server"]]
-version = "0.1.11"
-backend = "pipx:cmake-language-server"
-
-[[tools."pipx:poetry"]]
-version = "2.5.1"
-backend = "pipx:poetry"
-
-[[tools."pipx:yamllint"]]
-version = "1.38.0"
-backend = "pipx:yamllint"
-
 [[tools.pnpm]]
 version = "12.21.0"
 backend = "aqua:pnpm/pnpm"
@@ -889,6 +873,22 @@ checksum = "sha256:9cd98a532c5c5e0c4161314de0225de27e4c8a323917b6ea7b1b714d3ae23
 checksum_source = "mise-versions"
 url = "https://github.com/protocolbuffers/protobuf/releases/download/v36.2/protoc-36.2-osx-aarch_64.zip"
 url_api = "https://api.github.com/repos/protocolbuffers/protobuf/releases/assets/570742436"
+
+[[tools."pypi:basedpyright"]]
+version = "1.40.2"
+backend = "pypi:basedpyright"
+
+[[tools."pypi:cmake-language-server"]]
+version = "0.1.11"
+backend = "pypi:cmake-language-server"
+
+[[tools."pypi:poetry"]]
+version = "2.5.1"
+backend = "pypi:poetry"
+
+[[tools."pypi:yamllint"]]
+version = "1.38.0"
+backend = "pypi:yamllint"
 
 [[tools.python]]
 version = "3.14.10"
