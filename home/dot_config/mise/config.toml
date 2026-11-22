@@ -41,7 +41,7 @@ zig = 'latest'
 # Installer / Package Manager
 aqua = 'latest'           # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
 uv = 'latest'
-'pypi:poetry' = '2'       # registry 既定の asdf backend は locked=true 下で lockfile URL を要求して linux で失敗するため pypi に固定(pypi.uvx=true で uv 経由)
+'pypi:poetry' = '2'       # registry 既定は plugin backend(当初 asdf で locked 下の linux install が失敗、2026.11 時点は vfox)のため pypi に固定。uv 経由で入れ、依存は uv.lock サイドカーで固定
 cargo-binstall = "latest"
 pnpm = "latest"
 usage = "latest"          # mise の補完/spec 用
