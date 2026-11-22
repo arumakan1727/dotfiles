@@ -1,18 +1,20 @@
 # Pinned bootstrap binaries (supply-chain trust anchor).
 #
-# これは「mise を使わずに入れる」ブートストラップ用バイナリ (chezmoi / mise 本体) と
-# Homebrew 公式 install.sh のバージョン/commit と sha256 を固定するファイル。
-# 人間がレビューして記録した値が信頼の起点。
+# chezmoi / mise 本体のバージョンと sha256、Homebrew 公式 install.sh の commit/sha256 を
+# 固定する。人間がレビューして記録した値が信頼の起点。bootstrap.sh /
+# installer/chezmoi-steps/homebrew.sh が読み込む。
+# (Nerd Fonts は home/.chezmoiexternal.toml.tmpl に移行済み。ここでは扱わない。)
 #
 #   - version: GitHub Releases のタグ (先頭 'v' は付けない)
 #   - sha256_<os>_<arch>: そのプラットフォーム向け .tar.gz の sha256 (lowercase hex 64桁)
 #
-# 値の出所 (実測・検証済み, 記録日 2026-06-07):
+# 値の出所 (照合先 checksums ファイル):
 #   chezmoi: https://github.com/twpayne/chezmoi/releases/download/v<ver>/chezmoi_<ver>_checksums.txt
 #   mise:    https://github.com/jdx/mise/releases/download/v<ver>/SHASUMS256.txt
 #
-# 更新は update-pins.sh で行う (release-age ポリシーを尊重)。手で書き換える場合も
-# 必ず上記 checksums ファイルと照合すること。
+# chezmoi / mise セクションは update-pins.sh が release-age ポリシーを尊重して自動生成する
+# ([homebrew] は commit ベースなので自動更新せず保持される)。手で書き換える場合も必ず
+# 上記 checksums ファイル / レビュー済み commit と照合すること。
 
 [chezmoi]
 version             = "2.70.5"
@@ -22,11 +24,11 @@ sha256_linux_arm64  = "4f4f31d0a10ed3b955e814a5ae20075426e27c9d3a09f536bfa4a6c87
 sha256_linux_amd64  = "6a76a0ac3718f0d45b34b4b57067f9556f8f6042e3da710a3c496838362aca14"
 
 [mise]
-version            = "2026.6.1"
-sha256_macos_arm64 = "ed4786b826de4319634dde2294e7d8b9d64e5ee52db69148045b9a199cc3ae43"
-sha256_macos_x64   = "e2173fab287219664e3cf8e31ba9d2e225059ecc18971e2fe34826af638b255d"
-sha256_linux_arm64 = "881f6b902403444ffb132c928e93a30a18aaae7c133267ece7e97d18cca9db88"
-sha256_linux_x64   = "61806febeb1d13d586b2b7501ddf315af3cef28629c19bb12c197d43a4a19710"
+version            = "2026.11.8"
+sha256_macos_arm64 = "7a7f9342559cc4ca670054337ecf497e69d832a05f66e531628381dc92b88f48"
+sha256_macos_x64   = "355729a12f3d3b23059ad372855a82f5c8720d1d3fb63dbe5068bc9b4952201c"
+sha256_linux_arm64 = "b36da3c4892380325d44dee3678ba618de191254d8a4aed8011ee66b28a6cbd7"
+sha256_linux_x64   = "d2d5a46f507bba772686e2c8f2316b3a4439dac49a37a30db5c0e7bb077c5431"
 
 [homebrew]
 # Homebrew 公式 install.sh を commit 固定 + sha256 検証してから実行する (installer/homebrew.sh)。
