@@ -24,7 +24,6 @@ local SERVERS = {
   "dockerls",
   "prismals",
   "dartls",
-  "cmake",
 }
 
 local function on_attach(client, bufnr)

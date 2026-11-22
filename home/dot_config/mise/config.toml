@@ -135,7 +135,6 @@ taplo = 'latest'                              # toml LSP + formatter
 terraform-ls = 'latest'                       # terraformls
 "npm:bash-language-server" = 'latest'         # bashls
 "npm:@prisma/language-server" = 'latest'      # prismals
-"pypi:cmake-language-server" = 'latest'       # cmake LSP
 # TypeScript は tsserver でなく tsgo(TS7 ネイティブ)。native-preview は TypeScript 7.0 正式版(2026-07-08)
 # 以降は publish が止まっており、この最終 dev 版を exact 固定している。nvim-lspconfig の tsgo は
 # project-local node_modules/.bin/tsgo を優先する。

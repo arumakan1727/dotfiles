@@ -948,11 +948,6 @@ backend = "pypi:basedpyright"
 specifiers = ["latest"]
 uv = { path = "locks/pypi-basedpyright/1.40.2", digest = "sha256:ab097609665c6c2e26345b055508c8567cb2d7c9b0b5eb460251a7b0ab1bce4a" }
 
-[[tools."pypi:cmake-language-server"]]
-version = "0.1.11"
-backend = "pypi:cmake-language-server"
-specifiers = ["latest"]
-
 [[tools."pypi:poetry"]]
 version = "2.5.1"
 backend = "pypi:poetry"
