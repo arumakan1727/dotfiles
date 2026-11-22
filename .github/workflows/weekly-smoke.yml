@@ -33,6 +33,7 @@ jobs:
       # macOS: コンテナが無いので runner 上で実 apply。brew(cask 重い)と mise install は
       # skip し、フォントは headless で空にする。bootstrap の darwin ピン取得/検証と
       # 実 macOS FS への apply・macOS 用 run_onchange を実機で通すのが狙い。
+      # Claude Code / Codex(run_onchange 25)は skip せず、darwin ピンの取得/検証も兼ねる。
       - name: macOS E2E (bootstrap -> real apply; skip brew & mise, headless)
         if: runner.os == 'macOS'
         env:

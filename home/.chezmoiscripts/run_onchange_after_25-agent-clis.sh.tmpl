@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# run_onchange (chezmoi): install the native Claude Code and Codex CLIs where
+# they are absent. Delegates to installer/chezmoi-steps/{claude-code,codex}.sh.
+#
+# Install-only: both CLIs update themselves afterwards (Claude Code auto-update,
+# Codex `codex update` / startup check), so the pins in installer/pinned.toml
+# only seed fresh machines and a pin bump leaves existing installs alone. Not a
+# chezmoi external: chezmoi would re-hash the ~200-400MB binaries on every
+# diff/apply and fight the self-updaters over the launcher symlinks.
+#
+# run_onchange (not run_once): the hash lines render the step scripts and the
+# pins into this wrapper, so chezmoi re-runs it when either changes (a quick
+# no-op where both CLIs are present). Runs on both macOS and Linux. Skip with
+# DOTFILES_SKIP_AGENT_CLIS=1 (the fast CI smoke test sets this). Whether it is
+# set is rendered too (true/false, the same test as the guard below): a skipped
+# run still counts as done, so unsetting the variable must change the script for
+# the next apply to install the CLIs. Keep it set consistently (or export it) so
+# that `chezmoi diff` agrees with the last apply.
+#
+# claude-code-step-hash: {{ output "cat" (joinPath .chezmoi.sourceDir ".." "installer" "chezmoi-steps" "claude-code.sh") | sha256sum }}
+# codex-step-hash:       {{ output "cat" (joinPath .chezmoi.sourceDir ".." "installer" "chezmoi-steps" "codex.sh") | sha256sum }}
+# pinned-hash:           {{ output "cat" (joinPath .chezmoi.sourceDir ".." "installer" "pinned.toml") | sha256sum }}
+# skip-agent-clis:       {{ ne (env "DOTFILES_SKIP_AGENT_CLIS") "" }}
+set -Eeuo pipefail
+[ -n "${DOTFILES_DEBUG:-}" ] && set -x
+
+if [ -n "${DOTFILES_SKIP_AGENT_CLIS:-}" ]; then
+  echo "[agent-clis] DOTFILES_SKIP_AGENT_CLIS set — skipping"
+  exit 0
+fi
+
+repo_root="$(cd "$(dirname "$CHEZMOI_SOURCE_DIR")" && pwd -P)"
+# Try both even if the first fails; report failure afterwards.
+rc=0
+"${repo_root}/installer/chezmoi-steps/claude-code.sh" || rc=1
+"${repo_root}/installer/chezmoi-steps/codex.sh" || rc=1
+exit "$rc"

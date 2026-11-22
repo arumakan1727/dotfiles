@@ -30,6 +30,19 @@ git clone <this repo> dotfiles && cd dotfiles
 2. **chezmoi init --apply**: dotfiles を適用する。apply 中に chezmoi external が Nerd Fonts を
    sha256 検証取得し、apply 後に run_onchange が走る(対象が変われば次回 apply で自動再適用)。
 
+## AI agent CLIs (Claude Code / Codex)
+
+Claude Code と Codex CLI は、mise や npm を使わず公式のネイティブバイナリで入れる
+（`home/.chezmoiscripts/run_onchange_after_25-agent-clis.sh.tmpl`）。
+
+- **install-only**: `~/.local/bin/claude`、`~/.local/bin/codex` が無いマシンにだけ、`installer/pinned.toml` の
+  ピン版を sha256 検証して配置する。既にあれば何もしない。
+- **更新は各 CLI の自己アップデートに任せる**: 配置は公式インストーラと同じ形にしてあり、
+  Claude Code の auto-update と `claude update`、Codex の起動時チェックと `codex update` がそのまま引き継ぐ。
+  - Claude Code: `${XDG_DATA_HOME:-~/.local/share}/claude/versions/<ver>` + `~/.local/bin/claude` の symlink
+  - Codex: `~/.codex/packages/standalone/{releases/<ver>-<target>,current,auto-update-version}` + `~/.local/bin/codex` の symlink
+- ピンは新規マシンの初回導入の信頼の起点にすぎないので、更新が遅れても既存の導入には影響しない。
+
 ## Options
 
 apply の挙動を切り替える env（ヘッドレス機やテスト・CI で使う）:
@@ -37,6 +50,7 @@ apply の挙動を切り替える env（ヘッドレス機やテスト・CI で�
 - `DOTFILES_HEADLESS=1` — フォントを取得しない。
 - `DOTFILES_SKIP_MISE_INSTALL=1` — `mise install` を skip。
 - `DOTFILES_SKIP_BREW=1` — Homebrew + Brewfile によるインストールを skip。
+- `DOTFILES_SKIP_AGENT_CLIS=1` — Claude Code / Codex のインストールを skip。
 - `DOTFILES_DEBUG=1` — installer / run_onchange を `set -x` でトレース。
 
 ## Day-to-day
@@ -97,7 +111,7 @@ make help
 
 ```sh
 make test/linux        # smoke: bootstrap -> chezmoi apply -> 構造検証（高速）
-make test/linux/full   # 上記 + 代表ツールの mise install + zsh/bash 対話ロード
+make test/linux/full   # 上記 + Claude Code / Codex の導入 + 代表ツールの mise install + zsh/bash 対話ロード
 make test/linux/shell  # 同じクリーン環境に対話シェルで入る（手動デバッグ）
 ```
 

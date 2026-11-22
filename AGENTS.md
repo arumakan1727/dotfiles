@@ -22,6 +22,16 @@ README / Makefile / 各スクリプトを読めば分かる手順や構成はそ
 - fetch logic は `installer/chezmoi-steps/` または chezmoi external に閉じ込める。fetch 不要の設定変更は plain `.sh` にインラインし、スクリプト本体の変更で再実行させる。
 - headless 機では `DOTFILES_HEADLESS=1` を shell rc などで恒久 export する。chezmoi external は `apply` / `diff` のたびに評価されるため、一時 env だと次回フォント取得が復活する。
 
+## Claude Code / Codex
+
+- install-only: `installer/pinned.toml` のピンは新規マシンの初回導入用。更新は各 CLI の自己アップデートに任せ、ピン更新で既存の導入を差し替えない。chezmoi external にしない(diff / apply のたびに数百 MB を再ハッシュし、自己更新が張り替えた symlink とも衝突する)。
+- 配置は公式インストーラと同じ形を手で作る。自己更新はこの形を前提に引き継ぐ。
+    - Claude Code: `<binary> install <ver>` を使わない。`~/.claude.json` に `autoUpdates: false` が書かれ、ピン扱いになる。
+    - Claude Code の versions は `XDG_DATA_HOME` 配下。一時 HOME で試すときは `XDG_*` も差し替える(HOME だけだと実ホームの versions を指す)。
+    - Codex: `auto-update-version` が無いとピン扱いになり、定期更新が何もしない。
+- `update-pins.sh` の `[codex]` 更新は macOS + cosign が前提(Linux 版は Sigstore、macOS 版は全 Mach-O の codesign)。満たさない環境では検証を飛ばして書かず現ピンを保持する(ハッシュ不変の次回実行では検証が走らないため)。inactive な mise shim は `command -v` で見つかっても失敗するので `mise x aqua:sigstore/cosign@<ver> -- ...` で有効にする。
+- `DOTFILES_SKIP_AGENT_CLIS` は run_onchange 25 の描画結果に含まれる。apply と diff で値を揃える(テストでは process-wide に export する)。
+
 ## CI
 
 - `.github/workflows/ci.yml`(push/PR): `make lint`(shellcheck)+ Linux smoke(`make test/linux`)+ macOS render(`./installer/bootstrap.sh` で darwin ピンの取得/検証 → `chezmoi apply --dry-run`、実 apply はしない)。`weekly-smoke.yml`(週次 + 手動): Linux full E2E + macOS 実 apply。週次は「ピンが今も fetch でき checksum が一致するか」を継続検証する位置づけ。

@@ -5,9 +5,11 @@
 #
 #   in-container.sh [smoke|full]
 #
-# smoke (default): bootstrap -> chezmoi init --apply (mise install skipped) ->
-#                  structural verification. Fast; only downloads chezmoi+mise.
-# full:            smoke + representative `mise install` + zsh/bash -i load.
+# smoke (default): bootstrap -> chezmoi init --apply (mise install and the
+#                  Claude Code / Codex install skipped) -> structural
+#                  verification. Fast; only downloads chezmoi+mise.
+# full:            smoke + pinned Claude Code / Codex install + representative
+#                  `mise install` + zsh/bash -i load.
 #
 # Deliberately no `set -e`: assertions must keep running after a failure so the
 # summary reflects every check. Fatal setup steps are guarded explicitly.
@@ -59,7 +61,18 @@ fi
 pinned="$WORK/installer/pinned.toml"
 exp_chezmoi="$(awk -F'"' '/^\[chezmoi\]/{s=1} /^\[mise\]/{s=0} s&&/^[[:space:]]*version/{print $2; exit}' "$pinned")"
 exp_mise="$(awk -F'"' '/^\[mise\]/{s=1} s&&/^[[:space:]]*version/{print $2; exit}' "$pinned")"
-echo "  expected pins: chezmoi=$exp_chezmoi  mise=$exp_mise"
+# shellcheck source-path=SCRIPTDIR source=../installer/lib/toml_get.sh
+. "$WORK/installer/lib/toml_get.sh"
+exp_claude="$(toml_get "$pinned" claude-code version)"
+exp_codex="$(toml_get "$pinned" codex version)"
+echo "  expected pins: chezmoi=$exp_chezmoi  mise=$exp_mise  claude-code=$exp_claude  codex=$exp_codex"
+
+# The Claude Code / Codex install (run_onchange 25) downloads ~400MB, so only
+# `full` runs it. Exported process-wide like DOTFILES_HEADLESS: run_onchange 25
+# renders the skip value, so `chezmoi diff` must see the same value as `apply`.
+if [ "$LEVEL" = smoke ]; then
+  export DOTFILES_SKIP_AGENT_CLIS=1
+fi
 
 # --- stage 1: bootstrap (pinned + checksum-verified chezmoi & mise) -----------
 section "stage 1: bootstrap"
@@ -163,6 +176,45 @@ ok_if "chezmoi NOT a mise tool (config has no chezmoi assignment)" \
 if [ "$LEVEL" = smoke ]; then
   ok_if "smoke: ripgrep not installed (mise install skipped)" \
     bash -c '! '"$MISE"' which rg >/dev/null 2>&1'
+  ok_if "smoke: claude not installed (DOTFILES_SKIP_AGENT_CLIS)" test ! -e "$HOME/.local/bin/claude"
+  ok_if "smoke: codex not installed (DOTFILES_SKIP_AGENT_CLIS)" test ! -e "$HOME/.local/bin/codex"
+fi
+
+# --- stage 3c (full only): Claude Code / Codex installed from the pins ---------
+# run_onchange 25 ran during stage 2. Check the version AND the native layout,
+# because the CLIs' own updaters rely on it to take over later.
+if [ "$LEVEL" = full ]; then
+  section "stage 3c (full): Claude Code / Codex native install"
+  claude_bin="$HOME/.local/bin/claude"
+  ok_if "claude launcher is a symlink" test -L "$claude_bin"
+  ok_if "claude launcher -> ~/.local/share/claude/versions/$exp_claude" \
+    test "$(readlink "$claude_bin")" = "$HOME/.local/share/claude/versions/$exp_claude"
+  got_claude="$("$claude_bin" --version 2>/dev/null | awk 'NR==1{print $1}')"
+  ok_if "claude version == pinned ($exp_claude, got ${got_claude:-none})" test "$got_claude" = "$exp_claude"
+
+  codex_root="$HOME/.codex/packages/standalone"
+  codex_release="$exp_codex-$(uname -m | sed 's/arm64/aarch64/; s/amd64/x86_64/')-unknown-linux-musl"
+  ok_if "codex launcher -> standalone current/bin/codex" \
+    test "$(readlink "$HOME/.local/bin/codex")" = "$codex_root/current/bin/codex"
+  ok_if "codex current -> releases/$codex_release" \
+    test "$(readlink "$codex_root/current")" = "$codex_root/releases/$codex_release"
+  ok_if "codex follows the latest channel (auto-update-version)" \
+    test "$(cat "$codex_root/auto-update-version" 2>/dev/null)" = "$codex_release"
+  ok_if "codex bundles bwrap (Linux sandbox helper)" test -x "$codex_root/current/codex-resources/bwrap"
+  got_codex="$("$HOME/.local/bin/codex" --version 2>/dev/null | awk 'NR==1{print $NF}')"
+  ok_if "codex version == pinned ($exp_codex, got ${got_codex:-none})" test "$got_codex" = "$exp_codex"
+
+  # Install-only: a second run must leave the existing install alone.
+  for step in claude-code codex; do
+    if out="$("$WORK/installer/chezmoi-steps/$step.sh" 2>&1)"; then
+      # shellcheck disable=SC2016  # $1 is the inner bash -c positional
+      ok_if "$step step is a no-op when installed (reports 'skipping')" \
+        bash -c 'printf %s "$1" | grep -q skipping' _ "$out"
+    else
+      bad "$step step second run failed"
+      printf '%s\n' "$out" | tail -5
+    fi
+  done
 fi
 
 # --- stage 3b: a fresh LOGIN shell must bootstrap PATH on its own --------------

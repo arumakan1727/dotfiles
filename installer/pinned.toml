@@ -1,22 +1,31 @@
-# Pinned bootstrap binaries (supply-chain trust anchor).
+# Pinned binaries (supply-chain trust anchor).
 #
-# chezmoi / mise 本体のバージョンと sha256、Homebrew 公式 install.sh の commit/sha256 を
-# 固定する。人間がレビューして記録した値が信頼の起点。bootstrap.sh /
-# installer/chezmoi-steps/homebrew.sh が読み込む。
+# chezmoi / mise 本体、Claude Code / Codex CLI のバージョンと sha256、Homebrew 公式
+# install.sh の commit/sha256 を固定する。人間がレビューして記録した値が信頼の起点。
+# bootstrap.sh / installer/chezmoi-steps/{homebrew,claude-code,codex}.sh が読み込む。
 # (Nerd Fonts は home/.chezmoiexternal.toml.tmpl に移行済み。ここでは扱わない。)
 #
-#   - version: GitHub Releases のタグ (先頭 'v' は付けない)
-#   - sha256_<os>_<arch>: そのプラットフォーム向け .tar.gz の sha256 (lowercase hex 64桁)
+#   - version: リリースのバージョン (先頭 'v' / 'rust-v' は付けない)
+#   - sha256_<platform>: そのプラットフォーム向け配布物の sha256 (lowercase hex 64桁)
 #
-# 各 tarball の SHA-256 は以下の checksums ファイルと照合する。
-# chezmoi は installer/keys/chezmoi_cosign.pub で checksums ファイルの署名を毎回検証する。
-# mise は各 tarball の GitHub artifact attestation でソースのタグと署名元の release.yml を検証する。
-#   chezmoi: https://github.com/twpayne/chezmoi/releases/download/v<ver>/chezmoi_<ver>_checksums.txt
-#   mise:    https://github.com/jdx/mise/releases/download/v<ver>/SHASUMS256.txt
+# 各 sha256 の出所と検証:
+#   chezmoi:     https://github.com/twpayne/chezmoi/releases/download/v<ver>/chezmoi_<ver>_checksums.txt
+#                installer/keys/chezmoi_cosign.pub で checksums ファイルの署名を毎回検証する。
+#   mise:        https://github.com/jdx/mise/releases/download/v<ver>/SHASUMS256.txt
+#                各 tarball の GitHub artifact attestation でソースのタグと署名元の release.yml を検証する。
+#   claude-code: https://downloads.claude.ai/claude-code-releases/<ver>/manifest.json
+#                installer/keys/claude-code.asc で manifest の GPG 署名を検証する(stable チャネルの版)。
+#                7日待機は anthropics/claude-code の GitHub release の公開日時で判定する。
+#   codex:       https://github.com/openai/codex/releases/download/rust-v<ver>/codex-package_SHA256SUMS
+#                GitHub と releases.openai.com の asset digest と突合し、Linux は Sigstore bundle、
+#                macOS は全 Mach-O の Developer ID 署名を検証する。
 #
-# chezmoi / mise セクションは update-pins.sh が release-age ポリシーを尊重して自動生成する
+# Claude Code / Codex は install-only: 未導入のマシンにだけこのピンで入れ、以降は各 CLI の
+# 自己アップデートに任せる。ピンは新規マシンの初回導入の信頼の起点で、既存の導入は変えない。
+#
+# [homebrew] 以外は update-pins.sh が release-age ポリシーを尊重して自動生成する
 # ([homebrew] は commit ベースなので自動更新せず保持される)。手で書き換える場合も必ず
-# tarball に同じ検証を行い、Homebrew はレビュー済みの commit と照合すること。
+# 同じ検証を行い、Homebrew はレビュー済みの commit と照合すること。
 
 [chezmoi]
 version             = "2.70.5"
@@ -40,3 +49,17 @@ sha256_linux_x64   = "d2d5a46f507bba772686e2c8f2316b3a4439dac49a37a30db5c0e7bb07
 # 出所: https://github.com/Homebrew/install の install.sh を変更した age 準拠の最新 commit。
 install_commit = "a7b75bf0da9fbdd9e23e0e0940279807620bfd98"  # 2026-05-18
 install_sha256 = "f3e91784ffeda32bc397de7acc1154724cc47522a459c9ac656cca176eeba457"
+
+[claude-code]
+version             = "2.1.323"
+sha256_darwin_arm64 = "5432918d904a9b6afef7bb79d20df24d76052eabc1f41bceb84091d21f8889a7"
+sha256_darwin_x64   = "d68f8e14d65a1784391775cc1aadaf0f217ae5155813a9f91526e846018a25c4"
+sha256_linux_arm64  = "452dddff140b5caf00a5410333a3d6db82c73ea2dec74b1541fae18e97d47dca"
+sha256_linux_x64    = "604d29a6869409106b6a1110bdadcc8b72e8654a5a865d23258f938a696e348e"
+
+[codex]
+version                           = "0.169.0"
+sha256_aarch64_apple_darwin       = "8a232260df7a12c5e83e0b4b7659e1c8d9259b41942517bc0068d8ab55c36461"
+sha256_x86_64_apple_darwin        = "0a3c392235b4712409495ced02bbe0662ce7a038232766d1c1c34af74e905c2f"
+sha256_aarch64_unknown_linux_musl = "c8d0b4ab2a97c595b70b10412d36d0d5464dcef1e1d3246b073d48017cdf5a4f"
+sha256_x86_64_unknown_linux_musl  = "3b8ed091149cc63a59046b9f094bcfa21cdb4dda15ede441ce369bcee4a71ba0"
