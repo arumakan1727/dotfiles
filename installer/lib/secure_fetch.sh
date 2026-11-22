@@ -20,6 +20,47 @@
 # (e.g. committed in pinned.toml) is the real trust anchor. Verifying against
 # a checksums file fetched from the *same* release only catches corruption.
 
+# Run curl "$@", retrying transient failures with exponential backoff
+# (2s, 4s, 8s; SECURE_FETCH_ATTEMPTS attempts in total, default 4):
+#   - network-level errors curl's own --retry does not cover: DNS, connect,
+#     TLS handshake (exit 35, seen against GitHub's release CDN), timeouts,
+#     truncated or reset transfers, HTTP/2 stream errors;
+#   - HTTP 408/429/5xx, via curl's --retry inside each attempt.
+# Other HTTP errors (a 404 under -f) fail at once. Some curl builds report an
+# HTTP error under -f over HTTP/2 as a receive error (exit 56) instead of 22, so
+# an HTTP error is recognised by curl's "returned error: <status>" message (on
+# stderr with -S); if that wording ever changes, the cost is extra retries.
+# stdout is buffered and printed only for the attempt that succeeds, so a
+# write-out (-w) from a failed attempt never reaches the caller; download real
+# content with -o.
+_sf_curl() {
+  local attempt=1 max="${SECURE_FETCH_ATTEMPTS:-4}" delay=2 rc out errf
+  errf="$(mktemp "${TMPDIR:-/tmp}/sf_curl.XXXXXX")" || return 1
+  while :; do
+    # `&& rc=0 || rc=$?` keeps curl's status (an `if` would reset $? to 0) and
+    # is safe under the callers' `set -e`.
+    out="$(curl --retry 2 --retry-delay 2 "$@" 2>"$errf")" && rc=0 || rc=$?
+    cat "$errf" >&2
+    if [ "$rc" -eq 0 ]; then
+      rm -f -- "$errf"
+      printf '%s' "$out"
+      return 0
+    fi
+    case "$rc" in
+      5 | 6 | 7 | 16 | 18 | 28 | 35 | 52 | 55 | 56 | 92) ;; # transient
+      *) rm -f -- "$errf"; return "$rc" ;;
+    esac
+    if grep -q 'returned error: [0-9]' "$errf" || [ "$attempt" -ge "$max" ]; then
+      rm -f -- "$errf"
+      return "$rc"
+    fi
+    echo "secure_fetch: curl failed (exit $rc), retrying in ${delay}s ($attempt/$((max - 1)))" >&2
+    sleep "$delay"
+    attempt=$((attempt + 1))
+    delay=$((delay * 2))
+  done
+}
+
 # Print the lowercase-hex SHA-256 of a file (hash only, no filename).
 _sf_sha256() {
   local file="$1"
@@ -55,7 +96,7 @@ secure_fetch() {
     return 1
   }
 
-  if ! curl -fsSL --proto '=https' --tlsv1.2 "$url" -o "$tmp"; then
+  if ! _sf_curl -fsSL --proto '=https' --tlsv1.2 "$url" -o "$tmp"; then
     echo "secure_fetch: download failed: $url" >&2
     rm -f "$tmp"
     return 1

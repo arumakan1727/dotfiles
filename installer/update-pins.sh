@@ -106,7 +106,8 @@ require_tools() {
     || die "required tool not found: sha256sum or shasum"
 }
 
-curl_get() { curl -fsSL --proto '=https' --tlsv1.2 "$@"; }
+# Same transient-failure retries as secure_fetch (lib/secure_fetch.sh).
+curl_get() { _sf_curl -fsSL --proto '=https' --tlsv1.2 "$@"; }
 
 # Newest (by version) non-draft, non-prerelease release at least $DAYS old whose
 # tag is <tag_prefix><dotted numeric version>. Prints the version without the
