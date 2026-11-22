@@ -31,7 +31,9 @@ deno = 'latest'
 go = 'latest'
 java = "corretto-27" # 最新の feature release(非 LTS)を追う。次の release(28)が出るとサポートが切れるので、そのたびに上げる
 node = "26.13"       # minor まで固定。発端は mise 2026.6.x のメジャーのみ指定 '26' を exact 扱いして 404 にするバグ(2026.11.12 では解消を確認)
-python = '3.14'
+# postinstall: 旧 ~/.default-python-packages(mise 2026.11 で deprecated、2027.11 で廃止)の後継。この python を新規 install
+# したときだけ global に入れる。PIP_REQUIRE_VIRTUALENV を外し、--uploaded-prior-to P7D で依存にも 7d ルールを適用する。
+python = { version = '3.14', install_env = { PIP_REQUIRE_VIRTUALENV = "0" }, postinstall = "python -m pip install --quiet --uploaded-prior-to P7D PyYAML numpy typer" }
 rust = '1.100'       # 旧 installer/rustup.sh から移行(core:rust)。cargo-binstall は下記参照。node と同じ経緯で minor 固定
 zig = 'latest'
 
