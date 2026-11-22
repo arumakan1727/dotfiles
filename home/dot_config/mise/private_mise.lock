@@ -848,6 +848,15 @@ aube = { path = "locks/npm-googleworkspace-cli/0.22.5", digest = "sha256:9050180
 backend = "npm:@googleworkspace/cli"
 specifiers = ["latest"]
 
+[[tools."npm:@playwright/mcp"]]
+version = "0.0.85"
+aube = { path = "locks/npm-playwright-mcp/0.0.85", digest = "sha256:b51d397992c591819149beaf266194c7307b4f8115ba708fc3079e501880884a" }
+backend = "npm:@playwright/mcp"
+specifiers = ["latest"]
+
+[tools."npm:@playwright/mcp".provenance]
+repository = "github.com/microsoft/playwright-mcp"
+
 [[tools."npm:@prisma/language-server"]]
 version = "31.13.0"
 aube = { path = "locks/npm-prisma-language-server/31.13.0", digest = "sha256:649353151c81a7d7b359b60b11db77579080797616476fcb04fa821c4a9926e0" }
@@ -877,6 +886,15 @@ version = "20.0.51"
 aube = { path = "locks/npm-ccusage/20.0.51", digest = "sha256:8833a8a64a8e1ba2994e40c74d032edcbff3247a67581951762b910472f1f0b1" }
 backend = "npm:ccusage"
 specifiers = ["latest"]
+
+[[tools."npm:chrome-devtools-mcp"]]
+version = "1.13.0"
+aube = { path = "locks/npm-chrome-devtools-mcp/1.13.0", digest = "sha256:defcb2e5c4e53aba11dccb04dda16b6a237879f9875f3cdda7ac25b0a2060613" }
+backend = "npm:chrome-devtools-mcp"
+specifiers = ["latest"]
+
+[tools."npm:chrome-devtools-mcp".provenance]
+repository = "github.com/ChromeDevTools/chrome-devtools-mcp"
 
 [[tools."npm:difit"]]
 version = "5.0.12"

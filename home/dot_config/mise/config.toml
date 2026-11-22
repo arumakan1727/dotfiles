@@ -122,10 +122,15 @@ shfmt = 'latest'
 # Build / Codegen (brew から移行)
 cmake = 'latest'                 # aqua:Kitware/CMake
 protoc = 'latest'                # aqua:protocolbuffers/protobuf。旧 brew protobuf / protobuf@3 を集約
-"npm:agent-browser" = "latest"
 "npm:ccusage" = "latest"         # Claude Code 利用量トラッキング
 workmux = "latest"             # GitHub release を使用(cargo:raine/workmux は HEAD に解決されるため不可)
 "npm:difit" = "latest"
+
+# AI agent: browser automation(Claude Code / Codex から使う)
+# MCP server は npx で起動せず mise で固定し、各 agent の user scope 設定から mise shim 経由で起動する。
+"npm:agent-browser" = "latest"   # CLI + skill(skill 本体は `agent-browser skills get core` で CLI が版に合わせて配る)
+"npm:chrome-devtools-mcp" = "latest" # ChromeDevTools 公式 MCP。registry 短縮名なし
+"npm:@playwright/mcp" = "latest"     # Microsoft 公式 Playwright MCP。registry 短縮名なし(playwright は本体 npm:playwright を指す)
 
 # Neovim: LSP servers
 # nvim は mason を使わず native vim.lsp.enable で PATH から発見する(供給網を mise に一本化)。
