@@ -10,6 +10,10 @@ lockfile = true
 # Linux full E2E)では test/run.sh が MISE_LOCKED=1 を注入し「ピンが今も fetch でき checksum 一致」を厳密検証する。
 minimum_release_age = "7d" # fuzzy 解決(latest/node@26 等)で「リリース後 7d 未満」を弾く。旧 MISE_INSTALL_BEFORE env の後継(deprecated: warn 2026.10/remove 2027.10)。config 化で非対話/CI でも効く。exact pin と lockfile 再現 install はバイパス
 locked_verify_provenance = true # lockfile の provenance(github-attestations 等)を毎 install で再検証する。既定 false はキャッシュ信頼で検証スキップ。provenance_api_failures_fatal(既定 true) と相まって API 障害時は hard fail
+# paranoid の provenance カテゴリ(mise 2026.10.14+, global 専用): mise-versions(attestation を中継する mirror)が
+# 「attestation なし」と答えた artifact も GitHub に照会してから検証を省く。mirror の応答だけで検証が外れる経路を塞ぐ。
+# 代償は attestation の無い artifact ごとに GitHub API 1 回。config / env_files / plugins カテゴリは対象外(project 側の trust 運用を変えない)。
+paranoid = ["provenance"]
 lockfile_platforms = [
   "linux-x64",
   "linux-arm64",
