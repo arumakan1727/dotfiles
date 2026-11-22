@@ -676,21 +676,21 @@ url_api = "https://api.github.com/repos/hadolint/hadolint/releases/assets/496546
 provenance = "github-attestations"
 
 [[tools.java]]
-version = "corretto-24.0.2.12.1"
+version = "corretto-27.0.1.0.11"
 backend = "core:java"
-specifiers = ["corretto-24"]
+specifiers = ["corretto-27"]
 
 [tools.java."platforms.linux-arm64"]
-checksum = "sha256:57a5cdd6ba25dcf765390b3c8fcb085667fe3ef9cf6ccbc8e21f43cb5b40f267"
-url = "https://corretto.aws/downloads/resources/24.0.2.12.1/amazon-corretto-24.0.2.12.1-linux-aarch64.tar.gz"
+checksum = "sha256:6658f4f479bb179f1d9b0ed95ce8430432adac6f0502f5a80570d54dd0517ec9"
+url = "https://corretto.aws/downloads/resources/27.0.1.0.11/amazon-corretto-27.0.1.0.11-linux-aarch64.tar.gz"
 
 [tools.java."platforms.linux-x64"]
-checksum = "sha256:d4cd1f03a8b9aad58d0fdac96d1ba5de6b7ac86f3069729535f2fc1e5a33f7c6"
-url = "https://corretto.aws/downloads/resources/24.0.2.12.1/amazon-corretto-24.0.2.12.1-linux-x64.tar.gz"
+checksum = "sha256:2a8a5a833ec1b2e6e66bcf8a530438f471ebbbc928be90ab153b2985cdeac8e8"
+url = "https://corretto.aws/downloads/resources/27.0.1.0.11/amazon-corretto-27.0.1.0.11-linux-x64.tar.gz"
 
 [tools.java."platforms.macos-arm64"]
-checksum = "sha256:ac4e961dbb047740d1e2de141dd739da9fee4b6b2d62151e33b3bbbdb0b592dc"
-url = "https://corretto.aws/downloads/resources/24.0.2.12.1/amazon-corretto-24.0.2.12.1-macosx-aarch64.tar.gz"
+checksum = "sha256:6001774fcb01aa85d8fedca380c8330e91705963dd6e0f3d5e695a623e914c34"
+url = "https://corretto.aws/downloads/resources/27.0.1.0.11/amazon-corretto-27.0.1.0.11-macosx-aarch64.tar.gz"
 
 [[tools.jq]]
 version = "1.8.2"
