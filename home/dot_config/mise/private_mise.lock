@@ -301,6 +301,12 @@ version = "0.23.5"
 backend = "cargo:eza"
 specifiers = ["latest"]
 
+[[tools.cloudflare-cf]]
+version = "0.15.0"
+aube = { path = "locks/cloudflare-cf/0.15.0", digest = "sha256:05437ada1b35784ce4604332d4dea0ca6f921b6989903ade06bfc510ad3c8ce0" }
+backend = "npm:cf"
+specifiers = ["latest"]
+
 [[tools.cmake]]
 version = "4.5.0"
 backend = "aqua:Kitware/CMake"

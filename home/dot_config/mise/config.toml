@@ -106,6 +106,7 @@ age = "latest"                       # 暗号化
 zoxide = "latest"
 
 # Cloud/Infra
+cloudflare-cf = "latest"
 tfsec = 'latest'
 'aqua:aws/aws-cli' = 'latest'                  # aqua は .pkg でなく v2 バイナリを入れるため起動遅延を回避(旧 Homebrew 版から移行)
 terraform = 'latest'
