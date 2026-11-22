@@ -8,13 +8,15 @@
 #   - version: GitHub Releases のタグ (先頭 'v' は付けない)
 #   - sha256_<os>_<arch>: そのプラットフォーム向け .tar.gz の sha256 (lowercase hex 64桁)
 #
-# 値の出所 (照合先 checksums ファイル):
+# 各 tarball の SHA-256 は以下の checksums ファイルと照合する。
+# chezmoi は installer/keys/chezmoi_cosign.pub で checksums ファイルの署名を毎回検証する。
+# mise は各 tarball の GitHub artifact attestation でソースのタグと署名元の release.yml を検証する。
 #   chezmoi: https://github.com/twpayne/chezmoi/releases/download/v<ver>/chezmoi_<ver>_checksums.txt
 #   mise:    https://github.com/jdx/mise/releases/download/v<ver>/SHASUMS256.txt
 #
 # chezmoi / mise セクションは update-pins.sh が release-age ポリシーを尊重して自動生成する
 # ([homebrew] は commit ベースなので自動更新せず保持される)。手で書き換える場合も必ず
-# 上記 checksums ファイル / レビュー済み commit と照合すること。
+# tarball に同じ検証を行い、Homebrew はレビュー済みの commit と照合すること。
 
 [chezmoi]
 version             = "2.70.5"

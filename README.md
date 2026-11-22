@@ -50,17 +50,21 @@ chezmoi add <path>      # 実環境で直接編集したファイルを source �
 
 ## Update (chezmoi / mise の pin)
 
-`chezmoi` / `mise` は bootstrap が固定管理する trust anchor（`installer/pinned.toml`）で、mise 管理下の
-ツールではない。更新は「pin を更新 → bootstrap で取得し直す」:
+`installer/pinned.toml` に、bootstrap で使う chezmoi と mise のバージョンと SHA-256 を固定する。
+`make update-pins` は両方について、公開から7日以上経過した最新の安定版を選ぶ。
+バージョンか SHA-256 が1つでも変われば、そのツールの全対象プラットフォームの tarball を取得し、SHA-256 を照合する。
+
+- **chezmoi** は、リポジトリに固定した cosign 公開鍵 `installer/keys/chezmoi_cosign.pub` でチェックサム一覧の署名を毎回検証する。照合には署名済みの値を使う。
+- **mise** は、各 tarball の GitHub artifact attestation で、ソースが対象のリリースタグであることと、そのタグの `jdx/mise/.github/workflows/release.yml` が署名したことを確認する。
 
 ```shell
-GITHUB_TOKEN=$(gh auth token) make update-pins   # 7日以上経過した最新版へ pin + sha256 を再記録
-git diff installer/pinned.toml                   # version / sha256 を人手レビューしてコミット
-./installer/bootstrap.sh                          # 新 pin を DL→sha 照合→~/.local/bin へ置換（冪等）
+GITHUB_TOKEN=$(gh auth token) make update-pins
+git diff installer/pinned.toml  # バージョンと SHA-256 の差分をレビューしてコミット
+./installer/bootstrap.sh        # レビュー済みの SHA-256 と照合し、~/.local/bin に配置
 ```
 
-`update-pins` は chezmoi と mise を**まとめて**解決する（片方だけ上げたいときは `pinned.toml` の該当
-セクションを手編集し upstream の checksums と照合）。`--dry-run` で差分のみ、`--days N` で age 窓変更。
+`./installer/update-pins.sh --dry-run` でも同じ検証を行い、差分を表示する。片方だけ更新する場合は、
+検証済みの差分から該当セクションを取り込む。待機日数は `--days N` で変更できる。
 
 他のマシンで pin 更新を取り込むときは、`git pull` の後に `./installer/bootstrap.sh` を **`chezmoi apply` より先に**
 実行する。新しい mise 設定や lockfile は古い mise で読めないことがある（例: `paranoid = ["provenance"]` は
