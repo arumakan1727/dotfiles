@@ -43,7 +43,7 @@ zig = 'latest'
 # Installer / Package Manager
 aqua = 'latest'           # mise がネイティブに aqua をバックエンドとして使えるので aqua コマンドはなくてもインストール可能だが、aqua のレジストリを探索したいときがあるので一応
 uv = 'latest'
-'pypi:poetry' = '2'       # registry 既定は plugin backend(当初 asdf で locked 下の linux install が失敗、2026.11 時点は vfox)のため pypi に固定。uv 経由で入れ、依存は uv.lock サイドカーで固定
+'pypi:poetry' = { version = '2', python = '3.14' } # registry 既定は plugin backend(当初 asdf で locked 下の linux install が失敗、2026.11 時点は vfox)のため pypi に固定。uv 経由で入れ、依存は uv.lock サイドカーで固定。python は未指定だとプロジェクトの python ごとに別 install になり、python の異なるプロジェクトで missing になるため global の python に固定(pypi tool 共通)
 cargo-binstall = "latest"
 pnpm = "latest"
 usage = "latest"          # mise の補完/spec 用
@@ -136,7 +136,7 @@ workmux = "latest"             # GitHub release を使用(cargo:raine/workmux �
 # nvim は mason を使わず native vim.lsp.enable で PATH から発見する(供給網を mise に一本化)。
 lua-language-server = 'latest'                # lua_ls
 "go:golang.org/x/tools/gopls" = 'latest'      # gopls
-"pypi:basedpyright" = 'latest'                # basedpyright(Python 型チェック。lint/format は ruff に分担)
+"pypi:basedpyright" = { version = 'latest', python = '3.14' } # basedpyright(Python 型チェック。lint/format は ruff に分担)。python 固定の理由は pypi:poetry を参照
 ruff = 'latest'                               # ruff: Python LSP + conform/nvim-lint の formatter/linter 兼用
 "npm:yaml-language-server" = 'latest'         # yamlls
 "npm:vscode-langservers-extracted" = 'latest' # jsonls / cssls / html
@@ -163,4 +163,4 @@ terraform-ls = 'latest'                       # terraformls
 tree-sitter = '0.25'
 "go:golang.org/x/tools/cmd/goimports" = 'latest' # conform: goimports
 golangci-lint = 'latest'                         # nvim-lint: go
-"pypi:yamllint" = 'latest'                       # nvim-lint: yamllint
+"pypi:yamllint" = { version = 'latest', python = '3.14' } # nvim-lint: yamllint。python 固定の理由は pypi:poetry を参照

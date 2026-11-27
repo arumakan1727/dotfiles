@@ -1,9 +1,9 @@
 version = 1
 revision = 5
-requires-python = ">=3.10"
+requires-python = "==3.14.*"
 
 [options]
-exclude-newer = "2026-11-15T06:07:35.861269Z"
+exclude-newer = "2026-11-20T07:16:28.555554Z"
 
 [[package]]
 name = "basedpyright"

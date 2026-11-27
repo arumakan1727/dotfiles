@@ -993,19 +993,28 @@ url_api = "https://api.github.com/repos/protocolbuffers/protobuf/releases/assets
 version = "1.40.2"
 backend = "pypi:basedpyright"
 specifiers = ["latest"]
-uv = { path = "locks/pypi-basedpyright/1.40.2", digest = "sha256:ab097609665c6c2e26345b055508c8567cb2d7c9b0b5eb460251a7b0ab1bce4a" }
+uv = { path = "locks/pypi-basedpyright/1.40.2~0601de50", digest = "sha256:d5685498c7fb6c362d9c8f29dc1c8e4a089bc67bb9715f33594886de310bb747" }
+
+[tools."pypi:basedpyright".options]
+python = "3.14"
 
 [[tools."pypi:poetry"]]
 version = "2.5.1"
 backend = "pypi:poetry"
 specifiers = ["2"]
-uv = { path = "locks/pypi-poetry/2.5.1", digest = "sha256:aede16ab13691caf7df69c5d094261c08f20a3138ec6755acc0c18c94f3ae970" }
+uv = { path = "locks/pypi-poetry/2.5.1~30ebe673", digest = "sha256:6c8bfcfcf111de5b2d15875c3c11618f77ccf49203ee0b147ff648a1e282377a" }
+
+[tools."pypi:poetry".options]
+python = "3.14"
 
 [[tools."pypi:yamllint"]]
 version = "1.38.0"
 backend = "pypi:yamllint"
 specifiers = ["latest"]
-uv = { path = "locks/pypi-yamllint/1.38.0", digest = "sha256:74e019ac2e54152dbf6680c4a8e1f268e73971c1d9f8841d545072dd95d2a58b" }
+uv = { path = "locks/pypi-yamllint/1.38.0~647ee145", digest = "sha256:34fa82626911b5bc943e932caf5a39e72db919f454a8a2484056d6c70e0559d9" }
+
+[tools."pypi:yamllint".options]
+python = "3.14"
 
 [[tools.python]]
 version = "3.14.10"
